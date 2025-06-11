@@ -1,7 +1,13 @@
 package com.example.ticketbooking.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
+
+import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 @Data
@@ -9,28 +15,12 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String homeTeam;
-
-    @Column(nullable = false)
     private String awayTeam;
-
-    @Column(nullable = false)
-    private java.sql.Date date;
-
-    @Column(nullable = false)
-    private java.sql.Time time;
-
-    @Column(nullable = false)
+    private Date date;
+    private Time time;
     private String venue;
-
-    @Column(nullable = false)
     private int totalTickets;
-
-    @Column(nullable = false)
     private int availableTickets;
-
-    @Column(nullable = false)
     private double pricePerTicket;
 }

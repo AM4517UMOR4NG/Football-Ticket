@@ -1,18 +1,25 @@
 package com.example.ticketbooking.controller;
 
-import com.example.ticketbooking.model.User;
 import com.example.ticketbooking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
-@RequestMapping("/users")
+@Controller
 public class UserController {
-    @Autowired
-    private UserService service;
 
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return service.registerUser(user);
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(Model model) {
+        // Asumsi pengguna sudah login, ambil dari session atau context
+        model.addAttribute("user", userService.findByUsername("admin")); // Ganti dengan logika autentikasi
+        return "profile";
     }
 }

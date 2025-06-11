@@ -4,22 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
+@Table(name = "ticket_users") // Mengganti nama tabel dari "user" menjadi "ticket_users"
 @Data
-@Table(name = "\"user\"")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
     private String username;
-
-    @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
     private String email;
-
-    @Column(nullable = false)
-    private String role; // Misalnya "USER" atau "ADMIN"
+    private String role;
 }

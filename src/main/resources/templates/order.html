@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Orders</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+    <div class="container">
+        <h2>Daftar Pesanan</h2>
+        <form th:action="@{/orders}" method="post">
+            <div class="form-group">
+                <label for="matchId">Match ID:</label>
+                <input type="number" id="matchId" name="matchId" required>
+            </div>
+            <div class="form-group">
+                <label for="numberOfTickets">Jumlah Tiket:</label>
+                <input type="number" id="numberOfTickets" name="numberOfTickets" required>
+            </div>
+            <button type="submit">Pesan</button>
+        </form>
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+        <ul th:each="order : ${orders}">
+            <li th:text="'Order #' + ${order.id} + ': ' + ${order.numberOfTickets} + ' tickets'"></li>
+        </ul>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

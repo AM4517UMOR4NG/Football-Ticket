@@ -1,13 +1,15 @@
 package com.example.ticketbooking.config;
 
-import com.example.ticketbooking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -15,54 +17,53 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Autowired
-    private UserService userService;
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login", "/register", "/h2-console/**").permitAll()
-                .requestMatchers("/matches").permitAll()
-                .requestMatchers("/orders").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/matches", true)
-                .failureUrl("/login?error")
+                .defaultSuccessUrl("/dashboard", true)
+                .failureUrl("/login?error=true")
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/perform_logout")
-                .logoutSuccessUrl("/login?logout")
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout=true")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             )
-            .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**", "/api/**")
-            )
-            .exceptionHandling(exceptions -> exceptions
-                .accessDeniedPage("/access-denied")
+            .sessionManagement(session -> session
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
             );
-
         return http.build();
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
-            com.example.ticketbooking.model.User user = userService.findByUsername(username);
-            if (user == null) {
-                throw new UsernameNotFoundException("Pengguna tidak ditemukan: " + username);
-            }
-            return org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getRole())
-                .build();
-        };
+        // User biasa
+        UserDetails user = User.builder()
+            .username("user")
+            .password(passwordEncoder.encode("user123"))
+            .roles("USER")
+            .build();
+
+        // Admin
+        UserDetails admin = User.builder()
+            .username("admin")
+            .password(passwordEncoder.encode("admin123"))
+            .roles("ADMIN", "USER")
+            .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
     }
 }

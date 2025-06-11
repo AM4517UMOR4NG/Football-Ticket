@@ -4,30 +4,34 @@ import com.example.ticketbooking.model.User;
 import com.example.ticketbooking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RegisterController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public RegisterController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/register")
-    public String showRegistrationForm() {
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String username, @RequestParam String password,
-                              @RequestParam String email, @RequestParam String role) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password); // Akan di-encode oleh UserService
-        user.setEmail(email);
-        user.setRole(role);
-        userService.registerUser(user);
-        return "redirect:/login?success";
+    public String registerUser(User user, Model model) {
+        try {
+            userService.registerUser(user);
+            return "redirect:/login?success";
+        } catch (Exception e) {
+            model.addAttribute("error", "Registrasi gagal: " + e.getMessage());
+            return "register";
+        }
     }
 }
