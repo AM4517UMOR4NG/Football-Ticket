@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.login-form, .register-form, .ticket-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+table.match-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table.match-list th, table.match-list td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .login-form, .register-form, .ticket-form {
+    max-width: 100%;
+  }
+}
