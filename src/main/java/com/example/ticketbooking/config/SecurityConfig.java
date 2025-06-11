@@ -23,26 +23,31 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login", "/register", "/h2-console/**").permitAll()
                 .requestMatchers("/matches").permitAll()
-                .requestMatchers("/orders").authenticated()
+                .requestMatchers("/orders").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/matches", true)
+                .failureUrl("/login?error")
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/logout")
+                .logoutUrl("/perform_logout")
                 .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .permitAll()
             )
             .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**")
+                .ignoringRequestMatchers("/h2-console/**", "/api/**")
             )
-            .headers(headers -> headers
-                .frameOptions().disable()
+            .exceptionHandling(exceptions -> exceptions
+                .accessDeniedPage("/access-denied")
             );
+
         return http.build();
     }
 

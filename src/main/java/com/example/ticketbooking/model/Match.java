@@ -2,8 +2,6 @@ package com.example.ticketbooking.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Data
@@ -11,12 +9,28 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate date;
-    private LocalTime time;
+
+    @Column(nullable = false)
     private String homeTeam;
+
+    @Column(nullable = false)
     private String awayTeam;
+
+    @Column(nullable = false)
+    private java.sql.Date date;
+
+    @Column(nullable = false)
+    private java.sql.Time time;
+
+    @Column(nullable = false)
     private String venue;
-    private double pricePerTicket;
+
+    @Column(nullable = false)
     private int totalTickets;
+
+    @Column(nullable = false)
     private int availableTickets;
+
+    @Column(nullable = false)
+    private double pricePerTicket;
 }

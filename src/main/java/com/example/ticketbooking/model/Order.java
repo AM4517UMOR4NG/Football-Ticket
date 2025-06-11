@@ -2,24 +2,32 @@ package com.example.ticketbooking.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "\"order\"") // Escape the table name with double quotes
+@Table(name = "\"order\"")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
+    @Column(nullable = false)
+    private int numberOfTickets;
+
+    @Column(nullable = false)
+    private double totalPrice;
+
+    @Column(nullable = false)
+    private byte status; // 0: Pending, 1: Confirmed, 2: Cancelled
+
+    @Column
+    private java.sql.Timestamp orderDate;
 
     @ManyToOne
+    @JoinColumn(name = "match_id", nullable = false)
     private Match match;
 
-    private int numberOfTickets;
-    private double totalPrice;
-    private OrderStatus status;
-    private LocalDateTime orderDate;
+    @ManyToOne
+    @JoinColumn(name = "\"user_id\"", nullable = false)
+    private User user;
 }

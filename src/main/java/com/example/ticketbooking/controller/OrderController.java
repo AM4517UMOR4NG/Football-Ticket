@@ -11,11 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Controller untuk mengelola operasi terkait pesanan (orders).
- *
- * @author aekmo
- */
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -26,44 +21,30 @@ public class OrderController {
     @Autowired
     private UserService userService;
 
-    /**
-     * Membuat pesanan baru berdasarkan matchId dan jumlah tiket.
-     *
-     * @param matchId ID pertandingan
-     * @param numberOfTickets Jumlah tiket yang dipesan
-     * @param authentication Objek autentikasi untuk mendapatkan username
-     * @return Order yang dibuat
-     */
     @PostMapping
     public ResponseEntity<Order> createOrder(
             @RequestParam Long matchId,
             @RequestParam int numberOfTickets,
             Authentication authentication) {
         String username = authentication.getName();
-        User user = userService.findByUsername(username); // Gunakan findByUsername yang ada
+        User user = userService.findByUsername(username);
         if (user == null) {
-            return ResponseEntity.badRequest().build(); // Kembalikan error jika user tidak ditemukan
+            return ResponseEntity.badRequest().build();
         }
         try {
             Order order = orderService.createOrder(user, matchId, numberOfTickets);
             return ResponseEntity.ok(order);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build(); // Tangani error (misalnya stok tiket tidak cukup)
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    /**
-     * Mendapatkan daftar pesanan untuk pengguna yang sedang login.
-     *
-     * @param authentication Objek autentikasi untuk mendapatkan username
-     * @return List of Order untuk pengguna
-     */
     @GetMapping
     public ResponseEntity<List<Order>> getOrders(Authentication authentication) {
         String username = authentication.getName();
         User user = userService.findByUsername(username);
         if (user == null) {
-            return ResponseEntity.badRequest().build(); // Kembalikan error jika user tidak ditemukan
+            return ResponseEntity.badRequest().build();
         }
         List<Order> orders = orderService.getOrdersByUserId(user.getId());
         return ResponseEntity.ok(orders);

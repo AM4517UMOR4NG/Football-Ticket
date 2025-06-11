@@ -11,12 +11,15 @@
         input { width: 100%; padding: 8px; box-sizing: border-box; }
         button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
         button:hover { background-color: #45a049; }
+        .error { color: red; }
+        .success { color: green; }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Login</h2>
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/perform_login}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -27,8 +30,9 @@
             </div>
             <button type="submit">Login</button>
         </form>
-        <p th:if="${param.error}" style="color: red;">Login gagal. Periksa username dan password.</p>
-        <p th:if="${param.logout}" style="color: green;">Anda telah logout.</p>
+        <p th:if="${param.error}" class="error">Login gagal. Periksa username dan password.</p>
+        <p th:if="${param.logout}" class="success">Anda telah logout.</p>
+        <p th:if="${param.success}" class="success">Registrasi berhasil. Silakan login.</p>
         <p>Belum punya akun? <a th:href="@{/register}">Daftar di sini</a></p>
     </div>
 </body>

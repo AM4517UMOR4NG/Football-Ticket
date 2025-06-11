@@ -24,7 +24,7 @@ public class RegisterController {
                               @RequestParam String email, @RequestParam String role) {
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password); // Password akan di-encode oleh UserService
+        user.setPassword(password); // Akan di-encode oleh UserService
         user.setEmail(email);
         user.setRole(role);
         userService.registerUser(user);
