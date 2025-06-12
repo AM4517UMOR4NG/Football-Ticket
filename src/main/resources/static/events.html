@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Ticket Booking System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: #e74c3c; color: white; padding: 1rem 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 20px; }
+        .nav-links a { color: white; text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: #f1c40f; text-decoration: underline; }
+        .card { background-color: white; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        footer { background-color: #333; color: white; text-align: center; padding: 1rem 0; margin-top: 40px; }
+        .btn { display: inline-block; background-color: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 10px; border: none; cursor: pointer; transition: background-color 0.3s; }
+        .btn:hover { background-color: #c0392b; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">Ticket Booking</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="bookings.html">My Bookings</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Upcoming Events</h1>
+        <div id="events-container"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Ticket Booking System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            fetch('/api/events/upcoming', {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(events => {
+                const container = document.getElementById('events-container');
+                if (events.length === 0) {
+                    container.innerHTML = '<p>No upcoming events</p>';
+                    return;
+                }
+                events.forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.className = 'card';
+                    eventElement.innerHTML = `
+                        <h3>${event.title || 'Unnamed Event'}</h3>
+                        <p>${(event.description || 'No description').substring(0, 100)}...</p>
+                        <p>Venue: ${event.venue || 'N/A'}</p>
+                        <p>Date: ${new Date(event.eventDate).toLocaleDateString() || 'N/A'}</p>
+                        <p>Price: Rp${event.price || 0}</p>
+                        <a href="#" class="btn" onclick="bookEvent(${event.id || 0})">Book Now</a>
+                    `;
+                    container.appendChild(eventElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching events:', error);
+                document.getElementById('events-container').innerHTML = '<p class="text-red-500">Failed to load events</p>';
+            });
+
+            function bookEvent(eventId) {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    alert('Please login to book tickets');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ eventId, numberOfTickets: 1 })
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Booking failed');
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Booking successful! Reference: ' + data.bookingReference);
+                    window.location.href = 'bookings.html';
+                })
+                .catch(error => {
+                    console.error('Error booking event:', error);
+                    alert('Failed to book event: ' + error.message);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Booking System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: #e74c3c; color: white; padding: 1rem 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 20px; }
+        .nav-links a { color: white; text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: #f1c40f; text-decoration: underline; }
+        .hero { text-align: center; padding: 4rem 0; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border-radius: 10px; margin: 20px 0; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .btn { display: inline-block; background-color: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px; border: none; cursor: pointer; transition: background-color 0.3s; }
+        .btn:hover { background-color: #c0392b; }
+        footer { background-color: #333; color: white; text-align: center; padding: 1rem 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">Ticket Booking</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="bookings.html">My Bookings</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <h1>Welcome to Ticket Booking System</h1>
+            <p>Discover and book your favorite events with ease!</p>
+            <a href="events.html" class="btn">Explore Events</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Ticket Booking System. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

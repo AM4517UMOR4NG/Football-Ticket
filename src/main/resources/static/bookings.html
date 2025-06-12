@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Ticket Booking System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: #e74c3c; color: white; padding: 1rem 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 20px; }
+        .nav-links a { color: white; text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: #f1c40f; text-decoration: underline; }
+        .card { background-color: white; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .booking-card { display: flex; justify-content: space-between; margin-top: 10px; }
+        footer { background-color: #333; color: white; text-align: center; padding: 1rem 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">Ticket Booking</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="bookings.html">My Bookings</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>My Bookings</h1>
+        <div id="bookings-container"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Ticket Booking System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                document.getElementById('bookings-container').innerHTML = '<p class="text-red-500">Please login to view bookings</p>';
+                return;
+            }
+            fetch('/api/bookings', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(bookings => {
+                const container = document.getElementById('bookings-container');
+                if (bookings.length === 0) {
+                    container.innerHTML = '<p>No bookings found</p>';
+                    return;
+                }
+                bookings.forEach(booking => {
+                    const bookingElement = document.createElement('div');
+                    bookingElement.className = 'card';
+                    bookingElement.innerHTML = `
+                        <h3>${booking.eventTitle || 'Unnamed Event'}</h3>
+                        <p>${booking.numberOfTickets || 0} ticket(s) booked</p>
+                        <p>Total amount: Rp${booking.totalAmount || 0}</p>
+                        <p>Status: ${booking.status || 'N/A'}</p>
+                        <div class="booking-card">
+                            <div class="booking-info">
+                                <p>Venue: ${booking.venue || 'N/A'}</p>
+                                <p>Date: ${new Date(booking.eventDate).toLocaleDateString() || 'N/A'}</p>
+                            </div>
+                            <div class="booking-actions">
+                                <a href="#" class="btn">Details</a>
+                                <a href="#" class="btn">Cancel</a>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(bookingElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching bookings:', error);
+                document.getElementById('bookings-container').innerHTML = '<p class="text-red-500">Failed to load bookings</p>';
+            });
+        });
+    </script>
+</body>
+</html>

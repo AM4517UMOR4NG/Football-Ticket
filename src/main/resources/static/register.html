@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Ticket Booking System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #ff6f61, #ff8c42);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+            backdrop-filter: blur(5px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .register-card h2 {
+            color: #ff6f61;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+        input:focus {
+            border-color: #ff8c42;
+            box-shadow: 0 0 10px rgba(255, 140, 66, 0.3);
+        }
+        .btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(90deg, #ff6f61, #ff8c42);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, #ff5e50, #ff7a2b);
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .footer-text {
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-text a {
+            color: #ff8c42;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 1.5rem;
+            }
+            .btn {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="register-card">
+            <h2>Create Account</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-fullname">Full Name</label>
+                    <input type="text" id="reg-fullname" name="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Phone Number</label>
+                    <input type="tel" id="reg-phone" name="phone" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <div class="footer-text">
+                Already have an account? <a href="login.html">Login here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const fullname = document.getElementById('reg-fullname').value;
+            const phone = document.getElementById('reg-phone').value;
+
+            fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password, fullName: fullname, phoneNumber: phone, role: 'USER' })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Registration failed');
+                return response.json();
+            })
+            .then(data => {
+                if (data === 'User registered successfully') {
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Registration failed: ' + data);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during registration');
+            });
+        });
+    </script>
+</body>
+</html>

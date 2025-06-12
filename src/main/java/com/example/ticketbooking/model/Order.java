@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
+import com.example.ticketbooking.entity.User;
+
 @Entity
 @Table(name = "ticket_orders") // Mengganti nama tabel dari "order" menjadi "ticket_orders"
 @Data
