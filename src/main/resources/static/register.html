@@ -3,172 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Ticket Booking System</title>
+    <title>Ticket Booking - Register</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
-            background: linear-gradient(135deg, #ff6f61, #ff8c42);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            overflow: hidden;
-        }
-        .container {
-            width: 100%;
-            max-width: 450px;
+            justify-content: center;
             padding: 20px;
         }
-        .register-card {
+
+        .auth-container {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .auth-header {
             text-align: center;
-            animation: fadeIn 0.8s ease-in-out;
-            backdrop-filter: blur(5px);
+            margin-bottom: 30px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .register-card h2 {
-            color: #ff6f61;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            font-weight: 600;
-        }
-        .form-group {
-            margin-bottom: 1.2rem;
-            text-align: left;
-        }
-        label {
-            display: block;
+
+        .auth-header h1 {
             color: #333;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .auth-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        input {
+
+        .form-group input {
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
             outline: none;
+            border-color: #667eea;
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
         }
-        input:focus {
-            border-color: #ff8c42;
-            box-shadow: 0 0 10px rgba(255, 140, 66, 0.3);
+
+        .form-group.error input {
+            border-color: #e74c3c;
+            background: #fdf2f2;
         }
-        .btn {
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .submit-btn {
             width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(90deg, #ff6f61, #ff8c42);
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            border-radius: 10px;
+            font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
-        .btn:hover {
-            transform: scale(1.05);
-            background: linear-gradient(90deg, #ff5e50, #ff7a2b);
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
-        .btn:active {
-            transform: scale(0.98);
+
+        .submit-btn:active {
+            transform: translateY(0);
         }
-        .footer-text {
-            margin-top: 1.5rem;
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .form-toggle p {
             color: #666;
-            font-size: 0.9rem;
+            margin-bottom: 10px;
         }
-        .footer-text a {
-            color: #ff8c42;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .footer-text a:hover {
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
             text-decoration: underline;
+            font-size: 1em;
+            transition: color 0.3s ease;
         }
+
+        .toggle-btn:hover {
+            color: #764ba2;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 480px) {
-            .register-card {
-                padding: 1.5rem;
+            .auth-container {
+                margin: 10px;
+                padding: 30px 20px;
             }
-            .btn {
-                font-size: 1rem;
+            
+            .auth-header h1 {
+                font-size: 1.8em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="register-card">
-            <h2>Create Account</h2>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="reg-username">Username</label>
-                    <input type="text" id="reg-username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-email">Email</label>
-                    <input type="email" id="reg-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-password">Password</label>
-                    <input type="password" id="reg-password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-fullname">Full Name</label>
-                    <input type="text" id="reg-fullname" name="fullname" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-phone">Phone Number</label>
-                    <input type="tel" id="reg-phone" name="phone" required>
-                </div>
-                <button type="submit" class="btn">Register</button>
-            </form>
-            <div class="footer-text">
-                Already have an account? <a href="login.html">Login here</a>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>🎫 Ticket Booking</h1>
+            <p>Create your account to get started</p>
+        </div>
+
+        <div class="alert" id="alert"></div>
+
+        <form id="registerFormElement">
+            <div class="form-group">
+                <label for="regUsername">Username</label>
+                <input type="text" id="regUsername" name="username" required>
+                <div class="error-message">Username is required</div>
             </div>
+            
+            <div class="form-group">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" name="email" required>
+                <div class="error-message">Valid email is required</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="regFullName">Full Name</label>
+                <input type="text" id="regFullName" name="fullName" required>
+                <div class="error-message">Full name is required</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="regPhoneNumber">Phone Number</label>
+                <input type="tel" id="regPhoneNumber" name="phoneNumber" required>
+                <div class="error-message">Phone number is required</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" name="password" required>
+                <div class="error-message">Password is required</div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="registerBtn">
+                Create Account
+            </button>
+        </form>
+        
+        <div class="form-toggle">
+            <p>Already have an account?</p>
+            <button class="toggle-btn" onclick="window.location.href='login.html'">Sign In</button>
         </div>
     </div>
 
     <script>
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('reg-username').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-            const fullname = document.getElementById('reg-fullname').value;
-            const phone = document.getElementById('reg-phone').value;
+        // Configuration
+        const API_BASE_URL = 'http://localhost:8481/api/auth';
 
-            fetch('/api/auth/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, email, password, fullName: fullname, phoneNumber: phone, role: 'USER' })
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Registration failed');
-                return response.json();
-            })
-            .then(data => {
-                if (data === 'User registered successfully') {
-                    window.location.href = 'login.html';
+        // Alert functions
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+        }
+
+        function hideAlert() {
+            const alert = document.getElementById('alert');
+            alert.style.display = 'none';
+        }
+
+        // Loading state
+        function setButtonLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = '<span class="loading"></span>Processing...';
+            } else {
+                button.disabled = false;
+                button.innerHTML = 'Create Account';
+            }
+        }
+
+        // Form validation
+        function validateForm(form) {
+            let isValid = true;
+            const inputs = form.querySelectorAll('input[required]');
+            
+            inputs.forEach(input => {
+                const formGroup = input.parentElement;
+                
+                if (!input.value.trim()) {
+                    formGroup.classList.add('error');
+                    isValid = false;
                 } else {
-                    alert('Registration failed: ' + data);
+                    formGroup.classList.remove('error');
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred during registration');
+                
+                // Email validation
+                if (input.type === 'email' && input.value.trim()) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(input.value)) {
+                        formGroup.classList.add('error');
+                        formGroup.querySelector('.error-message').textContent = 'Please enter a valid email address';
+                        isValid = false;
+                    }
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Registration form handler
+        document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const registerBtn = document.getElementById('registerBtn');
+            
+            if (!validateForm(form)) {
+                return;
+            }
+            
+            const formData = new FormData(form);
+            const registrationData = {
+                username: formData.get('username'),
+                email: formData.get('email'),
+                fullName: formData.get('fullName'),
+                phoneNumber: formData.get('phoneNumber'),
+                password: formData.get('password'),
+                role: 'USER'
+            };
+            
+            setButtonLoading(registerBtn, true);
+            hideAlert();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(registrationData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showAlert('Account created successfully! Redirecting to login...', 'success');
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    showAlert(data.message || 'Registration failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert('Network error. Please check your connection and try again.', 'error');
+            } finally {
+                setButtonLoading(registerBtn, false);
+            }
+        });
+
+        // Clear form errors on input
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                input.parentElement.classList.remove('error');
             });
         });
     </script>
