@@ -1,11 +1,8 @@
 package com.example.ticketbooking.config;
 
 import com.example.ticketbooking.dto.EventDTO;
-import com.example.ticketbooking.dto.UserRegistrationDTO;
 import com.example.ticketbooking.repository.EventRepository;
-import com.example.ticketbooking.repository.UserRepository;
 import com.example.ticketbooking.service.EventService;
-import com.example.ticketbooking.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,75 +11,108 @@ import java.time.LocalDateTime;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
-    private final UserService userService;
-    private final EventService eventService;
-    private final UserRepository userRepository;
-    private final EventRepository eventRepository;
 
-    public DataInitializer(UserService userService, EventService eventService, UserRepository userRepository, EventRepository eventRepository) {
-        this.userService = userService;
-        this.eventService = eventService;
-        this.userRepository = userRepository;
-        this.eventRepository = eventRepository;
-    }
+        private final EventService eventService;
+        private final EventRepository eventRepository;
 
-    @Override
-    public void run(String... args) throws Exception {
-        if (userRepository.count() == 0) {
-            createSampleUsers();
+        public DataInitializer(EventService eventService, EventRepository eventRepository) {
+                this.eventService = eventService;
+                this.eventRepository = eventRepository;
         }
 
-        if (eventRepository.count() == 0) {
-            createSampleEvents();
+        @Override
+        public void run(String... args) throws Exception {
+                if (eventRepository.count() == 0) {
+                        createFootballEvents();
+                }
         }
-    }
 
-    private void createSampleUsers() {
-        UserRegistrationDTO user1 = new UserRegistrationDTO(
-                "john_doe", "john@example.com", "password123", "John Doe", "081234567890", "USER"
-        );
-        userService.registerUser(user1);
+        private void createFootballEvents() {
+                // Event 1: Pertandingan Timnas Indonesia
+                EventDTO event1 = new EventDTO(
+                                null,
+                                "Indonesia vs Thailand - Piala AFF 2025",
+                                "Pertandingan final Piala AFF 2025 antara Indonesia melawan Thailand. " +
+                                                "Saksikan aksi Egy Maulana Vikri, Witan Sulaeman, dan Marselino Ferdinan "
+                                                +
+                                                "membela Garuda di kandang sendiri!",
+                                "Stadion Utama Gelora Bung Karno",
+                                LocalDateTime.now().plusDays(20),
+                                88000,
+                                new BigDecimal("125000"));
+                eventService.createEvent(event1);
 
-        UserRegistrationDTO user2 = new UserRegistrationDTO(
-                "jane_smith", "jane@example.com", "password123", "Jane Smith", "081234567891", "USER"
-        );
-        userService.registerUser(user2);
+                // Event 2: Friendly Match
+                EventDTO event2 = new EventDTO(
+                                null,
+                                "Indonesia vs Argentina - International Friendly",
+                                "Pertandingan persahabatan internasional yang mempertemukan Timnas Indonesia " +
+                                                "dengan Argentina yang diperkuat Lionel Messi. Kesempatan langka menyaksikan "
+                                                +
+                                                "legenda sepak bola dunia bertanding di Indonesia!",
+                                "Stadion Manahan Solo",
+                                LocalDateTime.now().plusDays(35),
+                                40000,
+                                new BigDecimal("275000"));
+                eventService.createEvent(event2);
 
-        UserRegistrationDTO admin = new UserRegistrationDTO(
-                "admin", "admin@example.com", "admin123", "Administrator", "081000000000", "ADMIN"
-        );
-        userService.registerUser(admin);
-    }
+                // Event 3: Liga 1 Indonesia
+                EventDTO event3 = new EventDTO(
+                                null,
+                                "Persija Jakarta vs Persib Bandung - Klasiko Indonesia",
+                                "Pertandingan klasik Liga 1 Indonesia antara Persija Jakarta melawan Persib Bandung. " +
+                                                "Derby paling ditunggu dengan atmosfer penuh passion dari The Jakmania dan Bobotoh. "
+                                                +
+                                                "Featuring Marc Klok dan Pratama Arhan!",
+                                "Stadion Utama Gelora Bung Karno",
+                                LocalDateTime.now().plusDays(12),
+                                88000,
+                                new BigDecimal("95000"));
+                eventService.createEvent(event3);
 
-    private void createSampleEvents() {
-        EventDTO event1 = new EventDTO(
-                "Concert Music Festival 2025",
-                "Festival musik tahunan dengan artis ternama",
-                "Jakarta Convention Center",
-                LocalDateTime.now().plusDays(30),
-                1000,
-                new BigDecimal("150000")
-        );
-        eventService.createEvent(event1);
+                // Event 4: Exhibisi Match
+                EventDTO event4 = new EventDTO(
+                                null,
+                                "Cristiano Ronaldo Exhibition Match",
+                                "Pertandingan ekshibisi bintang dunia Cristiano Ronaldo melawan Tim All Star Indonesia. "
+                                                +
+                                                "Saksikan aksi CR7 dari jarak dekat dan bertemu dengan para pemain muda berbakat Indonesia. "
+                                                +
+                                                "Event sekali seumur hidup!",
+                                "Stadion Gelora Bandung Lautan Api",
+                                LocalDateTime.now().plusDays(50),
+                                38000,
+                                new BigDecimal("350000"));
+                eventService.createEvent(event4);
 
-        EventDTO event2 = new EventDTO(
-                "Football Match: Indonesia vs Malaysia",
-                "Pertandingan persahabatan internasional",
-                "Gelora Bung Karno Stadium",
-                LocalDateTime.now().plusDays(15),
-                80000,
-                new BigDecimal("75000")
-        );
-        eventService.createEvent(event2);
+                // Event 5: Youth Championship
+                EventDTO event5 = new EventDTO(
+                                null,
+                                "Indonesia U-23 vs Malaysia U-23 - SEA Games 2025",
+                                "Pertandingan sepak bola putra SEA Games 2025 antara Indonesia U-23 melawan Malaysia U-23. "
+                                                +
+                                                "Dukung generasi emas sepak bola Indonesia meraih medali emas di kandang sendiri. "
+                                                +
+                                                "Featuring future stars of Indonesian football!",
+                                "Stadion Patriot Candrabhaga",
+                                LocalDateTime.now().plusDays(28),
+                                30000,
+                                new BigDecimal("85000"));
+                eventService.createEvent(event5);
 
-        EventDTO event3 = new EventDTO(
-                "Tech Conference 2025",
-                "Konferensi teknologi tahunan dengan pakar industri",
-                "Balai Kartini",
-                LocalDateTime.now().plusDays(45),
-                500,
-                new BigDecimal("200000")
-        );
-        eventService.createEvent(event3);
-    }
+                // Event 6: Neymar Showcase
+                EventDTO event6 = new EventDTO(
+                                null,
+                                "Neymar Jr Skills & Goals Showcase",
+                                "Acara showcase eksklusif dari Neymar Jr menampilkan skill terbaik dan gol-gol spektakuler. "
+                                                +
+                                                "Termasuk meet & greet session, photo opportunity, dan masterclass sepak bola. "
+                                                +
+                                                "Kesempatan terbatas bertemu dengan salah satu pemain terbaik dunia!",
+                                "Stadion Kapten I Wayan Dipta",
+                                LocalDateTime.now().plusDays(42),
+                                15000,
+                                new BigDecimal("450000"));
+                eventService.createEvent(event6);
+        }
 }

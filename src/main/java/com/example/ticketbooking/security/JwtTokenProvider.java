@@ -2,8 +2,11 @@ package com.example.ticketbooking.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,30 +15,37 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    // JWT secret key - MUST be at least 64 characters (512 bits) for HS512
-    @Value("${app.jwtSecret:a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6}")
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
+
+    @Value("${app.jwt.secret:mySecretKeya1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6}")
     private String jwtSecret;
 
-    @Value("${app.jwtExpirationInMs:604800000}") // 7 days
-    private int jwtExpirationInMs;
+    @Value("${app.jwt.expiration:86400000}") // 24 hours in milliseconds
+    private long jwtExpirationMs;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
     public String generateToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        return generateTokenFromUsername(userPrincipal.getUsername());
+    }
 
-        Date expiryDate = new Date(System.currentTimeMillis() + jwtExpirationInMs);
+    public String generateTokenFromUsername(String username) {
+        Date expiryDate = new Date(System.currentTimeMillis() + jwtExpirationMs);
 
         return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512)
                 .compact();
     }
 
+    /**
+     * Get username from JWT token
+     */
     public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -46,24 +56,57 @@ public class JwtTokenProvider {
         return claims.getSubject();
     }
 
-    public boolean validateToken(String authToken) {
-        try {
-            Jwts.parserBuilder()
+    public Date getExpirationDateFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
-                .parseClaimsJws(authToken);
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getExpiration();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token);
+
             return true;
-        } catch (SecurityException ex) {
-            System.err.println("Invalid JWT signature");
+
         } catch (MalformedJwtException ex) {
-            System.err.println("Invalid JWT token");
+            logger.error("Invalid JWT token: {}", ex.getMessage());
         } catch (ExpiredJwtException ex) {
-            System.err.println("Expired JWT token");
+            logger.error("JWT token is expired: {}", ex.getMessage());
         } catch (UnsupportedJwtException ex) {
-            System.err.println("Unsupported JWT token");
+            logger.error("JWT token is unsupported: {}", ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            System.err.println("JWT claims string is empty");
+            logger.error("JWT claims string is empty: {}", ex.getMessage());
+        } catch (Exception ex) {
+            logger.error("JWT token validation failed: {}", ex.getMessage());
         }
+
         return false;
+    }
+
+    public boolean isTokenExpired(String token) {
+        try {
+            Date expiration = getExpirationDateFromToken(token);
+            return expiration.before(new Date());
+        } catch (Exception ex) {
+            logger.error("Error checking token expiration: {}", ex.getMessage());
+            return true;
+        }
+    }
+
+    public long getTokenRemainingTime(String token) {
+        try {
+            Date expiration = getExpirationDateFromToken(token);
+            return expiration.getTime() - System.currentTimeMillis();
+        } catch (Exception ex) {
+            logger.error("Error getting token remaining time: {}", ex.getMessage());
+            return 0;
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.example.ticketbooking.service;
 import com.example.ticketbooking.dto.UserRegistrationDTO;
 import com.example.ticketbooking.entity.User;
 import com.example.ticketbooking.repository.UserRepository;
+import com.example.ticketbooking.security.PasswordValidationService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ public class UserService {
     
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordValidationService passwordValidationService;
     
     public User registerUser(UserRegistrationDTO registrationDTO) {
         if (userRepository.findByUsername(registrationDTO.username()).isPresent()) {
@@ -24,6 +26,12 @@ public class UserService {
             throw new IllegalArgumentException("Email already registered");
         }
         
+        PasswordValidationService.PasswordValidationResult passwordValidation = 
+            passwordValidationService.validatePassword(registrationDTO.password());
+        if (!passwordValidation.isValid()) {
+            throw new IllegalArgumentException("Password validation failed: " + passwordValidation.getErrorMessage());
+        }
+        
         User user = new User();
         user.setUsername(registrationDTO.username());
         user.setEmail(registrationDTO.email());
@@ -31,7 +39,6 @@ public class UserService {
         user.setFullName(registrationDTO.fullName());
         user.setPhoneNumber(registrationDTO.phoneNumber());
         
-        // Set default role if not provided
         String role = registrationDTO.role() != null && !registrationDTO.role().isEmpty() 
             ? registrationDTO.role() : "USER";
         user.setRole(role);
@@ -48,21 +55,30 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
     
-    // Inisialisasi pengguna default "alogo" dengan password "alogositumorang"
     @PostConstruct
-    public void initDefaultUser() {
-        // Check if default user already exists
-        if (userRepository.findByUsername("alogo").isEmpty()) {
-            User defaultUser = new User();
-            defaultUser.setUsername("alogo");
-            defaultUser.setEmail("alogo@example.com");
-            defaultUser.setPassword(passwordEncoder.encode("alogositumorang"));
-            defaultUser.setFullName("Alogo Situmorang");
-            defaultUser.setPhoneNumber("081234567890");
-            defaultUser.setRole("ADMIN");
-            
-            userRepository.save(defaultUser);
-            System.out.println("Default user 'alogo' created successfully");
+    public void initDefaultAdmin() {
+        if (userRepository.findByUsername("Alogo12").isEmpty()) {
+            UserRegistrationDTO adminDto = new UserRegistrationDTO(
+                "Alogo12",
+                "alogo12@example.com",
+                "Alogo.situ24",
+                "Alogo Situmorang",
+                "081234567812",
+                "ADMIN"
+            );
+            PasswordValidationService.PasswordValidationResult validation = 
+                passwordValidationService.validatePassword(adminDto.password());
+            if (validation.isValid()) {
+                User admin = new User();
+                admin.setUsername(adminDto.username());
+                admin.setEmail(adminDto.email());
+                admin.setPassword(passwordEncoder.encode(adminDto.password()));
+                admin.setFullName(adminDto.fullName());
+                admin.setPhoneNumber(adminDto.phoneNumber());
+                admin.setRole(adminDto.role());
+                userRepository.save(admin);
+                System.out.println("Default admin 'Alogo12' created successfully");
+            }
         }
     }
 }

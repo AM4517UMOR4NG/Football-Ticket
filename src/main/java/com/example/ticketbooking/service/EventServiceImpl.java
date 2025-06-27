@@ -26,42 +26,42 @@ public class EventServiceImpl implements EventService {
         event.setEventDate(eventDTO.eventDate());
         event.setTotalSeats(eventDTO.totalSeats());
         event.setPrice(eventDTO.price());
-        event.setAvailableSeats(eventDTO.totalSeats()); // Initialize availableSeats
+        event.setAvailableSeats(eventDTO.totalSeats());
         eventRepository.save(event);
     }
 
     @Override
     public List<EventDTO> getAllEvents() {
         return eventRepository.findAll().stream()
-            .map(event -> new EventDTO(
-                event.getTitle(),
-                event.getDescription(),
-                event.getVenue(),
-                event.getEventDate(),
-                event.getTotalSeats(),
-                event.getPrice()
-            ))
-            .collect(Collectors.toList());
+                .map(event -> new EventDTO(
+                        event.getId(),
+                        event.getTitle(),
+                        event.getDescription(),
+                        event.getVenue(),
+                        event.getEventDate(),
+                        event.getTotalSeats(),
+                        event.getPrice()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<EventDTO> getUpcomingEvents() {
         return eventRepository.findAll().stream()
-            .filter(event -> event.getEventDate().isAfter(LocalDateTime.now()))
-            .map(event -> new EventDTO(
-                event.getTitle(),
-                event.getDescription(),
-                event.getVenue(),
-                event.getEventDate(),
-                event.getTotalSeats(),
-                event.getPrice()
-            ))
-            .collect(Collectors.toList());
+                .filter(event -> event.getEventDate().isAfter(LocalDateTime.now()))
+                .map(event -> new EventDTO(
+                        event.getId(),
+                        event.getTitle(),
+                        event.getDescription(),
+                        event.getVenue(),
+                        event.getEventDate(),
+                        event.getTotalSeats(),
+                        event.getPrice()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Event getEventById(Long id) {
         return eventRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Event not found"));
+                .orElseThrow(() -> new RuntimeException("Event not found"));
     }
 }

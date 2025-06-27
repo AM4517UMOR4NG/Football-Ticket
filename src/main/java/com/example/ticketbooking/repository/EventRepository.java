@@ -13,11 +13,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByStatus(Event.EventStatus status);
 
     @Query("SELECT e FROM Event e WHERE e.eventDate > :currentDate AND e.status = :status")
-    static
-    List<Event> findUpcomingEvents(LocalDateTime currentDate, Event.EventStatus status) {
-        throw new UnsupportedOperationException("Unimplemented method 'findUpcomingEvents'");
-    }
+    List<Event> findUpcomingEvents(LocalDateTime currentDate, Event.EventStatus status);
 
     List<Event> findByVenueContainingIgnoreCase(String venue);
+
     List<Event> findByTitleContainingIgnoreCase(String title);
 }

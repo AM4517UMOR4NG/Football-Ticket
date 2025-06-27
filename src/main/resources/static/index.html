@@ -3,53 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Booking System</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        header { background-color: #e74c3c; color: white; padding: 1rem 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: bold; }
-        .nav-links { display: flex; list-style: none; }
-        .nav-links li { margin-left: 20px; }
-        .nav-links a { color: white; text-decoration: none; transition: color 0.3s; }
-        .nav-links a:hover { color: #f1c40f; text-decoration: underline; }
-        .hero { text-align: center; padding: 4rem 0; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border-radius: 10px; margin: 20px 0; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .btn { display: inline-block; background-color: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px; border: none; cursor: pointer; transition: background-color 0.3s; }
-        .btn:hover { background-color: #c0392b; }
-        footer { background-color: #333; color: white; text-align: center; padding: 1rem 0; margin-top: 40px; }
-    </style>
+    <title>Ticket Booking - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="container">
-                <div class="logo">Ticket Booking</div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="bookings.html">My Bookings</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
-                </ul>
+<body class="bg-gray-900 text-white font-sans">
+    <nav class="bg-gray-800 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold">Ticket Booking</h1>
+                </div>
+                <div class="flex items-center space-x-4"
+                    <a href="#" id="" class="text-gray-300 hover:text-blue-400">Logout</a>
+                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <main class="container">
-        <div class="hero">
-            <h1>Welcome to Ticket Booking System</h1>
-            <p>Discover and book your favorite events with ease!</p>
-            <a href="events.html" class="btn">Explore Events</a>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-bold mb-4">Welcome to Ticket Booking</h2>
+        <p class="text-gray-400 mb-8">Book your tickets for exciting matches and events!</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
+                <h3 class="text-xl font-semibold mb-2">Latest Matches</h3>
+                <p class="text-gray-400 mb-4">Check out the upcoming matches and book your spot.</p>
+                <a href="match.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Matches</a>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
+                <h3 class="text-xl font-semibold mb-2">Events</h3>
+                <p class="text-gray-400 mb-4">Discover exciting events and book your tickets.</p>
+                <a href="events.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Events</a>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
+                <h3 class="text-xl font-semibold mb-2">My Bookings</h3>
+                <p class="text-gray-400 mb-4">Manage your existing bookings here.</p>
+                <a href="bookings.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Bookings</a>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
+                <h3 class="text-xl font-semibold mb-2">My Match Bookings</h3>
+                <p class="text-gray-400 mb-4">View and manage your match bookings.</p>
+                <a href="my_match_bookings.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Match Bookings</a>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
+                <h3 class="text-xl font-semibold mb-2">Profile</h3>
+                <p class="text-gray-400 mb-4">Update your profile and preferences.</p>
+                <a href="profile.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Profile</a>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
+                <h3 class="text-xl font-semibold mb-2">Search</h3>
+                <p class="text-gray-400 mb-4">Search for matches and events.</p>
+                <a href="search.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Search</a>
+            </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>© 2025 Ticket Booking System. All rights reserved.</p>
+    <footer class="bg-gray-800 shadow-md mt-8 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-400">© 2025 Ticket Booking System. Made with <strong>❤️</strong></p>
         </div>
     </footer>
+
+    <script>
+        const token = localStorage.getItem('accessToken');
+        const userId = localStorage.getItem('userId');
+        
+        if (!token || !userId) {
+            window.location.href = 'login.html';
+        }
+
+        document.getElementById('logoutLink').addEventListener('click', () => {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('userId');
+            window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>

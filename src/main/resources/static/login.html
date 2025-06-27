@@ -3,513 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Booking - Authentication</title>
+    <title>Login - Welcome Back</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        
+        .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
-
-        .auth-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .auth-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+        
+        .input-glow:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
         }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 30px;
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
         }
-
-        .auth-header h1 {
-            color: #333;
-            font-size: 2.2em;
-            margin-bottom: 10px;
-            font-weight: 300;
+        
+        .floating-animation-delay {
+            animation: float 6s ease-in-out infinite;
+            animation-delay: -3s;
         }
-
-        .auth-header p {
-            color: #666;
-            font-size: 1.1em;
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(-10px) rotate(-1deg); }
         }
-
-        .form-container {
-            position: relative;
+        
+        .pulse-shadow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
         }
-
-        .form-group {
-            margin-bottom: 20px;
-            position: relative;
+        
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
+            to { box-shadow: 0 0 30px rgba(102, 126, 234, 0.6), 0 0 40px rgba(102, 126, 234, 0.3); }
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 500;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        
+        .slide-in {
+            animation: slideIn 0.8s ease-out;
         }
-
-        .form-group input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        
+        .wobble:hover {
+            animation: wobble 0.8s ease-in-out;
         }
-
-        .form-group.error input {
-            border-color: #e74c3c;
-            background: #fdf2f2;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 0.85em;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .form-group.error .error-message {
-            display: block;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .form-toggle {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #eee;
-        }
-
-        .form-toggle p {
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: #667eea;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 1em;
-            transition: color 0.3s ease;
-        }
-
-        .toggle-btn:hover {
-            color: #764ba2;
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-weight: 500;
-            display: none;
-        }
-
-        .alert.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .form-section {
-            display: none;
-        }
-
-        .form-section.active {
-            display: block;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 480px) {
-            .auth-container {
-                margin: 10px;
-                padding: 30px 20px;
-            }
-            
-            .auth-header h1 {
-                font-size: 1.8em;
-            }
+        
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(1deg); }
+            75% { transform: rotate(-1deg); }
         }
     </style>
 </head>
-<body>
-    <div class="auth-container">
-        <div class="auth-header">
-            <h1>🎫 Ticket Booking</h1>
-            <p>Welcome! Please sign in or create an account</p>
-        </div>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="floating-animation absolute top-20 left-20 w-32 h-32 bg-white bg-opacity-5 rounded-full blur-xl"></div>
+        <div class="floating-animation-delay absolute top-40 right-32 w-24 h-24 bg-purple-300 bg-opacity-10 rounded-full blur-lg"></div>
+        <div class="floating-animation absolute bottom-32 left-32 w-40 h-40 bg-blue-300 bg-opacity-5 rounded-full blur-2xl"></div>
+        <div class="floating-animation-delay absolute bottom-20 right-20 w-28 h-28 bg-white bg-opacity-10 rounded-full blur-xl"></div>
+    </div>
 
-        <div class="alert" id="alert"></div>
+    <!-- Main Container -->
+    <div class="slide-in w-full max-w-md relative z-10">
+        <!-- Logo/Brand Section -->
+        <div class="text-center mb-8">
+            <div class="wobble inline-block mb-4 p-4 glass-effect rounded-2xl">
+                <svg class="w-12 h-12 text-white mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+            <p class="text-blue-100 text-opacity-80">Sign in to continue your journey</p>
+        </div>
 
         <!-- Login Form -->
-        <div class="form-section active" id="loginForm">
-            <form id="loginFormElement">
-                <div class="form-group">
-                    <label for="loginUsername">Username</label>
-                    <input type="text" id="loginUsername" name="username" required>
-                    <div class="error-message">Username is required</div>
+        <div class="glass-effect rounded-3xl p-8 shadow-2xl">
+            <form id="loginForm" class="space-y-6">
+                <!-- Username Field -->
+                <div class="group">
+                    <label for="username" class="block text-sm font-medium text-white mb-2 transition-all duration-200 group-focus-within:text-blue-200">
+                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        Username
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Enter your username"
+                        class="input-glow w-full p-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-blue-200 placeholder-opacity-60 focus:outline-none focus:bg-opacity-15 focus:border-opacity-40 transition-all duration-300" 
+                        required
+                    >
                 </div>
                 
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" name="password" required>
-                    <div class="error-message">Password is required</div>
+                <!-- Password Field -->
+                <div class="group">
+                    <label for="password" class="block text-sm font-medium text-white mb-2 transition-all duration-200 group-focus-within:text-blue-200">
+                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Enter your password"
+                            class="input-glow w-full p-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-blue-200 placeholder-opacity-60 focus:outline-none focus:bg-opacity-15 focus:border-opacity-40 transition-all duration-300 pr-12" 
+                            required
+                        >
+                        <button type="button" id="togglePassword" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-200 hover:text-white transition-colors duration-200">
+                            <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 
-                <button type="submit" class="submit-btn" id="loginBtn">
-                    Sign In
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center group cursor-pointer">
+                        <input type="checkbox" id="rememberMe" class="sr-only">
+                        <div class="checkbox-custom w-5 h-5 bg-white bg-opacity-10 border border-white border-opacity-30 rounded mr-3 flex items-center justify-center transition-all duration-200 group-hover:bg-opacity-20">
+                            <svg class="checkmark w-3 h-3 text-white opacity-0 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-blue-100 group-hover:text-white transition-colors duration-200">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-blue-200 hover:text-white transition-colors duration-200 hover:underline">Forgot password?</a>
+                </div>
+                
+                <!-- Login Button -->
+                <button 
+                    type="submit" 
+                    id="loginBtn"
+                    class="pulse-shadow w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold p-4 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50"
+                >
+                    <span id="loginBtnText" class="flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                        </svg>
+                        Sign In
+                    </span>
+                    <div id="loginSpinner" class="hidden">
+                        <svg class="animate-spin w-5 h-5 mx-auto" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </div>
                 </button>
             </form>
             
-            <div class="form-toggle">
-                <p>Don't have an account?</p>
-                <button class="toggle-btn" onclick="toggleForm('register')">Create Account</button>
+            <!-- Divider -->
+            <div class="my-6 flex items-center">
+                <div class="flex-1 border-t border-white border-opacity-20"></div>
+                <span class="px-4 text-blue-100 text-sm">or</span>
+                <div class="flex-1 border-t border-white border-opacity-20"></div>
+            </div>
+            
+            <!-- Register Link -->
+            <div class="text-center">
+                <p class="text-blue-100 mb-4">Don't have an account?</p>
+                <a href="register.html" class="inline-block px-6 py-3 bg-white bg-opacity-10 hover:bg-opacity-20 text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 border border-white border-opacity-20 hover:border-opacity-40">
+                    Create Account
+                </a>
             </div>
         </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-8">
+            <p class="text-blue-100 text-opacity-60 text-sm">
+                © 2025 Your Company. All rights reserved.
+            </p>
+        </div>
+    </div>
 
-        <!-- Registration Form -->
-        <div class="form-section" id="registerForm">
-            <form id="registerFormElement">
-                <div class="form-group">
-                    <label for="regUsername">Username</label>
-                    <input type="text" id="regUsername" name="username" required>
-                    <div class="error-message">Username is required</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="regEmail">Email</label>
-                    <input type="email" id="regEmail" name="email" required>
-                    <div class="error-message">Valid email is required</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="regFullName">Full Name</label>
-                    <input type="text" id="regFullName" name="fullName" required>
-                    <div class="error-message">Full name is required</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="regPhoneNumber">Phone Number</label>
-                    <input type="tel" id="regPhoneNumber" name="phoneNumber" required>
-                    <div class="error-message">Phone number is required</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="regPassword">Password</label>
-                    <input type="password" id="regPassword" name="password" required>
-                    <div class="error-message">Password is required</div>
-                </div>
-                
-                <button type="submit" class="submit-btn" id="registerBtn">
-                    Create Account
-                </button>
-            </form>
-            
-            <div class="form-toggle">
-                <p>Already have an account?</p>
-                <button class="toggle-btn" onclick="toggleForm('login')">Sign In</button>
+    <!-- Enhanced Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="glass-effect p-8 rounded-2xl text-center">
+            <div class="mb-4">
+                <svg class="animate-spin w-12 h-12 text-white mx-auto" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
             </div>
+            <p class="text-white font-medium">Signing you in...</p>
+            <p class="text-blue-200 text-sm mt-1">Please wait a moment</p>
         </div>
     </div>
 
     <script>
         // Configuration
-        const API_BASE_URL = 'http://localhost:8481/api/auth'; // Adjust this to your server URL
+        const apiConfig = {
+            baseUrl: 'http://localhost:8080/api',
+            fallbackUrl: 'http://localhost:8080/api'
+        };
 
-        // Form toggle functionality
-        function toggleForm(formType) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            
-            if (formType === 'register') {
-                loginForm.classList.remove('active');
-                registerForm.classList.add('active');
-                document.querySelector('.auth-header p').textContent = 'Create your account to get started';
-            } else {
-                registerForm.classList.remove('active');
-                loginForm.classList.add('active');
-                document.querySelector('.auth-header p').textContent = 'Welcome! Please sign in or create an account';
-            }
-            
-            // Clear alerts
-            hideAlert();
-        }
+        const redirectOptions = {
+            primary: 'index.html',
+            fallback: 'index.html'
+        };
 
-        // Alert functions
-        function showAlert(message, type) {
-            const alert = document.getElementById('alert');
-            alert.textContent = message;
-            alert.className = `alert ${type}`;
-            alert.style.display = 'block';
-        }
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginBtnText = document.getElementById('loginBtnText');
+        const loginSpinner = document.getElementById('loginSpinner');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
 
-        function hideAlert() {
-            const alert = document.getElementById('alert');
-            alert.style.display = 'none';
-        }
-
-        // Loading state
-        function setButtonLoading(button, isLoading) {
-            if (isLoading) {
-                button.disabled = true;
-                button.innerHTML = '<span class="loading"></span>Processing...';
-            } else {
-                button.disabled = false;
-                button.innerHTML = button.id === 'loginBtn' ? 'Sign In' : 'Create Account';
-            }
-        }
-
-        // Form validation
-        function validateForm(form) {
-            let isValid = true;
-            const inputs = form.querySelectorAll('input[required]');
-            
-            inputs.forEach(input => {
-                const formGroup = input.parentElement;
-                
-                if (!input.value.trim()) {
-                    formGroup.classList.add('error');
-                    isValid = false;
+        // Enhanced UI interactions
+        function initializeUI() {
+            // Custom checkbox functionality
+            rememberMeCheckbox.addEventListener('change', function() {
+                const checkmark = this.parentElement.querySelector('.checkmark');
+                if (this.checked) {
+                    checkmark.style.opacity = '1';
+                    this.parentElement.querySelector('.checkbox-custom').style.backgroundColor = 'rgba(59, 130, 246, 0.5)';
                 } else {
-                    formGroup.classList.remove('error');
-                }
-                
-                // Email validation
-                if (input.type === 'email' && input.value.trim()) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(input.value)) {
-                        formGroup.classList.add('error');
-                        formGroup.querySelector('.error-message').textContent = 'Please enter a valid email address';
-                        isValid = false;
-                    }
+                    checkmark.style.opacity = '0';
+                    this.parentElement.querySelector('.checkbox-custom').style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
                 }
             });
+
+            // Password toggle functionality
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                if (type === 'text') {
+                    eyeIcon.innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                    `;
+                } else {
+                    eyeIcon.innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    `;
+                }
+            });
+
+            // Auto-focus and smooth transitions
+            usernameInput.focus();
             
-            return isValid;
+            // Enhanced keyboard navigation
+            usernameInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    passwordInput.focus();
+                }
+            });
         }
 
-        // Login form handler
-        document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // Enhanced loading states
+        function showLoading() {
+            loginBtn.disabled = true;
+            loginBtnText.classList.add('hidden');
+            loginSpinner.classList.remove('hidden');
+            loadingOverlay.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            loginBtn.disabled = false;
+            loginBtnText.classList.remove('hidden');
+            loginSpinner.classList.add('hidden');
+            loadingOverlay.classList.add('hidden');
+        }
+
+        // Enhanced error handling with beautiful notifications
+        function showError(message) {
+            // Remove existing errors
+            const existingError = document.querySelector('.error-notification');
+            if (existingError) existingError.remove();
+
+            // Create beautiful error notification
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-notification fixed top-4 right-4 bg-red-500 bg-opacity-90 backdrop-blur-lg text-white p-4 rounded-xl shadow-2xl border border-red-400 border-opacity-30 z-50 transform translate-x-full transition-transform duration-300';
+            errorDiv.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <p class="font-medium">Login Failed</p>
+                        <p class="text-sm opacity-90">${message}</p>
+                    </div>
+                    <button class="ml-4 opacity-70 hover:opacity-100 transition-opacity" onclick="this.parentElement.parentElement.remove()">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
             
-            const form = e.target;
-            const loginBtn = document.getElementById('loginBtn');
+            document.body.appendChild(errorDiv);
             
-            if (!validateForm(form)) {
-                return;
+            // Animate in
+            setTimeout(() => {
+                errorDiv.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Auto remove
+            setTimeout(() => {
+                errorDiv.style.transform = 'translateX(full)';
+                setTimeout(() => errorDiv.remove(), 300);
+            }, 5000);
+        }
+
+        // Success notification
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed top-4 right-4 bg-green-500 bg-opacity-90 backdrop-blur-lg text-white p-4 rounded-xl shadow-2xl border border-green-400 border-opacity-30 z-50 transform translate-x-full transition-transform duration-300';
+            successDiv.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <p class="font-medium">Success!</p>
+                        <p class="text-sm opacity-90">${message}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(successDiv);
+            setTimeout(() => successDiv.style.transform = 'translateX(0)', 100);
+            setTimeout(() => successDiv.remove(), 3000);
+        }
+
+        // API calls
+        async function attemptLogin(apiUrl, loginData) {
+            const response = await axios.post(`${apiUrl}/auth/login`, loginData, {
+                timeout: 10000,
+                headers: { 'Content-Type': 'application/json' }
+            });
+            return response;
+        }
+
+        function handleLoginSuccess(response) {
+            console.log('Login successful:', response.data);
+            
+            // Store data
+            if (response.data.accessToken) {
+                localStorage.setItem('accessToken', response.data.accessToken);
+            }
+            if (response.data.userId) {
+                localStorage.setItem('userId', response.data.userId);
+            }
+            if (response.data.user) {
+                localStorage.setItem('userData', JSON.stringify(response.data.user));
             }
             
-            const formData = new FormData(form);
-            const loginData = {
-                username: formData.get('username'),
-                password: formData.get('password')
-            };
+            localStorage.setItem('loginTime', new Date().toISOString());
             
-            setButtonLoading(loginBtn, true);
-            hideAlert();
+            showSuccess('Login successful! Redirecting...');
             
+            setTimeout(() => {
+                window.location.href = redirectOptions.primary;
+            }, 1500);
+        }
+
+        // Main login handler
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!username || !password) {
+                showError('Please enter both username and password');
+                return;
+            }
+
+            showLoading();
+            const loginData = { username, password };
+
             try {
-                const response = await fetch(`${API_BASE_URL}/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(loginData)
-                });
+                let response;
                 
-                const data = await response.json();
-                
-                if (response.ok) {
-                    // Login successful
-                    localStorage.setItem('accessToken', data.accessToken);
-                    localStorage.setItem('username', data.username);
-                    localStorage.setItem('email', data.email);
-                    localStorage.setItem('fullName', data.fullName);
-                    
-                    showAlert('Login successful! Redirecting...', 'success');
-                    
-                    // Redirect to dashboard or main page after 2 seconds
-                    setTimeout(() => {
-                        window.location.href = '/'; // Change this to your main page
-                    }, 2000);
-                } else {
-                    // Login failed
-                    showAlert(data.message || 'Login failed. Please try again.', 'error');
+                try {
+                    response = await attemptLogin(apiConfig.baseUrl, loginData);
+                } catch (primaryError) {
+                    console.log('Primary API failed, trying fallback:', primaryError.message);
+                    response = await attemptLogin(apiConfig.fallbackUrl, loginData);
                 }
+
+                handleLoginSuccess(response);
+
             } catch (error) {
+                hideLoading();
                 console.error('Login error:', error);
-                showAlert('Network error. Please check your connection and try again.', 'error');
-            } finally {
-                setButtonLoading(loginBtn, false);
-            }
-        });
 
-        // Registration form handler
-        document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const form = e.target;
-            const registerBtn = document.getElementById('registerBtn');
-            
-            if (!validateForm(form)) {
-                return;
-            }
-            
-            const formData = new FormData(form);
-            const registrationData = {
-                username: formData.get('username'),
-                email: formData.get('email'),
-                fullName: formData.get('fullName'),
-                phoneNumber: formData.get('phoneNumber'),
-                password: formData.get('password'),
-                role: 'USER' // Default role
-            };
-            
-            setButtonLoading(registerBtn, true);
-            hideAlert();
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(registrationData)
-                });
+                let errorMessage = 'Login failed. Please try again.';
                 
-                const data = await response.json();
-                
-                if (response.ok) {
-                    // Registration successful
-                    showAlert('Account created successfully! You can now sign in.', 'success');
+                if (error.response) {
+                    const status = error.response.status;
+                    const data = error.response.data;
                     
-                    // Clear form
-                    form.reset();
-                    
-                    // Switch to login form after 2 seconds
-                    setTimeout(() => {
-                        toggleForm('login');
-                    }, 2000);
-                } else {
-                    // Registration failed
-                    showAlert(data.message || 'Registration failed. Please try again.', 'error');
+                    if (status === 401) {
+                        errorMessage = 'Invalid username or password';
+                    } else if (status === 429) {
+                        errorMessage = 'Too many login attempts. Please try again later.';
+                    } else if (data?.message) {
+                        errorMessage = data.message;
+                    }
+                } else if (error.request) {
+                    errorMessage = 'Unable to connect to server. Please check your connection.';
                 }
-            } catch (error) {
-                console.error('Registration error:', error);
-                showAlert('Network error. Please check your connection and try again.', 'error');
-            } finally {
-                setButtonLoading(registerBtn, false);
+
+                showError(errorMessage);
             }
         });
 
-        // Clear form errors on input
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => {
-                input.parentElement.classList.remove('error');
-            });
-        });
-
-        // Check if user is already logged in
+        // Auto-login check
         window.addEventListener('load', () => {
+            initializeUI();
+            
             const token = localStorage.getItem('accessToken');
-            if (token) {
-                // User is already logged in, redirect to main page
-                window.location.href = '/'; // Change this to your main page
+            const loginTime = localStorage.getItem('loginTime');
+            
+            if (token && loginTime) {
+                const timeDiff = new Date() - new Date(loginTime);
+                const hoursDiff = timeDiff / (1000 * 60 * 60);
+                
+                if (hoursDiff < 24) {
+                    showSuccess('Welcome back! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = redirectOptions.primary;
+                    }, 1500);
+                }
             }
         });
     </script>

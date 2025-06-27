@@ -3,383 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Booking - Register</title>
+    <title>Register - Ticket Booking System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #4a69bd, #7b68ee);
+            color: #333;
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
-        }
-
-        .auth-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-            padding: 40px;
+            align-items: center;
+            overflow-x: hidden;
             position: relative;
-            overflow: hidden;
         }
-
-        .auth-container::before {
+        body::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
-
-        .auth-header {
+        .container {
+            max-width: 450px;
+            width: 100%;
+            padding: 20px;
+            z-index: 1;
+            position: relative;
+        }
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            padding: 40px;
             text-align: center;
-            margin-bottom: 30px;
+            animation: fadeIn 1.5s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .auth-header h1 {
-            color: #333;
-            font-size: 2.2em;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .lock-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .lock-icon i {
+            color: white;
+            font-size: 24px;
+        }
+        .auth-card h2 {
+            color: #4a5568;
+            font-size: 2rem;
             margin-bottom: 10px;
-            font-weight: 300;
+            font-weight: 600;
         }
-
         .auth-header p {
-            color: #666;
-            font-size: 1.1em;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            font-weight: 400;
         }
-
         .form-group {
             margin-bottom: 20px;
-            position: relative;
+            text-align: left;
         }
-
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #555;
             font-weight: 500;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 0.9rem;
         }
-
         .form-group input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 1em;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            background: #f8f9fa;
+            background: rgba(255, 255, 255, 0.8);
+            color: #2d3748;
         }
-
         .form-group input:focus {
-            outline: none;
             border-color: #667eea;
-            background: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.95);
         }
-
-        .form-group.error input {
-            border-color: #e74c3c;
-            background: #fdf2f2;
+        .form-group input::placeholder {
+            color: #a0aec0;
         }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 0.85em;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .form-group.error .error-message {
-            display: block;
-        }
-
         .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 14px 30px;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
+            border-radius: 12px;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
+            width: 100%;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin-top: 10px;
         }
-
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
         }
-
         .submit-btn:active {
             transform: translateY(0);
         }
-
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .form-toggle {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #eee;
-        }
-
-        .form-toggle p {
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: #667eea;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 1em;
-            transition: color 0.3s ease;
-        }
-
-        .toggle-btn:hover {
-            color: #764ba2;
-        }
-
         .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-weight: 500;
+            margin: 15px 0;
+            padding: 12px 16px;
+            border-radius: 8px;
             display: none;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
-
         .alert.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background-color: rgba(72, 187, 120, 0.1);
+            color: #2f855a;
+            border: 1px solid rgba(72, 187, 120, 0.2);
         }
-
         .alert.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background-color: rgba(245, 101, 101, 0.1);
+            color: #c53030;
+            border: 1px solid rgba(245, 101, 101, 0.2);
         }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
+        .toggle-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .toggle-text {
+            color: #718096;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
         }
-
+        .toggle-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .toggle-link:hover {
+            color: #5a67d8;
+            text-decoration: underline;
+        }
         @media (max-width: 480px) {
-            .auth-container {
-                margin: 10px;
-                padding: 30px 20px;
+            .container {
+                padding: 15px;
             }
-            
-            .auth-header h1 {
-                font-size: 1.8em;
+            .auth-card {
+                padding: 30px 25px;
+            }
+            .auth-card h2 {
+                font-size: 1.8rem;
+            }
+            .submit-btn {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-header">
-            <h1>🎫 Ticket Booking</h1>
-            <p>Create your account to get started</p>
-        </div>
-
-        <div class="alert" id="alert"></div>
-
-        <form id="registerFormElement">
-            <div class="form-group">
-                <label for="regUsername">Username</label>
-                <input type="text" id="regUsername" name="username" required>
-                <div class="error-message">Username is required</div>
+    <div class="container">
+        <div class="auth-card">
+            <div class="lock-icon">
+                <i class="fas fa-user-plus"></i>
             </div>
-            
-            <div class="form-group">
-                <label for="regEmail">Email</label>
-                <input type="email" id="regEmail" name="email" required>
-                <div class="error-message">Valid email is required</div>
+            <h2>Create Account</h2>
+            <div class="auth-header">
+                <p>Sign up to start your booking journey</p>
             </div>
-            
-            <div class="form-group">
-                <label for="regFullName">Full Name</label>
-                <input type="text" id="regFullName" name="fullName" required>
-                <div class="error-message">Full name is required</div>
+            <div id="alert" class="alert"></div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="fullName"><i class="fas fa-id-card"></i> Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber"><i class="fas fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+            <div class="toggle-section">
+                <div class="toggle-text">or</div>
+                <div class="toggle-text">Already have an account?</div>
+                <a href="login.html" class="toggle-link">Sign In</a>
             </div>
-            
-            <div class="form-group">
-                <label for="regPhoneNumber">Phone Number</label>
-                <input type="tel" id="regPhoneNumber" name="phoneNumber" required>
-                <div class="error-message">Phone number is required</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="regPassword">Password</label>
-                <input type="password" id="regPassword" name="password" required>
-                <div class="error-message">Password is required</div>
-            </div>
-            
-            <button type="submit" class="submit-btn" id="registerBtn">
-                Create Account
-            </button>
-        </form>
-        
-        <div class="form-toggle">
-            <p>Already have an account?</p>
-            <button class="toggle-btn" onclick="window.location.href='login.html'">Sign In</button>
         </div>
     </div>
 
     <script>
-        // Configuration
-        const API_BASE_URL = 'http://localhost:8481/api/auth';
-
-        // Alert functions
-        function showAlert(message, type) {
-            const alert = document.getElementById('alert');
-            alert.textContent = message;
-            alert.className = `alert ${type}`;
-            alert.style.display = 'block';
-        }
-
-        function hideAlert() {
-            const alert = document.getElementById('alert');
-            alert.style.display = 'none';
-        }
-
-        // Loading state
-        function setButtonLoading(button, isLoading) {
-            if (isLoading) {
-                button.disabled = true;
-                button.innerHTML = '<span class="loading"></span>Processing...';
-            } else {
-                button.disabled = false;
-                button.innerHTML = 'Create Account';
-            }
-        }
-
-        // Form validation
-        function validateForm(form) {
-            let isValid = true;
-            const inputs = form.querySelectorAll('input[required]');
-            
-            inputs.forEach(input => {
-                const formGroup = input.parentElement;
-                
-                if (!input.value.trim()) {
-                    formGroup.classList.add('error');
-                    isValid = false;
-                } else {
-                    formGroup.classList.remove('error');
-                }
-                
-                // Email validation
-                if (input.type === 'email' && input.value.trim()) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(input.value)) {
-                        formGroup.classList.add('error');
-                        formGroup.querySelector('.error-message').textContent = 'Please enter a valid email address';
-                        isValid = false;
-                    }
-                }
-            });
-            
-            return isValid;
-        }
-
-        // Registration form handler
-        document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const form = e.target;
-            const registerBtn = document.getElementById('registerBtn');
-            
-            if (!validateForm(form)) {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const password = document.getElementById('password').value;
+            const alertDiv = document.getElementById('alert');
+
+            if (!username || !email || !fullName || !phoneNumber || !password) {
+                alertDiv.textContent = 'Please fill all fields.';
+                alertDiv.className = 'alert error';
+                alertDiv.style.display = 'block';
                 return;
             }
-            
-            const formData = new FormData(form);
+
             const registrationData = {
-                username: formData.get('username'),
-                email: formData.get('email'),
-                fullName: formData.get('fullName'),
-                phoneNumber: formData.get('phoneNumber'),
-                password: formData.get('password'),
-                role: 'USER'
+                username, email, fullName, phoneNumber, password, role: 'USER'
             };
-            
-            setButtonLoading(registerBtn, true);
-            hideAlert();
-            
+
             try {
-                const response = await fetch(`${API_BASE_URL}/register`, {
+                const response = await fetch('http://localhost:8080/api/auth/register', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(registrationData)
                 });
-                
                 const data = await response.json();
-                
                 if (response.ok) {
-                    showAlert('Account created successfully! Redirecting to login...', 'success');
-                    form.reset();
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 2000);
+                    alertDiv.textContent = 'Registration successful! Redirecting to login...';
+                    alertDiv.className = 'alert success';
+                    alertDiv.style.display = 'block';
+                    setTimeout(() => window.location.href = 'login.html', 1500);
                 } else {
-                    showAlert(data.message || 'Registration failed. Please try again.', 'error');
+                    alertDiv.textContent = data.message || 'Registration failed. Try again.';
+                    alertDiv.className = 'alert error';
+                    alertDiv.style.display = 'block';
                 }
             } catch (error) {
                 console.error('Registration error:', error);
-                showAlert('Network error. Please check your connection and try again.', 'error');
-            } finally {
-                setButtonLoading(registerBtn, false);
+                alertDiv.textContent = 'Network error. Please try again.';
+                alertDiv.className = 'alert error';
+                alertDiv.style.display = 'block';
             }
-        });
-
-        // Clear form errors on input
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => {
-                input.parentElement.classList.remove('error');
-            });
         });
     </script>
 </body>

@@ -3,22 +3,22 @@ package com.example.ticketbooking.dto;
 public class LoginResponse {
     private String accessToken;
     private String tokenType = "Bearer";
+    private Long userId;
     private String username;
     private String email;
     private String fullName;
 
-    // Default constructor
-    public LoginResponse() {}
+    public LoginResponse() {
+    }
 
-    // Constructor with parameters
-    public LoginResponse(String accessToken, String username, String email, String fullName) {
+    public LoginResponse(String accessToken, Long userId, String username, String email, String fullName) {
         this.accessToken = accessToken;
+        this.userId = userId;
         this.username = username;
         this.email = email;
         this.fullName = fullName;
     }
 
-    // Getters and setters
     public String getAccessToken() {
         return accessToken;
     }
@@ -33,6 +33,14 @@ public class LoginResponse {
 
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

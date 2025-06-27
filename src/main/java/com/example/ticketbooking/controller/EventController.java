@@ -20,7 +20,6 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    // Tambahkan metode lain jika diperlukan, misalnya getUpcomingEvents
     @GetMapping("/upcoming")
     public ResponseEntity<List<EventDTO>> getUpcomingEvents() {
         List<EventDTO> events = eventService.getUpcomingEvents();

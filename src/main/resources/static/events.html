@@ -3,116 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events - Ticket Booking System</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        header { background-color: #e74c3c; color: white; padding: 1rem 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: bold; }
-        .nav-links { display: flex; list-style: none; }
-        .nav-links li { margin-left: 20px; }
-        .nav-links a { color: white; text-decoration: none; transition: color 0.3s; }
-        .nav-links a:hover { color: #f1c40f; text-decoration: underline; }
-        .card { background-color: white; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        footer { background-color: #333; color: white; text-align: center; padding: 1rem 0; margin-top: 40px; }
-        .btn { display: inline-block; background-color: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 10px; border: none; cursor: pointer; transition: background-color 0.3s; }
-        .btn:hover { background-color: #c0392b; }
-    </style>
+    <title>Ticket Booking - Events</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="container">
-                <div class="logo">Ticket Booking</div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="bookings.html">My Bookings</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
-                </ul>
+<body class="bg-gray-900 text-white font-sans">
+    <nav class="bg-gray-800 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold">Ticket Booking</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-300 hover:text-blue-400">Home</a>
+                    <a href="events.html" class="text-blue-400">Events</a>
+                    <a href="match.html" class="text-gray-300 hover:text-blue-400">Matches</a>
+                    <a href="bookings.html" class="text-gray-300 hover:text-blue-400">My Bookings</a>
+                    <a href="my_match_bookings.html" class="text-gray-300 hover:text-blue-400">My Match Bookings</a>
+                    <a href="profile.html" class="text-gray-300 hover:text-blue-400">Profile</a>
+                    <a href="notifications.html" class="text-gray-300 hover:text-blue-400">Notifications</a>
+                    <a href="favorites.html" class="text-gray-300 hover:text-blue-400">Favorites</a>
+                    <a href="search.html" class="text-gray-300 hover:text-blue-400">Search</a>
+                    <a href="support_chat.html" class="text-gray-300 hover:text-blue-400">Support</a>
+                    <a href="#" id="logout" class="text-gray-300 hover:text-blue-400">Logout</a>
+                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <main class="container">
-        <h1>Upcoming Events</h1>
-        <div id="events-container"></div>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-bold mb-4">All Events</h2>
+        <div id="eventsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Events will be populated here -->
+        </div>
+        <p id="errorMessage" class="mt-4 text-sm text-red-400 hidden"></p>
+        <p id="successMessage" class="mt-4 text-sm text-green-400 hidden"></p>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>© 2025 Ticket Booking System. All rights reserved.</p>
+    <footer class="bg-gray-800 shadow-md mt-8 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-400">© 2025 Ticket Booking System. Made with <strong>❤️</strong></p>
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const token = localStorage.getItem('token');
-            fetch('/api/events/upcoming', {
-                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(events => {
-                const container = document.getElementById('events-container');
-                if (events.length === 0) {
-                    container.innerHTML = '<p>No upcoming events</p>';
-                    return;
-                }
-                events.forEach(event => {
-                    const eventElement = document.createElement('div');
-                    eventElement.className = 'card';
-                    eventElement.innerHTML = `
-                        <h3>${event.title || 'Unnamed Event'}</h3>
-                        <p>${(event.description || 'No description').substring(0, 100)}...</p>
-                        <p>Venue: ${event.venue || 'N/A'}</p>
-                        <p>Date: ${new Date(event.eventDate).toLocaleDateString() || 'N/A'}</p>
-                        <p>Price: Rp${event.price || 0}</p>
-                        <a href="#" class="btn" onclick="bookEvent(${event.id || 0})">Book Now</a>
-                    `;
-                    container.appendChild(eventElement);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching events:', error);
-                document.getElementById('events-container').innerHTML = '<p class="text-red-500">Failed to load events</p>';
-            });
+        const apiUrl = 'http://localhost:8080/api';
+        let token = localStorage.getItem('accessToken');
+        let userId = parseInt(localStorage.getItem('userId'));
 
-            function bookEvent(eventId) {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    alert('Please login to book tickets');
-                    window.location.href = 'login.html';
+        if (!token || isNaN(userId)) {
+            alert('Please log in');
+            window.location.href = 'login.html';
+        }
+
+        axios.defaults.baseURL = apiUrl;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        async function populateEvents() {
+            try {
+                const response = await axios.get('/events');
+                const events = response.data;
+                const eventsList = document.getElementById('eventsList');
+                
+                if (events.length === 0) {
+                    eventsList.innerHTML = '<p class="text-gray-400 col-span-full text-center">No events available at the moment.</p>';
                     return;
                 }
-                fetch('/api/bookings', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ eventId, numberOfTickets: 1 })
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Booking failed');
-                    return response.json();
-                })
-                .then(data => {
-                    alert('Booking successful! Reference: ' + data.bookingReference);
-                    window.location.href = 'bookings.html';
-                })
-                .catch(error => {
-                    console.error('Error booking event:', error);
-                    alert('Failed to book event: ' + error.message);
-                });
+                
+                eventsList.innerHTML = events.map(event => `
+                    <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition">
+                        <h3 class="text-xl font-semibold">${event.title}</h3>
+                        <p class="text-gray-400">Venue: ${event.venue}</p>
+                        <p class="text-gray-400">Date: ${event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'TBD'}</p>
+                        <p class="text-gray-400">Description: ${event.description || 'No description available'}</p>
+                        <p class="text-gray-400">Available Tickets: ${event.availableTickets || 'Unlimited'}</p>
+                        <p class="text-gray-400">Price: $${event.price || 'Free'}</p>
+                        <form onsubmit="return false;" class="mt-2" data-event-id="${event.id}">
+                            <label class="block text-sm font-medium text-gray-300 mb-1">Number of Tickets</label>
+                            <input type="number" min="1" max="10" value="1" class="numberOfTickets block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white mb-2">
+                            <button type="submit" class="bookEventBtn w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Book Now</button>
+                        </form>
+                    </div>
+                `).join('');
+                attachBookingHandlers();
+            } catch (error) {
+                console.error('Error loading events:', error);
+                document.getElementById('errorMessage').textContent = 'Failed to load events: ' + (error.response?.data?.message || error.message);
+                document.getElementById('errorMessage').classList.remove('hidden');
             }
+        }
+
+        function attachBookingHandlers() {
+            document.querySelectorAll('.bookEventBtn').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    const form = e.target.closest('form');
+                    const eventId = form.getAttribute('data-event-id');
+                    const numberOfTickets = form.querySelector('.numberOfTickets').value;
+                    
+                    if (!numberOfTickets || numberOfTickets < 1) {
+                        showError('Please select a valid number of tickets');
+                        return;
+                    }
+                    
+                    try {
+                        const bookingRequest = {
+                            eventId: parseInt(eventId),
+                            numberOfTickets: parseInt(numberOfTickets)
+                        };
+                        const response = await axios.post(`/bookings?userId=${userId}`, bookingRequest);
+                        showSuccess('Booking successful! Reference: ' + (response.data.bookingReference || 'N/A'));
+                        // Refresh the events list to update available tickets
+                        populateEvents();
+                    } catch (error) {
+                        showError('Booking failed: ' + (error.response?.data?.message || error.message));
+                    }
+                });
+            });
+        }
+
+        function showSuccess(message) {
+            const el = document.getElementById('successMessage');
+            el.textContent = message;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 5000);
+        }
+        
+        function showError(message) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = message;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 8000);
+        }
+
+        document.getElementById('logout').addEventListener('click', () => {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('userId');
+            window.location.href = 'login.html';
         });
+
+        // Initialize the page
+        populateEvents();
     </script>
 </body>
 </html>
