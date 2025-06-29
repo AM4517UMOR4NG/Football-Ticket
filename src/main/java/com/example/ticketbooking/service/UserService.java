@@ -57,7 +57,7 @@ public class UserService {
     
     @PostConstruct
     public void initDefaultAdmin() {
-        if (userRepository.findByUsername("Alogo12").isEmpty()) {
+        if (userRepository.findByUsername("Your-admin-name").isEmpty()) {
             UserRegistrationDTO adminDto = new UserRegistrationDTO(
             //inject admin
             );
