@@ -22,6 +22,7 @@ public class DataInitializer implements CommandLineRunner {
 
         @Override
         public void run(String... args) throws Exception {
+                // Admin user is now created in UserService.initDefaultAdmin()
                 if (eventRepository.count() == 0) {
                         createFootballEvents();
                 }
@@ -38,7 +39,7 @@ public class DataInitializer implements CommandLineRunner {
                                                 "membela Garuda di kandang sendiri!",
                                 "Stadion Utama Gelora Bung Karno",
                                 LocalDateTime.now().plusDays(20),
-                                88000,
+                                20,
                                 new BigDecimal("125000"));
                 eventService.createEvent(event1);
 
@@ -114,5 +115,7 @@ public class DataInitializer implements CommandLineRunner {
                                 15000,
                                 new BigDecimal("450000"));
                 eventService.createEvent(event6);
+                
+                System.out.println("✅ Football events created successfully!");
         }
 }
