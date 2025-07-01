@@ -59,7 +59,12 @@ public class UserService {
     public void initDefaultAdmin() {
         if (userRepository.findByUsername("Your-admin-name").isEmpty()) {
             UserRegistrationDTO adminDto = new UserRegistrationDTO(
-            //inject admin
+                "Your-admin-name", 
+                "admin@example.com", 
+                "AdminPassword123!",
+                "Admin Full Name",
+                "1234567890", 
+                "ADMIN" // role
             );
             PasswordValidationService.PasswordValidationResult validation = 
                 passwordValidationService.validatePassword(adminDto.password());
