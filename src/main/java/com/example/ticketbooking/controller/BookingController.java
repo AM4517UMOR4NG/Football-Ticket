@@ -27,12 +27,12 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<?> createBooking(@Valid @RequestBody BookingRequestDTO bookingRequestDTO,
-                                           BindingResult result,
-                                           @RequestParam Long userId) {
+            BindingResult result,
+            @RequestParam Long userId) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
+                    .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                    .collect(Collectors.joining(", "));
             return ResponseEntity.badRequest().body(errorMessage);
         }
         try {

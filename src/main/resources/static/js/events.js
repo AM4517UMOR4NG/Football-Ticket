@@ -15,12 +15,12 @@ async function populateEvents() {
         const response = await axios.get('/events');
         const events = response.data;
         const eventsList = document.getElementById('eventsList');
-        
+
         if (events.length === 0) {
             eventsList.innerHTML = '<p class="text-gray-400 col-span-full text-center">No events available at the moment.</p>';
             return;
         }
-        
+
         eventsList.innerHTML = events.map(event => `
             <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition">
                 <h3 class="text-xl font-semibold">${event.title}</h3>
@@ -29,14 +29,8 @@ async function populateEvents() {
                 <p class="text-gray-400">Description: ${event.description || 'No description available'}</p>
                 <p class="text-gray-400">Available Tickets: ${event.availableTickets || 'Unlimited'}</p>
                 <p class="text-gray-400">Price: $${event.price || 'Free'}</p>
-                <form onsubmit="return false;" class="mt-2" data-event-id="${event.id}">
-                    <label class="block text-sm font-medium text-gray-300 mb-1">Number of Tickets</label>
-                    <input type="number" min="1" max="10" value="1" class="numberOfTickets block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white mb-2">
-                    <button type="submit" class="bookEventBtn w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Book Now</button>
-                </form>
             </div>
         `).join('');
-        attachBookingHandlers();
     } catch (error) {
         console.error('Error loading events:', error);
         document.getElementById('errorMessage').textContent = 'Failed to load events: ' + (error.response?.data?.message || error.message);
@@ -46,16 +40,16 @@ async function populateEvents() {
 
 function attachBookingHandlers() {
     document.querySelectorAll('.bookEventBtn').forEach(btn => {
-        btn.addEventListener('click', async function(e) {
+        btn.addEventListener('click', async function (e) {
             const form = e.target.closest('form');
             const eventId = form.getAttribute('data-event-id');
             const numberOfTickets = form.querySelector('.numberOfTickets').value;
-            
+
             if (!numberOfTickets || numberOfTickets < 1) {
                 showError('Please select a valid number of tickets');
                 return;
             }
-            
+
             try {
                 const bookingRequest = {
                     eventId: parseInt(eventId),

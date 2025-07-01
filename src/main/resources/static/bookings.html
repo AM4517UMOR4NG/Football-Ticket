@@ -1,29 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Booking - My Bookings</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        /* Loading spinner */
-        .spinner {
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #3b82f6;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <link rel="stylesheet" href="css/bookings.css">
 </head>
 
-    <body class="bg-gray-900 text-white font-sans">
+<body class="bg-gray-900 text-white font-sans">
     <header class="bg-gray-800 shadow-md">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -32,33 +19,38 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="index.html" class="text-gray-300 hover:text-blue-400" aria-label="Home">Home</a>
-                    <a href="events.html" class="text-blue-400" aria-label="Events">Matches</a>
-                    <a href="bookings.html" class="text-gray-300 hover:text-blue-400" aria-label="My Bookings">My Bookings</a>
+                    <a href="events.html" class="text-gray-300 hover:text-blue-400" aria-label="Matches">Matches</a>
+                    <a href="bookings.html" class="text-gray-300 hover:text-blue-400" aria-label="My Bookings">My
+                        Bookings</a>
                     <a href="#" id="logout" class="text-gray-300 hover:text-blue-400" aria-label="Logout">Logout</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h2 class="text-3xl font-bold mb-4">My Bookings</h2>
         <p class="text-gray-400 mb-8">Book new tickets and manage your existing reservations</p>
 
-        <section class="bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+        <section class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8 max-w-3xl mx-auto">
             <h3 class="text-xl font-semibold mb-4">Book Your Tickets</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label for="eventSelect" class="block text-sm font-medium text-gray-300">Select Event</label>
-                    <select id="eventSelect" class="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                    <select id="eventSelect"
+                        class="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white">
                         <option value="">Loading events...</option>
                     </select>
                 </div>
                 <div>
-                    <label for="numberOfTickets" class="block text-sm font-medium text-gray-300">Number of Tickets</label>
-                    <input type="number" id="numberOfTickets" min="1" max="10" value="1" class="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                    <label for="numberOfTickets" class="block text-sm font-medium text-gray-300">Number of
+                        Tickets</label>
+                    <input type="number" id="numberOfTickets" min="1" max="10" value="1"
+                        class="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white">
                 </div>
                 <div class="flex items-end">
-                    <button id="bookNow" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                    <button id="bookNow"
+                        class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
                         <span id="bookButtonText">Book Now</span>
                         <div id="bookSpinner" class="spinner ml-2 hidden"></div>
                     </button>
@@ -68,361 +60,42 @@
             <p id="bookingError" class="mt-4 text-sm text-red-400 hidden"></p>
         </section>
 
-        <section class="bg-gray-800 p-6 rounded-lg shadow-md">
+        <section class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
             <h3 class="text-xl font-semibold mb-4">Your Bookings</h3>
             <div id="bookingsLoading" class="text-center py-8">
                 <div class="spinner mx-auto mb-4"></div>
                 <p class="text-gray-400">Loading bookings...</p>
             </div>
             <div id="bookingsContent" class="hidden">
-                <table class="min-w-full divide-y divide-gray-700">
-                    <thead class="bg-gray-700">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Booking Ref</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Event</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Venue</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tickets</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Total</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bookingsTable" class="bg-gray-800 divide-y divide-gray-700">
-                        <!-- Bookings will be populated here -->
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Booking Ref</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Event</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Venue</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tickets</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Total</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTable" class="bg-gray-800 divide-y divide-gray-700">
+                            <!-- Bookings will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
     </main>
 
     <footer class="bg-gray-800 shadow-md mt-8 py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-400">© 2025 Ticket Booking System. Made with <strong>❤️</strong></p>
+            <p class="text-center text-gray-400"><strong>Ronaldo THE GOAT</strong></p>
         </div>
     </footer>
 
-    <script>
-        // Configuration
-        const API_BASE_URL = 'http://localhost:8080/api';
-        const MAX_RETRIES = 3;
-        const RETRY_DELAY = 1000;
-
-        // Get authentication data
-        let token = localStorage.getItem('accessToken');
-        let userId = localStorage.getItem('userId');
-
-        // Validate authentication
-        if (!token || !userId) {
-            showError('Please log in to access bookings');
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 2000);
-        }
-
-        // Parse userId to integer
-        userId = parseInt(userId);
-        if (isNaN(userId)) {
-            showError('Invalid user ID. Please log in again.');
-            setTimeout(() => {
-                localStorage.clear();
-                window.location.href = 'login.html';
-            }, 2000);
-        }
-
-        // Configure axios with proper error handling
-        const apiClient = axios.create({
-            baseURL: API_BASE_URL,
-            timeout: 10000, // 10 second timeout
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        // Add request interceptor for debugging
-        apiClient.interceptors.request.use(
-            (config) => {
-                console.log('Making request to:', config.url);
-                console.log('Headers:', config.headers);
-                return config;
-            },
-            (error) => {
-                console.error('Request error:', error);
-                return Promise.reject(error);
-            }
-        );
-
-        // Add response interceptor for error handling
-        apiClient.interceptors.response.use(
-            (response) => {
-                console.log('Response received:', response.status);
-                return response;
-            },
-            (error) => {
-                console.error('Response error:', error);
-                
-                // Handle different types of errors
-                if (error.response) {
-                    // Server responded with error status
-                    console.error('Error status:', error.response.status);
-                    console.error('Error data:', error.response.data);
-                    
-                    if (error.response.status === 401) {
-                        showError('Session expired. Please log in again.');
-                        setTimeout(() => {
-                            localStorage.clear();
-                            window.location.href = 'login.html';
-                        }, 2000);
-                    }
-                } else if (error.request) {
-                    // Network error
-                    console.error('Network error:', error.request);
-                    showError('Network error. Please check your connection and try again.');
-                } else {
-                    // Other error
-                    console.error('Error:', error.message);
-                    showError('An unexpected error occurred.');
-                }
-                
-                return Promise.reject(error);
-            }
-        );
-
-        // Retry function for failed requests
-        async function retryRequest(requestFn, maxRetries = MAX_RETRIES) {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    return await requestFn();
-                } catch (error) {
-                    console.log(`Attempt ${i + 1} failed:`, error.message);
-                    
-                    if (i === maxRetries - 1) {
-                        throw error; // Last attempt failed
-                    }
-                    
-                    // Wait before retrying
-                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (i + 1)));
-                }
-            }
-        }
-
-        async function populateEvents() {
-            try {
-                const eventSelect = document.getElementById('eventSelect');
-                eventSelect.innerHTML = '<option value="">Loading events...</option>';
-                
-                const response = await retryRequest(() => apiClient.get('/events/upcoming'));
-                const events = response.data;
-                
-                eventSelect.innerHTML = '<option value="">Choose an Event</option>';
-                
-                if (events && events.length > 0) {
-                    events.forEach(event => {
-                        const option = document.createElement('option');
-                        option.value = event.id;
-                        option.textContent = `${event.title} - ${event.venue} (${new Date(event.eventDate).toLocaleString()})`;
-                        eventSelect.appendChild(option);
-                    });
-                } else {
-                    eventSelect.innerHTML = '<option value="">No events available</option>';
-                }
-                
-                console.log('Events loaded successfully:', events.length);
-            } catch (error) {
-                console.error('Failed to load events:', error);
-                const eventSelect = document.getElementById('eventSelect');
-                eventSelect.innerHTML = '<option value="">Failed to load events</option>';
-                showError(`Failed to load events: ${getErrorMessage(error)}`);
-            }
-        }
-
-        async function populateBookings() {
-            const loadingEl = document.getElementById('bookingsLoading');
-            const contentEl = document.getElementById('bookingsContent');
-            const tableEl = document.getElementById('bookingsTable');
-            
-            try {
-                loadingEl.classList.remove('hidden');
-                contentEl.classList.add('hidden');
-                
-                const response = await retryRequest(() => apiClient.get(`/bookings/user/${userId}`));
-                const bookings = response.data;
-                
-                if (bookings && bookings.length > 0) {
-                    tableEl.innerHTML = bookings.map(booking => `
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.bookingReference || 'N/A'}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.eventTitle || 'N/A'}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.venue || 'N/A'}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.eventDate ? new Date(booking.eventDate).toLocaleString() : 'N/A'}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.numberOfTickets || 'N/A'}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">$${booking.totalAmount || 'N/A'}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                                <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(booking.status)}">
-                                    ${booking.status || 'N/A'}
-                                </span>
-                            </td>
-                        </tr>
-                    `).join('');
-                } else {
-                    tableEl.innerHTML = '<tr><td colspan="7" class="px-6 py-4 text-center text-gray-400">No bookings found</td></tr>';
-                }
-                
-                console.log('Bookings loaded successfully:', bookings.length);
-            } catch (error) {
-                console.error('Failed to load bookings:', error);
-                tableEl.innerHTML = '<tr><td colspan="7" class="px-6 py-4 text-center text-red-400">Failed to load bookings</td></tr>';
-                showError(`Failed to load bookings: ${getErrorMessage(error)}`);
-            } finally {
-                loadingEl.classList.add('hidden');
-                contentEl.classList.remove('hidden');
-            }
-        }
-
-        function getStatusColor(status) {
-            switch (status?.toLowerCase()) {
-                case 'confirmed':
-                    return 'bg-green-100 text-green-800';
-                case 'pending':
-                    return 'bg-yellow-100 text-yellow-800';
-                case 'cancelled':
-                    return 'bg-red-100 text-red-800';
-                default:
-                    return 'bg-gray-100 text-gray-800';
-            }
-        }
-
-        function getErrorMessage(error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                return error.response.data.message;
-            } else if (error.message) {
-                return error.message;
-            } else {
-                return 'Unknown error occurred';
-            }
-        }
-
-        document.getElementById('bookNow').addEventListener('click', async () => {
-            const eventSelect = document.getElementById('eventSelect');
-            const numberOfTicketsInput = document.getElementById('numberOfTickets');
-            const bookButton = document.getElementById('bookNow');
-            const bookButtonText = document.getElementById('bookButtonText');
-            const bookSpinner = document.getElementById('bookSpinner');
-            
-            const eventId = eventSelect.value;
-            const numberOfTickets = parseInt(numberOfTicketsInput.value);
-
-            // Validation
-            if (!eventId || eventId === "") {
-                showError('Please select an event');
-                return;
-            }
-
-            if (!numberOfTickets || numberOfTickets < 1 || numberOfTickets > 10) {
-                showError('Please enter a valid number of tickets (1-10)');
-                return;
-            }
-
-            // Show loading state
-            bookButton.disabled = true;
-            bookButtonText.textContent = 'Booking...';
-            bookSpinner.classList.remove('hidden');
-
-            try {
-                const bookingRequest = {
-                    eventId: parseInt(eventId),
-                    numberOfTickets: numberOfTickets
-                };
-
-                console.log('Creating booking:', bookingRequest);
-                
-                const response = await retryRequest(() => 
-                    apiClient.post(`/bookings?userId=${userId}`, bookingRequest)
-                );
-                
-                console.log('Booking created successfully:', response.data);
-                showMessage(`Booking created successfully! Reference: ${response.data.bookingReference || 'N/A'}`);
-                
-                // Reset form
-                eventSelect.value = '';
-                numberOfTicketsInput.value = 1;
-                
-                // Refresh bookings
-                await populateBookings();
-                
-            } catch (error) {
-                console.error('Failed to create booking:', error);
-                showError(`Failed to create booking: ${getErrorMessage(error)}`);
-            } finally {
-                // Reset button state
-                bookButton.disabled = false;
-                bookButtonText.textContent = 'Book Now';
-                bookSpinner.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('logout').addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('userId');
-            window.location.href = 'index.html';
-        });
-
-        function showMessage(message) {
-            const messageEl = document.getElementById('bookingMessage');
-            const errorEl = document.getElementById('bookingError');
-            
-            // Hide error message
-            errorEl.classList.add('hidden');
-            
-            // Show success message
-            messageEl.textContent = message;
-            messageEl.classList.remove('hidden');
-            
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                messageEl.classList.add('hidden');
-            }, 5000);
-        }
-
-        function showError(message) {
-            const errorEl = document.getElementById('bookingError');
-            const messageEl = document.getElementById('bookingMessage');
-            
-            // Hide success message
-            messageEl.classList.add('hidden');
-            
-            // Show error message
-            errorEl.textContent = message;
-            errorEl.classList.remove('hidden');
-            
-            // Auto hide after 8 seconds (longer for errors)
-            setTimeout(() => {
-                errorEl.classList.add('hidden');
-            }, 8000);
-        }
-
-        // Initialize the page
-        async function initializePage() {
-            try {
-                console.log('Initializing page...');
-                console.log('User ID:', userId);
-                console.log('Token:', token ? 'Present' : 'Missing');
-                
-                await Promise.all([
-                    populateEvents(),
-                    populateBookings()
-                ]);
-                
-                console.log('Page initialized successfully');
-            } catch (error) {
-                console.error('Failed to initialize page:', error);
-                showError('Failed to load page data. Please refresh and try again.');
-            }
-        }
-
-        // Start initialization when page loads
-        document.addEventListener('DOMContentLoaded', initializePage);
-    </script>
+    <script src="js/bookings.js"></script>
 </body>
+
 </html>

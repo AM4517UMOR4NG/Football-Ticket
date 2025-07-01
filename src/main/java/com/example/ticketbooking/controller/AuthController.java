@@ -39,7 +39,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDTO userDto, HttpServletRequest request) {
         String clientIp = getClientIpAddress(request);
-        
+
         try {
             userService.registerUser(userDto);
             securityAuditService.logRegistrationAttempt(userDto.username(), userDto.email(), clientIp, true);
@@ -47,56 +47,56 @@ public class AuthController {
         } catch (IllegalArgumentException ex) {
             securityAuditService.logRegistrationAttempt(userDto.username(), userDto.email(), clientIp, false);
             return ResponseEntity.badRequest()
-                .body(new ApiResponse(false, ex.getMessage()));
+                    .body(new ApiResponse(false, ex.getMessage()));
         } catch (Exception ex) {
             securityAuditService.logRegistrationAttempt(userDto.username(), userDto.email(), clientIp, false);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ApiResponse(false, "Registration failed: " + ex.getMessage()));
+                    .body(new ApiResponse(false, "Registration failed: " + ex.getMessage()));
         }
     }
 
     @GetMapping("/auth/verify")
     public ResponseEntity<?> verifyToken(Authentication auth) {
-    if (auth != null && auth.isAuthenticated()) {
-        return ResponseEntity.ok(new ApiResponse(true, "Token is valid"));
-    }
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(false, "Invalid token"));
+        if (auth != null && auth.isAuthenticated()) {
+            return ResponseEntity.ok(new ApiResponse(true, "Token is valid"));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(false, "Invalid token"));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
+            HttpServletRequest request) {
         String clientIp = getClientIpAddress(request);
-        
+
         try {
             Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                    loginRequest.getUsername(),
-                    loginRequest.getPassword()
-                )
-            );
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()));
 
             String jwt = jwtTokenProvider.generateToken(authentication);
-            
+
             Optional<User> userOptional = userService.findByUsername(loginRequest.getUsername());
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, true);
-                LoginResponse loginResponse = new LoginResponse(jwt, user.getId(), user.getUsername(), user.getEmail(), user.getFullName());
+                LoginResponse loginResponse = new LoginResponse(jwt, user.getId(), user.getUsername(), user.getEmail(),
+                        user.getFullName());
                 return ResponseEntity.ok(loginResponse);
             } else {
                 securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, false);
                 return ResponseEntity.badRequest()
-                    .body(new ApiResponse(false, "User not found after authentication"));
+                        .body(new ApiResponse(false, "User not found after authentication"));
             }
 
         } catch (AuthenticationException ex) {
             securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, false);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(new ApiResponse(false, "Invalid username or password: " + ex.getMessage()));
+                    .body(new ApiResponse(false, "Invalid username or password: " + ex.getMessage()));
         } catch (Exception ex) {
             securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, false);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ApiResponse(false, "Login failed: " + ex.getMessage()));
+                    .body(new ApiResponse(false, "Login failed: " + ex.getMessage()));
         }
     }
 
@@ -105,12 +105,12 @@ public class AuthController {
         if (xForwardedFor != null && !xForwardedFor.isEmpty() && !"unknown".equalsIgnoreCase(xForwardedFor)) {
             return xForwardedFor.split(",")[0].trim();
         }
-        
+
         String xRealIp = request.getHeader("X-Real-IP");
         if (xRealIp != null && !xRealIp.isEmpty() && !"unknown".equalsIgnoreCase(xRealIp)) {
             return xRealIp;
         }
-        
+
         return request.getRemoteAddr();
     }
 

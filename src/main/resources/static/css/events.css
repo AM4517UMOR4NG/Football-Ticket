@@ -1,6 +1,7 @@
 /* css/events.css */
 .table-row:hover {
-    background-color: #1f2937; /* bg-gray-700 */
+    background-color: #1f2937;
+    /* bg-gray-700 */
     transition: background-color 0.3s ease;
 }
 
@@ -14,12 +15,18 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .low-stock {
-    background-color: #f87171; /* bg-red-400 */
+    background-color: #f87171;
+    /* bg-red-400 */
     color: white;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;

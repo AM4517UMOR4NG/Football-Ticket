@@ -24,7 +24,7 @@ const rememberMeCheckbox = document.getElementById('rememberMe');
 // Enhanced UI interactions
 function initializeUI() {
     // Custom checkbox functionality
-    rememberMeCheckbox.addEventListener('change', function() {
+    rememberMeCheckbox.addEventListener('change', function () {
         const checkmark = this.parentElement.querySelector('.checkmark');
         if (this.checked) {
             checkmark.style.opacity = '1';
@@ -36,10 +36,10 @@ function initializeUI() {
     });
 
     // Password toggle functionality
-    togglePassword.addEventListener('click', function() {
+    togglePassword.addEventListener('click', function () {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-        
+
         if (type === 'text') {
             eyeIcon.innerHTML = `
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
@@ -54,7 +54,7 @@ function initializeUI() {
 
     // Auto-focus and smooth transitions
     usernameInput.focus();
-    
+
     // Enhanced keyboard navigation
     usernameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -104,14 +104,14 @@ function showError(message) {
             </button>
         </div>
     `;
-    
+
     document.body.appendChild(errorDiv);
-    
+
     // Animate in
     setTimeout(() => {
         errorDiv.style.transform = 'translateX(0)';
     }, 100);
-    
+
     // Auto remove
     setTimeout(() => {
         errorDiv.style.transform = 'translateX(full)';
@@ -134,7 +134,7 @@ function showSuccess(message) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(successDiv);
     setTimeout(() => successDiv.style.transform = 'translateX(0)', 100);
     setTimeout(() => successDiv.remove(), 3000);
@@ -151,7 +151,7 @@ async function attemptLogin(apiUrl, loginData) {
 
 function handleLoginSuccess(response) {
     console.log('Login successful:', response.data);
-    
+
     // Store data
     if (response.data.accessToken) {
         localStorage.setItem('accessToken', response.data.accessToken);
@@ -162,11 +162,11 @@ function handleLoginSuccess(response) {
     if (response.data.user) {
         localStorage.setItem('userData', JSON.stringify(response.data.user));
     }
-    
+
     localStorage.setItem('loginTime', new Date().toISOString());
-    
+
     showSuccess('Login successful! Redirecting...');
-    
+
     setTimeout(() => {
         window.location.href = redirectOptions.primary;
     }, 1500);
@@ -175,7 +175,7 @@ function handleLoginSuccess(response) {
 // Main login handler
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
 
@@ -189,7 +189,7 @@ loginForm.addEventListener('submit', async (e) => {
 
     try {
         let response;
-        
+
         try {
             response = await attemptLogin(apiConfig.baseUrl, loginData);
         } catch (primaryError) {
@@ -204,11 +204,11 @@ loginForm.addEventListener('submit', async (e) => {
         console.error('Login error:', error);
 
         let errorMessage = 'Login failed. Please try again.';
-        
+
         if (error.response) {
             const status = error.response.status;
             const data = error.response.data;
-            
+
             if (status === 401) {
                 errorMessage = 'Invalid username or password';
             } else if (status === 429) {
@@ -227,14 +227,14 @@ loginForm.addEventListener('submit', async (e) => {
 // Auto-login check
 window.addEventListener('load', () => {
     initializeUI();
-    
+
     const token = localStorage.getItem('accessToken');
     const loginTime = localStorage.getItem('loginTime');
-    
+
     if (token && loginTime) {
         const timeDiff = new Date() - new Date(loginTime);
         const hoursDiff = timeDiff / (1000 * 60 * 60);
-        
+
         if (hoursDiff < 24) {
             showSuccess('Welcome back! Redirecting...');
             setTimeout(() => {

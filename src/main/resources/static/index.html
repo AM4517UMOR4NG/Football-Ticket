@@ -1,54 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ticket Booking - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="bg-gray-900 text-white font-sans">
-    <nav class="bg-gray-800 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <h1 class="text-2xl font-bold">Ticket Booking</h1>
-                </div>
-                <div class="flex items-center space-x-4"
-                    <a href="#" id="" class="text-gray-300 hover:text-blue-400">Ronaldo THE GOAT</a>
-                </div>
-            </div>
-        </div>
-    </nav>     
-            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
-                <h3 class="text-xl font-semibold mb-2">Events</h3>
-                <p class="text-gray-400 mb-4">Discover exciting events and book your tickets.</p>
-                <a href="events.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Matches</a>
-            </div>
-            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:bg-gray-700 transition">
-                <h3 class="text-xl font-semibold mb-2">My Bookings</h3>
-                <p class="text-gray-400 mb-4">Manage your existing bookings here.</p>
-                <a href="bookings.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Bookings</a>
-            </div>
 
-    <footer class="bg-gray-800 shadow-md mt-8 py-4">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-400">Ronaldo THE GOAT<strong></strong></p>
-        </div>
-    </footer>
-
-    <script>
-        const token = localStorage.getItem('accessToken');
-        const userId = localStorage.getItem('userId');
-        
-        if (!token || !userId) {
-            window.location.href = 'login.html';
-        }
-
-        document.getElementById('logoutLink').addEventListener('click', () => {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('userId');
-            window.location.href = 'login.html';
-        });
-    </script>
+<body class="bg-cover bg-center bg-no-repeat text-white font-sans relative" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2e/Ronaldo_in_2018.jpg');">
+    <!-- Overlay gelap -->
+    <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+    <!-- Sidebar Overlay for mobile -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-10 hidden transition-opacity duration-300"></div>
+    <!-- Tombol Hamburger -->
+    <button id="openSidebarBtn" class="fixed top-4 left-4 z-30 bg-gray-800 bg-opacity-70 p-2 rounded-md hover:bg-opacity-90 focus:outline-none transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <!-- Background Animation -->
+    <div class="football-animation absolute inset-0 z-0"></div>
+    <div class="relative z-10 flex min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-72 bg-white bg-opacity-10 backdrop-blur-lg border-r border-gray-700 p-6 space-y-8 shadow-2xl rounded-tr-3xl rounded-br-3xl transition-all duration-300 transform -translate-x-full fixed h-full z-20">
+            <!-- Tombol Close (X) -->
+            <button id="closeSidebarBtn" class="absolute top-4 right-4 text-white bg-gray-700 bg-opacity-60 rounded-full p-2 hover:bg-opacity-90 focus:outline-none transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="flex items-center space-x-3 mb-10">
+                <span class="text-3xl">⚽</span>
+                <h2 class="text-2xl font-extrabold tracking-wide text-white drop-shadow-lg">Ticket Booking</h2>
+            </div>
+            <nav class="space-y-6">
+                <a href="#" class="flex items-center text-white hover:bg-blue-500 hover:bg-opacity-20 px-4 py-2 rounded-lg transition-all duration-200">
+                    <span class="text-xl mr-3">🏠</span> <span class="font-medium">Home</span>
+                </a>
+                <a href="events.html" class="flex items-center text-white hover:bg-blue-500 hover:bg-opacity-20 px-4 py-2 rounded-lg transition-all duration-200">
+                    <span class="text-xl mr-3">🎫</span> <span class="font-medium">Matches</span>
+                </a>
+                <a href="bookings.html" class="flex items-center text-white hover:bg-blue-500 hover:bg-opacity-20 px-4 py-2 rounded-lg transition-all duration-200">
+                    <span class="text-xl mr-3">📒</span> <span class="font-medium">My Bookings</span>
+                </a>
+                <a href="login.html" id="logoutLink" class="flex items-center text-red-400 hover:text-red-600 hover:bg-red-100 hover:bg-opacity-10 px-4 py-2 rounded-lg mt-8 transition-all duration-200">
+                    <span class="text-xl mr-3">🚪</span> <span class="font-medium">Logout</span>
+                </a>
+            </nav>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-grow relative p-6 ml-0 lg:ml-64 transition-all duration-300">
+            <h1 class="text-3xl font-bold mb-4">Welcome to Ticket Booking</h1>
+            <p class="text-gray-300">Explore exciting events and manage your bookings with ease. Start by checking out the latest matches!</p>
+        </main>
+    </div>
+    <script src="js/index.js"></script>
 </body>
+
 </html>

@@ -36,7 +36,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Pertandingan final Piala AFF 2025 antara Indonesia melawan Thailand. " +
                                                 "Saksikan aksi Egy Maulana Vikri, Witan Sulaeman, dan Marselino Ferdinan "
                                                 +
-                                                "membela Garuda di kandang sendiri!. " 
+                                                "membela Garuda di kandang sendiri!. "
                                                 +
                                                 "Dukung Timnas Indonesia meraih gelar juara AFF pertama sejak 2016!. ",
                                 "Stadion Utama Gelora Bung Karno",
@@ -121,6 +121,6 @@ public class DataInitializer implements CommandLineRunner {
                                 new BigDecimal("450000"));
                 eventService.createEvent(event6);
 
-                System.out.println("✅ Football events created successfully!");
+                System.out.println("Football events created successfully!");
         }
 }

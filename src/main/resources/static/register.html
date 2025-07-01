@@ -1,193 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Ticket Booking System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298, #4a69bd, #7b68ee);
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .container {
-            max-width: 450px;
-            width: 100%;
-            padding: 20px;
-            z-index: 1;
-            position: relative;
-        }
-        .auth-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            text-align: center;
-            animation: fadeIn 1.5s ease-in-out;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .lock-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-        }
-        .lock-icon i {
-            color: white;
-            font-size: 24px;
-        }
-        .auth-card h2 {
-            color: #4a5568;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .auth-header p {
-            color: #718096;
-            margin-bottom: 30px;
-            font-size: 1rem;
-            font-weight: 400;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #4a5568;
-            font-size: 0.9rem;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-            color: #2d3748;
-        }
-        .form-group input:focus {
-            border-color: #667eea;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        .form-group input::placeholder {
-            color: #a0aec0;
-        }
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            padding: 14px 30px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            margin-top: 10px;
-        }
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
-        }
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        .alert {
-            margin: 15px 0;
-            padding: 12px 16px;
-            border-radius: 8px;
-            display: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .alert.success {
-            background-color: rgba(72, 187, 120, 0.1);
-            color: #2f855a;
-            border: 1px solid rgba(72, 187, 120, 0.2);
-        }
-        .alert.error {
-            background-color: rgba(245, 101, 101, 0.1);
-            color: #c53030;
-            border: 1px solid rgba(245, 101, 101, 0.2);
-        }
-        .toggle-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e2e8f0;
-        }
-        .toggle-text {
-            color: #718096;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-        }
-        .toggle-link {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
-        }
-        .toggle-link:hover {
-            color: #5a67d8;
-            text-decoration: underline;
-        }
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            .auth-card {
-                padding: 30px 25px;
-            }
-            .auth-card h2 {
-                font-size: 1.8rem;
-            }
-            .submit-btn {
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/register.css">
 </head>
+
 <body>
     <div class="container">
         <div class="auth-card">
@@ -214,7 +35,8 @@
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber"><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number"
+                        required>
                 </div>
                 <div class="form-group">
                     <label for="password"><i class="fas fa-lock"></i> Password</label>
@@ -231,52 +53,7 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const fullName = document.getElementById('fullName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const password = document.getElementById('password').value;
-            const alertDiv = document.getElementById('alert');
-
-            if (!username || !email || !fullName || !phoneNumber || !password) {
-                alertDiv.textContent = 'Please fill all fields.';
-                alertDiv.className = 'alert error';
-                alertDiv.style.display = 'block';
-                return;
-            }
-
-            const registrationData = {
-                username, email, fullName, phoneNumber, password, role: 'USER'
-            };
-
-            try {
-                const response = await fetch('http://localhost:8080/api/auth/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(registrationData)
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    alertDiv.textContent = 'Registration successful! Redirecting to login...';
-                    alertDiv.className = 'alert success';
-                    alertDiv.style.display = 'block';
-                    setTimeout(() => window.location.href = 'login.html', 1500);
-                } else {
-                    alertDiv.textContent = data.message || 'Registration failed. Try again.';
-                    alertDiv.className = 'alert error';
-                    alertDiv.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Registration error:', error);
-                alertDiv.textContent = 'Network error. Please try again.';
-                alertDiv.className = 'alert error';
-                alertDiv.style.display = 'block';
-            }
-        });
-    </script>
+    <script src="js/register.js"></script>
 </body>
+
 </html>
