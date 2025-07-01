@@ -60,10 +60,10 @@ public class UserService {
     public void initDefaultAdmin() {
         if (userRepository.findByUsername("Alogo12").isEmpty()) {
             UserRegistrationDTO adminDto = new UserRegistrationDTO(
-                    "Alogo12",
+                    "Alo2403",
                     "alogo12@example.com",
-                    "Alogo.situ24",
-                    "Alogo Situmorang",
+                    "Algo.situ24",
+                    "Alo Situmorang",
                     "081234567812",
                     "ADMIN");
             PasswordValidationService.PasswordValidationResult validation = passwordValidationService
