@@ -1,147 +1,96 @@
-// js/events.js
-/**
- * Ticket Booking System - Matches Page
- * Displays matches in a table with API integration
- */
+const apiUrl = 'http://localhost:8080/api';
+let token = localStorage.getItem('accessToken');
+let userId = parseInt(localStorage.getItem('userId'));
 
-const API_CONFIG = {
-    BASE_URL: 'http://localhost:8080/api',
-    TIMEOUT: 10000
-};
+if (!token || isNaN(userId)) {
+    alert('Please log in');
+    window.location.href = 'login.html';
+}
 
-/**
- * Authentication utilities
- */
-const auth = {
-    getToken: () => localStorage.getItem('accessToken'),
-    getUserId: () => parseInt(localStorage.getItem('userId')),
-    clear: () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('userId');
-    },
-    validate: () => {
-        const token = auth.getToken();
-        const userId = auth.getUserId();
-        if (!token || isNaN(userId)) {
-            ui.showError('Please log in to access matches');
-            setTimeout(() => {
-                auth.clear();
-                window.location.href = 'login.html';
-            }, 2000);
-            return false;
-        }
-        return true;
-    }
-};
+axios.defaults.baseURL = apiUrl;
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-/**
- * UI utilities for showing messages
- */
-const ui = {
-    showError: (message) => {
-        const el = document.getElementById('errorMessage');
-        el.textContent = message;
-        el.classList.remove('hidden');
-        setTimeout(() => el.classList.add('hidden'), 8000);
-    }
-};
-
-/**
- * Configure axios client
- */
-const apiClient = axios.create({
-    baseURL: API_CONFIG.BASE_URL,
-    timeout: API_CONFIG.TIMEOUT,
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth.getToken()}`
-    }
-});
-
-/**
- * Populate matches table with filtered events
- */
 async function populateEvents() {
-    const loadingEl = document.getElementById('eventsLoading');
-    const contentEl = document.getElementById('eventsContent');
-    const tableEl = document.getElementById('eventsTable');
-
     try {
-        loadingEl.classList.remove('hidden');
-        contentEl.classList.add('hidden');
-
-        const response = await apiClient.get('/events');
-        let events = response.data;
-
-        // Filter for matches
-        events = events.filter(event => 
-            event.type?.toLowerCase() === 'match' || 
-            event.title?.toLowerCase().includes('match')
-        );
-
+        const response = await axios.get('/events');
+        const events = response.data;
+        const eventsList = document.getElementById('eventsList');
+        
         if (events.length === 0) {
-            tableEl.innerHTML = `
-                <tr>
-                    <td colspan="6" class="px-6 py-4 text-center text-gray-400">
-                        No matches available at the moment.
-                    </td>
-                </tr>`;
+            eventsList.innerHTML = '<p class="text-gray-400 col-span-full text-center">No events available at the moment.</p>';
             return;
         }
-
-        tableEl.innerHTML = events.map(event => `
-            <tr class="table-row">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${event.title || 'N/A'}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${event.venue || 'N/A'}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    ${event.eventDate ? new Date(event.eventDate).toLocaleString() : 'TBD'}
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-300">${event.description || 'No description available'}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    ${event.availableTickets || 'Unlimited'}
-                    ${event.availableTickets && event.availableTickets < 10 ? 
-                        '<span class="low-stock ml-2">Low Stock</span>' : ''}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    $${event.price || 'Free'}
-                </td>
-            </tr>
+        
+        eventsList.innerHTML = events.map(event => `
+            <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition">
+                <h3 class="text-xl font-semibold">${event.title}</h3>
+                <p class="text-gray-400">Venue: ${event.venue}</p>
+                <p class="text-gray-400">Date: ${event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'TBD'}</p>
+                <p class="text-gray-400">Description: ${event.description || 'No description available'}</p>
+                <p class="text-gray-400">Available Tickets: ${event.availableTickets || 'Unlimited'}</p>
+                <p class="text-gray-400">Price: $${event.price || 'Free'}</p>
+                <form onsubmit="return false;" class="mt-2" data-event-id="${event.id}">
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Number of Tickets</label>
+                    <input type="number" min="1" max="10" value="1" class="numberOfTickets block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white mb-2">
+                    <button type="submit" class="bookEventBtn w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Book Now</button>
+                </form>
+            </div>
         `).join('');
-
+        attachBookingHandlers();
     } catch (error) {
-        console.error('Error loading matches:', error);
-        tableEl.innerHTML = `
-            <tr>
-                <td colspan="6" class="px-6 py-4 text-center text-red-400">
-                    Failed to load matches
-                </td>
-            </tr>`;
-        ui.showError(`Failed to load matches: ${getErrorMessage(error)}`);
-    } finally {
-        loadingEl.classList.add('hidden');
-        contentEl.classList.remove('hidden');
+        console.error('Error loading events:', error);
+        document.getElementById('errorMessage').textContent = 'Failed to load events: ' + (error.response?.data?.message || error.message);
+        document.getElementById('errorMessage').classList.remove('hidden');
     }
 }
 
-/**
- * Get error message from API response
- * @param {Error} error - The error object
- * @returns {string} - Formatted error message
- */
-function getErrorMessage(error) {
-    return error.response?.data?.message || error.message || 'Unknown error occurred';
+function attachBookingHandlers() {
+    document.querySelectorAll('.bookEventBtn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            const form = e.target.closest('form');
+            const eventId = form.getAttribute('data-event-id');
+            const numberOfTickets = form.querySelector('.numberOfTickets').value;
+            
+            if (!numberOfTickets || numberOfTickets < 1) {
+                showError('Please select a valid number of tickets');
+                return;
+            }
+            
+            try {
+                const bookingRequest = {
+                    eventId: parseInt(eventId),
+                    numberOfTickets: parseInt(numberOfTickets)
+                };
+                const response = await axios.post(`/bookings?userId=${userId}`, bookingRequest);
+                showSuccess('Booking successful! Reference: ' + (response.data.bookingReference || 'N/A'));
+                // Refresh the events list to update available tickets
+                populateEvents();
+            } catch (error) {
+                showError('Booking failed: ' + (error.response?.data?.message || error.message));
+            }
+        });
+    });
 }
 
-// Event listeners
-document.getElementById('logout').addEventListener('click', (e) => {
-    e.preventDefault();
-    auth.clear();
+function showSuccess(message) {
+    const el = document.getElementById('successMessage');
+    el.textContent = message;
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 5000);
+}
+
+function showError(message) {
+    const el = document.getElementById('errorMessage');
+    el.textContent = message;
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 8000);
+}
+
+document.getElementById('logout').addEventListener('click', () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userId');
     window.location.href = 'login.html';
 });
 
-// Initialize page
-document.addEventListener('DOMContentLoaded', () => {
-    if (auth.validate()) {
-        populateEvents();
-    }
-});
+// Initialize the page
+populateEvents();

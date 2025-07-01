@@ -36,7 +36,9 @@ public class DataInitializer implements CommandLineRunner {
                                 "Pertandingan final Piala AFF 2025 antara Indonesia melawan Thailand. " +
                                                 "Saksikan aksi Egy Maulana Vikri, Witan Sulaeman, dan Marselino Ferdinan "
                                                 +
-                                                "membela Garuda di kandang sendiri!",
+                                                "membela Garuda di kandang sendiri!. " 
+                                                +
+                                                "Dukung Timnas Indonesia meraih gelar juara AFF pertama sejak 2016!. ",
                                 "Stadion Utama Gelora Bung Karno",
                                 LocalDateTime.now().plusDays(20),
                                 20,
@@ -79,8 +81,11 @@ public class DataInitializer implements CommandLineRunner {
                                                 +
                                                 "Saksikan aksi CR7 dari jarak dekat dan bertemu dengan para pemain muda berbakat Indonesia. "
                                                 +
-                                                "Event sekali seumur hidup!",
-                                "Stadion Gelora Bandung Lautan Api",
+                                                "Event sekali seumur hidup!. "
+                                                +
+                                                "Tunggu kehadiran anda, sepak bola dunia di Indonesia!",
+
+                                "Stadion Gelora Bandung",
                                 LocalDateTime.now().plusDays(50),
                                 38000,
                                 new BigDecimal("350000"));
@@ -115,7 +120,7 @@ public class DataInitializer implements CommandLineRunner {
                                 15000,
                                 new BigDecimal("450000"));
                 eventService.createEvent(event6);
-                
+
                 System.out.println("✅ Football events created successfully!");
         }
 }

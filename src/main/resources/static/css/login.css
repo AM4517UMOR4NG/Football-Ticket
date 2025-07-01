@@ -1,0 +1,100 @@
+/* css/events.css */
+
+/* Global font settings with smaller size */
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.9rem; /* Reduced from default for smaller text */
+}
+
+/* Gradient background matching Matches page palette */
+.gradient-bg {
+    background: linear-gradient(135deg, #1f2937 0%, #1e3a8a 100%); /* bg-gray-700 to blue-900 */
+}
+
+/* Glass effect with smaller border and shadow */
+.glass-effect {
+    background: rgba(31, 41, 55, 0.1); /* bg-gray-700 with transparency */
+    backdrop-filter: blur(10px); /* Reduced blur for subtlety */
+    border: 1px solid rgba(75, 85, 99, 0.2); /* border-gray-600 with transparency */
+    padding: 0.75rem; /* Smaller padding */
+}
+
+/* Input glow effect with smaller shadow */
+.input-glow:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); /* blue-500 with smaller shadow */
+}
+
+/* Floating animation with reduced amplitude */
+.floating-animation {
+    animation: float 5s ease-in-out infinite; /* Slightly faster animation */
+}
+
+.floating-animation-delay {
+    animation: float 5s ease-in-out infinite;
+    animation-delay: -2.5s; /* Adjusted delay */
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(0.5deg); } /* Reduced translation */
+    66% { transform: translateY(-5px) rotate(-0.5deg); }
+}
+
+/* Pulse shadow with smaller glow */
+.pulse-shadow {
+    animation: pulse-glow 1.8s ease-in-out infinite alternate; /* Slightly faster */
+}
+
+@keyframes pulse-glow {
+    from { box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); } /* blue-500, smaller shadow */
+    to { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.2); }
+}
+
+/* Slide-in animation with smaller translation */
+.slide-in {
+    animation: slideIn 0.6s ease-out; /* Faster animation */
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(15px); } /* Reduced translation */
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Wobble animation with smaller rotation */
+.wobble:hover {
+    animation: wobble 0.6s ease-in-out; /* Faster animation */
+}
+
+@keyframes wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(0.5deg); } /* Reduced rotation */
+    75% { transform: rotate(-0.5deg); }
+}
+
+/* Existing styles from Matches page */
+.table-row:hover {
+    background-color: #1f2937; /* bg-gray-700 */
+    transition: background-color 0.3s ease;
+}
+
+.spinner {
+    border: 3px solid #f3f4f6; /* Smaller border */
+    border-top: 3px solid #3b82f6; /* blue-500 */
+    border-radius: 50%;
+    width: 16px; /* Smaller spinner */
+    height: 16px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.low-stock {
+    background-color: #f87171; /* bg-red-400 */
+    color: white;
+    padding: 0.2rem 0.4rem; /* Smaller padding */
+    border-radius: 0.2rem;
+    font-size: 0.7rem; /* Smaller font */
+}
