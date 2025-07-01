@@ -57,14 +57,14 @@ public class UserService {
     
     @PostConstruct
     public void initDefaultAdmin() {
-        if (userRepository.findByUsername("Your-admin-name").isEmpty()) {
+        if (userRepository.findByUsername("Alogo12").isEmpty()) {
             UserRegistrationDTO adminDto = new UserRegistrationDTO(
-                "Your-admin-name", 
-                "admin@example.com", 
-                "AdminPassword123!",
-                "Admin Full Name",
-                "1234567890", 
-                "ADMIN" // role
+                "Alogo12",
+                "alogo12@example.com",
+                "Alogo.situ24",
+                "Alogo Situmorang",
+                "081234567812",
+                "ADMIN"
             );
             PasswordValidationService.PasswordValidationResult validation = 
                 passwordValidationService.validatePassword(adminDto.password());
@@ -77,7 +77,7 @@ public class UserService {
                 admin.setPhoneNumber(adminDto.phoneNumber());
                 admin.setRole(adminDto.role());
                 userRepository.save(admin);
-                System.out.println("Default admin 'Your-admin-name' created successfully");
+                System.out.println("Default admin 'Alogo12' created successfully");
             }
         }
     }
