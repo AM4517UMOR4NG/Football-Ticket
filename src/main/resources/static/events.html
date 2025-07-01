@@ -3,32 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Booking - Events</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Ticket Booking - Matches</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body class="bg-gray-900 text-white font-sans">
-    <nav class="bg-gray-800 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="bg-gray-800 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <h1 class="text-2xl font-bold">Ticket Booking</h1>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="index.html" class="text-gray-300 hover:text-blue-400">Home</a>
-                    <a href="events.html" class="text-blue-400">Events</a>
-                    <a href="match.html" class="text-gray-300 hover:text-blue-400">Matches</a>
-                    <a href="bookings.html" class="text-gray-300 hover:text-blue-400">My Bookings</a>
-                    <a href="#" id="logout" class="text-gray-300 hover:text-blue-400">Logout</a>
+                    <a href="index.html" class="text-gray-300 hover:text-blue-400" aria-label="Home">Home</a>
+                    <a href="events.html" class="text-blue-400" aria-label="Matches">Matches</a>
+                    <a href="bookings.html" class="text-gray-300 hover:text-blue-400" aria-label="My Bookings">My Bookings</a>
+                    <a href="#" id="logout" class="text-gray-300 hover:text-blue-400" aria-label="Logout">Logout</a>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 class="text-3xl font-bold mb-4">All Events</h2>
-        <div id="eventsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Events will be populated here -->
+        <h2 class="text-3xl font-bold mb-4">All Matches</h2>
+        <div id="eventsLoading" class="text-center py-8">
+            <div class="spinner mx-auto mb-4"></div>
+            <p class="text-gray-400">Loading matches...</p>
+        </div>
+        <div id="eventsContent" class="hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-700">
+                    <thead class="bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Match</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Venue</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tickets Available</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsTable" class="bg-gray-800 divide-y divide-gray-700"></tbody>
+                </table>
+            </div>
         </div>
         <p id="errorMessage" class="mt-4 text-sm text-red-400 hidden"></p>
         <p id="successMessage" class="mt-4 text-sm text-green-400 hidden"></p>
@@ -40,103 +58,6 @@
         </div>
     </footer>
 
-    <script>
-        const apiUrl = 'http://localhost:8080/api';
-        let token = localStorage.getItem('accessToken');
-        let userId = parseInt(localStorage.getItem('userId'));
-
-        if (!token || isNaN(userId)) {
-            alert('Please log in');
-            window.location.href = 'login.html';
-        }
-
-        axios.defaults.baseURL = apiUrl;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-        async function populateEvents() {
-            try {
-                const response = await axios.get('/events');
-                const events = response.data;
-                const eventsList = document.getElementById('eventsList');
-                
-                if (events.length === 0) {
-                    eventsList.innerHTML = '<p class="text-gray-400 col-span-full text-center">No events available at the moment.</p>';
-                    return;
-                }
-                
-                eventsList.innerHTML = events.map(event => `
-                    <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition">
-                        <h3 class="text-xl font-semibold">${event.title}</h3>
-                        <p class="text-gray-400">Venue: ${event.venue}</p>
-                        <p class="text-gray-400">Date: ${event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'TBD'}</p>
-                        <p class="text-gray-400">Description: ${event.description || 'No description available'}</p>
-                        <p class="text-gray-400">Available Tickets: ${event.availableTickets || 'Unlimited'}</p>
-                        <p class="text-gray-400">Price: $${event.price || 'Free'}</p>
-                        <form onsubmit="return false;" class="mt-2" data-event-id="${event.id}">
-                            <label class="block text-sm font-medium text-gray-300 mb-1">Number of Tickets</label>
-                            <input type="number" min="1" max="10" value="1" class="numberOfTickets block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white mb-2">
-                            <button type="submit" class="bookEventBtn w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Book Now</button>
-                        </form>
-                    </div>
-                `).join('');
-                attachBookingHandlers();
-            } catch (error) {
-                console.error('Error loading events:', error);
-                document.getElementById('errorMessage').textContent = 'Failed to load events: ' + (error.response?.data?.message || error.message);
-                document.getElementById('errorMessage').classList.remove('hidden');
-            }
-        }
-
-        function attachBookingHandlers() {
-            document.querySelectorAll('.bookEventBtn').forEach(btn => {
-                btn.addEventListener('click', async function(e) {
-                    const form = e.target.closest('form');
-                    const eventId = form.getAttribute('data-event-id');
-                    const numberOfTickets = form.querySelector('.numberOfTickets').value;
-                    
-                    if (!numberOfTickets || numberOfTickets < 1) {
-                        showError('Please select a valid number of tickets');
-                        return;
-                    }
-                    
-                    try {
-                        const bookingRequest = {
-                            eventId: parseInt(eventId),
-                            numberOfTickets: parseInt(numberOfTickets)
-                        };
-                        const response = await axios.post(`/bookings?userId=${userId}`, bookingRequest);
-                        showSuccess('Booking successful! Reference: ' + (response.data.bookingReference || 'N/A'));
-                        // Refresh the events list to update available tickets
-                        populateEvents();
-                    } catch (error) {
-                        showError('Booking failed: ' + (error.response?.data?.message || error.message));
-                    }
-                });
-            });
-        }
-
-        function showSuccess(message) {
-            const el = document.getElementById('successMessage');
-            el.textContent = message;
-            el.classList.remove('hidden');
-            setTimeout(() => el.classList.add('hidden'), 5000);
-        }
-        
-        function showError(message) {
-            const el = document.getElementById('errorMessage');
-            el.textContent = message;
-            el.classList.remove('hidden');
-            setTimeout(() => el.classList.add('hidden'), 8000);
-        }
-
-        document.getElementById('logout').addEventListener('click', () => {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('userId');
-            window.location.href = 'login.html';
-        });
-
-        // Initialize the page
-        populateEvents();
-    </script>
+    <script src="js/events.js"></script>
 </body>
 </html>
