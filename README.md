@@ -438,7 +438,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <div align="center">
 <h3>________________________________________________________________________________________</h3>
-<p>Made with by <a href="https://github.com/AM4517UMOR4NG">AM4517UMOR4NG</a></p>
+<p>Made by <a href="https://github.com/AM4517UMOR4NG">AM4517UMOR4NG</a></p>
 </div>
 
 ---
