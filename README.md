@@ -1,351 +1,453 @@
-Football Ticket Booking System (This is first part)
+# First part of my project
 
-This is a web-based application for booking football match tickets. Users can register, log in, view upcoming events, and book tickets online. The system is equipped with modern security features and is designed for scalability and performance. It is currently under development and welcomes contributions to enhance its functionality.
-Table of Contents
+# ⚽ Football Ticket Booking System
 
-    Features
-    Technologies Used
-    Architecture
-    Database Schema
-    API Documentation
-    Security
-    Performance
-    Monitoring and Logging
-    Deployment
-    Testing
-    Production Checklist
-    Troubleshooting
-    Getting Started
-    Contributing
-    Changelog
-    Notes
-    License
+<div align="center">
+  <img src="https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java" alt="Java 17">
+  <img src="https://img.shields.io/badge/Spring_Boot-3-brightgreen?style=for-the-badge&logo=spring" alt="Spring Boot 3">
+  <img src="https://img.shields.io/badge/Security-JWT-blue?style=for-the-badge&logo=json-web-tokens" alt="JWT">
+  <img src="https://img.shields.io/badge/Database-H2-lightblue?style=for-the-badge&logo=h2" alt="H2 Database">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License">
+</div>
 
-Features
+<div align="center">
+  <h3>🎫 Modern, Secure, and Scalable Football Match Ticket Booking Platform</h3>
+  <p><em>Built with Spring Boot 3, featuring enterprise-grade security and performance optimization</em></p>
+</div>
 
-    User Authentication: Register and log in with secure password validation.
-    Ticket Booking: Book tickets for football matches online.
-    Event Management: View upcoming events; admins can manage events.
-    Security Auditing: Track login attempts, registrations, and suspicious activities.
-    Rate Limiting: Prevent brute-force attacks on login and registration endpoints.
-    JWT Authentication: Secure API endpoints with JSON Web Tokens.
-    Admin Monitoring: Admins can view security status and logs.
+---
 
-Technologies Used
+## 🌟 Why Choose This System?
 
-    Java 17
-    Spring Boot 3
-    Spring Security
-    Spring Data JPA
-    H2 Database (development; replaceable with a production database)
-    JWT (io.jsonwebtoken)
-    Lombok
-    Jakarta Validation
-    Maven
-    HTML, CSS, JavaScript (static frontend)
+<table>
+<tr>
+<td width="50%">
 
-Architecture
+### 🔐 **Enterprise Security**
+- **JWT Authentication** with 24-hour expiration
+- **Rate Limiting** (10 req/min) to prevent attacks
+- **BCrypt Password Hashing** with strong policy
+- **Security Audit Logging** for complete traceability
+- **CORS Protection** with configurable origins
 
-The application follows a layered architecture:
+</td>
+<td width="50%">
 
-    Controller: Handles HTTP requests and responses.
-    Service: Contains business logic.
-    Repository: Manages data access with JPA.
-    Entity: Represents database tables.
+### ⚡ **High Performance**
+- **HikariCP Connection Pooling** for optimal DB performance
+- **In-Memory Caching** for faster response times
+- **Batch Processing** for bulk operations
+- **Database Indexing** for quick queries
+- **Production-Ready** architecture
 
-Security is enforced through filters:
+</td>
+</tr>
+</table>
 
-    JWT Filter
-    Rate Limit Filter
-    Security Audit
+---
 
-Database Schema
+## 🚀 Quick Start
 
-    User: id, username, email, password, fullName, phoneNumber, role
-    Event: id, title, description, venue, dateTime, availableSeats, price
-    Booking: id, user_id, event_id, numberOfTickets, totalAmount, status, bookingReference
+### Prerequisites
+```bash
+☑️ Java 17+
+☑️ Maven 3.6+
+☑️ Git
+```
 
-API Documentation
-Authentication
+### 🏃‍♂️ Run in 3 Steps
+```bash
+# 1. Clone the repository
+git clone https://github.com/AM4517UMOR4NG/Football-Ticket.git
 
-    POST /api/auth/register
-    Register a new user.
-        Request:
-        json
+# 2. Navigate to project directory
+cd Football-Ticket
 
+# 3. Run the application
+mvn spring-boot:run
+```
+
+### 🎯 Access Points
+- **Main Application**: http://localhost:8080
+- **H2 Database Console**: http://localhost:8080/h2-console
+- **API Documentation**: Available via endpoints below
+
+---
+
+## 🎨 Key Features
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/🔐-Authentication-blue?style=for-the-badge">
+<br><strong>Secure Registration & Login</strong>
+<br>JWT-based authentication with robust password policies
+</td>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/🎫-Booking-green?style=for-the-badge">
+<br><strong>Easy Ticket Booking</strong>
+<br>Intuitive booking process with real-time seat availability
+</td>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/📊-Management-orange?style=for-the-badge">
+<br><strong>Event Management</strong>
+<br>Comprehensive event creation and management system
+</td>
+<td align="center" width="25%">
+<img src="https://img.shields.io/badge/🛡️-Security-red?style=for-the-badge">
+<br><strong>Security Monitoring</strong>
+<br>Real-time security auditing and threat detection
+</td>
+</tr>
+</table>
+</div>
+
+---
+
+## 📋 API Reference
+
+### 🔐 Authentication Endpoints
+
+<details>
+<summary><strong>POST /api/auth/register</strong> - Register New User</summary>
+
+**Request:**
+```json
 {
-  "username": "YourName",
-  "email": "user@example.com",
-  "password": "Password123.!",
-  "fullName": "Fullname",
+  "username": "footballfan",
+  "email": "fan@example.com",
+  "password": "SecurePass123!",
+  "fullName": "Ronaldo The GOAT",
   "phoneNumber": "081234567890",
   "role": "USER"
 }
-Response:
-json
+```
 
-    {
-      "success": true,
-      "message": "User registered successfully"
-    }
-
-POST /api/auth/login
-Log in a user.
-
-    Request:
-    json
-
+**Response:**
+```json
 {
-  "username": "YourName",
-  "password": "Password123.!"
+  "success": true,
+  "message": "User registered successfully"
 }
-Response:
-json
+```
+</details>
 
-        {
-          "accessToken": "eyJhbGciOiJIUzUxMiJ9...",
-          "tokenType": "Bearer",
-          "userId": 1,
-          "username": "YourName",
-          "email": "user@example.com",
-          "fullName": "Fullname"
-        }
+<details>
+<summary><strong>POST /api/auth/login</strong> - User Login</summary>
 
-Events
+**Request:**
+```json
+{
+  "username": "footballfan",
+  "password": "SecurePass123!"
+}
+```
 
-    GET /api/events/all
-    Retrieve all events.
-        Response:
-        json
+**Response:**
+```json
+{
+  "accessToken": "eyJhbGciOiJIUzUxMiJ9...",
+  "tokenType": "Bearer",
+  "userId": 1,
+  "username": "footballfan",
+  "email": "fan@example.com",
+  "fullName": "Ronaldo The GOAT"
+}
+```
+</details>
 
-        [
-          {
-            "id": 1,
-            "title": "Persija vs Persib",
-            "description": "Indonesian Classic Match",
-            "venue": "GBK Stadium",
-            "dateTime": "2024-01-15T19:00:00",
-            "availableSeats": 50000,
-            "price": 95000
-          }
-        ]
-    GET /api/events/upcoming
-    Retrieve upcoming events.
-        Response: Similar to /api/events/all, filtered for future events.
+### 🎫 Event & Booking Endpoints
 
-Bookings
+<details>
+<summary><strong>GET /api/events/all</strong> - Get All Events</summary>
 
-    POST /api/bookings/create
-    Create a new booking (requires authentication).
-        Headers: Authorization: Bearer {token}
-        Request:
-        json
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Persija vs Persib",
+    "description": "Indonesian Classic Match",
+    "venue": "GBK Stadium",
+    "dateTime": "2024-01-15T19:00:00",
+    "availableSeats": 50000,
+    "price": 95000
+  }
+]
+```
+</details>
 
+<details>
+<summary><strong>POST /api/bookings/create</strong> - Create Booking</summary>
+
+**Headers:** `Authorization: Bearer {token}`
+
+**Request:**
+```json
 {
   "eventId": 1,
   "numberOfTickets": 2
 }
-Response:
-json
+```
 
-    {
-      "id": 1,
-      "bookingReference": "BK20240115001",
-      "eventTitle": "Persija vs Persib",
-      "numberOfTickets": 2,
-      "totalAmount": 190000,
-      "status": "CONFIRMED"
-    }
+**Response:**
+```json
+{
+  "id": 1,
+  "bookingReference": "BK20240115001",
+  "eventTitle": "Persija vs Persib",
+  "numberOfTickets": 2,
+  "totalAmount": 190000,
+  "status": "CONFIRMED"
+}
+```
+</details>
 
-GET /api/bookings/user
-Retrieve a user's bookings (requires authentication).
+---
 
-    Headers: Authorization: Bearer {token}
-    Response:
-    json
+## 🏗️ Architecture Overview
 
-        [
-          {
-            "id": 1,
-            "bookingReference": "BK20240115001",
-            "eventTitle": "Persija vs Persib",
-            "numberOfTickets": 2,
-            "totalAmount": 190000,
-            "status": "CONFIRMED"
-          }
-        ]
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Controller    │    │   Service       │
+│   (HTML/CSS/JS) │◄──►│   Layer         │◄──►│   Layer         │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                        │
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Security      │    │   Repository    │    │   Database      │
+│   Filters       │    │   Layer         │◄──►│   (H2/MySQL)    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
-Security
+---
 
-    GET /api/admin/security/status
-    Get security status (requires ADMIN role).
-        Headers: Authorization: Bearer {token}
-        Response:
-        json
+## 🛠️ Technology Stack
 
-        {
-          "timestamp": "2024-01-15T10:30:00",
-          "securityLevel": "ENHANCED",
-          "rateLimitingEnabled": true,
-          "passwordValidationEnabled": true,
-          "auditLoggingEnabled": true
-        }
+<div align="center">
+<table>
+<tr>
+<td align="center"><strong>Backend</strong></td>
+<td align="center"><strong>Security</strong></td>
+<td align="center"><strong>Database</strong></td>
+<td align="center"><strong>Frontend</strong></td>
+</tr>
+<tr>
+<td align="center">
+Java 17<br>
+Spring Boot 3<br>
+Spring Data JPA<br>
+Maven<br>
+Lombok
+</td>
+<td align="center">
+Spring Security<br>
+JWT (jsonwebtoken)<br>
+BCrypt<br>
+Rate Limiting<br>
+CORS
+</td>
+<td align="center">
+H2 Database<br>
+HikariCP<br>
+JPA/Hibernate<br>
+Database Indexing
+</td>
+<td align="center">
+HTML5<br>
+CSS3<br>
+JavaScript<br>
+Responsive Design
+</td>
+</tr>
+</table>
+</div>
 
-Security
+---
 
-    JWT Authentication: Tokens expire after 24 hours, using the HS512 algorithm.
-    Rate Limiting: 10 requests per minute for login/register, tracked by IP.
-    Password Policy: Minimum 8 characters, requiring uppercase, lowercase, numbers, and special characters; hashed with BCrypt.
-    Audit Logging: Tracks login attempts, registrations, unauthorized access, and suspicious activities.
-    CORS: Configurable allowed origins via environment variables.
-    Security Headers: Includes X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, and Strict-Transport-Security.
+## 🐳 Docker Support
 
-Performance
+```bash
+# Build Docker image
+docker build -t football-ticket-booking .
 
-    Database: Optimized with HikariCP connection pooling, batch processing, and indexing.
-    Caching: In-memory caching for static data; session-based caching for user data.
+# Run container
+docker run -p 8080:8080 football-ticket-booking
+```
 
-Monitoring and Logging
-
-    Metrics: Tracks request times, error rates, database connections, and memory usage.
-    Logging: Structured with SLF4J; different levels for environments, including security audits, performance, and errors.
-
-Deployment
-Development
-
-    Install Java 17 and Maven.
-    Clone the repository: git clone https://github.com/AM4517UMOR4NG/Football-Ticket.git.
-    Run: mvn spring-boot:run.
-    Access at http://localhost:8080.
-    H2 Console at http://localhost:8080/h2-console.
-
-Production
-
-    Set environment variables:
-        JWT_SECRET: Strong secret key
-        JWT_EXPIRATION: Token expiration time (e.g., 86400000 for 24 hours)
-        CORS_ALLOWED_ORIGINS: Allowed domains
-        DATABASE_URL: Production database URL
-        DATABASE_USERNAME: Database username
-        DATABASE_PASSWORD: Database password
-    Build: mvn clean package -Pprod.
-    Run: java -jar target/ticket-booking-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod.
-
-Docker
-
-    Create a Dockerfile:
-    dockerfile
-
+**Dockerfile:**
+```dockerfile
 FROM openjdk:17-jre-slim
 COPY target/ticket-booking-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]
-Build and run:
-bash
+```
 
-    docker build -t ticket-booking .
-    docker run -p 8080:8080 ticket-booking
+---
 
-Testing
+## 🔧 Configuration
 
-    Unit Tests: Service layer with Mockito, repository with @DataJpaTest, security with @WebMvcTest, integration with @SpringBootTest.
-    API Tests: Postman collections, automated with RestAssured, performance with JMeter.
-    Security Tests: Penetration testing, JWT validation, rate limiting, and password policy checks.
+### Environment Variables
+```bash
+# Security
+JWT_SECRET=your-super-secret-key-here
+JWT_EXPIRATION=86400000
 
-Production Checklist
+# CORS
+CORS_ALLOWED_ORIGINS=http://localhost:3000,https://yourdomain.com
 
-    Security:
+# Database (Production)
+DATABASE_URL=jdbc:postgresql://localhost:5432/football_tickets
+DATABASE_USERNAME=your_username
+DATABASE_PASSWORD=your_password
+```
 
-JWT secret configured
-CORS restricted
-Rate limiting enabled
-Audit logging active
-Security headers set
-HTTPS enabled
+### Production Deployment
+```bash
+# Build for production
+mvn clean package -Pprod
 
-    Error handling secure
+# Run with production profile
+java -jar target/ticket-booking-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+```
 
-Performance:
+---
 
-Database indexes optimized
-Connection pooling configured
-Caching implemented
-Logging levels appropriate
+## 📊 Performance & Monitoring
 
-    Memory settings optimized
+### Key Metrics Tracked:
+- ⏱️ **Request Response Times**
+- 📈 **Error Rates**
+- 🔌 **Database Connections**
+- 💾 **Memory Usage**
+- 🔐 **Security Events**
 
-Monitoring:
-
-Health checks configured
-Metrics collection active
-Alerting set up
-Log aggregation working
-Database monitoring active
-
-        Security monitoring enabled
-
-Troubleshooting
-
-    JWT Token Expired: Verify expiration time in JWT_EXPIRATION.
-    Rate Limit Exceeded: Wait for the reset window (e.g., 1 minute).
-    Database Issues: Check HikariCP connection pool settings.
-    CORS Errors: Confirm CORS_ALLOWED_ORIGINS configuration.
-    Password Validation: Ensure compliance with policy (8+ chars, mixed case, numbers, special chars).
-
-For debugging, add to application.properties:
-properties
+### Logging Levels:
+```properties
+# Debug mode
 logging.level.com.example.ticketbooking=DEBUG
 logging.level.org.springframework.security=DEBUG
-Getting Started
-Prerequisites
+```
 
-    Java 17
-    Maven
-    Git
+---
 
-Steps
+## 🧪 Testing
 
-    Clone the repository: git clone https://github.com/AM4517UMOR4NG/Football-Ticket.git.
-    Run: mvn spring-boot:run.
-    Access at http://localhost:8080.
+### Test Coverage:
+- ✅ **Unit Tests** with Mockito
+- ✅ **Integration Tests** with @SpringBootTest
+- ✅ **Security Tests** with @WebMvcTest
+- ✅ **API Tests** with RestAssured
+- ✅ **Performance Tests** with JMeter
 
-For production, configure application-prod.properties with database and security settings.
-Contributing
+### Running Tests:
+```bash
+# Run all tests
+mvn test
 
-    Fork the repository.
-    Create a feature branch: git checkout -b feature/your-feature.
-    Make changes and test thoroughly.
-    Submit a pull request.
-    Ensure code review and CI checks pass.
+# Run with coverage
+mvn test jacoco:report
+```
 
-Changelog
+---
 
-    v1.0.0: Initial release with basic booking functionality.
-    v1.1.0: Added security features and audit logging.
-    v1.2.0: Enhanced performance and monitoring.
-    v1.3.0: Added Docker support and CI/CD pipeline.
+## 🚀 Production Checklist
 
-Notes
+### Security ✅
+- [ ] JWT secret configured
+- [ ] CORS origins restricted
+- [ ] Rate limiting enabled
+- [ ] HTTPS enabled
+- [ ] Security headers set
 
-    Configure environment variables (JWT_SECRET, JWT_EXPIRATION, CORS_ALLOWED_ORIGINS) for production security.
-    Replace H2 with a production-grade database (e.g., PostgreSQL, MySQL) in production.
-    Regularly review security audit logs and performance metrics.
-    Update dependencies for security patches.
+### Performance ✅
+- [ ] Database indexes optimized
+- [ ] Connection pooling configured
+- [ ] Caching implemented
+- [ ] Memory settings tuned
 
-License
+### Monitoring ✅
+- [ ] Health checks configured
+- [ ] Metrics collection active
+- [ ] Alerting set up
+- [ ] Log aggregation working
 
-This project is licensed under the MIT License. See the LICENSE file for details.
-Additional Instructions
+---
 
-To fully implement this README in your GitHub repository:
+## 🤝 Contributing
 
-    Replace the Existing README: Copy the above markdown content into your README.md file at the root of the Football-Ticket repository.
+We welcome contributions! Here's how to get involved:
 
-    Add a LICENSE File: Create a LICENSE file in the repository root with the following content:
-    text
-Email----------------> aekmohop@gmail.com <>
+1. **Fork** the repository
+2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
+3. **Make** your changes and test thoroughly
+4. **Submit** a pull request
 
-This project is licensed under the MIT License.
+### Development Guidelines:
+- Follow Java coding standards
+- Write comprehensive tests
+- Update documentation
+- Ensure security best practices
+
+---
+
+## 📈 Roadmap
+
+### Version 1.4.0 (Upcoming)
+- [ ] 🔔 Real-time notifications
+- [ ] 💳 Payment gateway integration
+- [ ] 📱 Mobile app API
+- [ ] 🎨 Advanced UI/UX
+
+### Version 1.5.0 (Future)
+- [ ] 🌐 Multi-language support
+- [ ] 📊 Advanced analytics
+- [ ] 🤖 AI-powered recommendations
+- [ ] ⚡ Microservices architecture
+
+---
+
+## 📞 Support & Contact
+
+<div align="center">
+<table>
+<tr>
+<td align="center">
+<strong>📧 Email</strong><br>
+<a href="mailto:aekmohop@gmail.com">aekmohop@gmail.com</a>
+</td>
+<td align="center">
+<strong>🐛 Issues</strong><br>
+<a href="https://github.com/AM4517UMOR4NG/Football-Ticket/issues">Report Bug</a>
+</td>
+<td align="center">
+<strong>💡 Feature Request</strong><br>
+<a href="https://github.com/AM4517UMOR4NG/Football-Ticket/issues">Request Feature</a>
+</td>
+</tr>
+</table>
+</div>
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+<h3>⭐ Star this repository if you find it helpful!</h3>
+<p>Made with by <a href="https://github.com/AM4517UMOR4NG">AM4517UMOR4NG</a></p>
+</div>
+
+---
+
+<div align="center">
+<img src="https://img.shields.io/badge/🚀-Production_Ready-brightgreen?style=for-the-badge" alt="Production Ready">
+<img src="https://img.shields.io/badge/🔒-Security_First-red?style=for-the-badge" alt="Security First">
+<img src="https://img.shields.io/badge/⚡-High_Performance-yellow?style=for-the-badge" alt="High Performance">
+</div>
 
 
 _________________________________________________________________________________________________
