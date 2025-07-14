@@ -1,50 +1,65 @@
-/* styles.css */
+/* css/login.css */
 
-/* Tambahan animasi untuk tombol */
-a.btn-animated {
-    transition: all 0.3s ease-in-out;
-    transform: scale(1);
+/* Ensure the body takes up the full viewport height and handles the background image properly */
+body {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps the background stable on scroll */
 }
 
-a.btn-animated:hover {
-    transform: scale(1.05);
+/* Enhance the backdrop blur effect for the form container */
+.bg-opacity-10.backdrop-blur-lg {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
 }
 
-/* Layout responsif tambahan untuk konten utama */
-.main-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+/* Custom styles for the form inputs to improve focus states */
+input:focus {
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); /* Blue glow on focus */
 }
 
-/* Kartu event */
-.card {
-    background-color: #0d0e0d;
-    /* Tailwind gray-800 */
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    transition: background-color 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+/* Style the checkbox custom div for better visibility */
+input[type="checkbox"]:checked + div svg {
+  opacity: 1 !important; /* Ensure checkmark is visible when checked */
 }
 
-.card:hover {
-    background-color: #374151;
-    /* Tailwind gray-700 */
+/* Enhance the toggle password button */
+#togglePassword:hover {
+  transform: scale(1.1); /* Slight scale on hover for better UX */
 }
 
-/* Judul halaman */
-.page-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #320d89;
+/* Loading overlay transition */
+#loadingOverlay {
+  transition: opacity 0.3s ease-in-out;
 }
 
-/* Footer teks */
-footer p {
-    font-size: 0.875rem;
-    color: #5cac9c;
-    /* Tailwind gray-400 */
+/* Ensure the login button spinner is centered */
+#loginSpinner svg {
+  margin: 0 auto;
+}
+
+/* Fallback for older browsers that may not support backdrop-filter */
+@supports not (backdrop-filter: blur(12px)) {
+  .bg-opacity-10.backdrop-blur-lg {
+    background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque fallback */
+  }
+}
+
+/* Adjust text readability for the footer text ("Ronaldo THE GOAT") */
+.text-blue-100.text-opacity-60 {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Subtle shadow for better contrast */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 640px) {
+  .max-w-md {
+    padding: 1rem; /* Reduce padding on smaller screens */
+  }
+  .w-full.bg-opacity-10.backdrop-blur-lg {
+    padding: 1.5rem; /* Adjust form padding */
+  }
+  h1.text-3xl {
+    font-size: 1.75rem; /* Smaller heading for mobile */
+  }
 }
