@@ -43,5 +43,4 @@ document.getElementById('logoutLink').addEventListener('click', () => {
     localStorage.removeItem('userId');
     window.location.href = 'login.html';
 });
-
 // Fungsi scroll tetap berjalan (tidak ada kode yang menghalangi scroll)
