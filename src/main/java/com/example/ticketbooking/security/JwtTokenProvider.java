@@ -17,8 +17,7 @@ public class JwtTokenProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-    @Value("${app.jwt.secret:your_secret_key_here}") // Change with your secret key
-    //Change with your token
+    @Value("${app.jwt.secret:a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6}")
     private String jwtSecret;
 
     @Value("${app.jwt.expiration:86400000}")
