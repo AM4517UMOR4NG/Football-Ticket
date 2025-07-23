@@ -7,16 +7,18 @@ public class LoginResponse {
     private String username;
     private String email;
     private String fullName;
+    private String role;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String accessToken, Long userId, String username, String email, String fullName) {
+    public LoginResponse(String accessToken, Long userId, String username, String email, String fullName, String role) {
         this.accessToken = accessToken;
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.fullName = fullName;
+        this.role = role;
     }
 
     public String getAccessToken() {
@@ -65,5 +67,12 @@ public class LoginResponse {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 }
