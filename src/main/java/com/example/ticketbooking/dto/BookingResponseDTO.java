@@ -10,6 +10,7 @@ public class BookingResponseDTO {
     private Integer numberOfTickets;
     private Double totalAmount;
     private String status;
+    private Long id;
 
     public String getBookingReference() {
         return bookingReference;
@@ -66,4 +67,7 @@ public class BookingResponseDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 }
