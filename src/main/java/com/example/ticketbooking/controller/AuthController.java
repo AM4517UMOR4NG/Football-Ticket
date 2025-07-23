@@ -81,7 +81,7 @@ public class AuthController {
                 User user = userOptional.get();
                 securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, true);
                 LoginResponse loginResponse = new LoginResponse(jwt, user.getId(), user.getUsername(), user.getEmail(),
-                        user.getFullName());
+                        user.getFullName(), user.getRole());
                 return ResponseEntity.ok(loginResponse);
             } else {
                 securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, false);
