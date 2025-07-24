@@ -132,6 +132,8 @@ async function populateEvents() {
     }
 }
 
+let latestBookings = [];
+
 async function populateBookings() {
     const loadingEl = document.getElementById('bookingsLoading');
     const contentEl = document.getElementById('bookingsContent');
@@ -141,37 +143,101 @@ async function populateBookings() {
         loadingEl.classList.remove('hidden');
         contentEl.classList.add('hidden');
 
-        const response = await retryRequest(() => apiClient.get(`/bookings/user/${userId}`));
-        const bookings = response.data;
-
-        if (bookings && bookings.length > 0) {
-            tableEl.innerHTML = bookings.map(booking => `
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.bookingReference || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.eventTitle || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.venue || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.eventDate ? new Date(booking.eventDate).toLocaleString() : 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.numberOfTickets || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">$${booking.totalAmount || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                        <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(booking.status)}">
-                            ${booking.status || 'N/A'}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
-        } else {
-            tableEl.innerHTML = '<tr><td colspan="7" class="px-6 py-4 text-center text-gray-400">No bookings found</td></tr>';
-        }
-
-        console.log('Bookings loaded successfully:', bookings.length);
+        const randomParam = `r=${Date.now()}${Math.floor(Math.random()*1000)}`;
+        const response = await retryRequest(() => apiClient.get(`/bookings/user/${userId}?${randomParam}`));
+        latestBookings = response.data;
+        renderBookingsTable(latestBookings);
+        console.log('Bookings loaded successfully:', latestBookings.length);
     } catch (error) {
-        console.error('Failed to load bookings:', error);
-        tableEl.innerHTML = '<tr><td colspan="7" class="px-6 py-4 text-center text-red-400">Failed to load bookings</td></tr>';
+        tableEl.innerHTML = '<tr><td colspan="8" class="px-6 py-4 text-center text-red-400">Failed to load bookings</td></tr>';
         showError(`Failed to load bookings: ${getErrorMessage(error)}`);
     } finally {
         loadingEl.classList.add('hidden');
         contentEl.classList.remove('hidden');
+    }
+}
+
+function renderBookingsTable(bookings) {
+    const tableEl = document.getElementById('bookingsTable');
+    if (bookings && bookings.length > 0) {
+        tableEl.innerHTML = bookings.map(booking => {
+            let actions = '';
+            if (booking.status === 'CONFIRMED') {
+                actions += `<button class='cancel-btn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded mr-2' data-id='${booking.id}'>Cancel</button>`;
+            } else if (booking.status === 'PENDING') {
+                actions += `<button class='confirm-btn bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded mr-2' data-id='${booking.id}'>Confirm</button>`;
+                actions += `<button class='cancel-btn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded' data-id='${booking.id}'>Cancel</button>`;
+            }
+            return `
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.bookingReference || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.eventTitle || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.venue || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.eventDate ? new Date(booking.eventDate).toLocaleString() : 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">${booking.numberOfTickets || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">$${booking.totalAmount || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(booking.status)}">
+                        ${booking.status || 'N/A'}
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                    ${actions}
+                </td>
+            </tr>
+            `;
+        }).join('');
+    } else {
+        tableEl.innerHTML = '<tr><td colspan="8" class="px-6 py-4 text-center text-gray-400">No bookings found</td></tr>';
+    }
+    // Attach event listeners for cancel/confirm buttons
+    document.querySelectorAll('.cancel-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const bookingId = this.getAttribute('data-id');
+            await handleCancelBooking(bookingId);
+        });
+    });
+    document.querySelectorAll('.confirm-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const bookingId = this.getAttribute('data-id');
+            await handleConfirmBooking(bookingId);
+        });
+    });
+}
+
+async function handleCancelBooking(bookingId) {
+    try {
+        const response = await retryRequest(() => apiClient.post(`/bookings/${bookingId}/cancel?userId=${userId}`));
+        showMessage('Booking cancelled successfully');
+        // Update booking di array lokal dengan data dari response
+        const idx = latestBookings.findIndex(b => b.id == bookingId);
+        if (idx !== -1 && response.data) {
+            latestBookings[idx] = { ...latestBookings[idx], ...response.data };
+            renderBookingsTable(latestBookings);
+        }
+        // Tetap fetch ulang agar sinkron
+        await new Promise(resolve => setTimeout(resolve, 400));
+        await populateBookings();
+    } catch (error) {
+        showError(`Failed to cancel booking: ${getErrorMessage(error)}`);
+    }
+}
+
+async function handleConfirmBooking(bookingId) {
+    try {
+        const response = await retryRequest(() => apiClient.post(`/bookings/${bookingId}/confirm?userId=${userId}`));
+        showMessage('Booking confirmed successfully');
+        // Update booking di array lokal dengan data dari response
+        const idx = latestBookings.findIndex(b => b.id == bookingId);
+        if (idx !== -1 && response.data) {
+            latestBookings[idx] = { ...latestBookings[idx], ...response.data };
+            renderBookingsTable(latestBookings);
+        }
+        // Tetap fetch ulang agar sinkron
+        await new Promise(resolve => setTimeout(resolve, 400));
+        await populateBookings();
+    } catch (error) {
+        showError(`Failed to confirm booking: ${getErrorMessage(error)}`);
     }
 }
 
@@ -189,8 +255,16 @@ function getStatusColor(status) {
 }
 
 function getErrorMessage(error) {
-    if (error.response && error.response.data && error.response.data.message) {
-        return error.response.data.message;
+    if (error.response && error.response.data) {
+        if (typeof error.response.data === 'object' && error.response.data.detail) {
+            return error.response.data.detail;
+        }
+        if (error.response.data.message) {
+            return error.response.data.message;
+        }
+        if (typeof error.response.data === 'string') {
+            return error.response.data;
+        }
     } else if (error.message) {
         return error.message;
     } else {
@@ -243,6 +317,8 @@ document.getElementById('bookNow').addEventListener('click', async () => {
         eventSelect.value = '';
         numberOfTicketsInput.value = 1;
 
+        // Tambahkan delay sebelum refresh bookings
+        await new Promise(resolve => setTimeout(resolve, 200));
         // Refresh bookings
         await populateBookings();
 
