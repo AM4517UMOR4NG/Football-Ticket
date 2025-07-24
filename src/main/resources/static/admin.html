@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Ticket Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-gray-900 text-white font-sans min-h-screen">
+    <header class="bg-gray-800 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+            <a href="index.html" class="text-gray-300 hover:text-blue-400">Home</a>
+        </nav>
+    </header>
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold mb-6">Dashboard Overview</h2>
+        <div id="dashboardStats" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-lg font-semibold mb-2">Total Users</h3>
+                <p id="totalUsers" class="text-3xl font-bold text-blue-400">-</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-lg font-semibold mb-2">Total Events</h3>
+                <p id="totalEvents" class="text-3xl font-bold text-green-400">-</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-lg font-semibold mb-2">Total Bookings</h3>
+                <p id="totalBookings" class="text-3xl font-bold text-yellow-400">-</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-lg font-semibold mb-2">Total Bookings Confirmed</h3>
+                <p id="totalBookingsConfirmed" class="text-3xl font-bold text-green-400">-</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-lg font-semibold mb-2">Total Bookings Cancelled</h3>
+                <p id="totalBookingsCancelled" class="text-3xl font-bold text-red-400">-</p>
+            </div>
+        </div>
+        <div id="errorMessage" class="text-red-400 hidden"></div>
+    </main>
+    <footer class="bg-gray-800 shadow-md mt-8 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-400"><strong>Ronaldo THE GOAT</strong></p>
+        </div>
+    </footer>
+    <script src="js/admin.js"></script>
+</body>
+</html> 
