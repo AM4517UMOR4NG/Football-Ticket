@@ -68,8 +68,37 @@ public class BookingService {
         return bookings.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
+    public BookingResponseDTO cancelBooking(Long bookingId, Long userId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+        if (!booking.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("You are not allowed to cancel this booking");
+        }
+        if (booking.getStatus() == Booking.BookingStatus.CANCELLED) {
+            throw new IllegalArgumentException("Booking already cancelled");
+        }
+        booking.setStatus(Booking.BookingStatus.CANCELLED);
+        bookingRepository.save(booking);
+        return mapToDto(booking);
+    }
+
+    public BookingResponseDTO confirmBooking(Long bookingId, Long userId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+        if (!booking.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("You are not allowed to confirm this booking");
+        }
+        if (booking.getStatus() == Booking.BookingStatus.CONFIRMED) {
+            throw new IllegalArgumentException("Booking already confirmed");
+        }
+        booking.setStatus(Booking.BookingStatus.CONFIRMED);
+        bookingRepository.save(booking);
+        return mapToDto(booking);
+    }
+
     private BookingResponseDTO mapToDto(Booking booking) {
         BookingResponseDTO dto = new BookingResponseDTO();
+        dto.setId(booking.getId());
         dto.setBookingReference(booking.getBookingReference());
         dto.setEventTitle(booking.getEvent().getTitle());
         dto.setVenue(booking.getEvent().getVenue());
