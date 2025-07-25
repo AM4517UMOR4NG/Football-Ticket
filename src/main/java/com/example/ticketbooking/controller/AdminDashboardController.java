@@ -31,9 +31,11 @@ public class AdminDashboardController {
         stats.put("totalUsers", userRepository.count());
         stats.put("totalEvents", eventRepository.count());
         stats.put("totalBookings", bookingRepository.count());
-        stats.put("totalBookingsConfirmed", bookingRepository.countByStatus(com.example.ticketbooking.entity.Booking.BookingStatus.CONFIRMED));
-        stats.put("totalBookingsCancelled", bookingRepository.countByStatus(com.example.ticketbooking.entity.Booking.BookingStatus.CANCELLED));
+        stats.put("totalBookingsConfirmed",
+                bookingRepository.countByStatus(com.example.ticketbooking.entity.Booking.BookingStatus.CONFIRMED));
+        stats.put("totalBookingsCancelled",
+                bookingRepository.countByStatus(com.example.ticketbooking.entity.Booking.BookingStatus.CANCELLED));
         // You can add more stats here as needed
         return ResponseEntity.ok(stats);
     }
-} 
+}
