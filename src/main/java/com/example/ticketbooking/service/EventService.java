@@ -1,6 +1,7 @@
 package com.example.ticketbooking.service;
 
 import com.example.ticketbooking.dto.EventDTO;
+
 import java.util.List;
 
 public interface EventService {
@@ -10,5 +11,9 @@ public interface EventService {
 
     List<EventDTO> getUpcomingEvents();
 
-    Object getEventById(Long id);
+    EventDTO getEventById(Long id);
+
+    List<EventDTO> getEventsByLeague(String league);
+
+    List<EventDTO> searchEvents(String query, String venue, String date);
 }
