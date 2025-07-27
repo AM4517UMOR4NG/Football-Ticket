@@ -45,6 +45,10 @@ public class Event {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "league_id")
+    private League league;
+
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
