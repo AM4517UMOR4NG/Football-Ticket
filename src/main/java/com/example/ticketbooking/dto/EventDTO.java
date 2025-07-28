@@ -10,5 +10,7 @@ public record EventDTO(
         String venue,
         LocalDateTime eventDate,
         Integer totalSeats,
-        BigDecimal price) {
+        BigDecimal price,
+        Long leagueId
+) {
 }
