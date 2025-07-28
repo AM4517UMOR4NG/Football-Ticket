@@ -31,6 +31,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/api/auth/register",
             "/api/events/upcoming",
             "/api/events/all",
+            "/api/leagues",
+            "/api/leagues/active",
+            "/api/about/stats",
+            "/api/about/team",
+            "/api/about/values",
             "/error",
             "/favicon.ico");
 
@@ -119,6 +124,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Check pattern matches
         if (path.startsWith("/api/events") && "GET".equals(method)) {
+            return true;
+        }
+        
+        if (path.startsWith("/api/leagues") && "GET".equals(method)) {
+            return true;
+        }
+        
+        if (path.startsWith("/api/about") && "GET".equals(method)) {
             return true;
         }
 
