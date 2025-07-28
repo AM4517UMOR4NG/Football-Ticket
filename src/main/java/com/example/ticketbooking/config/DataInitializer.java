@@ -2,7 +2,6 @@ package com.example.ticketbooking.config;
 
 import com.example.ticketbooking.dto.EventDTO;
 import com.example.ticketbooking.dto.LeagueDTO;
-import com.example.ticketbooking.entity.League;
 import com.example.ticketbooking.repository.EventRepository;
 import com.example.ticketbooking.repository.LeagueRepository;
 import com.example.ticketbooking.service.EventService;
@@ -21,8 +20,8 @@ public class DataInitializer implements CommandLineRunner {
         private final LeagueService leagueService;
         private final LeagueRepository leagueRepository;
 
-        public DataInitializer(EventService eventService, EventRepository eventRepository, 
-                             LeagueService leagueService, LeagueRepository leagueRepository) {
+        public DataInitializer(EventService eventService, EventRepository eventRepository,
+                        LeagueService leagueService, LeagueRepository leagueRepository) {
                 this.eventService = eventService;
                 this.eventRepository = eventRepository;
                 this.leagueService = leagueService;
@@ -43,110 +42,104 @@ public class DataInitializer implements CommandLineRunner {
         private void createLeagues() {
                 // Premier League
                 LeagueDTO premierLeague = new LeagueDTO(
-                        null,
-                        "Premier League",
-                        "The Premier League is the top level of the English football league system. Contested by 20 clubs, it operates on a system of promotion and relegation with the English Football League.",
-                        "England",
-                        1992,
-                        "/images/leagues/premier-league.png",
-                        "/images/leagues/premier-league-banner.jpg",
-                        20,
-                        "August",
-                        "May",
-                        "ACTIVE",
-                        null,
-                        null
-                );
+                                null,
+                                "Premier League",
+                                "The Premier League is the top level of the English football league system. Contested by 20 clubs, it operates on a system of promotion and relegation with the English Football League.",
+                                "England",
+                                1992,
+                                "/images/leagues/premier-league.png",
+                                "/images/leagues/premier-league-banner.jpg",
+                                20,
+                                "August",
+                                "May",
+                                "ACTIVE",
+                                null,
+                                null);
                 leagueService.createLeague(premierLeague);
 
                 // La Liga
                 LeagueDTO laLiga = new LeagueDTO(
-                        null,
-                        "La Liga",
-                        "La Liga is the men's top professional football division of the Spanish football league system. It is contested by 20 teams, with the three lowest-placed teams relegated to the Segunda División.",
-                        "Spain",
-                        1929,
-                        "/images/leagues/la-liga.png",
-                        "/images/leagues/la-liga-banner.jpg",
-                        20,
-                        "August",
-                        "May",
-                        "ACTIVE",
-                        null,
-                        null
-                );
+                                null,
+                                "La Liga",
+                                "La Liga is the men's top professional football division of the Spanish football league system. It is contested by 20 teams, with the three lowest-placed teams relegated to the Segunda División.",
+                                "Spain",
+                                1929,
+                                "/images/leagues/la-liga.png",
+                                "/images/leagues/la-liga-banner.jpg",
+                                20,
+                                "August",
+                                "May",
+                                "ACTIVE",
+                                null,
+                                null);
                 leagueService.createLeague(laLiga);
 
                 // Bundesliga
                 LeagueDTO bundesliga = new LeagueDTO(
-                        null,
-                        "Bundesliga",
-                        "The Bundesliga is a professional association football league in Germany. At the top of the German football league system, the Bundesliga is Germany's primary football competition.",
-                        "Germany",
-                        1963,
-                        "/images/leagues/bundesliga.png",
-                        "/images/leagues/bundesliga-banner.jpg",
-                        18,
-                        "August",
-                        "May",
-                        "ACTIVE",
-                        null,
-                        null
-                );
+                                null,
+                                "Bundesliga",
+                                "The Bundesliga is a professional association football league in Germany. At the top of the German football league system, the Bundesliga is Germany's primary football competition.",
+                                "Germany",
+                                1963,
+                                "/images/leagues/bundesliga.png",
+                                "/images/leagues/bundesliga-banner.jpg",
+                                18,
+                                "August",
+                                "May",
+                                "ACTIVE",
+                                null,
+                                null);
                 leagueService.createLeague(bundesliga);
 
                 // Serie A
                 LeagueDTO serieA = new LeagueDTO(
-                        null,
-                        "Serie A",
-                        "Serie A is a professional league competition for football clubs located at the top of the Italian football league system and the winner is awarded the Coppa Campioni d'Italia.",
-                        "Italy",
-                        1898,
-                        "/images/leagues/serie-a.png",
-                        "/images/leagues/serie-a-banner.jpg",
-                        20,
-                        "August",
-                        "May",
-                        "ACTIVE",
-                        null,
-                        null
-                );
+                                null,
+                                "Serie A",
+                                "Serie A is a professional league competition for football clubs located at the top of the Italian football league system and the winner is awarded the Coppa Campioni d'Italia.",
+                                "Italy",
+                                1898,
+                                "/images/leagues/serie-a.png",
+                                "/images/leagues/serie-a-banner.jpg",
+                                20,
+                                "August",
+                                "May",
+                                "ACTIVE",
+                                null,
+                                null);
                 leagueService.createLeague(serieA);
 
                 // Ligue 1
                 LeagueDTO ligue1 = new LeagueDTO(
-                        null,
-                        "Ligue 1",
-                        "Ligue 1 is a French professional league for men's association football clubs. At the top of the French football league system, it is the country's primary football competition.",
-                        "France",
-                        1932,
-                        "/images/leagues/ligue-1.png",
-                        "/images/leagues/ligue-1-banner.jpg",
-                        20,
-                        "August",
-                        "May",
-                        "ACTIVE",
-                        null,
-                        null
-                );
+                                null,
+                                "Ligue 1",
+                                "Ligue 1 is a French professional league for men's association football clubs. At the top of the French football league system, it is the country's primary football competition.",
+                                "France",
+                                1932,
+                                "/images/leagues/ligue-1.png",
+                                "/images/leagues/ligue-1-banner.jpg",
+                                20,
+                                "August",
+                                "May",
+                                "ACTIVE",
+                                null,
+                                null);
                 leagueService.createLeague(ligue1);
 
                 // Champions League
                 LeagueDTO championsLeague = new LeagueDTO(
-                        null,
-                        "UEFA Champions League",
-                        "The UEFA Champions League is an annual club football competition organised by the Union of European Football Associations and contested by top-division European clubs.",
-                        "Europe",
-                        1955,
-                        "/images/leagues/champions-league.png",
-                        "/images/leagues/champions-league-banner.jpg",
-                        32,
-                        "September",
-                        "May",
-                        "ACTIVE",
-                        null,
-                        null
-                );
+                                null,
+                                "UEFA Champions League",
+                                "The UEFA Champions League is an annual club football competition organised by the Union of European Football Associations and contested by top-division European clubs.",
+                                "Europe",
+                                1955,
+                                "/images/leagues/champions-league.png",
+                                "/images/leagues/champions-league-banner.jpg",
+                                32,
+                                "September",
+                                "May",
+                                "ACTIVE",
+                                null,
+                                null);
                 leagueService.createLeague(championsLeague);
 
                 System.out.println("FootballTix leagues created successfully!");
@@ -165,7 +158,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Old Trafford, Manchester",
                                 LocalDateTime.now().plusDays(15).withHour(16).withMinute(30),
                                 75000,
-                                new BigDecimal("95.00"));
+                                new BigDecimal("95.00"),
+                                null);
                 eventService.createEvent(event1);
 
                 // Match 2: Chelsea vs Arsenal
@@ -178,7 +172,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Stamford Bridge, London",
                                 LocalDateTime.now().plusDays(21).withHour(15).withMinute(0),
                                 40000,
-                                new BigDecimal("85.00"));
+                                new BigDecimal("85.00"),
+                                null);
                 eventService.createEvent(event2);
 
                 // Match 3: Manchester City vs Tottenham
@@ -191,7 +186,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Etihad Stadium, Manchester",
                                 LocalDateTime.now().plusDays(22).withHour(14).withMinute(0),
                                 55000,
-                                new BigDecimal("75.00"));
+                                new BigDecimal("75.00"),
+                                null);
                 eventService.createEvent(event3);
 
                 // La Liga Matches
@@ -204,19 +200,22 @@ public class DataInitializer implements CommandLineRunner {
                                 "Santiago Bernabéu, Madrid",
                                 LocalDateTime.now().plusDays(25).withHour(20).withMinute(0),
                                 90000,
-                                new BigDecimal("150.00"));
+                                new BigDecimal("150.00"),
+                                null);
                 eventService.createEvent(event4);
 
                 EventDTO event5 = new EventDTO(
-                                null,
-                                "Atletico Madrid vs Sevilla",
-                                "Madrid derby action! Atletico Madrid take on Sevilla in an exciting La Liga match. " +
-                                                "The Wanda Metropolitano will be rocking as these two competitive teams fight for European spots. " +
-                                                "Experience the passion of Spanish football!",
-                                "Wanda Metropolitano, Madrid",
-                                LocalDateTime.now().plusDays(18).withHour(19).withMinute(30),
-                                68000,
-                                new BigDecimal("65.00"));
+    null,
+    "Atletico Madrid vs Sevilla",
+    "Madrid derby action! Atletico Madrid take on Sevilla in an exciting La Liga match. " +
+    "The Wanda Metropolitano will be rocking as these two competitive teams fight for European spots. " +
+    "Experience the passion of Spanish football!",
+    "Wanda Metropolitano, Madrid",
+    LocalDateTime.now().plusDays(18).withHour(19).withMinute(30),
+    68000,
+    new BigDecimal("65.00"),
+    null
+);
                 eventService.createEvent(event5);
 
                 // Bundesliga Matches
@@ -229,7 +228,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Allianz Arena, Munich",
                                 LocalDateTime.now().plusDays(30).withHour(20).withMinute(30),
                                 75000,
-                                new BigDecimal("120.00"));
+                                new BigDecimal("120.00"),
+                                null);
                 eventService.createEvent(event6);
 
                 EventDTO event7 = new EventDTO(
@@ -241,7 +241,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Red Bull Arena, Leipzig",
                                 LocalDateTime.now().plusDays(12).withHour(17).withMinute(30),
                                 47000,
-                                new BigDecimal("55.00"));
+                                new BigDecimal("55.00"),
+                                null);
                 eventService.createEvent(event7);
 
                 // Serie A Matches
@@ -254,7 +255,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "San Siro, Milan",
                                 LocalDateTime.now().plusDays(28).withHour(20).withMinute(45),
                                 80000,
-                                new BigDecimal("110.00"));
+                                new BigDecimal("110.00"),
+                                null);
                 eventService.createEvent(event8);
 
                 EventDTO event9 = new EventDTO(
@@ -266,7 +268,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Allianz Stadium, Turin",
                                 LocalDateTime.now().plusDays(35).withHour(20).withMinute(30),
                                 41000,
-                                new BigDecimal("95.00"));
+                                new BigDecimal("95.00"),
+                                null);
                 eventService.createEvent(event9);
 
                 // Ligue 1 Matches
@@ -279,7 +282,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Parc des Princes, Paris",
                                 LocalDateTime.now().plusDays(32).withHour(21).withMinute(0),
                                 48000,
-                                new BigDecimal("130.00"));
+                                new BigDecimal("130.00"),
+                                null);
                 eventService.createEvent(event10);
 
                 EventDTO event11 = new EventDTO(
@@ -291,21 +295,23 @@ public class DataInitializer implements CommandLineRunner {
                                 "Groupama Stadium, Lyon",
                                 LocalDateTime.now().plusDays(19).withHour(20).withMinute(0),
                                 59000,
-                                new BigDecimal("70.00"));
+                                new BigDecimal("70.00"),
+                                null);
                 eventService.createEvent(event11);
-
-                // Champions League Matches
-                EventDTO event12 = new EventDTO(
-                                null,
-                                "Real Madrid vs Manchester City",
-                                "Champions League Quarter-Final! European football's elite clash as Real Madrid face Manchester City. " +
-                                                "The Santiago Bernabéu will host this epic Champions League encounter. " +
-                                                "Witness the best of European football in this must-see match!",
-                                "Santiago Bernabéu, Madrid",
-                                LocalDateTime.now().plusDays(45).withHour(21).withMinute(0),
-                                90000,
-                                new BigDecimal("200.00"));
-                eventService.createEvent(event12);
+// Champions League Matches
+EventDTO event12 = new EventDTO(
+    null,
+    "Real Madrid vs Manchester City",
+    "Champions League Quarter-Final! European football's elite clash as Real Madrid face Manchester City. " +
+    "The Santiago Bernabéu will host this epic Champions League encounter. " +
+    "Witness the best of European football in this must-see match!",
+    "Santiago Bernabéu, Madrid",
+    LocalDateTime.now().plusDays(45).withHour(21).withMinute(0),
+    90000,
+    new BigDecimal("200.00"),
+    null
+);
+eventService.createEvent(event12);
 
                 System.out.println("FootballTix events created successfully! All major leagues covered.");
         }
