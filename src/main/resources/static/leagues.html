@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootballTix - Leagues</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8fafc;
+        }
+        .hero-pattern {
+            background-color: #1e40af;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .league-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .league-banner {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
+                    <a href="events.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                    <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
+                    <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
+                    <a href="about.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">About</a>
+                </div>
+                <div class="flex items-center">
+                    <a href="login.html" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-pattern text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Football Leagues</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">Discover the world's greatest football competitions</p>
+                
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <input type="text" id="search-input" 
+                               class="w-full px-6 py-4 text-gray-900 bg-white rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               placeholder="Search leagues by name or country...">
+                        <button onclick="searchLeagues()" 
+                                class="absolute right-2 top-2 bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-md transition duration-150 ease-in-out">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="bg-white py-8 border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex space-x-4">
+                    <button id="all-filter" class="px-4 py-2 bg-blue-700 text-white rounded-lg text-sm font-medium">All Leagues</button>
+                    <button id="active-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Active</button>
+                    <button id="england-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">England</button>
+                    <button id="spain-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Spain</button>
+                    <button id="germany-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Germany</button>
+                    <button id="italy-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Italy</button>
+                    <button id="france-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">France</button>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="grid-view" class="px-4 py-2 bg-blue-700 text-white rounded-lg text-sm font-medium">Grid</button>
+                    <button id="list-view" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leagues Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Loading State -->
+        <div id="loading-state" class="text-center py-12">
+            <div class="spinner mx-auto mb-4"></div>
+            <div class="text-gray-600">Loading leagues...</div>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="text-center py-12 hidden">
+            <div class="text-red-600 mb-4">Failed to load leagues</div>
+            <button onclick="loadLeagues()" class="bg-blue-700 text-white px-4 py-2 rounded-lg">Try Again</button>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="text-center py-12 hidden">
+            <div class="max-w-md mx-auto">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">No leagues found</h3>
+                <p class="text-gray-600 mb-6">Try adjusting your search or filter criteria.</p>
+                <button onclick="loadLeagues()" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium transition duration-150 ease-in-out">
+                    View All Leagues
+                </button>
+            </div>
+        </div>
+
+        <!-- Leagues Grid -->
+        <div id="leagues-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Leagues will be populated here -->
+        </div>
+    </div>
+
+    <!-- League Stats Section -->
+    <div class="bg-gray-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">League Statistics</h3>
+                <p class="text-gray-600">Overview of our football leagues</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-2" id="total-leagues">0</div>
+                    <div class="text-gray-600">Total Leagues</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                    <div class="text-3xl font-bold text-green-600 mb-2" id="active-leagues">0</div>
+                    <div class="text-gray-600">Active Leagues</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-2" id="total-teams">0</div>
+                    <div class="text-gray-600">Total Teams</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                    <div class="text-3xl font-bold text-orange-600 mb-2" id="total-events">0</div>
+                    <div class="text-gray-600">Total Events</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold">FootballTix</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="events.html" class="text-gray-400 hover:text-white">Matches</a></li>
+                        <li><a href="bookings.html" class="text-gray-400 hover:text-white">My Bookings</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Leagues</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Refund Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>support@footballtix.com</li>
+                        <li>+44 123 456 7890</li>
+                        <li>123 Stadium Street, London</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2023 FootballTix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/leagues.js"></script>
+</body>
+</html> 
