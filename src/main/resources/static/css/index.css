@@ -1,82 +1,35 @@
 /* events.css */
 
-/* Efek transisi halus untuk semua elemen interaktif */
-a,
-button {
-    transition: all 0.3s ease-in-out;
+.table-row:hover {
+  background-color: #1f2937;
+  /* bg-gray-700 */
+  transition: background-color 0.3s ease;
 }
 
-/* Tombol animasi */
-a.cta-button {
-    transform: scale(1);
-}
-
-a.cta-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.5);
-    /* Biru */
-}
-
-/* Kartu konten */
 .card {
-    background-color: rgba(31, 41, 55, 0.8);
-    /* bg-gray-800 + opacity */
-    backdrop-filter: blur(4px);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background-color: rgba(31, 41, 55, 0.8);
+  /* bg-gray-800 + opacity */
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .card:hover {
-    background-color: rgba(31, 41, 55, 0.9);
-    transform: translateY(-4px);
+  background-color: rgba(31, 41, 55, 0.9);
+  transform: translateY(-4px);
 }
 
-/* Header branding */
-h1 {
-    font-weight: 800;
-    letter-spacing: 1px;
+.status-confirmed {
+  color: #34d399;
+  font-weight: 600;
 }
-
-/* Halaman responsif dan tengah */
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+.status-cancelled {
+  color: #f87171;
+  font-weight: 600;
 }
-
-main {
-    flex: 1;
-}
-
-/* Footer gaya */
-footer p {
-    font-size: 0.9rem;
-    color: #9ca3af;
-    /* Tailwind gray-400 */
-}
-
-/* Tambahan animasi teks atau judul */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.card h3 {
-    animation: fadeInUp 0.5s ease forwards;
-
-    /* Overlay dan Reset */
-    body,
-    html {
-        margin: 0;
-        padding: 0;
-    }
+.status-completed {
+  color: #fbbf24;
+  font-weight: 600;
 }
