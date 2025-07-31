@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface EventService {
     void createEvent(EventDTO eventDTO);
+    void updateEvent(Long id, EventDTO eventDTO);
+    void deleteEvent(Long id);
 
     List<EventDTO> getAllEvents();
 
