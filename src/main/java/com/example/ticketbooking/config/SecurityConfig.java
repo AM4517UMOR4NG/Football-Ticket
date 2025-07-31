@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/**/*.js")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/events/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/leagues/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/api/bookings/**")).authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
