@@ -39,6 +39,9 @@ public class Event {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Enumerated(EnumType.STRING)
     private EventStatus status = EventStatus.ACTIVE;
 
