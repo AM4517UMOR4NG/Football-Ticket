@@ -26,6 +26,7 @@ public class EventServiceImpl implements EventService {
         event.setEventDate(eventDTO.eventDate());
         event.setTotalSeats(eventDTO.totalSeats());
         event.setPrice(eventDTO.price());
+        event.setImageUrl(eventDTO.imageUrl());
         event.setAvailableSeats(eventDTO.totalSeats());
         eventRepository.save(event);
     }
@@ -68,6 +69,35 @@ public class EventServiceImpl implements EventService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void updateEvent(Long id, EventDTO eventDTO) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+        event.setTitle(eventDTO.title());
+        event.setDescription(eventDTO.description());
+        event.setVenue(eventDTO.venue());
+        event.setEventDate(eventDTO.eventDate());
+        event.setTotalSeats(eventDTO.totalSeats());
+        event.setPrice(eventDTO.price());
+        event.setImageUrl(eventDTO.imageUrl());
+        event.setAvailableSeats(eventDTO.totalSeats());
+        if (eventDTO.leagueId() != null) {
+            event.setLeague(new com.example.ticketbooking.entity.League());
+            event.getLeague().setId(eventDTO.leagueId());
+        } else {
+            event.setLeague(null);
+        }
+        eventRepository.save(event);
+    }
+
+    @Override
+    public void deleteEvent(Long id) {
+        if (!eventRepository.existsById(id)) {
+            throw new RuntimeException("Event not found");
+        }
+        eventRepository.deleteById(id);
+    }
+
     private EventDTO mapToDTO(Event event) {
         return new EventDTO(
                 event.getId(),
@@ -76,7 +106,9 @@ public class EventServiceImpl implements EventService {
                 event.getVenue(),
                 event.getEventDate(),
                 event.getTotalSeats(),
-                event.getPrice()
+                event.getPrice(),
+                event.getImageUrl(),
+                event.getLeague() != null ? event.getLeague().getId() : null
         );
     }
 
