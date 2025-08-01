@@ -11,6 +11,7 @@ public record EventDTO(
         LocalDateTime eventDate,
         Integer totalSeats,
         BigDecimal price,
+        String imageUrl,
         Long leagueId
 ) {
 }
