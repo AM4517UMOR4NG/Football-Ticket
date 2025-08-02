@@ -44,6 +44,38 @@ public class BookingController {
         }
     }
 
+    @PostMapping("/{bookingId}/cancel")
+    public ResponseEntity<?> cancelBooking(@PathVariable Long bookingId, @RequestParam Long userId) {
+        try {
+            BookingResponseDTO response = bookingService.cancelBooking(bookingId, userId);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error("Error cancelling booking: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(new ErrorResponse("Failed to cancel booking", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/{bookingId}/confirm")
+    public ResponseEntity<?> confirmBooking(@PathVariable Long bookingId, @RequestParam Long userId) {
+        try {
+            BookingResponseDTO response = bookingService.confirmBooking(bookingId, userId);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error("Error confirming booking: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(new ErrorResponse("Failed to confirm booking", e.getMessage()));
+        }
+    }
+
+    static class ErrorResponse {
+        public String error;
+        public String detail;
+
+        public ErrorResponse(String error, String detail) {
+            this.error = error;
+            this.detail = detail;
+        }
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getUserBookings(@PathVariable Long userId) {
         try {
