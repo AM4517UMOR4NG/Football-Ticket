@@ -162,6 +162,12 @@ function handleLoginSuccess(response) {
     if (response.data.user) {
         localStorage.setItem('userData', JSON.stringify(response.data.user));
     }
+    if (response.data.role) {
+        localStorage.setItem('userRole', response.data.role);
+    }
+    if (response.data.username) {
+        localStorage.setItem('username', response.data.username);
+    }
 
     localStorage.setItem('loginTime', new Date().toISOString());
 
