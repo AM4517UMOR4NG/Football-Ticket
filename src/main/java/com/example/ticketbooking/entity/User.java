@@ -2,10 +2,12 @@ package com.example.ticketbooking.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Data
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +25,7 @@ public class User {
     private String fullName;
     private String phoneNumber;
     private String role;
+
+    // Default constructor (required by Hibernate)
+    public User() {}
 }
