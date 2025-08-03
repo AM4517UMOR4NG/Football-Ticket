@@ -47,8 +47,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "The Premier League is the top level of the English football league system. Contested by 20 clubs, it operates on a system of promotion and relegation with the English Football League.",
                                 "England",
                                 1992,
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop",
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/id/f/f2/Premier_League_Logo.svg",
+                                "https://upload.wikimedia.org/wikipedia/id/f/f2/Premier_League_Logo.svg",
                                 20,
                                 "August",
                                 "May",
@@ -64,8 +64,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "La Liga is the men's top professional football division of the Spanish football league system. It is contested by 20 teams, with the three lowest-placed teams relegated to the Segunda División.",
                                 "Spain",
                                 1929,
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop",
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/commons/5/54/LaLiga_EA_Sports_2023_Vertical_Logo.svg",
+                                "https://upload.wikimedia.org/wikipedia/commons/5/54/LaLiga_EA_Sports_2023_Vertical_Logo.svg",
                                 20,
                                 "August",
                                 "May",
@@ -81,8 +81,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "The Bundesliga is a professional association football league in Germany. At the top of the German football league system, the Bundesliga is Germany's primary football competition.",
                                 "Germany",
                                 1963,
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop",
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/en/d/df/Bundesliga_logo_%282017%29.svg",
+                                "https://upload.wikimedia.org/wikipedia/en/d/df/Bundesliga_logo_%282017%29.svg",
                                 18,
                                 "August",
                                 "May",
@@ -98,8 +98,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Serie A is a professional league competition for football clubs located at the top of the Italian football league system and the winner is awarded the Coppa Campioni d'Italia.",
                                 "Italy",
                                 1898,
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop",
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/id/2/25/Serie_A_ENILIVE_logo.png",
+                                "https://upload.wikimedia.org/wikipedia/id/2/25/Serie_A_ENILIVE_logo.png",
                                 20,
                                 "August",
                                 "May",
@@ -115,8 +115,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Ligue 1 is a French professional league for men's association football clubs. At the top of the French football league system, it is the country's primary football competition.",
                                 "France",
                                 1932,
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop",
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/commons/7/7b/Logo_Ligue_1_McDonald%27s_2024.svg",
+                                "https://upload.wikimedia.org/wikipedia/commons/7/7b/Logo_Ligue_1_McDonald%27s_2024.svg",
                                 20,
                                 "August",
                                 "May",
@@ -132,8 +132,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "The UEFA Champions League is an annual club football competition organised by the Union of European Football Associations and contested by top-division European clubs.",
                                 "Europe",
                                 1955,
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop",
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/commons/b/b5/UEFA_logo.svg",
+                                "https://upload.wikimedia.org/wikipedia/commons/b/b5/UEFA_logo.svg",
                                 32,
                                 "September",
                                 "May",
@@ -159,7 +159,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(15).withHour(16).withMinute(30),
                                 75000,
                                 new BigDecimal("95.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/commons/c/cf/2009-3-14_ManUtd_vs_LFC_Ronaldo_Tackling.JPG",
                                 null);
                 eventService.createEvent(event1);
 
@@ -174,7 +174,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(21).withHour(15).withMinute(0),
                                 40000,
                                 new BigDecimal("85.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/commons/4/4b/Chelsea_vs._Arsenal%2C_29_May_2019_13.jpg",
                                 null);
                 eventService.createEvent(event2);
 
@@ -189,7 +189,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(22).withHour(14).withMinute(0),
                                 55000,
                                 new BigDecimal("75.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://upload.wikimedia.org/wikipedia/commons/8/8e/Free_Kick_Discussion_%2836593751686%29.jpg",
                                 null);
                 eventService.createEvent(event3);
 
@@ -204,7 +204,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(25).withHour(20).withMinute(0),
                                 90000,
                                 new BigDecimal("150.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://img.okezone.com/content/2020/12/08/261/2323551/senang-bisa-saksikan-pertarungan-messi-vs-ronaldo-bonucci-mereka-alien-QAcg70oLzn.jpg",
                                 null);
                 eventService.createEvent(event4);
 
@@ -218,7 +218,7 @@ public class DataInitializer implements CommandLineRunner {
     LocalDateTime.now().plusDays(18).withHour(19).withMinute(30),
     68000,
     new BigDecimal("65.00"),
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+    "https://english.ahram.org.eg/Media/News/2023/12/23/41_2023-638389580607985899-798.jpg",
     null
 );
                 eventService.createEvent(event5);
@@ -234,7 +234,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(30).withHour(20).withMinute(30),
                                 75000,
                                 new BigDecimal("120.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://assets-bundesliga-com.translate.goog/contender/2025/3/1920-1080-max.jpg?fit=1140,https://www-bundesliga-com.translate.goog/en/bundesliga/news/1140?_x_tr_sl%3Den&_x_tr_sl=en&_x_tr_tl=id&_x_tr_hl=id&_x_tr_pto=imgs",
                                 null);
                 eventService.createEvent(event6);
 
@@ -248,7 +248,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(12).withHour(17).withMinute(30),
                                 47000,
                                 new BigDecimal("55.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://assets.bundesliga.com/contender/2025/0/SMCS_Team-H2H_RBLB04_16-9.jpg?crop=285px,0px,1350px,1080px&fit=540,540",
                                 null);
                 eventService.createEvent(event7);
 
@@ -263,7 +263,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(28).withHour(20).withMinute(45),
                                 80000,
                                 new BigDecimal("110.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://asset-2.tstatic.net/bangka/foto/bank/images/2024021-ac-Milan-vs-Inter-Milan.jpg",
                                 null);
                 eventService.createEvent(event8);
 
@@ -277,7 +277,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(35).withHour(20).withMinute(30),
                                 41000,
                                 new BigDecimal("95.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://asset-2.tstatic.net/medan/foto/bank/originals/Napoli-vs-juventus-link.jpg",
                                 null);
                 eventService.createEvent(event9);
 
@@ -292,7 +292,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(32).withHour(21).withMinute(0),
                                 48000,
                                 new BigDecimal("130.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://wp.clutchpoints.com/wp-content/uploads/2023/02/Ligue-1-Odds-Marseille-vs.-PSG-prediction-pick-how-to-watch.jpg?w=1200",
                                 null);
                 eventService.createEvent(event10);
 
@@ -306,7 +306,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDateTime.now().plusDays(19).withHour(20).withMinute(0),
                                 59000,
                                 new BigDecimal("70.00"),
-                                "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+                                "https://www.thesun.co.uk/wp-content/uploads/2017/10/sport-preview-lyon.jpg?w=620",
                                 null);
                 eventService.createEvent(event11);
 // Champions League Matches
@@ -320,7 +320,7 @@ EventDTO event12 = new EventDTO(
     LocalDateTime.now().plusDays(45).withHour(21).withMinute(0),
     90000,
     new BigDecimal("200.00"),
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+    "https://img2.beritasatu.com/cache/beritasatu/480x310-2/2023/05/1683603654-910x580.webp",
     null
 );
 eventService.createEvent(event12);
