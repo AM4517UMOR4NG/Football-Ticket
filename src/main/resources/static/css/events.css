@@ -1,34 +1,70 @@
 /* css/events.css */
-.table-row:hover {
-    background-color: #1f2937;
-    /* bg-gray-700 */
-    transition: background-color 0.3s ease;
+
+/* Base styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8fafc;
 }
 
-.spinner {
-    border: 4px solid #f3f4f6;
-    border-top: 4px solid #3b82f6;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
+/* Hero pattern */
+.hero-pattern {
+    background-color: #1e40af;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
+/* Match card hover effect */
+.match-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.match-card:hover img {
+    transform: scale(1.1);
+}
+
+/* League badge */
+.league-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Filter card */
+.filter-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Animations */
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
     }
-
-    100% {
-        transform: rotate(360deg);
+    50% {
+        transform: translateY(-20px);
     }
 }
 
-.low-stock {
-    background-color: #f87171;
-    /* bg-red-400 */
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
+.animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Event image transition */
+.event-image {
+    transition: transform 0.3s ease-in-out;
+}
+
+.match-card:hover .event-image {
+    transform: scale(1.05);
+}
+
+/* Navigation alignment */
+nav .hidden.md\:flex {
+    margin-left: auto;
+}
+
+#mobile-menu .px-2.pt-2.pb-3 {
+    text-align: right;
 }
