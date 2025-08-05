@@ -40,6 +40,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    
+
     @PostConstruct
     public void initDefaultAdmin() {
         createDefaultAdminIfNotExists();
@@ -102,19 +104,19 @@ public class UserService {
     }
 
     private void createDefaultUserIfNotExists() {
-        if (userRepository.findByUsername("user1").isEmpty()) {
+        if (userRepository.findByUsername("").isEmpty()) {
             UserRegistrationDTO userDto = new UserRegistrationDTO(
-                    "user1",
-                    "user1@example.com",
-                    "User.1234",
-                    "Default User",
-                    "081234567899",
-                    "USER");
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "");
 
             if (isPasswordValid(userDto.password())) {
                 User user = createUserFromDTO(userDto);
                 userRepository.save(user);
-                log.info("Default user 'user1' created successfully");
+                log.info("Default user '' created successfully");
             } else {
                 log.error("Failed to create default user: invalid password");
             }
