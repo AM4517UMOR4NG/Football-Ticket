@@ -196,10 +196,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Support
 
 For support and questions, please contact:
-- Email: support@footballtix.com
-- Phone: +44 123 456 7890
+- Email: aekmohop@gmail.com
 
 ---
 
-**FootballTix** - Your trusted source for football tickets worldwide! ⚽
+**FootballTix** - Sui
 
