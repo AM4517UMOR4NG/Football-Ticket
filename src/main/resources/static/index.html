@@ -1,62 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ticket Booking - Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootballTix - Your Premier Football Ticketing Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
-
-<body class="bg-cover bg-center bg-no-repeat text-white font-sans relative" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2e/Ronaldo_in_2018.jpg');">
-    <!-- Overlay gelap -->
-    <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
-    <!-- Sidebar Overlay for mobile -->
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-10 hidden transition-opacity duration-300"></div>
-    <!-- Tombol Hamburger -->
-    <button id="openSidebarBtn" class="fixed top-4 left-4 z-30 bg-gray-800 bg-opacity-70 p-2 rounded-md hover:bg-opacity-90 focus:outline-none transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-    </button>
-    <!-- Background Animation -->
-    <div class="football-animation absolute inset-0 z-0"></div>
-    <div class="relative z-10 flex min-h-screen">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="w-72 bg-white bg-opacity-10 backdrop-blur-lg border-r border-gray-700 p-6 space-y-8 shadow-2xl rounded-tr-3xl rounded-br-3xl transition-all duration-300 transform -translate-x-full fixed h-full z-20">
-            <!-- Tombol Close (X) -->
-            <button id="closeSidebarBtn" class="absolute top-4 right-4 text-white bg-gray-700 bg-opacity-60 rounded-full p-2 hover:bg-opacity-90 focus:outline-none transition-all duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            <div class="flex items-center space-x-3 mb-10">
-                <span class="text-3xl"></span>
-                <h2 class="text-2xl font-extrabold tracking-wide text-white drop-shadow-lg">Ticket Booking</h2>
+<body class="bg-gray-50 font-montserrat">
+    <!-- Skip to content link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:z-50 focus:text-blue-700 focus:font-bold">Skip to main content</a>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
+                        <a href="events.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                        <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
+                        <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
+                        <a href="admin-dashboard.html" id="admin-link" class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                        <a href="#" id="logout-link" class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
+                    </div>
+                    <a href="login.html" id="login-link" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign In</a>
+                </div>
             </div>
-            <nav class="space-y-6">
-                <a href="#" class="flex items-center text-white hover:bg-blue-500 hover:bg-opacity-20 px-4 py-2 rounded-lg transition-all duration-200">
-                    <span class="text-xl mr-3"></span> <span class="font-medium">Home</span>
-                </a>
-                <a href="events.html" class="flex items-center text-white hover:bg-blue-500 hover:bg-opacity-20 px-4 py-2 rounded-lg transition-all duration-200">
-                    <span class="text-xl mr-3"></span> <span class="font-medium">Matches</span>
-                </a>
-                <a href="bookings.html" class="flex items-center text-white hover:bg-blue-500 hover:bg-opacity-20 px-4 py-2 rounded-lg transition-all duration-200">
-                    <span class="text-xl mr-3"></span> <span class="font-medium">My Bookings</span>
-                </a>
-                <a href="login.html" id="logoutLink" class="flex items-center text-red-400 hover:text-red-600 hover:bg-red-100 hover:bg-opacity-10 px-4 py-2 rounded-lg mt-8 transition-all duration-200">
-                    <span class="text-xl mr-3"></span> <span class="font-medium">Logout</span>
-                </a>
-            </nav>
-        </aside>
-        <!-- Main Content -->
-        <main class="flex-grow relative p-6 ml-0 lg:ml-64 transition-all duration-300">
-            <h1 class="text-3xl font-bold mb-4">Welcome to Ticket Booking</h1>
-            <p class="text-gray-300">Explore exciting events and manage your bookings with ease. Start by checking out the latest matches!</p>
-        </main>
-    </div>
-    <script src="js/index.js"></script>
-</body>
+        </div>
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-blue-700">Home</a>
+                <a href="events.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                <a href="bookings.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
+                <a href="leagues.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">Leagues</a>
+                <a href="admin-dashboard.html" id="admin-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                <a href="#" id="logout-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
+            </div>
+        </div>
+    </nav>
 
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-700 bg-blue-50">Home</a>
+                <a href="events.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Matches</a>
+                <a href="bookings.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">My Bookings</a>
+                <a href="leagues.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Leagues</a>
+                <a href="admin-dashboard.html" id="admin-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                <a href="#" id="logout-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+  <!-- Highlight Carousel -->
+<div id="highlight-carousel" class="carousel-container relative overflow-hidden rounded-lg shadow-lg" role="region" aria-label="Featured highlights carousel">
+    <div class="flex justify-between items-center absolute top-4 left-4 right-4 z-20">
+        <h2 class="text-2xl font-bold text-white bg-black bg-opacity-50 px-4 py-2 rounded">🐐</h2>
+        <div class="carousel-controls flex space-x-2">
+            <button class="carousel-nav prev" aria-label="Previous slide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-nav next" aria-label="Next slide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    <div class="carousel-inner flex transition-transform duration-500 ease-in-out">
+        <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide" aria-label="Slide 1 of 3">
+            <img src="https://assets-bundesliga-com.translate.goog/contender/2025/3/1920-1080-max.jpg?fit=1140,https://www-bundesliga-com.translate.goog/en/bundesliga/news/1140?_x_tr_sl%3Den&_x_tr_sl=en&_x_tr_tl=id&_x_tr_hl=id&_x_tr_pto=imgs" alt="Football player celebrating a goal" class="w-full h-full object-cover" loading="lazy">
+            <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
+                <h3 class="text-xl font-bold mb-1">Premier League Highlights</h3>
+                <p>Top goals from the weekend's matches</p>
+            </div>
+        </div>
+        <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide" aria-label="Slide 2 of 3">
+            <img src="https://pontianakinfo.disway.id/upload/14532e16defeb3b82172a64d5e9123d1.jpeg" alt="Football stadium with fans" class="w-full h-full object-cover" loading="lazy">
+            <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
+                <h3 class="text-xl font-bold mb-1">Stadium Experience</h3>
+                <p>Feel the energy of live football</p>
+            </div>
+        </div>
+        <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide" aria-label="Slide 3 of 3">
+            <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Football on the pitch" class="w-full h-full object-cover" loading="lazy">
+            <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
+                <h3 class="text-xl font-bold mb-1">Matchday Preparation</h3>
+                <p>Behind the scenes of your favorite teams</p>
+            </div>
+        </div>
+    </div>
+    <!-- Indicators -->
+    <div class="carousel-indicators absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2" role="tablist" aria-label="Carousel slide indicators">
+        <button class="indicator w-3 h-3 rounded-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 active" role="tab" aria-selected="true" aria-controls="carousel-item-1"></button>
+        <button class="indicator w-3 h-3 rounded-full bg-gray-300 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" role="tab" aria-selected="false" aria-controls="carousel-item-2"></button>
+        <button class="indicator w-3 h-3 rounded-full bg-gray-300 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" role="tab" aria-selected="false" aria-controls="carousel-item-3"></button>
+    </div>
+</div>
+    <!-- Featured Matches -->
+    <div id="main-content" class="featured-matches max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Featured Matches</h2>
+            <a href="events.html" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                View All Matches <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Match 1: Man Utd vs Liverpool -->
+            <div class="match-card bg-white">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 flex justify-between items-center">
+                    <div>
+                        <div class="text-sm font-medium">Premier League</div>
+                        <div class="text-xs flex items-center">
+                            <i class="far fa-calendar mr-2"></i> Sun, 10 Aug 2025 • 16:30
+                        </div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-full px-3 py-1 text-xs">Matchday 1</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-red-200 p-1">
+                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Manchester-United-Logo.png" alt="Manchester United Logo" class="w-20 h-20 object-contain rounded-full">
+                            </div>
+                            <div class="font-semibold text-center">Man Utd</div>
+                        </div>
+                        <div class="text-xl font-bold text-gray-400">VS</div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-red-600 p-1">
+                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Liverpool-Logo.png" alt="Liverpool Logo" class="w-20 h-20 object-contain rounded-full">
+                            </div>
+                            <div class="font-semibold text-center">Liverpool</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-600 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> Old Trafford, Manchester
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="price-tag">From £95</div>
+                        <a href="#" class="ticket-button">
+                            <i class="fas fa-ticket-alt"></i> Buy Tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Match 2: Chelsea vs Arsenal -->
+            <div class="match-card bg-white">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 flex justify-between items-center">
+                    <div>
+                        <div class="text-sm font-medium">Premier League</div>
+                        <div class="text-xs flex items-center">
+                            <i class="far fa-calendar mr-2"></i> Sat, 16 Aug 2025 • 15:00
+                        </div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-full px-3 py-1 text-xs">Matchday 2</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-blue-600 p-1">
+                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Chelsea-Logo.png" alt="Chelsea Logo" class="w-20 h-20 object-contain rounded-full">
+                            </div>
+                            <div class="font-semibold text-center">Chelsea</div>
+                        </div>
+                        <div class="text-xl font-bold text-gray-400">VS</div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-red-500 p-1">
+                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Arsenal-Logo.png" alt="Arsenal Logo" class="w-20 h-20 object-contain rounded-full">
+                            </div>
+                            <div class="font-semibold text-center">Arsenal</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-600 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> Stamford Bridge, London
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="price-tag">From £85</div>
+                        <a href="#" class="ticket-button">
+                            <i class="fas fa-ticket-alt"></i> Buy Tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Match 3: Man City vs Tottenham -->
+            <div class="match-card bg-white">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 flex justify-between items-center">
+                    <div>
+                        <div class="text-sm font-medium">Premier League</div>
+                        <div class="text-xs flex items-center">
+                            <i class="far fa-calendar mr-2"></i> Sun, 17 Aug 2025 • 14:00
+                        </div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-full px-3 py-1 text-xs">Matchday 2</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-sky-400 p-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/id/e/eb/Manchester_City_FC_badge.svg" alt="Manchester City Logo" class="w-20 h-20 object-contain rounded-full">
+                            </div>
+                            <div class="font-semibold text-center">Man City</div>
+                        </div>
+                        <div class="text-xl font-bold text-gray-400">VS</div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-blue-800 p-1">
+                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Tottenham-Logo.png" alt="Tottenham Logo" class="w-20 h-20 object-contain rounded-full">
+                            </div>
+                            <div class="font-semibold text-center">Tottenham</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-600 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> Etihad Stadium, Manchester
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="price-tag">From £75</div>
+                        <a href="#" class="ticket-button">
+                            <i class="fas fa-ticket-alt"></i> Buy Tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leagues Section -->
+  \<div class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Popular Leagues</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <a href="leagues.html" class="league-card bg-white p-6 text-center hover:shadow-lg">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League" class="w-12 h-12 object-contain">
+                </div>
+                <div class="font-semibold text-gray-800">Premier League</div>
+                <div class="text-sm text-gray-500 mt-1">England</div>
+            </a>
+            <a href="leagues.html" class="league-card bg-white p-6 text-center hover:shadow-lg">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/id/2/25/Serie_A_ENILIVE_logo.png" alt="La Liga" class="w-12 h-12 object-contain">
+                </div>
+                <div class="font-semibold text-gray-800">La Liga</div>
+                <div class="text-sm text-gray-500 mt-1">Spain</div>
+            </a>
+            <a href="leagues.html" class="league-card bg-white p-6 text-center hover:shadow-lg">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/d/df/Bundesliga_logo_%282017%29.svg" alt="Bundesliga" class="w-12 h-12 object-contain">
+                </div>
+                <div class="font-semibold text-gray-800">Bundesliga</div>
+                <div class="text-sm text-gray-500 mt-1">Germany</div>
+            </a>
+            <a href="leagues.html" class="league-card bg-white p-6 text-center hover:shadow-lg">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/id/2/25/Serie_A_ENILIVE_logo.png" alt="Serie A" class="w-12 h-12 object-contain">
+                </div>
+                <div class="font-semibold text-gray-800">Serie A</div>
+                <div class="text-sm text-gray-500 mt-1">Italy</div>
+            </a>
+            <a href="leagues.html" class="league-card bg-white p-6 text-center hover:shadow-lg">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Ligue_1_2024_Logo.png" alt="Ligue 1" class="w-12 h-12 object-contain">
+                </div>
+                <div class="font-semibold text-gray-800">Ligue 1</div>
+                <div class="text-sm text-gray-500 mt-1">France</div>
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- Why Choose Us -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Why Choose FootballTix</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="feature-box p-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Guaranteed Authentic Tickets</h3>
+                <p class="text-gray-600">All tickets sold on our platform are 100% authentic and verified. Buy with confidence.</p>
+            </div>
+            <div class="feature-box p-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Best Price Guarantee</h3>
+                <p class="text-gray-600">We offer competitive pricing and transparent fees. No hidden charges, ever.</p>
+            </div>
+            <div class="feature-box p-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">24/7 Customer Support</h3>
+                <p class="text-gray-600">Our dedicated support team is available around the clock to assist with any questions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="bg-blue-700 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <h3 class="text-2xl font-bold mb-2">Never Miss a Match</h3>
+                    <p class="text-blue-100">Subscribe for exclusive deals and match updates</p>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <form class="flex flex-col sm:flex-row gap-2" aria-label="Newsletter subscription">
+                        <label for="newsletter-email" class="sr-only">Email address</label>
+                        <input type="email" id="newsletter-email" placeholder="Enter your email" class="flex-1 p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <button id="subscribe-button" type="submit" class="bg-blue-900 hover:bg-blue-950 text-white px-6 py-3 rounded-lg font-medium transition duration-150 ease-in-out">
+                            Subscribe
+                        </button>
+                    </form>
+                    <p class="text-blue-100 text-sm mt-2 text-center sm:text-left">We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-600 rounded-lg p-2 mr-2">
+                            <svg class="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold">FootballTix</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Popular Leagues</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Premier League</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">La Liga</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Bundesliga</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Serie A</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Ligue 1</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-500"></i>
+                            <span>123 Stadium Street, London, UK</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3 text-blue-500"></i>
+                            <span>+44 123 456 7890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-blue-500"></i>
+                            <span>support@footballtix.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <div class="flex flex-col md:flex-row justify-between">
+                    <p>&copy; 2023 FootballTix. All rights reserved.</p>
+                    <div class="flex space-x-4 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-white">Privacy Policy</a>
+                        <a href="#" class="hover:text-white">Terms of Service</a>
+                        <a href="#" class="hover:text-white">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/index.js"></script>
+    <script src="js/global.js"></script>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        });
+
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.querySelector('.carousel-inner');
+            const items = document.querySelectorAll('.carousel-item');
+            const indicators = document.querySelectorAll('.indicator');
+            const prevBtn = document.querySelector('.carousel-nav.prev');
+            const nextBtn = document.querySelector('.carousel-nav.next');
+            let currentIndex = 0;
+            const totalItems = items.length;
+
+            function initCarousel() {
+                updateCarousel();
+                setInterval(() => {
+                    currentIndex = (currentIndex + 1) % totalItems;
+                    updateCarousel();
+                }, 5000);
+            }
+
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                    indicator.setAttribute('aria-selected', index === currentIndex);
+                });
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            });
+
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+
+            initCarousel();
+        });
+
+        // Simulate login state
+        document.getElementById('login-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('logout-link').classList.remove('hidden');
+            document.getElementById('admin-link').classList.remove('hidden');
+            document.getElementById('logout-mobile-link').classList.remove('hidden');
+            document.getElementById('admin-mobile-link').classList.remove('hidden');
+            this.classList.add('hidden');
+        });
+
+        function handleLogout() {
+            document.getElementById('logout-link').classList.add('hidden');
+            document.getElementById('admin-link').classList.add('hidden');
+            document.getElementById('logout-mobile-link').classList.add('hidden');
+            document.getElementById('admin-mobile-link').classList.add('hidden');
+            document.getElementById('login-link').classList.remove('hidden');
+        }
+
+    </script>
+</body>
 </html>
