@@ -6,46 +6,9 @@
     <title>FootballTix - Leagues</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f8fafc;
-        }
-        .hero-pattern {
-            background-color: #1e40af;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .league-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .league-banner {
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    </style>
+    <link rel="stylesheet" href="css/leagues.css">
 </head>
-<body>
+<body class="font-montserrat bg-gray-100">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,35 +21,43 @@
                         <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
                     </div>
                 </div>
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
-                    <a href="events.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
-                    <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
-                    <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
-                    <a href="about.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">About</a>
-                </div>
-                <div class="flex items-center">
-                    <a href="login.html" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign In</a>
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
+                        <a href="events.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                        <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
+                        <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
+                        <a href="admin-dashboard.html" id="admin-link" class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                        <a href="#" id="logout-link" class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
+                    </div>
+                    <a href="login.html" id="login-link" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign In</a>
                 </div>
             </div>
         </div>
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-blue-700">Home</a>
+                <a href="events.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                <a href="bookings.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
+                <a href="leagues.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">Leagues</a>
+                <a href="admin-dashboard.html" id="admin-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                <a href="#" id="logout-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
+            </div>
+        </div>
     </nav>
-
+    <script src="js/global.js"></script>
     <!-- Hero Section -->
     <div class="hero-pattern text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Football Leagues</h1>
                 <p class="text-xl md:text-2xl mb-8 opacity-90">Discover the world's greatest football competitions</p>
-                
                 <!-- Search Bar -->
                 <div class="max-w-2xl mx-auto">
                     <div class="relative">
-                        <input type="text" id="search-input" 
-                               class="w-full px-6 py-4 text-gray-900 bg-white rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                               placeholder="Search leagues by name or country...">
-                        <button onclick="searchLeagues()" 
-                                class="absolute right-2 top-2 bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-md transition duration-150 ease-in-out">
+                        <input type="text" id="search-input" class="w-full px-6 py-4 text-gray-900 bg-white rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search leagues by name or country...">
+                        <button onclick="searchLeagues()" class="absolute right-2 top-2 bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-md transition duration-150 ease-in-out">
                             Search
                         </button>
                     </div>
@@ -94,7 +65,6 @@
             </div>
         </div>
     </div>
-
     <!-- Filter Section -->
     <div class="bg-white py-8 border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,7 +85,6 @@
             </div>
         </div>
     </div>
-
     <!-- Leagues Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Loading State -->
@@ -123,13 +92,11 @@
             <div class="spinner mx-auto mb-4"></div>
             <div class="text-gray-600">Loading leagues...</div>
         </div>
-
         <!-- Error State -->
         <div id="error-state" class="text-center py-12 hidden">
             <div class="text-red-600 mb-4">Failed to load leagues</div>
             <button onclick="loadLeagues()" class="bg-blue-700 text-white px-4 py-2 rounded-lg">Try Again</button>
         </div>
-
         <!-- Empty State -->
         <div id="empty-state" class="text-center py-12 hidden">
             <div class="max-w-md mx-auto">
@@ -145,13 +112,11 @@
                 </button>
             </div>
         </div>
-
         <!-- Leagues Grid -->
         <div id="leagues-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Leagues will be populated here -->
         </div>
     </div>
-
     <!-- League Stats Section -->
     <div class="bg-gray-50 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -179,7 +144,6 @@
             </div>
         </div>
     </div>
-
     <!-- Footer -->
     <footer class="bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -225,7 +189,6 @@
             </div>
         </div>
     </footer>
-
     <script src="js/leagues.js"></script>
 </body>
-</html> 
+</html>
