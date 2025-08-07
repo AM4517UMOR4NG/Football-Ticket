@@ -55,10 +55,18 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/auth/verify")
+    @GetMapping("/verify")
     public ResponseEntity<?> verifyToken(Authentication auth) {
         if (auth != null && auth.isAuthenticated()) {
-            return ResponseEntity.ok(new ApiResponse(true, "Token is valid"));
+            Object principal = auth.getPrincipal();
+            if (principal instanceof org.springframework.security.core.userdetails.UserDetails userDetails) {
+                String username = userDetails.getUsername();
+                com.example.ticketbooking.entity.User user = userService.findByUsername(username).orElse(null);
+                if (user != null) {
+                    return ResponseEntity.ok(user);
+                }
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(false, "User not found"));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(false, "Invalid token"));
     }
