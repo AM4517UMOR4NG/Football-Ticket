@@ -30,7 +30,9 @@
                         <a href="events.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
                         <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
                         <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
+                        <a href="profile.html" id="profile-link" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700 hidden">Profile</a>
                         <a href="admin-dashboard.html" id="admin-link" class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                        <a href="admin-profile.html" id="admin-profile-link" class="px-3 py-2 rounded-md text-sm font-medium text-orange-500 hover:text-orange-700 hidden">Admin Profile</a>
                         <a href="#" id="logout-link" class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
                     </div>
                     <a href="login.html" id="login-link" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign In</a>
@@ -44,7 +46,9 @@
                 <a href="events.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">Matches</a>
                 <a href="bookings.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
                 <a href="leagues.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700">Leagues</a>
+                <a href="profile.html" id="profile-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700 hidden">Profile</a>
                 <a href="admin-dashboard.html" id="admin-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                <a href="admin-profile.html" id="admin-profile-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-orange-500 hover:text-orange-700 hidden">Admin Profile</a>
                 <a href="#" id="logout-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
             </div>
         </div>
@@ -402,8 +406,9 @@
                 <div class="flex flex-col md:flex-row justify-between">
                     <p>&copy; 2023 FootballTix. All rights reserved.</p>
                     <div class="flex space-x-4 mt-4 md:mt-0">
+                        <a href="faq.html" class="hover:text-white">FAQ</a>
+                        <a href="terms.html" class="hover:text-white">Terms & Conditions</a>
                         <a href="#" class="hover:text-white">Privacy Policy</a>
-                        <a href="#" class="hover:text-white">Terms of Service</a>
                         <a href="#" class="hover:text-white">Cookie Policy</a>
                     </div>
                 </div>
@@ -473,17 +478,25 @@
         document.getElementById('login-link').addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('logout-link').classList.remove('hidden');
+            document.getElementById('profile-link').classList.remove('hidden');
             document.getElementById('admin-link').classList.remove('hidden');
+            document.getElementById('admin-profile-link').classList.remove('hidden');
             document.getElementById('logout-mobile-link').classList.remove('hidden');
+            document.getElementById('profile-mobile-link').classList.remove('hidden');
             document.getElementById('admin-mobile-link').classList.remove('hidden');
+            document.getElementById('admin-profile-mobile-link').classList.remove('hidden');
             this.classList.add('hidden');
         });
 
         function handleLogout() {
             document.getElementById('logout-link').classList.add('hidden');
+            document.getElementById('profile-link').classList.add('hidden');
             document.getElementById('admin-link').classList.add('hidden');
+            document.getElementById('admin-profile-link').classList.add('hidden');
             document.getElementById('logout-mobile-link').classList.add('hidden');
+            document.getElementById('profile-mobile-link').classList.add('hidden');
             document.getElementById('admin-mobile-link').classList.add('hidden');
+            document.getElementById('admin-profile-mobile-link').classList.add('hidden');
             document.getElementById('login-link').classList.remove('hidden');
         }
 
