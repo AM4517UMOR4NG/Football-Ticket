@@ -4,6 +4,7 @@ import com.example.ticketbooking.entity.User;
 import com.example.ticketbooking.entity.Booking;
 import com.example.ticketbooking.repository.UserRepository;
 import com.example.ticketbooking.repository.BookingRepository;
+import com.example.ticketbooking.dto.BookingAdminDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -56,18 +58,25 @@ public class AdminDashboardController {
     // --- BOOKING ANALYTICS & MANAGEMENT ---
     @GetMapping("/bookings")
     @Transactional(readOnly = true)
-    public List<Booking> getAllBookings() {
-        List<Booking> bookings = bookingRepository.findAll();
-        // Initialize lazy-loaded user and event proxies within the transaction
-        bookings.forEach(booking -> {
-            if (booking.getUser() != null) {
-                booking.getUser().getId(); // Forces User proxy initialization
-            }
-            if (booking.getEvent() != null) {
-                booking.getEvent().getId(); // Forces Event proxy initialization
-            }
-        });
-        return bookings;
+    public java.util.List<BookingAdminDTO> getAllBookings() {
+        java.util.List<Booking> bookings = bookingRepository.findAll();
+        java.util.List<BookingAdminDTO> dtos = new ArrayList<>();
+        for (Booking booking : bookings) {
+            if (booking.getUser() == null || booking.getEvent() == null) continue;
+            BookingAdminDTO dto = new BookingAdminDTO();
+            dto.id = booking.getId();
+            dto.bookingReference = booking.getBookingReference();
+            dto.userId = booking.getUser().getId();
+            dto.username = booking.getUser().getUsername();
+            dto.eventId = booking.getEvent().getId();
+            dto.eventTitle = booking.getEvent().getTitle();
+            dto.numberOfTickets = booking.getNumberOfTickets();
+            dto.totalAmount = booking.getTotalAmount();
+            dto.status = booking.getStatus() != null ? booking.getStatus().name() : null;
+            dto.bookingDate = booking.getBookingDate();
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     @GetMapping("/bookings/stats")
