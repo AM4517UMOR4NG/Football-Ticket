@@ -53,6 +53,7 @@ public class Event {
     private League league;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Booking> bookings;
 
     public enum EventStatus {
