@@ -40,7 +40,41 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public boolean changePassword(String username, String currentPassword, String newPassword) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            return false;
+        }
+
+        User user = userOpt.get();
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            return false;
+        }
+
+        validatePassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return true;
+    }
+
+    public Long getUserBookingCount(Long userId) {
+        // This would need to be implemented with BookingRepository
+        return 0L; // Placeholder
+    }
+
+    public Long getUserActiveBookingCount(Long userId) {
+        // This would need to be implemented with BookingRepository
+        return 0L; // Placeholder
+    }
+
+    public Double getUserTotalSpent(Long userId) {
+        // This would need to be implemented with BookingRepository
+        return 0.0; // Placeholder
+    }
 
     @PostConstruct
     public void initDefaultAdmin() {
@@ -71,7 +105,7 @@ public class UserService {
         user.setEmail(registrationDTO.email());
         user.setPassword(passwordEncoder.encode(registrationDTO.password()));
         user.setFullName(registrationDTO.fullName());
-        user.setPhoneNumber(registrationDTO.phoneNumber());
+        user.setPhone(registrationDTO.phoneNumber());
 
         String role = determineUserRole(registrationDTO.role());
         user.setRole(role);
