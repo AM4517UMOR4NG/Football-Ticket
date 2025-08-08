@@ -24,10 +24,12 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"password", "hibernateLazyInitializer", "handler"})
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"bookings", "hibernateLazyInitializer", "handler"})
     private Event event;
 
     @Column(name = "number_of_tickets", nullable = false)
