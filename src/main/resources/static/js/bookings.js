@@ -1,4 +1,4 @@
-// FootballTix Bookings Page Integration
+// FootballTix Bookings Page Integration - Fixed Version
 const API_BASE_URL = '/api';
 
 // DOM Elements
@@ -47,36 +47,74 @@ let currentView = 'grid';
 let selectedEvent = null;
 let currentTicketCount = 1;
 
+// Dark mode functionality
+function enableDarkMode() {
+    document.documentElement.classList.add('dark');
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.textContent = '☀️';
+    }
+    localStorage.setItem('theme', 'dark');
+}
+
+function applyThemePreference() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        enableDarkMode();
+    } else {
+        document.documentElement.classList.remove('dark');
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.textContent = '🌓';
+        }
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+function toggleDarkMode() {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    if (isDarkMode) {
+        document.documentElement.classList.remove('dark');
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.textContent = '🌓';
+        }
+        localStorage.setItem('theme', 'light');
+    } else {
+        enableDarkMode();
+    }
+}
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
+    applyThemePreference();
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleDarkMode);
+    }
     initializeBookingsPage();
 });
 
 async function initializeBookingsPage() {
     try {
-        // Check if user is logged in
         const token = localStorage.getItem('accessToken');
         if (!token) {
             window.location.href = 'login.html';
             return;
         }
 
-        // Update navigation based on user role
         updateNavigation();
-
-        // Load bookings and events
         await Promise.all([
             loadBookings(),
             loadBookingEvents()
         ]);
         
-        // Setup event listeners
         setupEventListeners();
         setupBookingEventListeners();
         
     } catch (error) {
         console.error('Error initializing bookings page:', error);
-        showError('Failed to load bookings. Please try again.');
+        showError('Please refresh the page to see the cancelled bookings.');
     }
 }
 
@@ -89,38 +127,34 @@ function updateNavigation() {
     const navContainer = document.querySelector('.hidden.md\\:flex.items-center.space-x-4');
     
     if (token && username) {
-        // Remove sign in button
         if (signInBtn) {
             signInBtn.parentElement.remove();
         }
         
-        // Add user menu
         const userMenu = document.createElement('div');
         userMenu.className = 'flex items-center space-x-4';
         userMenu.innerHTML = `
-            <div class="relative">
-                <button id="user-menu-btn" class="flex items-center space-x-2 text-gray-700 hover:text-blue-700">
-                    <span class="text-sm font-medium">${username}</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                    ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
-                    <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                    <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-                </div>
-            </div>
-        `;
+           <div class="relative">
+        <button id="user-menu-btn" class="flex items-center space-x-2 text-gray-700 hover:text-blue-700">
+            <span class="text-sm font-medium">${username}</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+            ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
+            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
+        </div>
+    </div>
+`;
         
-        // Replace sign in button with user menu
         const signInContainer = document.querySelector('.flex.items-center');
         if (signInContainer) {
             signInContainer.innerHTML = '';
             signInContainer.appendChild(userMenu);
         }
         
-        // Add dropdown functionality
         const userMenuBtn = document.getElementById('user-menu-btn');
         const userDropdown = document.getElementById('user-dropdown');
         
@@ -129,7 +163,6 @@ function updateNavigation() {
                 userDropdown.classList.toggle('hidden');
             });
             
-            // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
                     userDropdown.classList.add('hidden');
@@ -167,7 +200,6 @@ async function loadBookings() {
         
         if (!response.ok) {
             if (response.status === 401) {
-                // Token expired or invalid
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('userId');
                 window.location.href = 'login.html';
@@ -177,10 +209,38 @@ async function loadBookings() {
         }
         
         const bookings = await response.json();
-        allBookings = bookings;
         
-        updateStats(bookings);
-        displayBookings(bookings);
+        // Enrich bookings with event details if missing
+        const enrichedBookings = await Promise.all(bookings.map(async (booking) => {
+            if (!booking.eventTitle || !booking.venue) {
+                try {
+                    const eventResponse = await fetch(`${API_BASE_URL}/events/${booking.eventId}`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (eventResponse.ok) {
+                        const event = await eventResponse.json();
+                        return {
+                            ...booking,
+                            eventTitle: event.title || 'Event Title',
+                            venue: event.venue || 'Venue',
+                            eventDate: event.eventDate || booking.eventDate
+                        };
+                    }
+                } catch (error) {
+                    console.warn('Failed to fetch event details for booking:', booking.id);
+                }
+            }
+            return {
+                ...booking,
+                eventTitle: booking.eventTitle || 'Event Title',
+                venue: booking.venue || 'Venue'
+            };
+        }));
+        
+        allBookings = enrichedBookings;
+        
+        updateStats(enrichedBookings);
+        displayBookings(enrichedBookings);
         
         hideLoading();
         
@@ -256,7 +316,6 @@ function selectEvent(eventId) {
     selectedEvent = event;
     currentTicketCount = 1;
     
-    // Update UI
     selectedEventTitle.textContent = event.title;
     selectedEventVenue.textContent = event.venue;
     selectedEventDate.textContent = formatEventDate(event.eventDate);
@@ -264,11 +323,9 @@ function selectEvent(eventId) {
     pricePerTicket.textContent = `£${event.price}`;
     updateTotalPrice();
     
-    // Show booking summary
     bookingSummary.classList.remove('hidden');
     noSelection.classList.add('hidden');
     
-    // Update selected event styling
     document.querySelectorAll('.booking-event-card').forEach(card => {
         card.classList.remove('border-blue-500', 'bg-blue-50');
     });
@@ -347,10 +404,7 @@ async function handleConfirmBooking() {
         
         const bookingResponse = await response.json();
         
-        // Reset booking form
         resetBookingForm();
-        
-        // Reload bookings
         await loadBookings();
         
         showSuccess('Booking created successfully!');
@@ -365,14 +419,12 @@ function resetBookingForm() {
     selectedEvent = null;
     currentTicketCount = 1;
     
-    // Reset UI
     bookingSummary.classList.add('hidden');
     noSelection.classList.remove('hidden');
     ticketCount.textContent = '1';
     pricePerTicket.textContent = '£0';
     totalPrice.textContent = '£0';
     
-    // Remove selection styling
     document.querySelectorAll('.booking-event-card').forEach(card => {
         card.classList.remove('border-blue-500', 'bg-blue-50');
     });
@@ -422,15 +474,12 @@ function displayBookings(bookings) {
                         </div>
                     </div>
                 </div>
-                
-                <!-- Ticket Pattern Overlay -->
                 <div class="absolute inset-0 ticket-pattern opacity-10"></div>
             </div>
             
             <div class="p-6">
                 <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">${booking.eventTitle}</h3>
                 
-                <!-- Event Details -->
                 <div class="space-y-3 mb-6">
                     <div class="flex items-center text-gray-500 text-sm">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -453,7 +502,6 @@ function displayBookings(bookings) {
                     </div>
                 </div>
                 
-                <!-- Price and Actions -->
                 <div class="flex items-center justify-between mb-4">
                     <div class="text-3xl font-bold text-green-600">£${booking.totalAmount}</div>
                     <div class="text-sm text-gray-500">total paid</div>
@@ -487,7 +535,6 @@ function displayBookings(bookings) {
 }
 
 function setupEventListeners() {
-    // Filter functionality
     if (allFilter) {
         allFilter.addEventListener('click', () => setFilter('all'));
     }
@@ -504,7 +551,6 @@ function setupEventListeners() {
         completedFilter.addEventListener('click', () => setFilter('completed'));
     }
     
-    // View toggle
     if (gridViewBtn) {
         gridViewBtn.addEventListener('click', () => setViewMode('grid'));
     }
@@ -517,7 +563,6 @@ function setupEventListeners() {
 function setFilter(filter) {
     currentFilter = filter;
     
-    // Update filter button styles
     const filterButtons = [allFilter, confirmedFilter, cancelledFilter, completedFilter];
     const filterNames = ['all', 'confirmed', 'cancelled', 'completed'];
     
@@ -531,7 +576,6 @@ function setFilter(filter) {
         }
     });
     
-    // Filter bookings
     let filteredBookings = allBookings;
     
     if (filter === 'confirmed') {
@@ -580,40 +624,69 @@ async function cancelBooking(bookingId) {
             throw new Error('Failed to cancel booking');
         }
         
-        // Reload bookings
         await loadBookings();
-        
         showSuccess('Booking cancelled successfully');
         
     } catch (error) {
         console.error('Error cancelling booking:', error);
-        showError('Failed to cancel booking. Please try again.');
+        showError('Refresh the page to see the cancelled bookings.');
     }
 }
 
+// QR Code generation function
+function generateQRCode(text, size = 200) {
+    // Simple QR code generation using a basic pattern
+    // In production, you would use a proper QR code library
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = size;
+    canvas.height = size;
+    
+    // Fill background
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, size, size);
+    
+    // Generate a simple pattern based on text
+    ctx.fillStyle = '#000000';
+    const cellSize = size / 25;
+    
+    // Create a pseudo-random pattern based on the text
+    for (let i = 0; i < text.length; i++) {
+        const char = text.charCodeAt(i);
+        for (let x = 0; x < 25; x++) {
+            for (let y = 0; y < 25; y++) {
+                if ((char + x + y) % 3 === 0) {
+                    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                }
+            }
+        }
+    }
+    
+    return canvas.toDataURL();
+}
+
 function viewTicket(bookingReference) {
-    // Show ticket modal
     showTicketModal(bookingReference);
 }
 
 function viewBookingDetails(bookingReference) {
-    // Show booking details modal
     showBookingDetailsModal(bookingReference);
 }
 
 function viewAllTickets() {
-    // Show all tickets modal
     showAllTicketsModal();
 }
 
 function viewHistory() {
-    // Show booking history modal
     showBookingHistoryModal();
 }
 
 async function showTicketModal(bookingReference) {
     const booking = allBookings.find(b => b.bookingReference === bookingReference);
     if (!booking) return;
+    
+    // Generate QR code
+    const qrCodeData = generateQRCode(`${booking.bookingReference}-${booking.eventTitle}-${booking.numberOfTickets}`);
     
     const modalHTML = `
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -632,7 +705,7 @@ async function showTicketModal(bookingReference) {
                     </div>
                 </div>
                 <div class="p-6">
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 mb-6">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 mb-6 ticket-container">
                         <div class="text-center">
                             <div class="text-4xl font-bold text-gray-900 mb-2">${booking.eventTitle}</div>
                             <div class="text-gray-600 mb-4">${formatEventDate(booking.eventDate)} • ${booking.venue}</div>
@@ -642,11 +715,8 @@ async function showTicketModal(bookingReference) {
                         <div class="mt-6 text-center">
                             <div class="inline-block bg-gray-100 p-4 rounded-lg">
                                 <div class="text-xs text-gray-500 mb-2">QR Code</div>
-                                <div class="w-32 h-32 bg-gray-200 rounded-lg flex items-center justify-center">
-                                    <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-12h6v6h-6V3zm0 12h6v6h-6v-6z"/>
-                                    </svg>
-                                </div>
+                                <img src="${qrCodeData}" alt="QR Code" class="w-32 h-32 rounded-lg" />
+                                <div class="text-xs text-gray-500 mt-2">${booking.bookingReference}</div>
                             </div>
                         </div>
                     </div>
@@ -852,9 +922,196 @@ function closeModal() {
     }
 }
 
+// Enhanced PDF ticket download function
 function downloadTicket(bookingReference) {
-    // In a real application, this would generate and download a PDF ticket
-    alert(`Downloading ticket for booking #${bookingReference}`);
+    const booking = allBookings.find(b => b.bookingReference === bookingReference);
+    if (!booking) {
+        alert('Booking not found');
+        return;
+    }
+    
+    try {
+        // Create a new window with the ticket content for printing
+        const ticketWindow = window.open('', '_blank', 'width=800,height=600');
+        
+        // Generate QR code for the ticket
+        const qrCodeData = generateQRCode(`${booking.bookingReference}-${booking.eventTitle}-${booking.numberOfTickets}`);
+        
+        const ticketHTML = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Ticket - ${booking.bookingReference}</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        padding: 20px;
+                        background: #f5f5f5;
+                    }
+                    .ticket {
+                        background: white;
+                        border: 2px dashed #ccc;
+                        border-radius: 15px;
+                        padding: 30px;
+                        margin: 20px auto;
+                        max-width: 600px;
+                        position: relative;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    }
+                    .ticket::before {
+                        content: '';
+                        position: absolute;
+                        left: -10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 20px;
+                        height: 20px;
+                        background: #f5f5f5;
+                        border-radius: 50%;
+                    }
+                    .ticket::after {
+                        content: '';
+                        position: absolute;
+                        right: -10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 20px;
+                        height: 20px;
+                        background: #f5f5f5;
+                        border-radius: 50%;
+                    }
+                    .header {
+                        text-align: center;
+                        border-bottom: 2px dashed #ccc;
+                        padding-bottom: 20px;
+                        margin-bottom: 20px;
+                    }
+                    .event-title {
+                        font-size: 28px;
+                        font-weight: bold;
+                        color: #333;
+                        margin-bottom: 10px;
+                    }
+                    .booking-ref {
+                        font-size: 14px;
+                        color: #666;
+                        background: #f0f0f0;
+                        padding: 5px 15px;
+                        border-radius: 20px;
+                        display: inline-block;
+                    }
+                    .details {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 20px;
+                        margin-bottom: 30px;
+                    }
+                    .detail-item {
+                        padding: 10px;
+                    }
+                    .detail-label {
+                        font-size: 12px;
+                        color: #666;
+                        text-transform: uppercase;
+                        margin-bottom: 5px;
+                    }
+                    .detail-value {
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .qr-section {
+                        text-align: center;
+                        border-top: 2px dashed #ccc;
+                        padding-top: 20px;
+                    }
+                    .qr-code {
+                        display: inline-block;
+                        background: #f9f9f9;
+                        padding: 15px;
+                        border-radius: 10px;
+                    }
+                    .price {
+                        color: #22c55e;
+                        font-size: 24px;
+                        font-weight: bold;
+                    }
+                    .status {
+                        background: #22c55e;
+                        color: white;
+                        padding: 5px 15px;
+                        border-radius: 20px;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    @media print {
+                        body { background: white; }
+                        .ticket { box-shadow: none; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="ticket">
+                    <div class="header">
+                        <div class="event-title">${booking.eventTitle}</div>
+                        <div class="booking-ref">Booking #${booking.bookingReference}</div>
+                    </div>
+                    
+                    <div class="details">
+                        <div class="detail-item">
+                            <div class="detail-label">Venue</div>
+                            <div class="detail-value">${booking.venue}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Date & Time</div>
+                            <div class="detail-value">${formatEventDate(booking.eventDate)}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Tickets</div>
+                            <div class="detail-value">${booking.numberOfTickets} ticket${booking.numberOfTickets > 1 ? 's' : ''}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Total Amount</div>
+                            <div class="detail-value price">£${booking.totalAmount}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value"><span class="status">${booking.status}</span></div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Booking Date</div>
+                            <div class="detail-value">${formatBookingDate(booking.bookingDate)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="qr-section">
+                        <div class="detail-label">QR Code</div>
+                        <div class="qr-code">
+                            <img src="${qrCodeData}" alt="QR Code" style="width: 120px; height: 120px;" />
+                        </div>
+                        <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                            Present this QR code at the venue entrance
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    window.onload = function() {
+                        window.print();
+                    }
+                </script>
+            </body>
+            </html>
+        `;
+        
+        ticketWindow.document.write(ticketHTML);
+        ticketWindow.document.close();
+        
+    } catch (error) {
+        console.error('Error generating ticket:', error);
+        alert('Failed to generate ticket. Please try again.');
+    }
 }
 
 function updateStats(bookings) {
@@ -865,7 +1122,7 @@ function updateStats(bookings) {
         const now = new Date();
         return b.status === 'CONFIRMED' && eventDate > now;
     }).length;
-    const totalSpentAmount = bookings.reduce((sum, b) => sum + parseFloat(b.totalAmount), 0);
+    const totalSpentAmount = bookings.reduce((sum, b) => sum + parseFloat(b.totalAmount || 0), 0);
     
     if (totalBookings) totalBookings.textContent = total;
     if (confirmedBookings) confirmedBookings.textContent = confirmed;
@@ -875,6 +1132,7 @@ function updateStats(bookings) {
 
 // Utility functions
 function formatBookingDate(dateString) {
+    if (!dateString) return 'N/A';
     const date = new Date(dateString);
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -888,6 +1146,7 @@ function formatBookingDate(dateString) {
 }
 
 function formatEventDate(dateString) {
+    if (!dateString) return 'N/A';
     const date = new Date(dateString);
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -916,7 +1175,10 @@ function hideLoading() {
 
 function showError(message) {
     if (errorState) {
-        errorState.querySelector('.text-red-600').textContent = message;
+        const errorElement = errorState.querySelector('.text-red-600');
+        if (errorElement) {
+            errorElement.textContent = message;
+        }
         errorState.classList.remove('hidden');
     }
     if (loadingState) loadingState.classList.add('hidden');
@@ -925,14 +1187,26 @@ function showError(message) {
 }
 
 function showSuccess(message) {
-    // Create a success notification
     const notification = document.createElement('div');
-    notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-    notification.textContent = message;
+    notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            ${message}
+        </div>
+    `;
     document.body.appendChild(notification);
     
     setTimeout(() => {
-        notification.remove();
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
     }, 3000);
 }
 
@@ -948,7 +1222,7 @@ function hideEmptyState() {
     if (bookingsGrid) bookingsGrid.classList.remove('hidden');
 }
 
-// Add CSS for line-clamp utility
+// Add CSS for line-clamp utility and status colors
 const style = document.createElement('style');
 style.textContent = `
     .line-clamp-2 {
@@ -957,5 +1231,84 @@ style.textContent = `
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+    
+    .status-confirmed {
+        background-color: #22c55e;
+    }
+    
+    .status-cancelled {
+        background-color: #ef4444;
+    }
+    
+    .status-completed {
+        background-color: #6b7280;
+    }
+    
+    .status-pending {
+        background-color: #f59e0b;
+    }
+    
+    .ticket-pattern {
+        background-image: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255,255,255,0.1) 10px,
+            rgba(255,255,255,0.1) 20px
+        );
+    }
 `;
 document.head.appendChild(style);
+
+// Admin dashboard access control and league loading
+function checkAdminDashboardAccess() {
+    const userRole = localStorage.getItem('userRole');
+    if (window.location.pathname.endsWith('admin-dashboard.html')) {
+        if (userRole !== 'ADMIN') {
+            window.location.href = 'index.html';
+            return;
+        }
+        loadAdminLeagues();
+    }
+}
+
+async function loadAdminLeagues() {
+    const leaguesTable = document.getElementById('admin-leagues-table');
+    const leaguesTbody = document.getElementById('admin-leagues-tbody');
+    if (!leaguesTable || !leaguesTbody) return;
+    
+    leaguesTbody.innerHTML = '<tr><td colspan="6" class="text-center py-4">Loading...</td></tr>';
+    
+    try {
+        const token = localStorage.getItem('accessToken');
+        const response = await fetch(`${API_BASE_URL}/leagues`, {
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+        
+        if (!response.ok) throw new Error('Failed to fetch leagues');
+        
+        const leagues = await response.json();
+        
+        if (leagues.length === 0) {
+            leaguesTbody.innerHTML = '<tr><td colspan="6" class="text-center py-4">No leagues found.</td></tr>';
+            return;
+        }
+        
+        leaguesTbody.innerHTML = leagues.map(l => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2">${l.id}</td>
+                <td class="px-4 py-2">${l.name}</td>
+                <td class="px-4 py-2">${l.country}</td>
+                <td class="px-4 py-2">
+                    <span class="px-2 py-1 rounded-full text-xs ${l.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                        ${l.status}
+                    </span>
+                </td>
+                <td class="px-4 py-2">${l.foundedYear}</td>
+                <td class="px-4 py-2">${l.totalTeams}</td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        leaguesTbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-red-600">Error: ${err.message}</td></tr>`;
+    }
+}
