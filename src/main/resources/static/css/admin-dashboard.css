@@ -1,0 +1,38 @@
+/* Base styles */
+body { 
+    font-family: 'Montserrat', sans-serif; 
+    background: #f8fafc; 
+}
+
+/* Admin badge */
+.admin-badge { 
+    background: #f59e42; 
+    color: #fff; 
+    padding: 0.25rem 0.75rem; 
+    border-radius: 9999px; 
+    font-weight: 600; 
+    font-size: 0.9rem; 
+}
+
+/* Table styles */
+.table th, 
+.table td { 
+    padding: 0.75rem 1rem; 
+}
+
+.table th { 
+    background: #f3f4f6; 
+}
+
+.table tr:nth-child(even) { 
+    background: #f9fafb; 
+}
+
+/* Stat card styles */
+.stat-card { 
+    transition: box-shadow 0.2s; 
+}
+
+.stat-card:hover { 
+    box-shadow: 0 8px 24px 0 rgba(59,130,246,0.10); 
+}
