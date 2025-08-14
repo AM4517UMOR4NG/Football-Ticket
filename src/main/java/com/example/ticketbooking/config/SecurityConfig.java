@@ -51,7 +51,9 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/api/events/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/leagues/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")
-                        .requestMatchers(new AntPathRequestMatcher("/api/bookings/**")).authenticated())
+                        .requestMatchers(new AntPathRequestMatcher("/api/bookings/**")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/api/profile")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/api/profile/**")).authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
                         UsernamePasswordAuthenticationFilter.class)
