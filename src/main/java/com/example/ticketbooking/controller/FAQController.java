@@ -12,4 +12,4 @@ public class FAQController {
     public String getFAQPage() {
         return "faq";
     }
-} 
+}
