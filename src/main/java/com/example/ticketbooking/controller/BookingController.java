@@ -2,7 +2,9 @@ package com.example.ticketbooking.controller;
 
 import com.example.ticketbooking.dto.BookingRequestDTO;
 import com.example.ticketbooking.dto.BookingResponseDTO;
+import com.example.ticketbooking.entity.User;
 import com.example.ticketbooking.service.BookingService;
+import com.example.ticketbooking.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -10,10 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,6 +29,9 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public ResponseEntity<?> createBooking(@Valid @RequestBody BookingRequestDTO bookingRequestDTO,
@@ -84,6 +92,26 @@ public class BookingController {
         } catch (Exception e) {
             logger.error("Error fetching bookings for user {}: {}", userId, e.getMessage(), e);
             return ResponseEntity.badRequest().body("Failed to fetch bookings: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/my-bookings")
+    public ResponseEntity<?> getCurrentUserBookings() {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth == null || !auth.isAuthenticated()) {
+                return ResponseEntity.status(401).body(Map.of("error", "Not authenticated"));
+            }
+
+            String username = auth.getName();
+            User user = userService.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            List<BookingResponseDTO> bookings = bookingService.getUserBookings(user.getId());
+            return ResponseEntity.ok(bookings);
+        } catch (Exception e) {
+            logger.error("Error fetching current user bookings: {}", e.getMessage(), e);
+            return ResponseEntity.badRequest().body(Map.of("error", "Failed to fetch bookings: " + e.getMessage()));
         }
     }
 }
