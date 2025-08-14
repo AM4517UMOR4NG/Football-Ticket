@@ -147,13 +147,15 @@ public class DataInitializer implements CommandLineRunner {
 
         private void createFootballEvents() {
                 // Featured Premier League Matches (as shown in index.html)
-                
+
                 // Match 1: Manchester United vs Liverpool
                 EventDTO event1 = new EventDTO(
                                 null,
                                 "Manchester United vs Liverpool",
-                                "The biggest rivalry in English football! Watch the Red Devils take on the Reds in this epic Premier League clash. " +
-                                                "Old Trafford will be electric as these two historic clubs battle for supremacy. " +
+                                "The biggest rivalry in English football! Watch the Red Devils take on the Reds in this epic Premier League clash. "
+                                                +
+                                                "Old Trafford will be electric as these two historic clubs battle for supremacy. "
+                                                +
                                                 "Don't miss this classic encounter between two of England's most successful clubs!",
                                 "Old Trafford, Manchester",
                                 LocalDateTime.now().plusDays(15).withHour(16).withMinute(30),
@@ -167,8 +169,10 @@ public class DataInitializer implements CommandLineRunner {
                 EventDTO event2 = new EventDTO(
                                 null,
                                 "Chelsea vs Arsenal",
-                                "London derby at its finest! Chelsea host Arsenal in a Premier League showdown that promises goals and drama. " +
-                                                "Stamford Bridge will be packed as these London giants fight for crucial points. " +
+                                "London derby at its finest! Chelsea host Arsenal in a Premier League showdown that promises goals and drama. "
+                                                +
+                                                "Stamford Bridge will be packed as these London giants fight for crucial points. "
+                                                +
                                                 "Experience the passion of London football at its best!",
                                 "Stamford Bridge, London",
                                 LocalDateTime.now().plusDays(21).withHour(15).withMinute(0),
@@ -182,8 +186,10 @@ public class DataInitializer implements CommandLineRunner {
                 EventDTO event3 = new EventDTO(
                                 null,
                                 "Manchester City vs Tottenham",
-                                "Premier League title contenders clash! Manchester City face Tottenham in a match that could decide the title race. " +
-                                                "The Etihad Stadium will witness top-class football as these two attacking teams go head-to-head. " +
+                                "Premier League title contenders clash! Manchester City face Tottenham in a match that could decide the title race. "
+                                                +
+                                                "The Etihad Stadium will witness top-class football as these two attacking teams go head-to-head. "
+                                                +
                                                 "A must-watch match for any football fan!",
                                 "Etihad Stadium, Manchester",
                                 LocalDateTime.now().plusDays(22).withHour(14).withMinute(0),
@@ -197,8 +203,10 @@ public class DataInitializer implements CommandLineRunner {
                 EventDTO event4 = new EventDTO(
                                 null,
                                 "Real Madrid vs Barcelona",
-                                "El Clásico! The most prestigious match in world football. Real Madrid host Barcelona in this legendary La Liga encounter. " +
-                                                "The Santiago Bernabéu will be packed with 90,000 fans as these Spanish giants battle for supremacy. " +
+                                "El Clásico! The most prestigious match in world football. Real Madrid host Barcelona in this legendary La Liga encounter. "
+                                                +
+                                                "The Santiago Bernabéu will be packed with 90,000 fans as these Spanish giants battle for supremacy. "
+                                                +
                                                 "Witness football history in the making!",
                                 "Santiago Bernabéu, Madrid",
                                 LocalDateTime.now().plusDays(25).withHour(20).withMinute(0),
@@ -209,26 +217,28 @@ public class DataInitializer implements CommandLineRunner {
                 eventService.createEvent(event4);
 
                 EventDTO event5 = new EventDTO(
-    null,
-    "Atletico Madrid vs Sevilla",
-    "Madrid derby action! Atletico Madrid take on Sevilla in an exciting La Liga match. " +
-    "The Wanda Metropolitano will be rocking as these two competitive teams fight for European spots. " +
-    "Experience the passion of Spanish football!",
-    "Wanda Metropolitano, Madrid",
-    LocalDateTime.now().plusDays(18).withHour(19).withMinute(30),
-    68000,
-    new BigDecimal("65.00"),
-    "https://english.ahram.org.eg/Media/News/2023/12/23/41_2023-638389580607985899-798.jpg",
-    null
-);
+                                null,
+                                "Atletico Madrid vs Sevilla",
+                                "Madrid derby action! Atletico Madrid take on Sevilla in an exciting La Liga match. " +
+                                                "The Wanda Metropolitano will be rocking as these two competitive teams fight for European spots. "
+                                                +
+                                                "Experience the passion of Spanish football!",
+                                "Wanda Metropolitano, Madrid",
+                                LocalDateTime.now().plusDays(18).withHour(19).withMinute(30),
+                                68000,
+                                new BigDecimal("65.00"),
+                                "https://english.ahram.org.eg/Media/News/2023/12/23/41_2023-638389580607985899-798.jpg",
+                                null);
                 eventService.createEvent(event5);
 
                 // Bundesliga Matches
                 EventDTO event6 = new EventDTO(
                                 null,
                                 "Bayern Munich vs Borussia Dortmund",
-                                "Der Klassiker! Germany's biggest rivalry. Bayern Munich face Borussia Dortmund in this Bundesliga classic. " +
-                                                "The Allianz Arena will be packed as these German powerhouses battle for the title. " +
+                                "Der Klassiker! Germany's biggest rivalry. Bayern Munich face Borussia Dortmund in this Bundesliga classic. "
+                                                +
+                                                "The Allianz Arena will be packed as these German powerhouses battle for the title. "
+                                                +
                                                 "Witness the best of German football!",
                                 "Allianz Arena, Munich",
                                 LocalDateTime.now().plusDays(30).withHour(20).withMinute(30),
@@ -241,7 +251,8 @@ public class DataInitializer implements CommandLineRunner {
                 EventDTO event7 = new EventDTO(
                                 null,
                                 "RB Leipzig vs Bayer Leverkusen",
-                                "Top Bundesliga clash! RB Leipzig host Bayer Leverkusen in an exciting match between two rising German clubs. " +
+                                "Top Bundesliga clash! RB Leipzig host Bayer Leverkusen in an exciting match between two rising German clubs. "
+                                                +
                                                 "The Red Bull Arena will witness fast-paced, attacking football. " +
                                                 "Don't miss this thrilling encounter!",
                                 "Red Bull Arena, Leipzig",
@@ -257,7 +268,8 @@ public class DataInitializer implements CommandLineRunner {
                                 null,
                                 "AC Milan vs Inter Milan",
                                 "Derby della Madonnina! The Milan derby is one of football's greatest spectacles. " +
-                                                "AC Milan face Inter Milan in this Serie A classic at the iconic San Siro. " +
+                                                "AC Milan face Inter Milan in this Serie A classic at the iconic San Siro. "
+                                                +
                                                 "Experience the passion and intensity of Italian football's biggest rivalry!",
                                 "San Siro, Milan",
                                 LocalDateTime.now().plusDays(28).withHour(20).withMinute(45),
@@ -270,8 +282,10 @@ public class DataInitializer implements CommandLineRunner {
                 EventDTO event9 = new EventDTO(
                                 null,
                                 "Juventus vs Napoli",
-                                "Italian football giants clash! Juventus host Napoli in a Serie A match that could decide the title race. " +
-                                                "The Allianz Stadium will be packed as these two historic clubs battle for supremacy. " +
+                                "Italian football giants clash! Juventus host Napoli in a Serie A match that could decide the title race. "
+                                                +
+                                                "The Allianz Stadium will be packed as these two historic clubs battle for supremacy. "
+                                                +
                                                 "Witness the best of Italian football!",
                                 "Allianz Stadium, Turin",
                                 LocalDateTime.now().plusDays(35).withHour(20).withMinute(30),
@@ -286,7 +300,8 @@ public class DataInitializer implements CommandLineRunner {
                                 null,
                                 "Paris Saint-Germain vs Marseille",
                                 "Le Classique! France's biggest rivalry. PSG face Marseille in this Ligue 1 classic. " +
-                                                "The Parc des Princes will be electric as these French giants battle for supremacy. " +
+                                                "The Parc des Princes will be electric as these French giants battle for supremacy. "
+                                                +
                                                 "Experience the passion of French football!",
                                 "Parc des Princes, Paris",
                                 LocalDateTime.now().plusDays(32).withHour(21).withMinute(0),
@@ -300,7 +315,8 @@ public class DataInitializer implements CommandLineRunner {
                                 null,
                                 "Lyon vs Monaco",
                                 "French football excellence! Lyon host Monaco in an exciting Ligue 1 encounter. " +
-                                                "The Groupama Stadium will witness top-class football as these competitive teams battle for European spots. " +
+                                                "The Groupama Stadium will witness top-class football as these competitive teams battle for European spots. "
+                                                +
                                                 "Don't miss this thrilling match!",
                                 "Groupama Stadium, Lyon",
                                 LocalDateTime.now().plusDays(19).withHour(20).withMinute(0),
@@ -309,21 +325,22 @@ public class DataInitializer implements CommandLineRunner {
                                 "https://www.thesun.co.uk/wp-content/uploads/2017/10/sport-preview-lyon.jpg?w=620",
                                 null);
                 eventService.createEvent(event11);
-// Champions League Matches
-EventDTO event12 = new EventDTO(
-    null,
-    "Real Madrid vs Manchester City",
-    "Champions League Quarter-Final! European football's elite clash as Real Madrid face Manchester City. " +
-    "The Santiago Bernabéu will host this epic Champions League encounter. " +
-    "Witness the best of European football in this must-see match!",
-    "Santiago Bernabéu, Madrid",
-    LocalDateTime.now().plusDays(45).withHour(21).withMinute(0),
-    90000,
-    new BigDecimal("200.00"),
-    "https://img2.beritasatu.com/cache/beritasatu/480x310-2/2023/05/1683603654-910x580.webp",
-    null
-);
-eventService.createEvent(event12);
+                // Champions League Matches
+                EventDTO event12 = new EventDTO(
+                                null,
+                                "Real Madrid vs Manchester City",
+                                "Champions League Quarter-Final! European football's elite clash as Real Madrid face Manchester City. "
+                                                +
+                                                "The Santiago Bernabéu will host this epic Champions League encounter. "
+                                                +
+                                                "Witness the best of European football in this must-see match!",
+                                "Santiago Bernabéu, Madrid",
+                                LocalDateTime.now().plusDays(45).withHour(21).withMinute(0),
+                                90000,
+                                new BigDecimal("200.00"),
+                                "https://img2.beritasatu.com/cache/beritasatu/480x310-2/2023/05/1683603654-910x580.webp",
+                                null);
+                eventService.createEvent(event12);
 
                 System.out.println("FootballTix events created successfully! All major leagues covered.");
         }
