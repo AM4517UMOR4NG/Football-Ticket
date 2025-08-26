@@ -329,10 +329,14 @@ body {
 .carousel-container {
     position: relative;
     overflow: hidden;
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    border-radius: var(--radius, 0); /* Remove border-radius for full-screen */
-    box-shadow: var(--shadow-lg, none); /* Optional: remove shadow for full-screen */
+    width: 100vw;
+    /* Full viewport width */
+    height: 100vh;
+    /* Full viewport height */
+    border-radius: var(--radius, 0);
+    /* Remove border-radius for full-screen */
+    box-shadow: var(--shadow-lg, none);
+    /* Optional: remove shadow for full-screen */
 }
 
 .carousel-inner {
@@ -350,7 +354,8 @@ body {
 .carousel-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Fills container, cropping edges if needed */
+    object-fit: cover;
+    /* Fills container, cropping edges if needed */
     display: block;
 }
 
@@ -426,14 +431,18 @@ body {
 /* Responsive adjustments */
 @media (max-width: 640px) {
     .carousel-container {
-        height: 60vh; /* Reduce height on mobile for better usability */
+        height: 60vh;
+        /* Reduce height on mobile for better usability */
     }
+
     .carousel-caption h3 {
         font-size: 1.25rem;
     }
+
     .carousel-caption {
         padding: 15px;
     }
+
     .carousel-nav {
         width: 32px;
         height: 32px;
@@ -601,7 +610,8 @@ body {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 40px;
-    color: var(--dark, #1f2937); /* Fallback color */
+    color: var(--dark, #1f2937);
+    /* Fallback color */
 }
 
 .leagues-grid {
@@ -634,21 +644,39 @@ body {
     align-items: center;
     justify-content: center;
     margin: 0 auto 15px;
-    background-color: var(--white, #ffffff); /* Consistent background */
-    overflow: hidden; /* Prevent image overflow */
+    background-color: var(--white, #ffffff);
+    /* Consistent background */
+    overflow: hidden;
+    /* Prevent image overflow */
 }
 
-.bg-blue-100 { background-color: #dbeafe; }
-.bg-red-100 { background-color: #fee2e2; }
-.bg-green-100 { background-color: #dcfce7; }
-.bg-purple-100 { background-color: #f3e8ff; }
+.bg-blue-100 {
+    background-color: #dbeafe;
+}
+
+.bg-red-100 {
+    background-color: #fee2e2;
+}
+
+.bg-green-100 {
+    background-color: #dcfce7;
+}
+
+.bg-purple-100 {
+    background-color: #f3e8ff;
+}
 
 .league-logo img {
-    max-width: 60px; /* Increased from 50px for better visibility */
-    max-height: 60px; /* Increased from 50px */
-    width: auto; /* Allow natural scaling */
-    height: auto; /* Allow natural scaling */
-    object-fit: contain; /* Ensure image fits without cropping */
+    max-width: 60px;
+    /* Increased from 50px for better visibility */
+    max-height: 60px;
+    /* Increased from 50px */
+    width: auto;
+    /* Allow natural scaling */
+    height: auto;
+    /* Allow natural scaling */
+    object-fit: contain;
+    /* Ensure image fits without cropping */
 }
 
 .league-name {
@@ -659,22 +687,27 @@ body {
 
 .league-country {
     font-size: 0.9rem;
-    color: var(--gray, #6b7280); /* Fallback color */
+    color: var(--gray, #6b7280);
+    /* Fallback color */
 }
 
 /* Responsive Adjustments for Leagues */
 @media (min-width: 640px) {
     .leagues-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on sm screens */
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 columns on sm screens */
     }
 }
 
 @media (min-width: 1024px) {
     .leagues-grid {
-        grid-template-columns: repeat(5, 1fr); /* 5 columns on lg screens */
+        grid-template-columns: repeat(5, 1fr);
+        /* 5 columns on lg screens */
     }
+
     .league-card {
-        padding: 30px; /* Slightly reduce padding on larger screens */
+        padding: 30px;
+        /* Slightly reduce padding on larger screens */
     }
 }
 
@@ -688,7 +721,8 @@ body {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 40px;
-    color: var(--dark, #1f2937); /* Fallback color */
+    color: var(--dark, #1f2937);
+    /* Fallback color */
 }
 
 .features-grid {
@@ -736,24 +770,28 @@ body {
 .feature-card h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
-    color: var(--dark, #1f2937); /* Fallback color */
+    color: var(--dark, #1f2937);
+    /* Fallback color */
 }
 
 .feature-card p {
-    color: var(--gray, #6b7280); /* Fallback color */
+    color: var(--gray, #6b7280);
+    /* Fallback color */
     font-size: 0.95rem;
 }
 
 /* Responsive Adjustments for Features */
 @media (min-width: 640px) {
     .features-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on sm screens */
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns on sm screens */
     }
 }
 
 @media (min-width: 1024px) {
     .features-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on lg screens */
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 columns on lg screens */
     }
 }
 
@@ -953,58 +991,58 @@ body {
         align-items: center;
         gap: 10px;
     }
-    
+
     .mobile-toggle {
         display: none;
     }
-    
+
     .search-form {
         flex-direction: row;
     }
-    
+
     .matches-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .leagues-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    
+
     .features-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    
+
     .newsletter-content {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
     }
-    
+
     .newsletter-text {
         text-align: left;
         flex: 1;
     }
-    
+
     .newsletter-form {
         flex: 1;
     }
-    
+
     .newsletter-form form {
         flex-direction: row;
     }
-    
+
     .newsletter-form input {
         flex: 1;
     }
-    
+
     .newsletter-form button {
         width: auto;
     }
-    
+
     .footer-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .footer-bottom {
         flex-direction: row;
         justify-content: space-between;
@@ -1016,11 +1054,11 @@ body {
     .matches-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    
+
     .leagues-grid {
         grid-template-columns: repeat(5, 1fr);
     }
-    
+
     .footer-grid {
         grid-template-columns: repeat(4, 1fr);
     }
