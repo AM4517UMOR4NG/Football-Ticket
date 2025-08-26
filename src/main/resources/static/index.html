@@ -18,71 +18,78 @@
         to main content</a>
 
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
+                <!-- Logo -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                        <svg class="h-8 w-8 text-blue-700 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
                             <path
                                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
                             </path>
                         </svg>
-                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                        <span class="ml-2 text-xl font-extrabold text-black tracking-wide">FootballTix</span>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <div class="hidden md:flex items-center space-x-4">
-                        <a href="index.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
-                        <a href="events.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
-                        <a href="bookings.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My
-                            Bookings</a>
-                        <a href="leagues.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
-                        <a href="profile.html" id="profile-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700 hidden">Profile</a>
-                        <a href="admin-dashboard.html" id="admin-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin
-                            Dashboard</a>
-                        <a href="admin-profile.html" id="admin-profile-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-500 hover:text-orange-700 hidden">Admin
-                            Profile</a>
-                        <a href="#" id="logout-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden"
-                            onclick="handleLogout()">Logout</a>
-                    </div>
+
+                <!-- Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Home</a>
+                    <a href="events.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Matches</a>
+                    <a href="bookings.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">My
+                        Bookings</a>
+                    <a href="leagues.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Leagues</a>
+                </div>
+
+                <div class="flex items-center" id="nav-right-container">
+                    <!-- Sign In Button - Will be replaced by user menu when logged in -->
                     <a href="login.html" id="login-link"
-                        class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign
+                        class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign
                         In</a>
                 </div>
+
+
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-toggle"
+                        class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Icon when menu is closed -->
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Icon when menu is open -->
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="mobile-menu md:hidden bg-white shadow-lg hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-blue-700 bg-blue-50">Home</a>
-                <a href="events.html"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Matches</a>
-                <a href="bookings.html"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">My
-                    Bookings</a>
-                <a href="leagues.html"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Leagues</a>
-                <a href="profile.html" id="profile-mobile-link"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700 hidden">Profile</a>
-                <a href="admin-dashboard.html" id="admin-mobile-link"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-orange-600 font-bold hidden">Admin
-                    Dashboard</a>
-                <a href="admin-profile.html" id="admin-profile-mobile-link"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-orange-500 hover:text-orange-700 hidden">Admin
-                    Profile</a>
-                <a href="#" id="logout-mobile-link"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-red-600 font-semibold hidden"
-                    onclick="handleLogout()">Logout</a>
+
+            <!-- Mobile menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Home</a>
+                    <a href="events.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Matches</a>
+                    <a href="bookings.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">My
+                        Bookings</a>
+                    <a href="leagues.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Leagues</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -90,7 +97,7 @@
     <!-- Highlight Carousel -->
     <div id="highlight-carousel" class="carousel-container relative overflow-hidden rounded-lg shadow-lg" role="region"
         aria-label="Featured highlights carousel">
-        <div class="flex justify-between items-center absolute top-4 left-4 right-4 z-20">
+        <div class="flex justify-between items-center absolute top-1/2 left-4 right-4 z-20 transform -translate-y-1/2">
             <h2 class="text-2xl font-bold text-white bg-black bg-opacity-50 px-4 py-2 rounded">🐐</h2>
             <div class="carousel-controls flex space-x-2">
                 <button class="carousel-nav prev" aria-label="Previous slide">
@@ -105,28 +112,28 @@
             <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
                 aria-label="Slide 1 of 3">
                 <img src="https://assets-bundesliga-com.translate.goog/contender/2025/3/1920-1080-max.jpg?fit=1140,https://www-bundesliga-com.translate.goog/en/bundesliga/news/1140?_x_tr_sl%3Den&_x_tr_sl=en&_x_tr_tl=id&_x_tr_hl=id&_x_tr_pto=imgs"
-                    alt="Football player celebrating a goal" class="w-full h-full object-cover" loading="lazy">
+                    alt="Loading.." class="w-full h-full object-cover" loading="lazy">
                 <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
-                    <h3 class="text-xl font-bold mb-1">Premier League Highlights</h3>
-                    <p>Top goals from the weekend's matches</p>
+                    <h3 class="text-xl font-bold mb-1">Bundesliga Highlights</h3>
+                    <p>Intensive match of the week</p>
                 </div>
             </div>
             <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
                 aria-label="Slide 2 of 3">
                 <img src="https://asset-2.tstatic.net/bangka/foto/bank/images/2024021-ac-Milan-vs-Inter-Milan.jpg"
-                    alt="Football stadium with fans" class="w-full h-full object-cover" loading="lazy">
+                    alt="Loading.." class="w-full h-full object-cover" loading="lazy">
                 <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
-                    <h3 class="text-xl font-bold mb-1">Stadium Experience</h3>
-                    <p>Feel the energy of live football</p>
+                    <h3 class="text-xl font-bold mb-1">Seria A Highlights</h3>
+                    <p>Most waited matches of the weeks</p>
                 </div>
             </div>
             <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
                 aria-label="Slide 3 of 3">
-                <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                <img src="https://cdn0-production-images-kly.akamaized.net/p6CDGH2qUqP_g_NfJpB2eKBNG5Q=/1200x1200/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/2129121/original/032333300_1525150438-Real-Madrid-Bayern-Munchen1.jpg"
                     alt="Football on the pitch" class="w-full h-full object-cover" loading="lazy">
                 <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
                     <h3 class="text-xl font-bold mb-1">Matchday Preparation</h3>
-                    <p>Behind the scenes of your favorite teams</p>
+                    <p>Training day of your favorite teams</p>
                 </div>
             </div>
         </div>
@@ -171,7 +178,7 @@
                         <div class="flex flex-col items-center">
                             <div
                                 class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-red-200 p-1">
-                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Manchester-United-Logo.png"
+                                <img src=""
                                     alt="Manchester United Logo" class="w-20 h-20 object-contain rounded-full">
                             </div>
                             <div class="font-semibold text-center">Man Utd</div>
@@ -180,7 +187,7 @@
                         <div class="flex flex-col items-center">
                             <div
                                 class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-red-600 p-1">
-                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Liverpool-Logo.png"
+                                <img src=""
                                     alt="Liverpool Logo" class="w-20 h-20 object-contain rounded-full">
                             </div>
                             <div class="font-semibold text-center">Liverpool</div>
@@ -214,7 +221,7 @@
                         <div class="flex flex-col items-center">
                             <div
                                 class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-blue-600 p-1">
-                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Chelsea-Logo.png"
+                                <img src=""
                                     alt="Chelsea Logo" class="w-20 h-20 object-contain rounded-full">
                             </div>
                             <div class="font-semibold text-center">Chelsea</div>
@@ -223,7 +230,7 @@
                         <div class="flex flex-col items-center">
                             <div
                                 class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-red-500 p-1">
-                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Arsenal-Logo.png"
+                                <img src=""
                                     alt="Arsenal Logo" class="w-20 h-20 object-contain rounded-full">
                             </div>
                             <div class="font-semibold text-center">Arsenal</div>
@@ -257,7 +264,7 @@
                         <div class="flex flex-col items-center">
                             <div
                                 class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-sky-400 p-1">
-                                <img src="https://upload.wikimedia.org/wikipedia/id/e/eb/Manchester_City_FC_badge.svg"
+                                <img src=""
                                     alt="Manchester City Logo" class="w-20 h-20 object-contain rounded-full">
                             </div>
                             <div class="font-semibold text-center">Man City</div>
@@ -266,7 +273,7 @@
                         <div class="flex flex-col items-center">
                             <div
                                 class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 border-2 border-blue-800 p-1">
-                                <img src="https://logos-world.net/wp-content/uploads/2020/06/Tottenham-Logo.png"
+                                <img src=""
                                     alt="Tottenham Logo" class="w-20 h-20 object-contain rounded-full">
                             </div>
                             <div class="font-semibold text-center">Tottenham</div>
@@ -276,7 +283,7 @@
                         <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> Etihad Stadium, Manchester
                     </div>
                     <div class="flex justify-between items-center">
-                        <div class="price-tag">From £75</div>
+                        <div class="price-tag">From £75</div>"
                         <a href="#" class="ticket-button">
                             <i class="fas fa-ticket-alt"></i> Buy Tickets
                         </a>
@@ -396,16 +403,16 @@
                     </div>
                     <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on Twitter">
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on Instagram">
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on Facebook">
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Facebook">
                             <i class="fab fa-facebook"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white" aria-label="Follow us on YouTube">
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on YouTube">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>
@@ -415,9 +422,9 @@
                     <ul class="space-y-2">
                         <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
                         <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="how-it-works.html" class="text-gray-400 hover:text-white">How It Works</a></li>
                         <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="contactus.html" class="text-gray-400 hover:text-white">Contact Us</a></li>
                     </ul>
                 </div>
                 <div>
