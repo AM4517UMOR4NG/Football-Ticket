@@ -36,7 +36,7 @@ public class AboutController {
             Map<String, Object> companyInfo = new HashMap<>();
             companyInfo.put("name", "FootballTix");
             companyInfo.put("founded", "2023");
-            companyInfo.put("headquarters", "London, United Kingdom");
+            companyInfo.put("headquarters", "Indonesia, West Papua");
             companyInfo.put("mission", "To provide the best football ticketing experience worldwide");
             companyInfo.put("vision", "To become the leading platform for football fans globally");
 
@@ -76,31 +76,31 @@ public class AboutController {
             java.util.List<Map<String, Object>> team = new java.util.ArrayList<>();
 
             Map<String, Object> member1 = new HashMap<>();
-            member1.put("name", "John Smith");
+            member1.put("name", "Aek Situmorang");
             member1.put("position", "CEO & Founder");
-            member1.put("bio", "Former professional footballer with 15+ years of experience in sports management");
-            member1.put("image", "/images/team/john-smith.jpg");
+            member1.put("bio", "Former professional footballer (da goat)");
+            member1.put("image", "");
             team.add(member1);
 
             Map<String, Object> member2 = new HashMap<>();
-            member2.put("name", "Sarah Johnson");
+            member2.put("name", "Johnson Mobile Leged");
             member2.put("position", "CTO");
             member2.put("bio", "Technology expert with deep knowledge in e-commerce and ticketing systems");
-            member2.put("image", "/images/team/sarah-johnson.jpg");
+            member2.put("image", "/images/team/johnson ml.jpg");
             team.add(member2);
 
             Map<String, Object> member3 = new HashMap<>();
-            member3.put("name", "Michael Brown");
+            member3.put("name", "Siuu Brown");
             member3.put("position", "Head of Operations");
             member3.put("bio", "Operations specialist with extensive experience in event management");
-            member3.put("image", "/images/team/michael-brown.jpg");
+            member3.put("image", "/images/team/siuubrown.jpg");
             team.add(member3);
 
             Map<String, Object> member4 = new HashMap<>();
-            member4.put("name", "Emma Wilson");
+            member4.put("name", "Emma Waduh");
             member4.put("position", "Head of Customer Success");
             member4.put("bio", "Customer experience expert dedicated to ensuring fan satisfaction");
-            member4.put("image", "/images/team/emma-wilson.jpg");
+            member4.put("image", "/images/team/emma-waduh.jpg");
             team.add(member4);
 
             teamInfo.put("team", team);
