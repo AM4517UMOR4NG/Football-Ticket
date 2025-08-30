@@ -18,7 +18,7 @@ public class PrivacyPolicyController {
     @ResponseBody
     public ResponseEntity<String> updateCookieConsent() {
         try {
-            // Here you could add logic to handle cookie consent
+            // Be able to add logic to handle cookie consent
             return ResponseEntity.ok("Cookie consent updated successfully");
         } catch (Exception e) {
             return ResponseEntity
@@ -31,7 +31,7 @@ public class PrivacyPolicyController {
     @ResponseBody
     public ResponseEntity<String> downloadPrivacyPolicy() {
         try {
-            // Here you could add logic to generate downloadable privacy policy
+            // Be able to add logic to generate downloadable privacy policy
             return ResponseEntity.ok("Privacy Policy download initiated");
         } catch (Exception e) {
             return ResponseEntity
