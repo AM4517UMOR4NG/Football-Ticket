@@ -30,7 +30,7 @@ public class DataInitializer implements CommandLineRunner {
 
         @Override
         public void run(String... args) throws Exception {
-                // Admin user is now created in UserService.initDefaultAdmin()
+               
                 if (leagueRepository.count() == 0) {
                         createLeagues();
                 }
@@ -40,7 +40,6 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         private void createLeagues() {
-                // Premier League
                 LeagueDTO premierLeague = new LeagueDTO(
                                 null,
                                 "Premier League",
@@ -57,7 +56,6 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 leagueService.createLeague(premierLeague);
 
-                // La Liga
                 LeagueDTO laLiga = new LeagueDTO(
                                 null,
                                 "La Liga",
@@ -74,7 +72,6 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 leagueService.createLeague(laLiga);
 
-                // Bundesliga
                 LeagueDTO bundesliga = new LeagueDTO(
                                 null,
                                 "Bundesliga",
@@ -91,7 +88,6 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 leagueService.createLeague(bundesliga);
 
-                // Serie A
                 LeagueDTO serieA = new LeagueDTO(
                                 null,
                                 "Serie A",
@@ -108,7 +104,6 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 leagueService.createLeague(serieA);
 
-                // Ligue 1
                 LeagueDTO ligue1 = new LeagueDTO(
                                 null,
                                 "Ligue 1",
@@ -125,7 +120,6 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 leagueService.createLeague(ligue1);
 
-                // Champions League
                 LeagueDTO championsLeague = new LeagueDTO(
                                 null,
                                 "UEFA Champions League",
@@ -146,9 +140,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         private void createFootballEvents() {
-                // Featured Premier League Matches (as shown in index.html)
 
-                // Match 1: Manchester United vs Liverpool
                 EventDTO event1 = new EventDTO(
                                 null,
                                 "Manchester United vs Liverpool",
@@ -165,7 +157,7 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 eventService.createEvent(event1);
 
-                // Match 2: Chelsea vs Arsenal
+               
                 EventDTO event2 = new EventDTO(
                                 null,
                                 "Chelsea vs Arsenal",
@@ -182,7 +174,6 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 eventService.createEvent(event2);
 
-                // Match 3: Manchester City vs Tottenham
                 EventDTO event3 = new EventDTO(
                                 null,
                                 "Manchester City vs Tottenham",
@@ -199,7 +190,7 @@ public class DataInitializer implements CommandLineRunner {
                                 null);
                 eventService.createEvent(event3);
 
-                // La Liga Matches
+                
                 EventDTO event4 = new EventDTO(
                                 null,
                                 "Real Madrid vs Barcelona",
