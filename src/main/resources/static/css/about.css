@@ -1,0 +1,217 @@
+/* Page font fallback */
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* FOOTER - style to match provided image */
+.ft-footer {
+  background: #0b1520;
+  color: #b7ceea;
+}
+
+.ft-footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.ft-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+@media(min-width:768px) {
+  .ft-grid {
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  }
+}
+
+.ft-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.ft-logo {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ft-logo-svg {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.ft-title {
+  font-weight: 700;
+  font-size: 20px;
+  color: #070707;
+}
+
+.ft-desc {
+  color: #9aa6b5;
+  margin: 0 0 18px;
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+/* socials */
+.ft-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.ft-social {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
+  color: #9aa6b5;
+  text-decoration: none;
+  transition: color .18s, background .18s;
+}
+
+.ft-social .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.ft-social:hover {
+  color: #0b0b0b;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* headings */
+.ft-heading {
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* links list - underlined like image */
+.ft-links,
+.ft-contact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
+.ft-links li,
+.ft-contact li {
+  margin-bottom: 12px;
+}
+
+.ft-links a,
+.ft-contact a {
+  color: #9aa6b5;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(255, 255, 255, 0.06);
+  transition: color .15s, text-decoration-color .15s;
+}
+
+.ft-links a:hover,
+.ft-contact a:hover {
+  color: #fff;
+  text-decoration-color: rgba(255, 255, 255, 0.12);
+}
+
+/* contact icons */
+.contact-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  vertical-align: middle;
+  color: #8fabe8;
+  display: inline-block;
+}
+
+/* separators */
+.ft-hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin: 28px 0;
+}
+
+.ft-hr.thin {
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  margin: 6px 0 26px;
+}
+
+/* copyright */
+.ft-copy {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  padding-bottom: 6px;
+}
+
+/* small responsive tweaks */
+@media(max-width:767px) {
+  .ft-desc {
+    max-width: 100%;
+  }
+
+  .ft-title {
+    font-size: 18px;
+  }
+}
+
+/* small helper to keep hero spacing tidy */
+.hero .stat-card.active {
+  border-width: 3px;
+  border-color: #1E40AF;
+}
+
+/* Warna menarik untuk stat numbers (jumlah event dll.) */
+.num {
+  color: #090909;
+  transition: color 0.3s ease;
+}
+
+.stat-card:hover .num {
+  color: #141415;
+}
+
+/* Tambahan untuk membuat bagian hero (About FootballTix) lebih bertema biru */
+.hero {
+  background-color: #5c8c86;
+}
+
+/* Latar belakang biru muda yang sedikit lebih tebal */
+.hero h1 {
+  color: #1E3A8A;
+}
+
+/* Judul biru lebih tebal (gelap) */
+.hero .hero-desc {
+  color: #0b0b0b;
+}
+
+/* Deskripsi biru lebih tebal */
+.hero .stat-card {
+  background-color: #d5edf1;
+  border-color: #0f1010;
+}
+
+/* Kartu stats biru yang lebih tebal */
+.hero .label {
+  color: #1D4ED8;
+}
+
+/* Label biru lebih tebal */
