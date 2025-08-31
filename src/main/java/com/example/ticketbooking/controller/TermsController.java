@@ -12,4 +12,4 @@ public class TermsController {
     public String getTermsPage() {
         return "terms";
     }
-} 
+}
