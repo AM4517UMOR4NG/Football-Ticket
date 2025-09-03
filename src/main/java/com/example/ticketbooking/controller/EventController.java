@@ -57,13 +57,12 @@ public class EventController {
     @GetMapping("/leagues")
     public ResponseEntity<Map<String, Object>> getAvailableLeagues() {
         Map<String, Object> leagues = Map.of(
-            "premier", Map.of("name", "Premier League", "country", "England", "color", "blue"),
-            "laliga", Map.of("name", "La Liga", "country", "Spain", "color", "red"),
-            "bundesliga", Map.of("name", "Bundesliga", "country", "Germany", "color", "green"),
-            "seriea", Map.of("name", "Serie A", "country", "Italy", "color", "blue"),
-            "ligue1", Map.of("name", "Ligue 1", "country", "France", "color", "purple"),
-            "champions", Map.of("name", "Champions League", "country", "Europe", "color", "gold")
-        );
+                "premier", Map.of("name", "Premier League", "country", "England", "color", "blue"),
+                "laliga", Map.of("name", "La Liga", "country", "Spain", "color", "red"),
+                "bundesliga", Map.of("name", "Bundesliga", "country", "Germany", "color", "green"),
+                "seriea", Map.of("name", "Serie A", "country", "Italy", "color", "blue"),
+                "ligue1", Map.of("name", "Ligue 1", "country", "France", "color", "purple"),
+                "champions", Map.of("name", "Champions League", "country", "Europe", "color", "gold"));
         return ResponseEntity.ok(leagues);
     }
 
@@ -81,17 +80,16 @@ public class EventController {
     public ResponseEntity<Map<String, Object>> getEventStats() {
         List<EventDTO> allEvents = eventService.getAllEvents();
         List<EventDTO> upcomingEvents = eventService.getUpcomingEvents();
-        
+
         Map<String, Object> stats = Map.of(
-            "totalEvents", allEvents.size(),
-            "upcomingEvents", upcomingEvents.size(),
-            "totalSeats", allEvents.stream().mapToInt(EventDTO::totalSeats).sum(),
-            "averagePrice", allEvents.stream()
-                .mapToDouble(e -> e.price().doubleValue())
-                .average()
-                .orElse(0.0)
-        );
-        
+                "totalEvents", allEvents.size(),
+                "upcomingEvents", upcomingEvents.size(),
+                "totalSeats", allEvents.stream().mapToInt(EventDTO::totalSeats).sum(),
+                "averagePrice", allEvents.stream()
+                        .mapToDouble(e -> e.price().doubleValue())
+                        .average()
+                        .orElse(0.0));
+
         return ResponseEntity.ok(stats);
     }
 
