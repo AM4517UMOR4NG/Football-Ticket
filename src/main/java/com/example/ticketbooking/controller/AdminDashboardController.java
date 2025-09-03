@@ -25,7 +25,7 @@ public class AdminDashboardController {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
 
-    // --- USER ANALYTICS & MANAGEMENT ---
+    // User Analytics & Management
     @GetMapping("/users")
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
@@ -50,19 +50,21 @@ public class AdminDashboardController {
     @DeleteMapping("/users/{id}")
     @Transactional
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        if (!userRepository.existsById(id)) return ResponseEntity.notFound().build();
+        if (!userRepository.existsById(id))
+            return ResponseEntity.notFound().build();
         userRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
-    // --- BOOKING ANALYTICS & MANAGEMENT ---
+    // Booking Analytics & Management
     @GetMapping("/bookings")
     @Transactional(readOnly = true)
     public java.util.List<BookingAdminDTO> getAllBookings() {
         java.util.List<Booking> bookings = bookingRepository.findAll();
         java.util.List<BookingAdminDTO> dtos = new ArrayList<>();
         for (Booking booking : bookings) {
-            if (booking.getUser() == null || booking.getEvent() == null) continue;
+            if (booking.getUser() == null || booking.getEvent() == null)
+                continue;
             BookingAdminDTO dto = new BookingAdminDTO();
             dto.id = booking.getId();
             dto.bookingReference = booking.getBookingReference();
@@ -93,7 +95,8 @@ public class AdminDashboardController {
     @DeleteMapping("/bookings/{id}")
     @Transactional
     public ResponseEntity<?> deleteBooking(@PathVariable Long id) {
-        if (!bookingRepository.existsById(id)) return ResponseEntity.notFound().build();
+        if (!bookingRepository.existsById(id))
+            return ResponseEntity.notFound().build();
         bookingRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
