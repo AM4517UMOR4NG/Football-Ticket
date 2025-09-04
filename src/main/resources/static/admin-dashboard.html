@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,22 +10,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="css/admin-dashboard.css" rel="stylesheet">
     <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: { primary: '#1e40af', accent: '#f59e42' }
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#1e40af', accent: '#f59e42' }
+                }
+            }
         }
-      }
-    }
     </script>
     <script src="js/global.js"></script>
     <script>
-    if (!isAdmin()) {
-        window.location.href = 'index.html';
-    }
+        if (!isAdmin()) {
+            window.location.href = 'index.html';
+        }
     </script>
 </head>
+
 <body class="bg-gray-50 dark:bg-gray-900">
     <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,10 +40,11 @@
                     <a href="leagues.html" class="hover:text-blue-700 dark:hover:text-yellow-400">Leagues</a>
                     <a href="events.html" class="hover:text-blue-700 dark:hover:text-yellow-400">Events</a>
                     <a href="bookings.html" class="hover:text-blue-700 dark:hover:text-yellow-400">Bookings</a>
-                    <a href="admin-dashboard.html" id="admin-link" class="text-orange-600 font-bold hidden">Admin Dashboard</a>
-                    <a href="#" id="logout-link" class="text-red-600 font-semibold hidden" onclick="handleLogout()">Logout</a>
-                    <a href="login.html" id="login-link" class="bg-blue-700 dark:bg-yellow-400 text-white dark:text-gray-900 px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out hidden">Login</a>
-                    <button id="theme-toggle" class="ml-2 px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">🌓</button>
+                    <a href="admin-dashboard.html" id="admin-link" class="text-orange-600 font-bold">Admin Dashboard</a>
+                    <a href="admin-profile.html" class="text-orange-600 font-bold">Admin Profile</a>
+                    <a href="#" id="logout-link" class="text-red-600 font-semibold" onclick="handleLogout()">Logout</a>
+                    <button id="theme-toggle"
+                        class="ml-2 px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">🌓</button>
                 </div>
             </div>
         </div>
@@ -99,7 +102,9 @@
                         </tr>
                     </thead>
                     <tbody id="admin-users-tbody">
-                        <tr><td colspan="6">Loading...</td></tr>
+                        <tr>
+                            <td colspan="6">Loading...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -120,25 +125,29 @@
                         </tr>
                     </thead>
                     <tbody id="admin-bookings-tbody">
-                        <tr><td colspan="5">Loading...</td></tr>
+                        <tr>
+                            <td colspan="5">Loading...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         <!-- Toast Notification -->
-        <div id="toast" class="fixed bottom-6 right-6 bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg hidden z-50"></div>
+        <div id="toast"
+            class="fixed bottom-6 right-6 bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg hidden z-50"></div>
     </div>
 
     <script src="js/admin-dashboard.js"></script>
     <script>
-    function handleLogout() {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('username');
-        localStorage.removeItem('userRole');
-        window.location.href = 'index.html';
-    }
+        function handleLogout() {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        }
     </script>
 </body>
-</html> 
+
+</html>
