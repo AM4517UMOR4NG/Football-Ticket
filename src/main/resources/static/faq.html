@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootballTix - Frequently Asked Questions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/faq.css">
+</head>
+
+<body class="bg-gray-50 font-montserrat">
+       <!-- Navigation -->
+       <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="index.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
+                        <a href="events.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                        <a href="bookings.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My
+                            Bookings</a>
+                        <a href="leagues.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
+                        <a href="profile.html" id="profile-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700 hidden">Profile</a>
+                        <a href="admin-dashboard.html" id="admin-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin
+                            Dashboard</a>
+                        <a href="admin-profile.html" id="admin-profile-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-500 hover:text-orange-700 hidden">Admin
+                            Profile</a>
+                        <a href="#" id="logout-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden"
+                            onclick="handleLogout()">Logout</a>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white shadow-lg hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-blue-700 bg-blue-50">Home</a>
+                <a href="events.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Matches</a>
+                <a href="bookings.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">My
+                    Bookings</a>
+                <a href="leagues.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Leagues</a>
+                <a href="profile.html" id="profile-mobile-link"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-blue-700 hidden">Profile</a>
+                <a href="admin-dashboard.html" id="admin-mobile-link"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-orange-600 font-bold hidden">Admin
+                    Dashboard</a>
+                <a href="admin-profile.html" id="admin-profile-mobile-link"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-orange-500 hover:text-orange-700 hidden">Admin
+                    Profile</a>
+                <a href="#" id="logout-mobile-link"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-red-600 font-semibold hidden"
+                    onclick="handleLogout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">Find answers to common questions about football ticketing
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                        <i class="fas fa-ticket-alt text-2xl mb-2"></i>
+                        <div class="text-sm">Ticket Booking</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                        <i class="fas fa-credit-card text-2xl mb-2"></i>
+                        <div class="text-sm">Payment</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                        <i class="fas fa-shield-alt text-2xl mb-2"></i>
+                        <div class="text-sm">Security</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                        <i class="fas fa-headset text-2xl mb-2"></i>
+                        <div class="text-sm">Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Search Bar -->
+            <div class="mb-8">
+                <div class="relative">
+                    <input type="text" id="faq-search" placeholder="Search FAQs..."
+                        class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- FAQ Categories -->
+            <div class="space-y-8">
+                <!-- Ticket Booking -->
+                <div class="faq-category">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-ticket-alt text-blue-600 mr-3"></i>
+                        Ticket Booking
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">How do I book tickets for a match?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>To book tickets, simply browse our available matches, select your preferred seats,
+                                    and proceed to checkout. You'll need to create an account or sign in to complete
+                                    your booking. We accept various payment methods including credit cards, debit cards,
+                                    and digital wallets.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">Can I cancel or modify my booking?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>Yes, you can modify or cancel your booking up to 24 hours before the match.
+                                    Cancellations are subject to our refund policy. You can manage your bookings through
+                                    your account dashboard or contact our customer support team.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">How far in advance can I book tickets?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>Tickets are typically available for booking 3-6 months before the match date. For
+                                    high-profile matches, tickets may be released earlier. We recommend booking as soon
+                                    as possible to secure the best seats.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment & Pricing -->
+                <div class="faq-category">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-credit-card text-green-600 mr-3"></i>
+                        Payment & Pricing
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">What payment methods do you accept?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>We accept all major credit cards (Visa, MasterCard, American Express), debit cards,
+                                    PayPal, and various digital wallets including Apple Pay and Google Pay. All payments
+                                    are processed securely through our encrypted payment gateway.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">Are there any booking fees?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>We charge a small service fee of 2.5% on all bookings to cover processing costs and
+                                    platform maintenance. This fee is clearly displayed before you complete your
+                                    purchase.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">Do you offer refunds?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>Yes, we offer full refunds for cancellations made more than 24 hours before the
+                                    match. Cancellations within 24 hours are subject to a 50% refund. No refunds are
+                                    available for no-shows.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security & Safety -->
+                <div class="faq-category">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-shield-alt text-purple-600 mr-3"></i>
+                        Security & Safety
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">Is my payment information secure?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>Absolutely! We use industry-standard SSL encryption to protect all payment
+                                    information. We never store your credit card details on our servers. All
+                                    transactions are processed through secure, PCI-compliant payment gateways.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">How do I know my tickets are authentic?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>All tickets purchased through FootballTix are guaranteed authentic. We work directly
+                                    with official ticket distributors and clubs. Each ticket comes with a unique QR code
+                                    and security features to prevent fraud.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">What happens if a match is cancelled?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>If a match is cancelled, we will automatically process a full refund to your original
+                                    payment method within 5-7 business days. You'll also receive an email notification
+                                    with details about the cancellation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Support -->
+                <div class="faq-category">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-headset text-orange-600 mr-3"></i>
+                        Customer Support
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">How can I contact customer support?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>You can reach our customer support team through multiple channels: Live chat
+                                    (available 24/7), email at support@footballtix.com, or phone at +1-800-FOOTBALL. We
+                                    typically respond within 2 hours during business hours.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">What are your support hours?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>Our customer support is available 24/7 through live chat and email. Phone support is
+                                    available Monday to Friday, 9 AM to 6 PM EST. For urgent match-day issues, we have
+                                    dedicated emergency support available.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-gray-50 rounded-lg p-6">
+                            <button class="faq-question w-full text-left flex justify-between items-center"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-semibold text-gray-900">Can I get help at the stadium?</span>
+                                <i class="fas fa-chevron-down text-blue-600 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden mt-4 text-gray-600">
+                                <p>Yes! We have on-site support staff at major stadiums. Look for our FootballTix
+                                    representatives wearing blue jackets with our logo. They can help with ticket
+                                    issues, directions, and general assistance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="bg-gray-100 py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
+            <p class="text-lg text-gray-600 mb-8">Can't find what you're looking for? Our support team is here to help!
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-comments text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Live Chat</h3>
+                    <p class="text-gray-600 mb-4">Get instant help from our support team</p>
+                    <button
+                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">Start
+                        Chat</button>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-envelope text-3xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Email Support</h3>
+                    <p class="text-gray-600 mb-4">Send us a detailed message</p>
+                    <a href="mailto:support@footballtix.com"
+                        class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors inline-block">Send
+                        Email</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-phone text-3xl text-purple-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Phone Support</h3>
+                    <p class="text-gray-600 mb-4">Call us directly</p>
+                    <a href="tel:+1-800-FOOTBALL"
+                        class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors inline-block">Call
+                        Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">FootballTix</h3>
+                    <p class="text-gray-400">Your trusted partner for football ticketing worldwide.</p>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-white">Home</a></li>
+                        <li><a href="events.html" class="hover:text-white">Matches</a></li>
+                        <li><a href="leagues.html" class="hover:text-white">Leagues</a></li>
+                        <li><a href="about.html" class="hover:text-white">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="faq.html" class="hover:text-white">FAQ</a></li>
+                        <li><a href="terms.html" class="hover:text-white">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 FootballTix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/faq.js"></script>
+</body>
+
+</html>
