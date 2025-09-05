@@ -17,11 +17,11 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class LeagueController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(LeagueController.class);
-    
+
     private final LeagueService leagueService;
-    
+
     @GetMapping
     public ResponseEntity<List<LeagueDTO>> getAllLeagues() {
         try {
@@ -32,7 +32,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping("/active")
     public ResponseEntity<List<LeagueDTO>> getActiveLeagues() {
         try {
@@ -43,7 +43,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<LeagueDTO> getLeagueById(@PathVariable Long id) {
         try {
@@ -57,7 +57,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping("/name/{name}")
     public ResponseEntity<LeagueDTO> getLeagueByName(@PathVariable String name) {
         try {
@@ -71,7 +71,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping("/country/{country}")
     public ResponseEntity<List<LeagueDTO>> getLeaguesByCountry(@PathVariable String country) {
         try {
@@ -82,7 +82,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping("/search")
     public ResponseEntity<List<LeagueDTO>> searchLeagues(@RequestParam String query) {
         try {
@@ -93,7 +93,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping("/{id}/events/count")
     public ResponseEntity<Map<String, Object>> getEventCountByLeague(@PathVariable Long id) {
         try {
@@ -104,12 +104,12 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping("/all")
     public ResponseEntity<Map<String, Object>> getAllLeaguesMap() {
         try {
             Map<String, Object> leaguesMap = new HashMap<>();
-            
+
             // Convert to the format expected by frontend
             leaguesMap.put("premier", Map.of("name", "Premier League", "country", "England", "color", "blue"));
             leaguesMap.put("laliga", Map.of("name", "La Liga", "country", "Spain", "color", "red"));
@@ -117,14 +117,14 @@ public class LeagueController {
             leaguesMap.put("seriea", Map.of("name", "Serie A", "country", "Italy", "color", "blue"));
             leaguesMap.put("ligue1", Map.of("name", "Ligue 1", "country", "France", "color", "purple"));
             leaguesMap.put("champions", Map.of("name", "Champions League", "country", "Europe", "color", "gold"));
-            
+
             return ResponseEntity.ok(leaguesMap);
         } catch (Exception e) {
             logger.error("Error fetching all leagues map: {}", e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @PostMapping
     public ResponseEntity<LeagueDTO> createLeague(@RequestBody LeagueDTO leagueDTO) {
         try {
@@ -135,7 +135,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @PutMapping("/{id}")
     public ResponseEntity<LeagueDTO> updateLeague(@PathVariable Long id, @RequestBody LeagueDTO leagueDTO) {
         try {
@@ -149,7 +149,7 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLeague(@PathVariable Long id) {
         try {
@@ -163,4 +163,4 @@ public class LeagueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-} 
+}
