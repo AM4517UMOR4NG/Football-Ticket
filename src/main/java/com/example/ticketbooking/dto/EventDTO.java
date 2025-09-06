@@ -12,6 +12,5 @@ public record EventDTO(
         Integer totalSeats,
         BigDecimal price,
         String imageUrl,
-        Long leagueId
-) {
+        Long leagueId) {
 }
