@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "users")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,8 @@ public class User {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     // Default constructor (required by Hibernate)
-    public User() {}
+    public User() {
+    }
 
     @PreUpdate
     protected void onUpdate() {
