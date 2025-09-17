@@ -2,7 +2,9 @@ package com.example.ticketbooking.service;
 
 import com.example.ticketbooking.dto.UserRegistrationDTO;
 import com.example.ticketbooking.entity.User;
+import com.example.ticketbooking.entity.Booking;
 import com.example.ticketbooking.repository.UserRepository;
+import com.example.ticketbooking.repository.BookingRepository;
 import com.example.ticketbooking.security.PasswordValidationService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BookingRepository bookingRepository;
     private final PasswordEncoder passwordEncoder;
     private final PasswordValidationService passwordValidationService;
 
@@ -62,18 +65,22 @@ public class UserService {
     }
 
     public Long getUserBookingCount(Long userId) {
-        // This would need to be implemented with BookingRepository
-        return 0L; // Placeholder
+        return (long) bookingRepository.findByUser_Id(userId).size();
     }
 
     public Long getUserActiveBookingCount(Long userId) {
-        // This would need to be implemented with BookingRepository
-        return 0L; // Placeholder
+        return bookingRepository.findByUser_Id(userId).stream()
+                .filter(booking -> booking.getStatus() == Booking.BookingStatus.CONFIRMED ||
+                        booking.getStatus() == Booking.BookingStatus.PENDING)
+                .count();
     }
 
     public Double getUserTotalSpent(Long userId) {
-        // This would need to be implemented with BookingRepository
-        return 0.0; // Placeholder
+        return bookingRepository.findByUser_Id(userId).stream()
+                .filter(booking -> booking.getStatus() == Booking.BookingStatus.CONFIRMED ||
+                        booking.getStatus() == Booking.BookingStatus.COMPLETED)
+                .mapToDouble(booking -> booking.getTotalAmount().doubleValue())
+                .sum();
     }
 
     @PostConstruct
