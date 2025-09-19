@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +24,12 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"password", "hibernateLazyInitializer", "handler"})
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "password", "hibernateLazyInitializer", "handler" })
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"bookings", "hibernateLazyInitializer", "handler"})
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "bookings", "hibernateLazyInitializer", "handler" })
     private Event event;
 
     @Column(name = "number_of_tickets", nullable = false)
@@ -45,6 +45,6 @@ public class Booking {
     private LocalDateTime bookingDate = LocalDateTime.now();
 
     public enum BookingStatus {
-        CONFIRMED, CANCELLED, COMPLETED
+        PENDING, CONFIRMED, CANCELLED, COMPLETED
     }
 }
