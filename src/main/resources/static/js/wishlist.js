@@ -6,15 +6,10 @@ class WishlistManager {
     }
 
     init() {
-        this.setupEventListeners();
-        this.checkAuthentication();
         this.updateNavigation();
         this.loadWishlist();
-        
-        // Force update navigation after a short delay to ensure DOM is ready
-        setTimeout(() => {
-            this.updateNavigation();
-        }, 100);
+        this.setupEventListeners();
+        this.checkAuthentication();
     }
 
     /* --------------------- Navigation & Auth --------------------- */
@@ -33,22 +28,21 @@ class WishlistManager {
             const userMenu = document.createElement('div');
             userMenu.className = 'flex items-center space-x-4';
             userMenu.innerHTML = `
-           <div class="relative">
-        <button id="user-menu-btn" class="flex items-center space-x-2 text-black hover:text-blue-700">
-            <span class="text-sm font-medium">${username}</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-            ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
-                        <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-        </div>
-    </div>
-`;
-
-            const signInContainer = document.querySelector('.flex.items-center');
+            <div class="relative">
+                <button id="user-menu-btn" class="flex items-center space-x-2 text-black dark:text-white hover:text-blue-700 dark:hover:text-blue-400">
+                    <span class="text-sm font-medium">${username}</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700">
+                    ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Admin Dashboard</a>' : ''}
+                    <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+                    <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+                </div>
+            </div>
+        `;
+            const signInContainer = document.getElementById('nav-right-container');
             if (signInContainer) {
                 signInContainer.innerHTML = '';
                 signInContainer.appendChild(userMenu);
@@ -103,13 +97,6 @@ class WishlistManager {
                 }
             });
         }
-
-        // Listen for storage changes to update navigation
-        window.addEventListener('storage', (e) => {
-            if (['accessToken', 'username', 'userRole'].includes(e.key)) {
-                this.updateNavigation();
-            }
-        });
     }
 
     async checkAuthentication() {
@@ -158,7 +145,6 @@ class WishlistManager {
             this.showError('Failed to load your wishlist. Please try again.');
         }
     }
-    
 
     renderWishlist() {
         const container = document.getElementById('wishlist-container');
@@ -411,9 +397,5 @@ function handleLogout() {
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
     localStorage.removeItem('userRole');
-    localStorage.removeItem('sessionExpiry');
     window.location.href = 'index.html';
 }
-
-// Make handleLogout globally available
-window.handleLogout = handleLogout;
