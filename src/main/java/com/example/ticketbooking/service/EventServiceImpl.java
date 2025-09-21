@@ -2,7 +2,9 @@ package com.example.ticketbooking.service;
 
 import com.example.ticketbooking.dto.EventDTO;
 import com.example.ticketbooking.entity.Event;
+import com.example.ticketbooking.entity.League;
 import com.example.ticketbooking.repository.EventRepository;
+import com.example.ticketbooking.repository.LeagueRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,9 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
+    private final LeagueRepository leagueRepository;
 
-    public EventServiceImpl(EventRepository eventRepository) {
+    public EventServiceImpl(EventRepository eventRepository, LeagueRepository leagueRepository) {
         this.eventRepository = eventRepository;
+        this.leagueRepository = leagueRepository;
     }
 
     @Override
@@ -28,6 +32,14 @@ public class EventServiceImpl implements EventService {
         event.setPrice(eventDTO.price());
         event.setImageUrl(eventDTO.imageUrl());
         event.setAvailableSeats(eventDTO.totalSeats());
+        
+        // Set league if leagueId is provided
+        if (eventDTO.leagueId() != null) {
+            League league = leagueRepository.findById(eventDTO.leagueId())
+                    .orElseThrow(() -> new RuntimeException("League not found with id: " + eventDTO.leagueId()));
+            event.setLeague(league);
+        }
+        
         eventRepository.save(event);
     }
 
@@ -82,8 +94,9 @@ public class EventServiceImpl implements EventService {
         event.setImageUrl(eventDTO.imageUrl());
         event.setAvailableSeats(eventDTO.totalSeats());
         if (eventDTO.leagueId() != null) {
-            event.setLeague(new com.example.ticketbooking.entity.League());
-            event.getLeague().setId(eventDTO.leagueId());
+            League league = leagueRepository.findById(eventDTO.leagueId())
+                    .orElseThrow(() -> new RuntimeException("League not found with id: " + eventDTO.leagueId()));
+            event.setLeague(league);
         } else {
             event.setLeague(null);
         }
@@ -108,35 +121,34 @@ public class EventServiceImpl implements EventService {
                 event.getTotalSeats(),
                 event.getPrice(),
                 event.getImageUrl(),
-                event.getLeague() != null ? event.getLeague().getId() : null
-        );
+                event.getLeague() != null ? event.getLeague().getId() : null);
     }
 
     private boolean isEventInLeague(Event event, String league) {
         String title = event.getTitle().toLowerCase();
         String venue = event.getVenue().toLowerCase();
-        
+
         return switch (league.toLowerCase()) {
-            case "premier" -> title.contains("manchester") || title.contains("chelsea") || 
-                             title.contains("arsenal") || title.contains("liverpool") ||
-                             title.contains("tottenham") || venue.contains("london") ||
-                             venue.contains("manchester") || venue.contains("old trafford") ||
-                             venue.contains("stamford bridge") || venue.contains("etihad");
+            case "premier" -> title.contains("manchester") || title.contains("chelsea") ||
+                    title.contains("arsenal") || title.contains("liverpool") ||
+                    title.contains("tottenham") || venue.contains("london") ||
+                    venue.contains("manchester") || venue.contains("old trafford") ||
+                    venue.contains("stamford bridge") || venue.contains("etihad");
             case "laliga" -> title.contains("madrid") || title.contains("barcelona") ||
-                            title.contains("atletico") || title.contains("sevilla") ||
-                            venue.contains("madrid") || venue.contains("barcelona") ||
-                            venue.contains("bernabeu") || venue.contains("metropolitano");
+                    title.contains("atletico") || title.contains("sevilla") ||
+                    venue.contains("madrid") || venue.contains("barcelona") ||
+                    venue.contains("bernabeu") || venue.contains("metropolitano");
             case "bundesliga" -> title.contains("bayern") || title.contains("dortmund") ||
-                                title.contains("leipzig") || title.contains("leverkusen") ||
-                                venue.contains("munich") || venue.contains("allianz") ||
-                                venue.contains("red bull arena");
+                    title.contains("leipzig") || title.contains("leverkusen") ||
+                    venue.contains("munich") || venue.contains("allianz") ||
+                    venue.contains("red bull arena");
             case "seriea" -> title.contains("milan") || title.contains("juventus") ||
-                            title.contains("napoli") || venue.contains("milan") ||
-                            venue.contains("san siro") || venue.contains("turin");
+                    title.contains("napoli") || venue.contains("milan") ||
+                    venue.contains("san siro") || venue.contains("turin");
             case "ligue1" -> title.contains("psg") || title.contains("marseille") ||
-                            title.contains("lyon") || title.contains("monaco") ||
-                            venue.contains("paris") || venue.contains("parc des princes") ||
-                            venue.contains("groupama");
+                    title.contains("lyon") || title.contains("monaco") ||
+                    venue.contains("paris") || venue.contains("parc des princes") ||
+                    venue.contains("groupama");
             case "champions" -> title.contains("champions league") || title.contains("european");
             default -> false;
         };
@@ -146,13 +158,13 @@ public class EventServiceImpl implements EventService {
         boolean matchesQuery = query == null || query.isEmpty() ||
                 event.getTitle().toLowerCase().contains(query.toLowerCase()) ||
                 event.getDescription().toLowerCase().contains(query.toLowerCase());
-        
+
         boolean matchesVenue = venue == null || venue.isEmpty() ||
                 event.getVenue().toLowerCase().contains(venue.toLowerCase());
-        
+
         boolean matchesDate = date == null || date.isEmpty() ||
                 event.getEventDate().toLocalDate().toString().equals(date);
-        
+
         return matchesQuery && matchesVenue && matchesDate;
     }
 }
