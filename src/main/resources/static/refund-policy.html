@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootballTix - Refund Policy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/refund-policy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo (Left) -->
+                <div class="flex-shrink-0 flex items-center">
+                    <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                    </svg>
+                    <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                </div>
+                <!-- Navigation Links and Auth (Right) -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
+                    <a href="events.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                    <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
+                    <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Leagues</a>
+                    <a href="profile.html" id="profile-link" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700 hidden">Profile</a>
+                    <a href="admin-dashboard.html" id="admin-link" class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                    <a href="admin-profile.html" id="admin-profile-link" class="px-3 py-2 rounded-md text-sm font-medium text-orange-500 hover:text-orange-700 hidden">Admin Profile</a>
+                    <div id="auth-status"></div>
+                    </div>
+                </div>
+                <!-- Hamburger Icon for Mobile -->
+                <div class="md:hidden flex items-center">
+                    <label for="menu-checkbox" class="text-gray-900 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+            <input type="checkbox" id="menu-checkbox" class="hidden peer">
+            <!-- Mobile Menu (Hidden by Default) -->
+            <div id="mobile-menu" class="md:hidden bg-white shadow-lg hidden peer-checked:block">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Home</a>
+                    <a href="events.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Matches</a>
+                    <a href="bookings.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">My Bookings</a>
+                    <a href="leagues.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Leagues</a>
+                    <a href="profile.html" id="profile-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hidden">Profile</a>
+                    <a href="admin-dashboard.html" id="admin-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-orange-600 font-bold hidden">Admin Dashboard</a>
+                    <a href="admin-profile.html" id="admin-profile-mobile-link" class="block px-3 py-2 rounded-md text-base font-medium text-orange-500 hover:text-orange-700 hidden">Admin Profile</a>
+                    <div id="auth-status-mobile"></div>
+                    <div id="sign-in-link">
+                        <a href="login.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-pattern text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Refund Policy</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">Understanding our refund terms and conditions</p>
+                <div class="flex justify-center space-x-8">
+                    <div class="flex items-center">
+                        <i class="fas fa-undo text-2xl mr-3"></i>
+                        <span class="text-lg">Flexible Refunds</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-2xl mr-3"></i>
+                        <span class="text-lg">Secure Process</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-2xl mr-3"></i>
+                        <span class="text-lg">Quick Processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="py-16 bg-gray-50" id="main-content" role="main">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Quick Summary -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Quick Summary</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center p-4 bg-green-50 rounded-lg">
+                        <i class="fas fa-check-circle text-3xl text-green-600 mb-3"></i>
+                        <h3 class="font-semibold text-gray-900 mb-2">Full Refund</h3>
+                        <p class="text-sm text-gray-600">Within 24 hours of booking</p>
+                    </div>
+                    <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-clock text-3xl text-yellow-600 mb-3"></i>
+                        <h3 class="font-semibold text-gray-900 mb-2">Partial Refund</h3>
+                        <p class="text-sm text-gray-600">Up to 7 days before event</p>
+                    </div>
+                    <div class="text-center p-4 bg-red-50 rounded-lg">
+                        <i class="fas fa-times-circle text-3xl text-red-600 mb-3"></i>
+                        <h3 class="font-semibold text-gray-900 mb-2">No Refund</h3>
+                        <p class="text-sm text-gray-600">Within 7 days of event</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Detailed Policy -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Detailed Refund Policy</h2>
+                <div class="space-y-8">
+                    <!-- Full Refund Section -->
+                    <section class="border-l-4 border-green-500 pl-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Full Refund (100%)</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-green-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Within 24 hours of booking</h4>
+                                    <p class="text-gray-600 mt-1">You can cancel your booking and receive a full refund within 24 hours of making the reservation, regardless of the event date.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-green-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Event cancellation by organizer</h4>
+                                    <p class="text-gray-600 mt-1">If the event is cancelled by the organizer, you will automatically receive a full refund including all fees.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-green-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Venue change or significant modification</h4>
+                                    <p class="text-gray-600 mt-1">If the venue changes or there are significant modifications to the event that affect your ability to attend.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Partial Refund Section -->
+                    <section class="border-l-4 border-yellow-500 pl-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Partial Refund (50-80%)</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-info-circle text-yellow-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">7-30 days before event</h4>
+                                    <p class="text-gray-600 mt-1">Cancellations made between 7 and 30 days before the event date are eligible for a partial refund.</p>
+                                    <ul class="list-disc list-inside text-sm text-gray-600 mt-2 ml-4">
+                                        <li>7-14 days: 80% refund</li>
+                                        <li>15-21 days: 70% refund</li>
+                                        <li>22-30 days: 50% refund</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-info-circle text-yellow-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Processing fees</h4>
+                                    <p class="text-gray-600 mt-1">A processing fee of 5% will be deducted from all partial refunds to cover administrative costs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- No Refund Section -->
+                    <section class="border-l-4 border-red-500 pl-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">No Refund</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-times text-red-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Within 7 days of event</h4>
+                                    <p class="text-gray-600 mt-1">No refunds are available for cancellations made within 7 days of the event date.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-times text-red-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">No-show</h4>
+                                    <p class="text-gray-600 mt-1">If you do not attend the event without prior cancellation, no refund will be provided.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-times text-red-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Personal circumstances</h4>
+                                    <p class="text-gray-600 mt-1">Personal circumstances such as illness, travel issues, or other personal reasons are not eligible for refunds within the no-refund period.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- How to Request a Refund -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">How to Request a Refund</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Online Process</h3>
+                        <ol class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">1</span>
+                                <span>Log into your FootballTix account</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">2</span>
+                                <span>Go to "My Bookings" section</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">3</span>
+                                <span>Select the booking you want to cancel</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">4</span>
+                                <span>Click "Cancel Booking" and confirm</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5">5</span>
+                                <span>Refund will be processed automatically</span>
+                            </li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact Support</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-phone text-blue-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Phone Support</h4>
+                                    <p class="text-gray-600">Call us at +1 (555) 123-4567</p>
+                                    <p class="text-sm text-gray-500">Available 9 AM - 8 PM daily</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-blue-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Email Support</h4>
+                                    <p class="text-gray-600">Email us at refunds@footballtix.com</p>
+                                    <p class="text-sm text-gray-500">Response within 24 hours</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-comments text-blue-600 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Live Chat</h4>
+                                    <p class="text-gray-600">Available on our website</p>
+                                    <p class="text-sm text-gray-500">Instant support during business hours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Refund Processing -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Refund Processing</h2>
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <i class="fas fa-clock text-3xl text-blue-600 mb-3"></i>
+                            <h3 class="font-semibold text-gray-900 mb-2">Processing Time</h3>
+                            <p class="text-sm text-gray-600">3-5 business days</p>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg">
+                            <i class="fas fa-credit-card text-3xl text-green-600 mb-3"></i>
+                            <h3 class="font-semibold text-gray-900 mb-2">Payment Method</h3>
+                            <p class="text-sm text-gray-600">Original payment method</p>
+                        </div>
+                        <div class="text-center p-4 bg-purple-50 rounded-lg">
+                            <i class="fas fa-bell text-3xl text-purple-600 mb-3"></i>
+                            <h3 class="font-semibold text-gray-900 mb-2">Notification</h3>
+                            <p class="text-sm text-gray-600">Email confirmation</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Important Notes</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-info-circle text-blue-600 mt-1 mr-3"></i>
+                                <span>Refunds are processed to the original payment method used for the booking.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-info-circle text-blue-600 mt-1 mr-3"></i>
+                                <span>Processing times may vary depending on your bank or payment provider.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-info-circle text-blue-600 mt-1 mr-3"></i>
+                                <span>You will receive an email confirmation once the refund has been processed.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-info-circle text-blue-600 mt-1 mr-3"></i>
+                                <span>Service fees and taxes are non-refundable unless the event is cancelled by the organizer.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Exceptions and Special Cases -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Exceptions and Special Cases</h2>
+                <div class="space-y-6">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Force Majeure Events</h3>
+                        <p class="text-gray-600 mb-3">In cases of force majeure events (natural disasters, government restrictions, etc.), we may offer special refund arrangements or credit for future events.</p>
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="text-sm text-blue-800"><strong>Note:</strong> Each case is evaluated individually, and decisions are made based on the specific circumstances.</p>
+                        </div>
+                    </div>
+                    <div class="border-l-4 border-green-500 pl-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">VIP and Premium Tickets</h3>
+                        <p class="text-gray-600 mb-3">VIP and premium tickets may have different refund policies. Please check the specific terms when purchasing these tickets.</p>
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <p class="text-sm text-green-800"><strong>Tip:</strong> Contact our VIP support team for premium ticket refunds.</p>
+                        </div>
+                    </div>
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Season Passes and Packages</h3>
+                        <p class="text-gray-600 mb-3">Season passes and multi-event packages have specific refund policies. Please refer to the terms and conditions provided at the time of purchase.</p>
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <p class="text-sm text-purple-800"><strong>Important:</strong> Partial usage may affect refund eligibility for packages.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FAQ Section -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <details class="border border-gray-200 rounded-lg">
+                        <summary class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+                            <span class="font-medium text-gray-900">Can I transfer my ticket to someone else?</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </summary>
+                        <div class="faq-answer px-6 pb-4">
+                            <p class="text-gray-600">Yes, you can transfer your ticket to another person up to 24 hours before the event. This can be done through your account dashboard or by contacting our support team.</p>
+                        </div>
+                    </details>
+                    <details class="border border-gray-200 rounded-lg">
+                        <summary class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+                            <span class="font-medium text-gray-900">What if I lose my ticket?</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </summary>
+                        <div class="faq-answer px-6 pb-4">
+                            <p class="text-gray-600">If you lose your ticket, you can download it again from your account dashboard. For physical tickets, contact our support team for replacement options.</p>
+                        </div>
+                    </details>
+                    <details class="border border-gray-200 rounded-lg">
+                        <summary class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+                            <span class="font-medium text-gray-900">Do I get a refund if the event is postponed?</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </summary>
+                        <div class="faq-answer px-6 pb-4">
+                            <p class="text-gray-600">If an event is postponed, your ticket remains valid for the new date. If you cannot attend the new date, you may be eligible for a refund depending on the circumstances.</p>
+                        </div>
+                    </details>
+                    <details class="border border-gray-200 rounded-lg">
+                        <summary class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+                            <span class="font-medium text-gray-900">How long does it take to receive my refund?</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </summary>
+                        <div class="faq-answer px-6 pb-4">
+                            <p class="text-gray-600">Refunds are typically processed within 3-5 business days. However, the time it takes to appear in your account depends on your bank or payment provider.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <!-- Contact Section -->
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl shadow-xl p-8 text-white">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold mb-4">Need Help with a Refund?</h2>
+                    <p class="text-blue-100 mb-6">Our support team is here to help you with any refund-related questions or issues.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="contactus.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                            <i class="fas fa-envelope mr-2"></i>Contact Support
+                        </a>
+                        <a href="faq.html" class="bg-blue-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-600 transition duration-300">
+                            <i class="fas fa-question-circle mr-2"></i>View FAQ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold">FootballTix</span>
+                    </div>
+                    <p class="text-gray-400">Your trusted partner in football ticketing worldwide.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="events.html" class="text-gray-400 hover:text-white">Matches</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Leagues</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="contactus.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQ</a></li>
+                        <li><a href="refund-policy.html" class="text-gray-400 hover:text-white font-bold" aria-current="page">Refund Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.1 2 4.7 4.1 3 7.6c-.2.5-.1 1 .3 1.4l1.7 1.7c.4.4.4 1 0 1.4l-1.7 1.7c-.3.3-.5.8-.4 1.3C4.8 20 8.1 22 12 22c4 0 7.3-2 8.8-5.6.1-.5 0-1-.4-1.3l-1.7-1.7c-.4-.4-.4-1 0-1.4L20.4 9c.4-.4.5-.9.3-1.4C19.3 4.1 15.9 2 12 2z"/></svg>
+                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK" target="_blank" class="hover:text-white">123 Stadium Street, London, UK</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 01.9-.27c1 .2 2 .3 3 .3a1 1 0 011 1v3a1 1 0 01-1 1C9.07 21.5 2.5 14.93 2.5 6a1 1 0 011-1h3a1 1 0 011 1c0 1 .1 2.1.3 3a1 1 0 01-.27.9l-2.2 2.2z"/></svg>
+                            <a href="tel:+441234567890" class="hover:text-white">+44 123 456 7890</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <a href="mailto:support@footballtix.com" class="hover:text-white">support@footballtix.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 FootballTix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
