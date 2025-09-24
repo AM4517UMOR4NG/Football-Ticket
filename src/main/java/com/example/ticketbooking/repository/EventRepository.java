@@ -3,6 +3,7 @@ package com.example.ticketbooking.repository;
 import com.example.ticketbooking.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -18,4 +19,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByVenueContainingIgnoreCase(String venue);
 
     List<Event> findByTitleContainingIgnoreCase(String title);
+
+    @Query("SELECT COUNT(e) FROM Event e WHERE e.status = :status")
+    Long countByStatus(@Param("status") Event.EventStatus status);
+
+    @Query("SELECT COUNT(e) FROM Event e WHERE e.eventDate > :date")
+    Long countByEventDateAfter(@Param("date") LocalDateTime date);
 }
