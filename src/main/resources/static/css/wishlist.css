@@ -1,0 +1,399 @@
+/* Base styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8fafc;
+}
+
+/* Navigation */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+/* Navbar styling to match events.html exactly */
+nav {
+    background-color: #ffffff !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+    transition: all 0.3s ease !important;
+}
+
+nav:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Navbar height and spacing */
+nav .flex.justify-between {
+    height: 4rem !important;
+}
+
+/* Logo styling */
+nav .text-xl {
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    color: #000000 !important;
+    letter-spacing: 0.025em !important;
+}
+
+/* Navigation links styling */
+nav .hidden.md\\:flex a {
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 0.375rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+nav .hidden.md\\:flex a:hover {
+    color: #1d4ed8 !important;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3) !important;
+}
+
+nav .hidden.md\\:flex a:active {
+    background-color: #dbeafe !important;
+}
+
+/* Sign In button styling */
+#login-link {
+    background-color: #1d4ed8 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.5rem !important;
+    font-size: 0.875rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+}
+
+#login-link:hover {
+    background-color: #1e40af !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* User dropdown styling */
+#user-menu-btn {
+    color: #000000 !important;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease !important;
+}
+
+#user-menu-btn:hover {
+    color: #1d4ed8 !important;
+}
+
+#user-dropdown {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+#user-dropdown a {
+    color: #374151 !important;
+    font-size: 0.875rem !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease !important;
+}
+
+#user-dropdown a:hover {
+    background-color: #f3f4f6 !important;
+}
+
+#user-dropdown a:last-child {
+    color: #dc2626 !important;
+}
+
+/* Hapus alignment yang mendorong links ke kanan */
+nav .hidden.md\:flex {
+    margin-left: 0;
+}
+
+/* Mobile menu alignment seperti gambar (left-aligned) */
+#mobile-menu .px-2.pt-2.pb-3 {
+    text-align: left;
+}
+
+/* Tambahan untuk user dropdown setelah login (positioning right-aligned seperti gambar kedua) */
+.relative > button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.relative .hidden.absolute {
+    right: 0;
+    left: auto;
+}
+
+.wishlist-item {
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+.wishlist-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}
+.wishlist-item-image {
+    transition: transform 0.3s ease;
+}
+.wishlist-item:hover .wishlist-item-image {
+    transform: scale(1.05);
+}
+.wishlist-actions {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.wishlist-item:hover .wishlist-actions {
+    opacity: 1;
+}
+.notification-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+.notification-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.notification-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+.notification-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+.notification-toggle input:checked + .notification-slider {
+    background-color: #3b82f6;
+}
+.notification-toggle input:checked + .notification-slider:before {
+    transform: translateX(20px);
+}
+.price-tag {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: inline-block;
+}
+.event-date {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+}
+.venue-info {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+.venue-info i {
+    color: #9ca3af;
+}
+.remove-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.remove-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+.book-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+.book-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    color: white;
+}
+.notification-settings {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+.notification-settings h4 {
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+.notification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.notification-item:last-child {
+    margin-bottom: 0;
+}
+.notification-label {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+.loading-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+/* Empty State Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+.empty-heart {
+    animation: float 3s ease-in-out infinite;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wishlist-item {
+        margin-bottom: 1rem;
+    }
+   
+    .wishlist-actions {
+        opacity: 1;
+        margin-top: 1rem;
+    }
+   
+    .notification-settings {
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+    }
+}
+/* Navigation Styles - Consistent with other pages */
+.user-dropdown {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
+.user-dropdown a {
+    transition: all 0.2s ease;
+}
+.user-dropdown a:hover {
+    background-color: #f3f4f6;
+    transform: translateX(2px);
+}
+.user-menu-btn {
+    transition: all 0.2s ease;
+}
+.user-menu-btn:hover {
+    transform: scale(1.05);
+}
+/* Mobile menu styles */
+.mobile-menu {
+    transition: all 0.3s ease;
+}
+.mobile-menu a {
+    transition: all 0.2s ease;
+}
+.mobile-menu a:hover {
+    background-color: #f3f4f6;
+    transform: translateX(4px);
+}
+/* Navigation animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.user-dropdown {
+    animation: slideIn 0.2s ease-out;
+}
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .wishlist-item {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #f9fafb;
+    }
+   
+    .notification-settings {
+        background-color: #111827;
+        border-color: #374151;
+    }
+   
+    .notification-label {
+        color: #d1d5db;
+    }
+    .user-dropdown {
+        background-color: #1f2937;
+        border-color: #374151;
+    }
+    .user-dropdown a {
+        color: #f9fafb;
+    }
+    .user-dropdown a:hover {
+        background-color: #374151;
+    }
+    .mobile-menu a {
+        color: #f9fafb;
+    }
+    .mobile-menu a:hover {
+        background-color: #374151;
+    }
+}
