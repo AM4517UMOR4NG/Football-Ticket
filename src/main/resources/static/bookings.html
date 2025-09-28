@@ -1,38 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FootballTix - My Bookings</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/bookings.css">
 </head>
+
 <body>
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
+                <!-- Logo -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                        <svg class="h-8 w-8 text-blue-700 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
                         </svg>
-                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                        <span class="ml-2 text-xl font-extrabold text-black tracking-wide">FootballTix</span>
                     </div>
                 </div>
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
-                    <a href="events.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
-                    <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My Bookings</a>
-                    <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-blue-700">Leagues</a>
+
+                <!-- Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Home</a>
+                    <a href="events.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Matches</a>
+                    <a href="bookings.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">My
+                        Bookings</a>
+                    <a href="wishlist.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">My
+                        Wishlist</a>
+                    <a href="leagues.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Leagues</a>
                 </div>
+
+                <!-- Sign In -->
                 <div class="flex items-center">
-                    <a href="login.html" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign In</a>
+                    <a href="login.html"
+                        class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign
+                        In</a>
                 </div>
             </div>
         </div>
     </nav>
+
 
     <!-- Hero Section -->
     <div class="hero-pattern text-white">
@@ -69,13 +89,18 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                 <div class="flex space-x-4">
-                    <button id="all-filter" class="px-4 py-2 bg-blue-700 text-white rounded-lg text-sm font-medium">All</button>
-                    <button id="confirmed-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Confirmed</button>
-                    <button id="cancelled-filter" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Cancelled</button>
+                    <button id="all-filter"
+                        class="px-4 py-2 bg-blue-700 text-white rounded-lg text-sm font-medium">All</button>
+                    <button id="confirmed-filter"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Confirmed</button>
+                    <button id="cancelled-filter"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Cancelled</button>
                 </div>
                 <div class="flex space-x-2">
-                    <button id="grid-view" class="px-4 py-2 bg-blue-700 text-white rounded-lg text-sm font-medium">Grid</button>
-                    <button id="list-view" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">List</button>
+                    <button id="grid-view"
+                        class="px-4 py-2 bg-blue-700 text-white rounded-lg text-sm font-medium">Grid</button>
+                    <button id="list-view"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">List</button>
                 </div>
             </div>
         </div>
@@ -100,7 +125,9 @@
             <div class="max-w-md mx-auto">
                 <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z">
+                        </path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">No bookings yet</h3>
@@ -125,22 +152,26 @@
                 <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                     <h4 class="text-lg font-semibold mb-2">View Tickets</h4>
                     <p class="text-gray-600 mb-4">Access your digital tickets and booking details</p>
-                    <button onclick="viewAllTickets()" class="text-green-700 hover:text-green-800 font-medium">View Tickets →</button>
+                    <button onclick="viewAllTickets()" class="text-green-700 hover:text-green-800 font-medium">View
+                        Tickets →</button>
                 </div>
                 <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
                     <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM4 15h6v-2H4v2zM4 11h6V9H4v2zM4 7h6V5H4v2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM4 15h6v-2H4v2zM4 11h6V9H4v2zM4 7h6V5H4v2z"></path>
                         </svg>
                     </div>
                     <h4 class="text-lg font-semibold mb-2">Booking History</h4>
                     <p class="text-gray-600 mb-4">Review past bookings and match history</p>
-                    <button onclick="viewHistory()" class="text-purple-700 hover:text-purple-800 font-medium">View History →</button>
+                    <button onclick="viewHistory()" class="text-purple-700 hover:text-purple-800 font-medium">View
+                        History →</button>
                 </div>
             </div>
         </div>
@@ -153,7 +184,9 @@
                 <div>
                     <div class="flex items-center mb-4">
                         <svg class="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
                         </svg>
                         <span class="ml-2 text-xl font-bold">FootballTix</span>
                     </div>
@@ -165,34 +198,44 @@
                         <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
                         <li><a href="events.html" class="text-gray-400 hover:text-white">Matches</a></li>
                         <li><a href="bookings.html" class="text-gray-400 hover:text-white">My Bookings</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Leagues</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Support</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Refund Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="contactus.html" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="refund-policy.html" class="text-gray-400 hover:text-white">Refund Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white">Terms and Conditions</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>support@footballtix.com</li>
-                        <li>+44 123 456 7890</li>
-                        <li>123 Stadium Street, London</li>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.1 2 4.7 4.1 3 7.6c-.2.5-.1 1 .3 1.4l1.7 1.7c.4.4.4 1 0 1.4l-1.7 1.7c-.3.3-.5.8-.4 1.3C4.8 20 8.1 22 12 22c4 0 7.3-2 8.8-5.6.1-.5 0-1-.4-1.3l-1.7-1.7c-.4-.4-.4-1 0-1.4L20.4 9c.4-.4.5-.9.3-1.4C19.3 4.1 15.9 2 12 2z"/></svg>
+                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK" target="_blank" class="hover:text-white">123 Stadium Street, London, UK</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 01.9-.27c1 .2 2 .3 3 .3a1 1 0 011 1v3a1 1 0 01-1 1C9.07 21.5 2.5 14.93 2.5 6a1 1 0 011-1h3a1 1 0 011 1c0 1 .1 2.1.3 3a1 1 0 01-.27.9l-2.2 2.2z"/></svg>
+                            <a href="tel:+441234567890" class="hover:text-white">+44 123 456 7890</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <a href="mailto:support@footballtix.com" class="hover:text-white">support@footballtix.com</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-                <p>&copy; 2023 FootballTix. All rights reserved.</p>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                    <p>&copy; 2023 FootballTix. All rights reserved.</p>
+                </div>
             </div>
-        </div>
     </footer>
 
     <script src="js/bookings.js"></script>
 </body>
+
 </html>
