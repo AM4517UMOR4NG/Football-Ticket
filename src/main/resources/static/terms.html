@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootballTix - Terms & Conditions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/terms.css">
+</head>
+
+<body class="bg-gray-50 font-montserrat">
+
+ <body class="bg-gray-50 font-montserrat">
+       <!-- Navigation -->
+      <!-- NAVBAR — gunakan ini untuk menggantikan div nav desktop lama -->
+<nav class="bg-white shadow-xl sticky top-0 z-50" role="navigation" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo / brand (tetap seperti yang Tuan pakai) -->
+      <div class="flex items-center">
+        <a href="index.html" class="flex items-center" aria-label="FootballTix home">
+          <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="#0B5CF6" stroke-width="1.8" fill="white" />
+            <path d="M10 8l6 4-6 4V8z" fill="#0B5CF6" />
+          </svg>
+          <span class="ml-3 text-2xl font-extrabold tracking-wide">FootballTix</span>
+        </a>
+      </div>
+
+      <!-- Desktop nav links (this is the replaced div, now styled exactly like before) -->
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="index.html"
+           class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+           Back to Home
+        </a>
+
+        <a href="events.html"
+           class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+           Back to Matches
+        </a>
+
+        <a href="leagues.html"
+           class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+           Back to Leagues
+        </a>
+      </div>
+
+      <!-- Mobile toggle (kept for mobile behavior; JS expects these IDs) -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open main menu" class="p-2 rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-blue-300">
+          <svg id="mobile-icon-open" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="mobile-icon-close" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile menu (hidden by default) -->
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4" aria-hidden="true">
+    <a href="index.html" class="block py-2 px-3 rounded-md text-sm font-bold text-black hover:text-blue-700">Back to Home</a>
+    <a href="events.html" class="block py-2 px-3 rounded-md text-sm font-bold text-black hover:text-blue-700">Back to Matches</a>
+    <a href="leagues.html" class="block py-2 px-3 rounded-md text-sm font-bold text-black hover:text-blue-700">Back to Leagues</a>
+  </div>
+</nav>
+
+
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Terms & Conditions</h1>
+                    <p class="text-xl md:text-2xl mb-8 opacity-90">Please read these terms carefully before using our
+                        services</p>
+                    <div class="flex justify-center space-x-4">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <i class="fas fa-gavel text-2xl mb-2"></i>
+                            <div class="text-sm">Legal Terms</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <i class="fas fa-shield-alt text-2xl mb-2"></i>
+                            <div class="text-sm">User Rights</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <i class="fas fa-file-contract text-2xl mb-2"></i>
+                            <div class="text-sm">Service Agreement</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <i class="fas fa-calendar-alt text-2xl mb-2"></i>
+                            <div class="text-sm">Last Updated</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms Content -->
+        <div class="py-16 bg-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Table of Contents -->
+                <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Table of Contents</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <ul class="space-y-2 text-gray-600">
+                            <li><a href="#acceptance" class="hover:text-blue-600">1. Acceptance of Terms</a></li>
+                            <li><a href="#services" class="hover:text-blue-600">2. Services Description</a></li>
+                            <li><a href="#registration" class="hover:text-blue-600">3. User Registration</a></li>
+                            <li><a href="#booking" class="hover:text-blue-600">4. Ticket Booking</a></li>
+                            <li><a href="#payment" class="hover:text-blue-600">5. Payment Terms</a></li>
+                        </ul>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><a href="#cancellation" class="hover:text-blue-600">6. Cancellation Policy</a></li>
+                            <li><a href="#prohibited" class="hover:text-blue-600">7. Prohibited Activities</a></li>
+                            <li><a href="#privacy" class="hover:text-blue-600">8. Privacy Policy</a></li>
+                            <li><a href="#liability" class="hover:text-blue-600">9. Limitation of Liability</a></li>
+                            <li><a href="#changes" class="hover:text-blue-600">10. Changes to Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Terms Sections -->
+                <div class="space-y-12">
+                    <!-- Acceptance of Terms -->
+                    <section id="acceptance" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Acceptance of Terms</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                By accessing and using FootballTix ("the Service"), you accept and agree to be bound by
+                                the terms and provision of this agreement. If you do not agree to abide by the above,
+                                please do not use this service.
+                            </p>
+                            <p class="mb-4">
+                                These Terms and Conditions ("Terms") govern your use of the FootballTix website and
+                                services. By using our services, you agree to these terms in full. If you disagree with
+                                any part of these terms, you may not use our services.
+                            </p>
+                            <p>
+                                We reserve the right to modify these terms at any time. We will notify users of any
+                                material changes via email or through a notice on our website.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Services Description -->
+                    <section id="services" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">2. Services Description</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                FootballTix provides an online platform for booking football match tickets. Our services
+                                include:
+                            </p>
+                            <ul class="list-disc pl-6 mb-4 space-y-2">
+                                <li>Online ticket booking for football matches</li>
+                                <li>Secure payment processing</li>
+                                <li>Digital ticket delivery</li>
+                                <li>Customer support services</li>
+                                <li>Match information and updates</li>
+                            </ul>
+                            <p>
+                                We act as an intermediary between ticket buyers and official ticket distributors. We do
+                                not own or control the tickets we sell.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- User Registration -->
+                    <section id="registration" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">3. User Registration</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                To use our services, you must register for an account. You agree to provide accurate,
+                                current, and complete information during registration and to update such information to
+                                keep it accurate, current, and complete.
+                            </p>
+                            <p class="mb-4">
+                                You are responsible for safeguarding the password and for all activities that occur
+                                under your account. You agree not to disclose your password to any third party and to
+                                take sole responsibility for any activities or actions under your account.
+                            </p>
+                            <p>
+                                You must be at least 18 years old to create an account. If you are under 18, you may
+                                only use our services with the involvement of a parent or guardian.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Ticket Booking -->
+                    <section id="booking" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Ticket Booking</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                All ticket bookings are subject to availability. We do not guarantee that tickets will
+                                be available for any particular match or seat location.
+                            </p>
+                            <p class="mb-4">
+                                By booking tickets, you agree to:
+                            </p>
+                            <ul class="list-disc pl-6 mb-4 space-y-2">
+                                <li>Provide accurate personal information</li>
+                                <li>Comply with stadium and event rules</li>
+                                <li>Not resell tickets for profit</li>
+                                <li>Use tickets only for their intended purpose</li>
+                                <li>Accept that tickets are non-transferable unless specified</li>
+                            </ul>
+                            <p>
+                                Tickets are valid only for the specific match, date, and time indicated. Late arrivals
+                                may result in denied entry.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Payment Terms -->
+                    <section id="payment" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Payment Terms</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                All prices are displayed in the local currency and include applicable taxes and service
+                                fees. Payment must be made in full at the time of booking.
+                            </p>
+                            <p class="mb-4">
+                                We accept various payment methods including credit cards, debit cards, and digital
+                                wallets. All payments are processed securely through our encrypted payment gateway.
+                            </p>
+                            <p class="mb-4">
+                                Service fees are non-refundable and clearly displayed before purchase. These fees cover
+                                our operational costs and platform maintenance.
+                            </p>
+                            <p>
+                                In case of payment disputes, we reserve the right to cancel bookings and withhold
+                                refunds until the dispute is resolved.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Cancellation Policy -->
+                    <section id="cancellation" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Cancellation Policy</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                Cancellation requests must be submitted at least 24 hours before the match start time.
+                                Cancellations are subject to the following terms:
+                            </p>
+                            <div class="bg-gray-50 rounded-lg p-6 mb-4">
+                                <h3 class="font-semibold text-gray-900 mb-2">Refund Schedule:</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li><strong>More than 24 hours:</strong> Full refund (minus service fees)</li>
+                                    <li><strong>24 hours or less:</strong> 50% refund (minus service fees)</li>
+                                    <li><strong>No-show:</strong> No refund</li>
+                                    <li><strong>Match cancellation:</strong> Full refund</li>
+                                </ul>
+                            </div>
+                            <p>
+                                Refunds will be processed within 5-7 business days to the original payment method.
+                                Service fees are non-refundable except in cases of match cancellation.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Prohibited Activities -->
+                    <section id="prohibited" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Prohibited Activities</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                You agree not to use our services for any unlawful purpose or in any way that could
+                                damage, disable, overburden, or impair our servers or networks.
+                            </p>
+                            <p class="mb-4">
+                                Prohibited activities include:
+                            </p>
+                            <ul class="list-disc pl-6 mb-4 space-y-2">
+                                <li>Reselling tickets for profit without authorization</li>
+                                <li>Using automated systems to purchase tickets</li>
+                                <li>Creating multiple accounts to circumvent purchase limits</li>
+                                <li>Providing false or misleading information</li>
+                                <li>Attempting to gain unauthorized access to our systems</li>
+                                <li>Interfering with other users' ability to use our services</li>
+                            </ul>
+                            <p>
+                                Violation of these terms may result in account suspension or termination and legal
+                                action.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Privacy Policy -->
+                    <section id="privacy" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">8. Privacy Policy</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                Your privacy is important to us. Our Privacy Policy explains how we collect, use, and
+                                protect your personal information.
+                            </p>
+                            <p class="mb-4">
+                                By using our services, you consent to the collection and use of your information as
+                                described in our Privacy Policy.
+                            </p>
+                            <p>
+                                We may share your information with:
+                            </p>
+                            <ul class="list-disc pl-6 mb-4 space-y-2">
+                                <li>Official ticket distributors and venues</li>
+                                <li>Payment processors for transaction processing</li>
+                                <li>Law enforcement when required by law</li>
+                                <li>Service providers who assist in our operations</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Limitation of Liability -->
+                    <section id="liability" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">9. Limitation of Liability</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                FootballTix shall not be liable for any indirect, incidental, special, consequential, or
+                                punitive damages, including but not limited to loss of profits, data, or use.
+                            </p>
+                            <p class="mb-4">
+                                Our total liability to you for any claims arising from the use of our services shall not
+                                exceed the amount you paid for the specific booking in question.
+                            </p>
+                            <p>
+                                We are not responsible for:
+                            </p>
+                            <ul class="list-disc pl-6 mb-4 space-y-2">
+                                <li>Match cancellations or postponements</li>
+                                <li>Stadium access issues</li>
+                                <li>Transportation problems</li>
+                                <li>Weather-related issues</li>
+                                <li>Personal injury or property damage at venues</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Changes to Terms -->
+                    <section id="changes" class="scroll-mt-20">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">10. Changes to Terms</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="mb-4">
+                                We reserve the right to modify these terms at any time. Changes will be effective
+                                immediately upon posting on our website.
+                            </p>
+                            <p class="mb-4">
+                                We will notify users of material changes via email or through a prominent notice on our
+                                website. Your continued use of our services after such changes constitutes acceptance of
+                                the new terms.
+                            </p>
+                            <p>
+                                If you do not agree to the modified terms, you should discontinue using our services.
+                            </p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="bg-blue-50 rounded-lg p-8 mt-12">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Contact Information</h2>
+                    <p class="text-gray-600 mb-4">
+                        If you have any questions about these Terms and Conditions, please contact us:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Email:</h3>
+                            <p class="text-gray-600">legal@footballtix.com</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Phone:</h3>
+                            <p class="text-gray-600">+1-800-FOOTBALL</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Address:</h3>
+                            <p class="text-gray-600">123 Football Street<br>Sports City, SC 12345<br>United States</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Last Updated:</h3>
+                            <p class="text-gray-600">January 15, 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <!-- Footer -->
+   <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold">FootballTix</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="events.html" class="text-gray-400 hover:text-white">Matches</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="how-it-works.html" class="text-gray-400 hover:text-white">How it Works</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="contactus.html" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Popular Leagues</h3>
+                    <ul class="space-y-2">
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Premier League</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">La Liga</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Bundesliga</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Serie A</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Ligue 1</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.1 2 4.7 4.1 3 7.6c-.2.5-.1 1 .3 1.4l1.7 1.7c.4.4.4 1 0 1.4l-1.7 1.7c-.3.3-.5.8-.4 1.3C4.8 20 8.1 22 12 22c4 0 7.3-2 8.8-5.6.1-.5 0-1-.4-1.3l-1.7-1.7c-.4-.4-.4-1 0-1.4L20.4 9c.4-.4.5-.9.3-1.4C19.3 4.1 15.9 2 12 2z"/></svg>
+                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK" target="_blank" class="hover:text-white">123 Stadium Street, London, UK</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 01.9-.27c1 .2 2 .3 3 .3a1 1 0 011 1v3a1 1 0 01-1 1C9.07 21.5 2.5 14.93 2.5 6a1 1 0 011-1h3a1 1 0 011 1c0 1 .1 2.1.3 3a1 1 0 01-.27.9l-2.2 2.2z"/></svg>
+                            <a href="tel:+441234567890" class="hover:text-white">+44 123 456 7890</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <a href="mailto:support@footballtix.com" class="hover:text-white">support@footballtix.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                    <p>&copy; 2023 FootballTix. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="js/terms.js"></script>
+</body>
+
+</html>
