@@ -126,11 +126,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (path.startsWith("/api/events") && "GET".equals(method)) {
             return true;
         }
-        
+
         if (path.startsWith("/api/leagues") && "GET".equals(method)) {
             return true;
         }
-        
+
         if (path.startsWith("/api/about") && "GET".equals(method)) {
             return true;
         }
