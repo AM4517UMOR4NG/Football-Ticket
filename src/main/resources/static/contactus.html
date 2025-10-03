@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootballTix - Contact Us</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/contactus.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #3286da;
+        }
+        .hero-pattern {
+            background-color: #1e40af;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            position: relative;
+            overflow: hidden;
+        }
+        .league-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .spinner {
+            border: 4px solid #1a2894;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 0px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .league-banner {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-field {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            transition: all 0.3s ease;
+        }
+        .form-field:hover {
+            transform: translateY(-2px);
+        }
+        .social-link {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .social-link:hover::before {
+            left: 100%;
+        }
+        .quick-help-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .quick-help-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .quick-help-link:hover::after {
+            width: 100%;
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .loading {
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8, #3b82f6);
+            background-size: 400% 400%;
+            animation: gradient-shift 1.5s ease infinite;
+        }
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .success {
+            background: linear-gradient(45deg, #10b981, #059669) !important;
+            transform: scale(1.05);
+        }
+        .nav-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .contact-info-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .contact-info-item:hover {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            transform: translateX(10px);
+        }
+    </style>
+</head>
+<body>
+ 
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-extrabold text-black tracking-wide">FootballTix</span>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Back to Home</a>
+                    <a href="events.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Back to Matches</a>
+                    <a href="leagues.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Back to Leagues</a>
+                </div>
+
+           
+
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-toggle"
+                        class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Icon when menu is closed -->
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Icon when menu is open -->
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Home</a>
+                    <a href="events.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Matches</a>
+                    <a href="bookings.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">My
+                        Bookings</a>
+                    <a href="leagues.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Leagues</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-pattern text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="text-center">
+                <div class="animate-float">
+                    <i class="fas fa-comments text-6xl mb-6 opacity-80"></i>
+                </div>
+                <h1
+                    class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                    Get in Touch
+                </h1>
+                <p class="text-xl md:text-2xl mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
+                    We're here to help with all your football ticketing needs.
+                    <span class="block mt-2 text-lg opacity-75">Reach out and let's make your football experience
+                        unforgettable!</span>
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-12">
+                    <div
+                        class="flex items-center glass-effect px-6 py-4 rounded-2xl hover:scale-105 transition-transform duration-300">
+                        <div class="bg-blue bg-opacity-20 p-3 rounded-full mr-4">
+                            <i class="fas fa-phone font-bold text-blue-900 text-2xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-3x1 font-bold text-gray-900 mb-2">Call us</div>
+                            <div class="text-3x1 font-bold text-gray-900 mb-2">+1 (555) 123-4567</div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center glass-effect px-6 py-4 rounded-2xl hover:scale-105 transition-transform duration-300">
+                        <div class="bg-blue bg-opacity-20 p-3 rounded-full mr-4">
+                            <i class="fas fa-envelope font-bold text-blue-900 text-2xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-3x1 font-bold text-gray-900 mb-2">Email us</div>
+                            <div class="text-3x1 font-bold text-gray-900 mb-2">support@footballtix.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Form Section -->
+    <div class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Contact Form -->
+                <div class="bg-white rounded-3xl shadow-2xl p-10 league-card border border-gray-100">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-4">
+                            <i class="fas fa-paper-plane text-2xl text-blue-600"></i>
+                        </div>
+                         
+                        <p class="text-gray-600">We'd love to hear from you. Send us a message and we'll respond as soon
+                            as possible.</p>
+                    </div>
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <label for="first-name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-user mr-2 text-blue-500"></i>First Name
+                                </label>
+                                <input type="text" id="first-name" name="firstName" required
+                                    class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                    placeholder="Enter your first name">
+                            </div>
+                            <div class="form-field">
+                                <label for="last-name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-user mr-2 text-blue-500"></i>Last Name
+                                </label>
+                                <input type="text" id="last-name" name="lastName" required
+                                    class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                    placeholder="Enter your last name">
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-envelope mr-2 text-blue-500"></i>Email Address
+                            </label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-field">
+                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-phone mr-2 text-blue-500"></i>Phone Number
+                            </label>
+                            <input type="tel" id="phone" name="phone"
+                                class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div class="form-field">
+                            <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-tag mr-2 text-blue-500"></i>Subject
+                            </label>
+                            <select id="subject" name="subject" required
+                                class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+                                <option value="">Select a subject</option>
+                                <option value="general">💬 General Inquiry</option>
+                                <option value="booking">🎫 Booking Support</option>
+                                <option value="refund">💰 Refund Request</option>
+                                <option value="technical">🔧 Technical Issue</option>
+                                <option value="partnership">🤝 Partnership</option>
+                                <option value="other">❓ Other</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-comment-alt mr-2 text-blue-500"></i>Message
+                            </label>
+                            <textarea id="message" name="message" rows="6" required
+                                class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all duration-300"
+                                placeholder="Tell us how we can help you..."></textarea>
+                        </div>
+                        <div class="flex items-center space-x-3 p-4 bg-blue-50 rounded-xl">
+                            <input type="checkbox" id="newsletter" name="newsletter"
+                                class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded transition-all duration-200">
+                            <label for="newsletter" class="text-sm text-gray-700 flex items-center">
+                                <i class="fas fa-newspaper mr-2 text-blue-500"></i>
+                                Subscribe to our newsletter for updates and special offers
+                            </label>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-8 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <!-- Contact Information Card -->
+                    <div class="bg-white rounded-3xl shadow-2xl p-10 league-card border border-gray-100">
+                        <div class="text-center mb-8">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-2xl mb-4">
+                                <i class="fas fa-map-marker-alt text-2xl text-green-600"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Contact Information</h3>
+                            <p class="text-gray-600">Get in touch with us through any of these channels</p>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="contact-info-item p-4 rounded-xl">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-xl">
+                                        <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-1">Address</h4>
+                                        <p class="text-gray-600 leading-relaxed">
+                                            123 Football Street<br>
+                                            Sports District<br>
+                                            London, UK SW1A 1AA
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-info-item p-4 rounded-xl">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-green-100 p-3 rounded-xl">
+                                        <i class="fas fa-phone text-green-600 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-1">Phone</h4>
+                                        <p class="text-gray-600">+1 (555) 123-4567</p>
+                                        <p class="text-gray-600">+44 (0) 20 7123 4567</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-info-item p-4 rounded-xl">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-xl">
+                                        <i class="fas fa-envelope text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-1">Email</h4>
+                                        <p class="text-gray-600">support@footballtix.com</p>
+                                        <p class="text-gray-600">info@footballtix.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-info-item p-4 rounded-xl">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-orange-100 p-3 rounded-xl">
+                                        <i class="fas fa-clock text-orange-600 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-1">Business Hours</h4>
+                                        <div class="space-y-1 text-gray-600">
+                                            <p class="flex justify-between"><span>Monday - Friday:</span><span
+                                                    class="font-medium">9:00 AM - 8:00 PM</span></p>
+                                            <p class="flex justify-between"><span>Saturday:</span><span
+                                                    class="font-medium">10:00 AM - 6:00 PM</span></p>
+                                            <p class="flex justify-between"><span>Sunday:</span><span
+                                                    class="font-medium">12:00 PM - 5:00 PM</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Social Media -->
+                    <div class="bg-white rounded-3xl shadow-2xl p-10 league-card border border-gray-100">
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-pink-100 rounded-2xl mb-4">
+                                <i class="fas fa-share-alt text-2xl text-pink-600"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Follow Us</h3>
+                            <p class="text-gray-600">Stay connected on social media</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="#"
+                                class="social-link flex items-center p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105">
+                                <i class="fab fa-facebook-f text-xl mr-3"></i>
+                                <span class="font-semibold">Facebook</span>
+                            </a>
+                            <a href="#"
+                                class="social-link flex items-center p-4 bg-gradient-to-r from-sky-400 to-sky-500 text-white rounded-xl hover:from-sky-500 hover:to-sky-600 transition-all duration-300 transform hover:scale-105">
+                                <i class="fab fa-twitter text-xl mr-3"></i>
+                                <span class="font-semibold">Twitter</span>
+                            </a>
+                            <a href="#"
+                                class="social-link flex items-center p-4 bg-gradient-to-r from-pink-600 to-pink-700 text-white rounded-xl hover:from-pink-700 hover:to-pink-800 transition-all duration-300 transform hover:scale-105">
+                                <i class="fab fa-instagram text-xl mr-3"></i>
+                                <span class="font-semibold">Instagram</span>
+                            </a>
+                            <a href="#"
+                                class="social-link flex items-center p-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105">
+                                <i class="fab fa-youtube text-xl mr-3"></i>
+                                <span class="font-semibold">YouTube</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- FAQ Quick Links -->
+                    <div class="bg-white rounded-3xl shadow-2xl p-10 league-card border border-gray-100">
+                        <div class="text-center mb-8">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 bg-yellow-100 rounded-2xl mb-4">
+                                <i class="fas fa-question-circle text-2xl text-yellow-600"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Quick Help</h3>
+                            <p class="text-gray-600">Find answers to common questions</p>
+                        </div>
+                        <div class="space-y-3">
+                            <a href="faq.html"
+                                class="quick-help-link flex items-center p-4 bg-gray-50 rounded-xl hover:bg-blue-50 transition-all duration-300 group">
+                                <div
+                                    class="bg-blue-100 p-2 rounded-lg mr-4 group-hover:bg-blue-200 transition-colors duration-300">
+                                    <i class="fas fa-question-circle text-blue-600"></i>
+                                </div>
+                                <span
+                                    class="font-medium text-gray-700 group-hover:text-blue-700 transition-colors duration-300 flex-1">Frequently
+                                    Asked Questions</span>
+                                <i
+                                    class="fas fa-chevron-right text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300"></i>
+                            </a>
+                            <a href="refund-policy.html"
+                                class="quick-help-link flex items-center p-4 bg-gray-50 rounded-xl hover:bg-green-50 transition-all duration-300 group">
+                                <div
+                                    class="bg-green-100 p-2 rounded-lg mr-4 group-hover:bg-green-200 transition-colors duration-300">
+                                    <i class="fas fa-undo text-green-600"></i>
+                                </div>
+                                <span
+                                    class="font-medium text-gray-700 group-hover:text-green-700 transition-colors duration-300 flex-1">Refund
+                                    Policy</span>
+                                <i
+                                    class="fas fa-chevron-right text-gray-400 group-hover:text-green-600 group-hover:translate-x-1 transition-all duration-300"></i>
+                            </a>
+                            <a href="terms.html"
+                                class="quick-help-link flex items-center p-4 bg-gray-50 rounded-xl hover:bg-purple-50 transition-all duration-300 group">
+                                <div
+                                    class="bg-purple-100 p-2 rounded-lg mr-4 group-hover:bg-purple-200 transition-colors duration-300">
+                                    <i class="fas fa-file-contract text-purple-600"></i>
+                                </div>
+                                <span
+                                    class="font-medium text-gray-700 group-hover:text-purple-700 transition-colors duration-300 flex-1">Terms
+                                    & Conditions</span>
+                                <i
+                                    class="fas fa-chevron-right text-gray-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all duration-300"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Map Section -->
+    <div class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-2xl mb-6">
+                    <i class="fas fa-map-marked-alt text-2xl text-indigo-600"></i>
+                </div>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Find Us</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Visit our office or get in touch online. We're always
+                    here to help you with your football ticketing needs.</p>
+            </div>
+            <div
+                class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl shadow-inner p-16 flex items-center justify-center min-h-96 league-card relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10"></div>
+                <div class="text-center relative z-10">
+                    <div class="animate-pulse-slow mb-6">
+                        <i class="fas fa-map-marked-alt text-8xl text-gray-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-600 mb-4">Interactive Map Coming Soon</h3>
+                    <p class="text-gray-500 text-lg mb-4">123 Football Street, Sports District, London, UK</p>
+                    <div class="flex justify-center space-x-6 text-sm text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fas fa-subway mr-2"></i>
+                            <span>Victoria Station - 5 min walk</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-parking mr-2"></i>
+                            <span>Free parking available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Emergency Contact Section -->
+    <div class="py-16 bg-gradient-to-r from-red-50 to-orange-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-xl p-10 text-center border-l-4 border-red-500">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-2xl mb-6">
+                    <i class="fas fa-exclamation-triangle text-2xl text-red-600"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Need Urgent Help?</h3>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    If you have an urgent issue related to upcoming matches or need immediate assistance,
+                    please use our 24/7 emergency contact line.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="tel:+1555emergenc"
+                        class="bg-red-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-phone mr-2"></i>Emergency: +1 (555) EMERGENCY
+                    </a>
+                    <a href="mailto:urgent@footballtix.com"
+                        class="bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-orange-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-envelope mr-2"></i>urgent@footballtix.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold">FootballTix</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=hnXqfj1y3Yo&list=RDhnXqfj1y3Yo&start_radio=1" class="text-gray-400 hover:text-white" aria-label="Follow us on YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="how-it-works.html" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="contactus.html" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Popular Leagues</h3>
+                    <ul class="space-y-2">
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Premier League</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">La Liga</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Bundesliga</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Serie A</a></li>
+                        <li><a href="leagues.html" class="text-gray-400 hover:text-white">Ligue 1</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.1 2 4.7 4.1 3 7.6c-.2.5-.1 1 .3 1.4l1.7 1.7c.4.4.4 1 0 1.4l-1.7 1.7c-.3.3-.5.8-.4 1.3C4.8 20 8.1 22 12 22c4 0 7.3-2 8.8-5.6.1-.5 0-1-.4-1.3l-1.7-1.7c-.4-.4-.4-1 0-1.4L20.4 9c.4-.4.5-.9.3-1.4C19.3 4.1 15.9 2 12 2z"/></svg>
+                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK" target="_blank" class="hover:text-white">123 Stadium Street, London, UK</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 01.9-.27c1 .2 2 .3 3 .3a1 1 0 011 1v3a1 1 0 01-1 1C9.07 21.5 2.5 14.93 2.5 6a1 1 0 011-1h3a1 1 0 011 1c0 1 .1 2.1.3 3a1 1 0 01-.27.9l-2.2 2.2z"/></svg>
+                            <a href="tel:+441234567890" class="hover:text-white">+44 123 456 7890</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <a href="mailto:support@footballtix.com" class="hover:text-white">support@footballtix.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                    <p>&copy; 2023 FootballTix. All rights reserved.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Enhanced contactus.js for FootballTix - Contact Page with Visual Improvements
+        document.addEventListener('DOMContentLoaded', function () {
+            // DOM Elements
+            const contactForm = document.getElementById('contact-form');
+            const authStatus = document.getElementById('auth-status');
+            const signInLink = document.getElementById('sign-in-link');
+            const logoutBtn = document.getElementById('logout-btn');
+            const navSignInBtn = document.querySelector('.nav-sign-in'); // Added for navbar sign-in button
+            // Initialize the page with enhanced animations
+            initializeContactPage();
+            function initializeContactPage() {
+                checkAuthStatus();
+                setupEventListeners();
+                enhanceFormInteractions();
+                addAdvancedAnimations();
+                setupFormValidation();
+                initializeVisualEffects();
+                addLoadingTransitions();
+                initializeScrollEffects();
+            }
+            function checkAuthStatus() {
+                const token = getStoredData('authToken');
+                const userData = getStoredData('userData');
+                if (token && userData) {
+                    handleLoggedInState();
+                } else {
+                    handleLoggedOutState();
+                }
+            }
+            function handleLoggedInState() {
+                // Show auth status with smooth animation
+                if (authStatus) {
+                    authStatus.classList.remove('hidden');
+                    authStatus.style.opacity = '0';
+                    authStatus.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        authStatus.style.transition = 'all 0.5s ease';
+                        authStatus.style.opacity = '1';
+                        authStatus.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+                // Hide sign-in links with fade out animation
+                hideSignInElements();
+                const userData = JSON.parse(getStoredData('userData'));
+                if (userData && userData.role === 'ADMIN') {
+                    addAdminFeatures();
+                    console.log('Admin user logged in');
+                }
+                // Add welcome animation
+                showWelcomeMessage(userData);
+                // Update user name display
+                const userNameElement = document.getElementById('user-name');
+                if (userNameElement && userData && userData.name) {
+                    userNameElement.textContent = `Welcome, ${userData.name}!`;
+                }
+            }
+            function handleLoggedOutState() {
+                // Hide auth status with smooth animation
+                if (authStatus) {
+                    authStatus.style.transition = 'all 0.5s ease';
+                    authStatus.style.opacity = '0';
+                    authStatus.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        authStatus.classList.add('hidden');
+                    }, 500);
+                }
+                // Show sign-in links with fade in animation
+                showSignInElements();
+            }
+            function hideSignInElements() {
+                const elementsToHide = [signInLink, navSignInBtn];
+                elementsToHide.forEach(element => {
+                    if (element) {
+                        element.style.transition = 'all 0.4s ease';
+                        element.style.opacity = '0';
+                        element.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            element.classList.add('hidden');
+                        }, 400);
+                    }
+                });
+            }
+            function showSignInElements() {
+                const elementsToShow = [signInLink, navSignInBtn];
+                elementsToShow.forEach((element, index) => {
+                    if (element) {
+                        element.classList.remove('hidden');
+                        element.style.opacity = '0';
+                        element.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            element.style.transition = 'all 0.4s ease';
+                            element.style.opacity = '1';
+                            element.style.transform = 'scale(1)';
+                        }, index * 100);
+                    }
+                });
+            }
+            // Initialize scroll effects
+            function initializeScrollEffects() {
+                const backToTopBtn = document.getElementById('back-to-top');
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.style.opacity = '1';
+                        backToTopBtn.style.transform = 'translateY(0)';
+                    } else {
+                        backToTopBtn.style.opacity = '0';
+                        backToTopBtn.style.transform = 'translateY(20px)';
+                    }
+                });
+                backToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            // Rest of your existing JavaScript functions...
+            // (Include all the functions from the previous JavaScript artifact)
+            // Utility functions
+            function getStoredData(key) {
+                try {
+                    return localStorage.getItem(key);
+                } catch (error) {
+                    console.error('Error accessing localStorage:', error);
+                    return null;
+                }
+            }
+            function setStoredData(key, value) {
+                try {
+                    localStorage.setItem(key, value);
+                } catch (error) {
+                    console.error('Error setting localStorage:', error);
+                }
+            }
+            function removeStoredData(key) {
+                try {
+                    localStorage.removeItem(key);
+                } catch (error) {
+                    console.error('Error removing from localStorage:', error);
+                }
+            }
+            // Placeholder functions for the enhanced features
+            function showWelcomeMessage(userData) {
+                if (userData && userData.name) {
+                    console.log(`Welcome back, ${userData.name}!`);
+                }
+            }
+            function addAdminFeatures() {
+                console.log('Admin features loaded');
+            }
+            function setupEventListeners() {
+                console.log('Event listeners setup');
+            }
+            function enhanceFormInteractions() {
+                console.log('Form interactions enhanced');
+            }
+            function addAdvancedAnimations() {
+                console.log('Advanced animations added');
+            }
+            function setupFormValidation() {
+                console.log('Form validation setup');
+            }
+            function initializeVisualEffects() {
+                console.log('Visual effects initialized');
+            }
+            function addLoadingTransitions() {
+                console.log('Loading transitions added');
+            }
+        });
+    </script>
+</body>
+</html>
