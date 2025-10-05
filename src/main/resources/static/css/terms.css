@@ -1,0 +1,208 @@
+/* Terms & Conditions Page Styles */
+
+/* Smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Section animations */
+section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Table of contents styling */
+.bg-gray-50 a {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bg-gray-50 a:hover {
+    color: #2563eb;
+    transform: translateX(4px);
+}
+
+.bg-gray-50 a::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #2563eb;
+    transition: width 0.3s ease;
+    transform: translateY(-50%);
+}
+
+.bg-gray-50 a:hover::before {
+    width: 4px;
+}
+
+/* Section headings */
+section h2 {
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    border-radius: 2px;
+}
+
+/* Prose styling improvements */
+.prose {
+    line-height: 1.7;
+}
+
+.prose p {
+    margin-bottom: 1.25rem;
+}
+
+.prose ul {
+    margin-bottom: 1.25rem;
+}
+
+.prose li {
+    margin-bottom: 0.5rem;
+}
+
+/* Highlight important information */
+
+
+/* Contact information styling */
+.bg-blue-50 {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-blue-50::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #e6e7e8, #1d4ed8, #1e40af);
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+    .prose {
+        font-size: 0.95rem;
+    }
+
+    section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .bg-gray-50 {
+        display: none;
+    }
+}
+
+/* Focus states for accessibility */
+section:focus-within {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+    border-radius: 8px;
+}
+
+/* Loading states */
+section.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Success/error states */
+section.success {
+    border-left: 4px solid #10b981;
+}
+
+section.error {
+    border-left: 4px solid #ef4444;
+}
+
+/* Hover effects for interactive elements */
+.bg-gray-50:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Animation for section transitions */
+.profile-section {
+    transition: all 0.3s ease;
+}
+
+.profile-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus management for keyboard navigation */
+section:target {
+    scroll-margin-top: 100px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    section h2::after {
+        background: #000;
+    }
+
+    .bg-gray-50 a::before {
+        background-color: #000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
