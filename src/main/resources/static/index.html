@@ -42,6 +42,9 @@
                     <a href="bookings.html"
                         class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">My
                         Bookings</a>
+                    <a href="wishlist.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">My
+                        Wishlist</a>
                     <a href="leagues.html"
                         class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Leagues</a>
                 </div>
@@ -87,6 +90,9 @@
                     <a href="bookings.html"
                         class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">My
                         Bookings</a>
+                    <a href="wishlist.html"
+                        class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">My
+                        Wishlist</a>
                     <a href="leagues.html"
                         class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Leagues</a>
                 </div>
@@ -128,13 +134,22 @@
                 </div>
             </div>
             <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
-                aria-label="Slide 3 of 3">
+                aria-label="Slide 4 of 4">
                 <img src="https://cdn0-production-images-kly.akamaized.net/p6CDGH2qUqP_g_NfJpB2eKBNG5Q=/1200x1200/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/2129121/original/032333300_1525150438-Real-Madrid-Bayern-Munchen1.jpg"
                     alt="Football on the pitch" class="w-full h-full object-cover" loading="lazy">
                 <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
                     <h3 class="text-xl font-bold mb-1">Matchday Preparation</h3>
                     <p>Training day of your favorite teams</p>
                 </div>
+                  <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
+                aria-label="Slide 2 of 3">
+                <img src="https://asset-2.tstatic.net/bangka/foto/bank/images/2024021-ac-Milan-vs-Inter-Milan.jpg"
+                    alt="Loading.." class="w-full h-full object-cover" loading="lazy">
+                <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
+                    <h3 class="text-xl font-bold mb-1">Seria A Highlights</h3>
+                    <p>Most waited matches of the weeks</p>
+                </div>
+            </div>
             </div>
         </div>
         <!-- Indicators -->
@@ -198,9 +213,14 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="price-tag">From £95</div>
-                        <a href="#" class="ticket-button">
-                            <i class="fas fa-ticket-alt"></i> Buy Tickets
-                        </a>
+                        <div class="flex space-x-2">
+                            <button onclick="addToWishlist(1)" class="wishlist-btn" title="Add to Wishlist">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <a href="#" class="ticket-button">
+                                <i class="fas fa-ticket-alt"></i> Buy Tickets
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -241,9 +261,14 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="price-tag">From £85</div>
-                        <a href="#" class="ticket-button">
-                            <i class="fas fa-ticket-alt"></i> Buy Tickets
-                        </a>
+                        <div class="flex space-x-2">
+                            <button onclick="addToWishlist(2)" class="wishlist-btn" title="Add to Wishlist">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <a href="#" class="ticket-button">
+                                <i class="fas fa-ticket-alt"></i> Buy Tickets
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,10 +308,15 @@
                         <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> Etihad Stadium, Manchester
                     </div>
                     <div class="flex justify-between items-center">
-                        <div class="price-tag">From £75</div>"
-                        <a href="#" class="ticket-button">
-                            <i class="fas fa-ticket-alt"></i> Buy Tickets
-                        </a>
+                        <div class="price-tag">From £75</div>
+                        <div class="flex space-x-2">
+                            <button onclick="addToWishlist(3)" class="wishlist-btn" title="Add to Wishlist">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <a href="#" class="ticket-button">
+                                <i class="fas fa-ticket-alt"></i> Buy Tickets
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -391,15 +421,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <div class="flex items-center mb-4">
-                        <div class="bg-blue-600 rounded-lg p-2 mr-2">
-                            <svg class="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
-                                </path>
-                            </svg>
-                        </div>
-                        <span class="text-xl font-bold">FootballTix</span>
+                      <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold">FootballTix</span>
                     </div>
                     <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
                     <div class="flex space-x-4">
@@ -441,23 +469,16 @@
                     <h3 class="text-lg font-semibold mb-4">Contact</h3>
                     <ul class="space-y-3 text-gray-400">
                         <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-3 text-blue-500"></i>
-                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK"
-                                target="_blank" class="hover:text-white">
-                                <span>123 Stadium Street, London, UK</span>
-                            </a>
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.1 2 4.7 4.1 3 7.6c-.2.5-.1 1 .3 1.4l1.7 1.7c.4.4.4 1 0 1.4l-1.7 1.7c-.3.3-.5.8-.4 1.3C4.8 20 8.1 22 12 22c4 0 7.3-2 8.8-5.6.1-.5 0-1-.4-1.3l-1.7-1.7c-.4-.4-.4-1 0-1.4L20.4 9c.4-.4.5-.9.3-1.4C19.3 4.1 15.9 2 12 2z"/></svg>
+                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK" target="_blank" class="hover:text-white">123 Stadium Street, London, UK</a>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-3 text-blue-500"></i>
-                            <a href="tel:+441234567890" class="hover:text-white">
-                                <span>+44 123 456 7890</span>
-                            </a>
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 01.9-.27c1 .2 2 .3 3 .3a1 1 0 011 1v3a1 1 0 01-1 1C9.07 21.5 2.5 14.93 2.5 6a1 1 0 011-1h3a1 1 0 011 1c0 1 .1 2.1.3 3a1 1 0 01-.27.9l-2.2 2.2z"/></svg>
+                            <a href="tel:+441234567890" class="hover:text-white">+44 123 456 7890</a>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-blue-500"></i>
-                            <a href="mailto:support@footballtix.com" class="hover:text-white">
-                                <span>support@footballtix.com</span>
-                            </a>
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <a href="mailto:support@footballtix.com" class="hover:text-white">support@footballtix.com</a>
                         </li>
                     </ul>
                 </div>
