@@ -30,15 +30,15 @@ class AuthManager {
         try {
             const token = this.getStorageItem(this.storageKeys.accessToken);
             const expiry = this.getStorageItem(this.storageKeys.sessionExpiry);
-            
+
             if (!token) return false;
-            
+
             // Check if session has expired
             if (expiry && new Date().getTime() > parseInt(expiry)) {
                 this.handleLogout(false); // Silent logout
                 return false;
             }
-            
+
             return true;
         } catch (error) {
             console.warn('Error checking login status:', error);
@@ -73,13 +73,13 @@ class AuthManager {
             Object.values(this.storageKeys).forEach(key => {
                 this.removeStorageItem(key);
             });
-            
+
             this.triggerEvent('logout');
-            
+
             if (showNotification) {
                 this.showNotification('Logged out successfully', 'info');
             }
-            
+
             if (redirect) {
                 // Add a small delay for better UX
                 setTimeout(() => {
@@ -165,15 +165,15 @@ class AuthManager {
             background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6'};
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         `;
-        
+
         document.body.appendChild(notification);
-        
+
         // Animate in
         requestAnimationFrame(() => {
             notification.style.transform = 'translateX(0)';
             notification.style.opacity = '1';
         });
-        
+
         // Auto remove after 3 seconds
         setTimeout(() => {
             notification.style.transform = 'translateX(100%)';
@@ -208,26 +208,26 @@ class ThemeManager {
 
         const htmlElement = document.documentElement;
         const body = document.body;
-        
+
         // Remove all theme classes
         htmlElement.classList.remove('dark', 'light');
         body.classList.remove('theme-dark', 'theme-light');
-        
+
         let effectiveTheme = mode;
-        
+
         if (mode === 'auto') {
             effectiveTheme = this.mediaQuery.matches ? 'dark' : 'light';
         }
-        
+
         // Apply theme
         htmlElement.classList.add(effectiveTheme);
         body.classList.add(`theme-${effectiveTheme}`);
-        
+
         // Update CSS custom properties for smooth transitions
         this.updateThemeProperties(effectiveTheme);
-        
+
         this.currentTheme = mode;
-        
+
         if (savePreference) {
             try {
                 localStorage.setItem(this.storageKey, mode);
@@ -235,16 +235,16 @@ class ThemeManager {
                 console.warn('Error saving theme preference:', error);
             }
         }
-        
+
         this.triggerEvent('themeChanged', { mode, effectiveTheme });
-        
+
         // Update meta theme-color for mobile browsers
         this.updateMetaThemeColor(effectiveTheme);
     }
 
     updateThemeProperties(theme) {
         const root = document.documentElement;
-        
+
         if (theme === 'dark') {
             root.style.setProperty('--bg-primary', '#0f172a');
             root.style.setProperty('--bg-secondary', '#1e293b');
@@ -267,7 +267,7 @@ class ThemeManager {
             metaThemeColor.name = 'theme-color';
             document.head.appendChild(metaThemeColor);
         }
-        
+
         metaThemeColor.content = theme === 'dark' ? '#0f172a' : '#ffffff';
     }
 
@@ -312,17 +312,17 @@ class ThemeManager {
         // Load saved theme or detect system preference
         const savedTheme = localStorage.getItem(this.storageKey);
         const initialTheme = savedTheme || 'auto';
-        
+
         // Listen for system theme changes
         this.mediaQuery.addEventListener('change', (e) => {
             if (this.currentTheme === 'auto') {
                 this.setTheme('auto', false);
             }
         });
-        
+
         // Set initial theme
         this.setTheme(initialTheme, false);
-        
+
         // Add transition class after a short delay to prevent flash
         setTimeout(() => {
             document.body.classList.add('theme-transition');
@@ -396,7 +396,7 @@ class UIManager {
             themeToggle.innerHTML = this.getThemeToggleIcon();
             themeToggle.setAttribute('aria-label', 'Toggle theme');
             themeToggle.className += ' theme-toggle-btn';
-            
+
             themeToggle.addEventListener('click', () => {
                 this.theme.toggleTheme();
                 this.updateThemeToggleIcon();
@@ -434,7 +434,7 @@ class UIManager {
         if (logoutLink) {
             logoutLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                
+
                 // Show confirmation dialog
                 if (confirm('Are you sure you want to logout?')) {
                     this.auth.handleLogout();
@@ -483,7 +483,7 @@ class App {
     initializeApp() {
         try {
             this.uiManager = new UIManager(this.authManager, this.themeManager);
-            
+
             // Add global error handling
             window.addEventListener('error', (e) => {
                 console.error('Global error:', e.error);
@@ -553,4 +553,8 @@ if (!document.querySelector('#theme-transitions')) {
         }
     `;
     document.head.appendChild(style);
+}
+
+function isAdmin() {
+    return localStorage.getItem('userRole') === 'ADMIN';
 }
