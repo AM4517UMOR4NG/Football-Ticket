@@ -1,0 +1,313 @@
+/* User Profile Page Styles */
+
+/* Profile header animations */
+.bg-gradient-to-r {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-gradient-to-r::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Profile avatar styling */
+.relative .w-24 {
+    transition: all 0.3s ease;
+}
+
+.relative .w-24:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Camera button animation */
+.absolute.bottom-0.right-0 {
+    transition: all 0.3s ease;
+}
+
+.absolute.bottom-0.right-0:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar sticky behavior */
+.sticky {
+    transition: all 0.3s ease;
+}
+
+.sticky:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Quick actions button styling */
+.space-y-2 button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.space-y-2 button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.space-y-2 button:hover::before {
+    left: 100%;
+}
+
+.space-y-2 button:hover {
+    transform: translateX(4px);
+    background-color: #eff6ff;
+}
+
+/* Form input styling */
+input:disabled {
+    background-color: #f8fafc;
+    cursor: not-allowed;
+}
+
+input:not(:disabled):focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6;
+}
+
+/* Edit button animations */
+.bg-blue-600 {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-blue-600::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.bg-blue-600:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.bg-blue-600:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Booking history card animations */
+.border.border-gray-200 {
+    transition: all 0.3s ease;
+}
+
+.border.border-gray-200:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}
+
+/* Status badge animations */
+.bg-green-100,
+.bg-gray-100 {
+    transition: all 0.3s ease;
+}
+
+.bg-green-100:hover,
+.bg-gray-100:hover {
+    transform: scale(1.05);
+}
+
+/* Toggle switch styling */
+.relative.inline-flex {
+    transition: all 0.3s ease;
+}
+
+.relative.inline-flex:hover {
+    transform: scale(1.05);
+}
+
+/* Section transitions */
+.profile-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form validation states */
+input:invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+input:valid {
+    border-color: #10b981;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f4f6;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Success/error message animations */
+.message {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+    .lg\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .sticky {
+        position: relative;
+        top: auto;
+    }
+}
+
+/* Accessibility improvements */
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .bg-gradient-to-r::before {
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.3), transparent);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .bg-gradient-to-r {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .sticky {
+        position: static;
+    }
+
+    button {
+        display: none;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Focus management */
+.profile-section:target {
+    scroll-margin-top: 100px;
+}
+
+/* Hover effects for interactive elements */
+.space-y-4>div:hover {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
