@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>How It Works - FootballTix</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pkL1dCq2H1Yc3Zx6xJ8j1r2Jb3/7s2f1Z0qQ6q1b6K5pG9b1e1Y2vQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/how-it-works.css">
+
+  <!-- Optional: Tailwind utilities -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <meta name="description" content="How FootballTix works — registration, browsing matches, selecting tickets, payment and match day." />
+</head>
+<body class="font-montserrat">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-xl sticky top-0 z-50" role="navigation" aria-label="Main navigation">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+
+        <!-- Logo / brand -->
+        <div class="flex items-center">
+          <a href="index.html" class="flex items-center" aria-label="FootballTix home">
+            <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="#0B5CF6" stroke-width="1.8" fill="white" />
+              <path d="M10 8l6 4-6 4V8z" fill="#0B5CF6" />
+            </svg>
+            <span class="ml-3 text-2xl font-extrabold tracking-wide">FootballTix</span>
+          </a>
+        </div>
+
+        
+      <!-- Desktop nav links (this is the replaced div, now styled exactly like before) -->
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="index.html"
+           class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+           Back to Home
+        </a>
+
+        <a href="events.html"
+           class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+           Back to Matches
+        </a>
+
+        <a href="leagues.html"
+           class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+           Back to Leagues
+        </a>
+      </div>
+
+      <!-- Mobile toggle (kept for mobile behavior; JS expects these IDs) -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open main menu" class="p-2 rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-blue-300">
+          <svg id="mobile-icon-open" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="mobile-icon-close" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile menu (hidden by default) -->
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4" aria-hidden="true">
+    <a href="index.html" class="block py-2 px-3 rounded-md text-sm font-bold text-black hover:text-blue-700">Back to Home</a>
+    <a href="events.html" class="block py-2 px-3 rounded-md text-sm font-bold text-black hover:text-blue-700">Back to Matches</a>
+    <a href="leagues.html" class="block py-2 px-3 rounded-md text-sm font-bold text-black hover:text-blue-700">Back to Leagues</a>
+  </div>
+</nav>
+  <!-- Hero -->
+  <section class="hero" role="banner">
+    <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">How FootballTix Works</h1>
+      <p class="text-lg max-w-3xl mx-auto">Your complete guide to booking football tickets online. From registration to match day, we've got you covered every step of the way.</p>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <main class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Simple 5-Step Process</h2>
+
+      <div class="space-y-12">
+
+        <!-- Step 1 -->
+        <article class="step-container">
+          <div class="flex flex-col lg:flex-row items-center">
+            <div class="step-number-container lg:mr-12 mb-6 lg:mb-0">
+              <div class="step-number">1</div>
+            </div>
+            <div class="step-content flex-1">
+              <h3 class="text-2xl font-bold mb-3">Create Your Account</h3>
+              <p class="mb-4">Start your football journey by creating a free account. Provide name, email, and a secure password. We protect your data with industry-standard practices.</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-muted">
+                <div class="flex items-center"><i class="fas fa-check-circle mr-3"></i> Quick 2-minute registration</div>
+                <div class="flex items-center"><i class="fas fa-check-circle mr-3"></i> Email verification required</div>
+                <div class="flex items-center"><i class="fas fa-check-circle mr-3"></i> Secure password protection</div>
+                <div class="flex items-center"><i class="fas fa-check-circle mr-3"></i> Free account creation</div>
+              </div>
+              <a href="register.html" class="btn btn-blue" role="button">
+                <i class="fas fa-user-plus"></i>
+                <span class="ml-2">Get Started Now</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 2 -->
+        <article class="step-container">
+          <div class="flex flex-col lg:flex-row items-center">
+            <div class="step-number-container lg:mr-12 mb-6 lg:mb-0">
+              <div class="step-number">2</div>
+            </div>
+            <div class="step-content flex-1">
+              <h3 class="text-2xl font-bold mb-3">Browse Available Matches</h3>
+              <p class="mb-4">Explore matches from top leagues worldwide. Filter by date, league, team, or venue to find the perfect match for you.</p>
+              <a href="events.html" class="btn btn-blue" role="button">
+                <i class="fas fa-search"></i>
+                <span class="ml-2">Browse Matches</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 3 -->
+        <article class="step-container">
+          <div class="flex flex-col lg:flex-row items-center">
+            <div class="step-number-container lg:mr-12 mb-6 lg:mb-0">
+              <div class="step-number">3</div>
+            </div>
+            <div class="step-content flex-1">
+              <h3 class="text-2xl font-bold mb-3">Select Your Tickets</h3>
+              <p class="mb-4">Choose seats, review pricing and make sure you get the best value. See exactly where you'll be sitting.</p>
+              <a href="book-tickets.html" class="btn btn-blue" role="button">
+                <i class="fas fa-ticket-alt"></i>
+                <span class="ml-2">Select Tickets</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 4 -->
+        <article class="step-container">
+          <div class="flex flex-col lg:flex-row items-center">
+            <div class="step-number-container lg:mr-12 mb-6 lg:mb-0">
+              <div class="step-number">4</div>
+            </div>
+            <div class="step-content flex-1">
+              <h3 class="text-2xl font-bold mb-3">Secure Payment</h3>
+              <p class="mb-4">Complete the purchase with our secure payment system — cards, wallets, encrypted transactions.</p>
+              <div class="payment-methods flex flex-wrap gap-4 mb-4">
+                <div class="payment-item bg-white p-3 rounded-xl shadow-md flex items-center justify-center">
+                  <div class="payment-logo visa w-14 h-10 bg-contain bg-no-repeat bg-center" 
+                       style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg')"></div>
+                </div>
+                <div class="payment-item bg-white p-3 rounded-xl shadow-md flex items-center justify-center">
+                  <div class="payment-logo mastercard w-14 h-10 bg-contain bg-no-repeat bg-center" 
+                       style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg')"></div>
+                </div>
+                <div class="payment-item bg-white p-3 rounded-xl shadow-md flex items-center justify-center">
+                  <div class="payment-logo paypal w-14 h-10 bg-contain bg-no-repeat bg-center" 
+                       style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg')"></div>
+                </div>
+                <div class="payment-item bg-white p-3 rounded-xl shadow-md flex items-center justify-center">
+                  <div class="payment-logo apple-pay w-14 h-10 bg-contain bg-no-repeat bg-center" 
+                       style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg')"></div>
+                </div>
+                <div class="payment-item bg-white p-3 rounded-xl shadow-md flex items-center justify-center">
+                  <div class="payment-logo google-pay w-14 h-10 bg-contain bg-no-repeat bg-center" 
+                       style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg')"></div>
+                </div>
+              </div>
+              <div class="security-badge flex items-center mt-6 text-sm text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span>256-bit SSL Encryption | PCI DSS Compliant</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 5 -->
+        <article class="step-container">
+          <div class="flex flex-col lg:flex-row items-center">
+            <div class="step-number-container lg:mr-12 mb-6 lg:mb-0">
+              <div class="step-number">5</div>
+            </div>
+            <div class="step-content flex-1">
+              <h3 class="text-2xl font-bold mb-3">Enjoy the Match!</h3>
+              <p class="mb-4">Tickets delivered instantly to your account — access via website or mobile app. Show digital tickets at the venue.</p>
+              <a href="bookings.html" class="btn btn-blue" role="button">
+                <i class="fas fa-ticket-alt"></i>
+                <span class="ml-2">View My Tickets</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Additional info & FAQ -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+      <div class="bg-white rounded-xl p-8">
+        <div class="text-center mb-6">
+          <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 bg-blue-50 overflow-hidden shadow-lg">
+            <img src="https://img.freepik.com/premium-vector/vip-quality-badge-label-element_689076-1.jpg" 
+                 alt="Ticket Icon" 
+                 class="w-16 h-16 object-cover">
+          </div>
+          <h3 class="text-xl font-bold text-gray-900">Ticket Types Available</h3>
+        </div>
+        <ul class="space-y-3 text-gray-600">
+          <li><strong>VIP Seats:</strong> Premium seating with exclusive amenities</li>
+          <li><strong>General Admission:</strong> Standard seating options</li>
+          <li><strong>Family Section:</strong> Kid-friendly seating areas</li>
+          <li><strong>Wheelchair Accessible:</strong> Accessible seating options</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-xl p-8">
+        <div class="text-center mb-6">
+          <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 bg-green-50 overflow-hidden shadow-lg">
+            <img src="https://media.licdn.com/dms/image/v2/D4D12AQGgH039JOiFVw/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1724038807936?e=2147483647&v=beta&t=zGGlHvMyeL_5WsvnROUMJ4bvywIfuUFvSQgDY2mO1cc" 
+                 alt="Security Icon" 
+                 class="w-16 h-16 object-cover">
+          </div>
+          <h3 class="text-xl font-bold text-gray-900">Safety & Security</h3>
+        </div>
+        <ul class="space-y-3 text-gray-600">
+          <li>100% authentic tickets guaranteed</li>
+          <li>Secure payment processing</li>
+          <li>Data protection compliance</li>
+          <li>24/7 customer support</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ card -->
+    <section class="bg-white rounded-xl p-8 mb-12">
+      <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h3>
+      <div class="space-y-6">
+        <div class="border-b pb-4">
+          <h4 class="text-lg font-semibold">Can I cancel my tickets after purchase?</h4>
+          <p class="text-gray-600">Yes, cancel up to 48 hours before the event. See <a href="refund-policy.html">refund policy</a> for details.</p>
+        </div>
+
+        <div class="border-b pb-4">
+          <h4 class="text-lg font-semibold">How do I access my tickets?</h4>
+          <p class="text-gray-600">Tickets are available immediately in your account and mobile app.</p>
+        </div>
+
+        <div class="pb-4">
+          <h4 class="text-lg font-semibold">What payment methods do you accept?</h4>
+          <p class="text-gray-600">Major credit/debit cards and digital wallets like PayPal.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="text-center mb-12">
+      <h3 class="text-2xl font-bold mb-3">Ready to Get Started?</h3>
+      <p class="text-gray-600 mb-6">Join thousands of football fans who trust FootballTix for their match tickets.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="register.html" class="btn btn-blue">
+          <i class="fas fa-user-plus"></i>
+          <span class="ml-2">Create Account</span>
+        </a>
+        <a href="events.html" class="btn btn-green">
+          <i class="fas fa-search"></i>
+          <span class="ml-2">Browse Matches</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+        <div>
+          <div class="flex items-center mb-4">
+            <div class="bg-blue-600 rounded-lg p-2 mr-2">
+              <svg class="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+              </svg>
+            </div>
+            <span class="text-xl font-bold">FootballTix</span>
+          </div>
+          <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Popular Leagues</h3>
+          <ul class="space-y-2">
+            <li><a href="leagues.html">Premier League</a></li>
+            <li><a href="leagues.html">La Liga</a></li>
+            <li><a href="leagues.html">Bundesliga</a></li>
+            <li><a href="leagues.html">Serie A</a></li>
+            <li><a href="leagues.html">Ligue 1</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Contact</h3>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-center">
+              <i class="fas fa-map-marker-alt mr-3 text-blue-500"></i>
+              <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK" target="_blank" rel="noopener">123 Stadium Street, London, UK</a>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone-alt mr-3 text-blue-500"></i>
+              <a href="tel:+441234567890">+44 123 456 7890</a>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope mr-3 text-blue-500"></i>
+              <a href="mailto:support@footballtix.com">support@footballtix.com</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t mt-8 pt-8 text-center text-sm text-gray-400">
+        <p>&copy; 2023 FootballTix. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    (function(){
+      const toggle = document.getElementById('mobile-toggle');
+      const menu = document.getElementById('mobile-menu');
+      const iconOpen = document.getElementById('mobile-icon-open');
+      const iconClose = document.getElementById('mobile-icon-close');
+
+      if(toggle){
+        toggle.addEventListener('click', ()=>{
+          const expanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          menu.classList.toggle('hidden');
+          iconOpen.classList.toggle('hidden');
+          iconClose.classList.toggle('hidden');
+        });
+      }
+
+      // Add .active to current nav link if href matches location
+      try{
+        const links = document.querySelectorAll('nav a');
+        links.forEach(a=>{
+          if(a.href === location.href || (a.getAttribute('href') && location.pathname.endsWith(a.getAttribute('href')))){
+            a.classList.add('active');
+            a.setAttribute('aria-current','page');
+          }
+        });
+      }catch(e){/*ignore*/}
+
+    })();
+  </script>
+  <script src="js/how-it-works.js"></script>
+</body>
+</html>
