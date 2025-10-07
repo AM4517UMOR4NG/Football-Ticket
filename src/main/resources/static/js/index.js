@@ -1,6 +1,158 @@
 // Enhanced FootballTix Frontend Integration - User Friendly Version (Fixed)
 const API_BASE_URL = '/api';
 
+// Wishlist functionality
+async function addToWishlist(eventId) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+        alert('Please log in to add events to your wishlist');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/wishlist/add', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                eventId: eventId,
+                notifyOnPriceDrop: true,
+                notifyBeforeEvent: true
+            })
+        });
+
+        if (response.status === 401) {
+            alert('Please log in to add events to your wishlist');
+            localStorage.removeItem('accessToken');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to add to wishlist');
+        }
+
+        // Update button state
+        const button = document.querySelector(`[onclick*="addToWishlist(${eventId})"]`);
+        if (button) {
+            button.classList.add('added');
+            button.innerHTML = '<i class="fas fa-heart"></i>';
+            button.title = 'Remove from Wishlist';
+            button.onclick = () => removeFromWishlist(eventId);
+        }
+
+        showSuccessMessage('Event added to wishlist!');
+
+    } catch (error) {
+        console.error('Error adding to wishlist:', error);
+        alert(error.message || 'Failed to add to wishlist');
+    }
+}
+
+async function removeFromWishlist(eventId) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+        alert('Please log in to manage your wishlist');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/wishlist/remove/${eventId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 401) {
+            alert('Please log in to manage your wishlist');
+            localStorage.removeItem('accessToken');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to remove from wishlist');
+        }
+
+        // Update button state
+        const button = document.querySelector(`[onclick*="removeFromWishlist(${eventId})"]`);
+        if (button) {
+            button.classList.remove('added');
+            button.innerHTML = '<i class="far fa-heart"></i>';
+            button.title = 'Add to Wishlist';
+            button.onclick = () => addToWishlist(eventId);
+        }
+
+        showSuccessMessage('Event removed from wishlist!');
+
+    } catch (error) {
+        console.error('Error removing from wishlist:', error);
+        alert(error.message || 'Failed to remove from wishlist');
+    }
+}
+
+function showSuccessMessage(message) {
+    // Create a temporary success message
+    const successDiv = document.createElement('div');
+    successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+    successDiv.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(successDiv);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        successDiv.remove();
+    }, 3000);
+}
+
+// Check wishlist status for events on page load
+async function checkWishlistStatus() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return;
+
+    const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+    
+    for (const button of wishlistButtons) {
+        const eventId = button.getAttribute('onclick')?.match(/addToWishlist\((\d+)\)/)?.[1];
+        if (!eventId) continue;
+
+        try {
+            const response = await fetch(`/api/wishlist/check/${eventId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.isInWishlist) {
+                    button.classList.add('added');
+                    button.innerHTML = '<i class="fas fa-heart"></i>';
+                    button.title = 'Remove from Wishlist';
+                    button.onclick = () => removeFromWishlist(eventId);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking wishlist status:', error);
+        }
+    }
+}
+
 // DOM Elements
 const leagueSelect = document.getElementById('league-select');
 const teamSelect = document.getElementById('team-select');
@@ -18,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCarousel();
     initializeMobileMenu();
     applyThemePreference();
+    checkWishlistStatus();
     setupThemeToggle();
     initializeApp();
     setupKeyboardShortcuts();
@@ -215,7 +368,7 @@ async function initializeApp() {
         setupEventListeners();
         await loadStats();
         setupAutoRefresh();
-        showToast('Ronaldo is the GOAT', 'success', 3000);
+        showToast('Ronaldo is the GOAT', 'success', 200);
     } catch (error) {
         console.error('Error initializing app:', error);
         showToast('Failed to load some content. Please refresh the page.', 'error');
@@ -1103,7 +1256,6 @@ function updateNavigation() {
                 </button>
                 <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700">
                     ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Admin Dashboard</a>' : ''}
-                    ${userRole === 'ADMIN' ? '<a href="admin-profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Admin Profile</a>' : ''}
                     <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
                     <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
                 </div>

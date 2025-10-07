@@ -37,7 +37,7 @@ async function initializeBookingPage() {
         // If page requires login, check token
         const token = localStorage.getItem('accessToken');
         // For booking page we redirect if not logged in. If it's admin page, adminInit will handle separately.
-        if (!token && location.pathname.includes('booking') ) {
+        if (!token && location.pathname.includes('booking')) {
             window.location.href = 'login.html';
             return;
         }
@@ -83,7 +83,7 @@ function updateNavigation() {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
-                <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                     ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
                     <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                     <a href="#" id="logout-link" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
@@ -162,9 +162,9 @@ function displayEvents(events) {
     }
 
     // Render cards using data attributes (no inline onclick)
-eventsGrid.innerHTML = events.map(event => {
-    const selectedClass = selectedEvent && selectedEvent.id === event.id ? 'ring-2 ring-blue-500' : '';
-    return `
+    eventsGrid.innerHTML = events.map(event => {
+        const selectedClass = selectedEvent && selectedEvent.id === event.id ? 'ring-2 ring-blue-500' : '';
+        return `
     <div class="booking-card ${selectedClass} bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 cursor-pointer" data-event-id="${event.id}">
         <div class="relative">
             <!-- Event Image -->
@@ -260,7 +260,7 @@ eventsGrid.innerHTML = events.map(event => {
         </div>
     </div>
     `;
-}).join('');
+    }).join('');
 
     eventsGrid.classList.remove('hidden');
 
