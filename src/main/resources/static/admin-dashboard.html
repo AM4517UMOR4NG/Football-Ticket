@@ -28,24 +28,74 @@
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900">
-    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <span class="ml-2 text-xl font-bold text-blue-700 dark:text-yellow-400">FootballTix</span>
-                    <span class="ml-4 admin-badge">Admin</span>
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                    </div>
                 </div>
-                <div id="navbar-links" class="flex items-center space-x-4">
-                    <a href="index.html" class="hover:text-blue-700 dark:hover:text-yellow-400">Home</a>
-                    <a href="leagues.html" class="hover:text-blue-700 dark:hover:text-yellow-400">Leagues</a>
-                    <a href="events.html" class="hover:text-blue-700 dark:hover:text-yellow-400">Events</a>
-                    <a href="bookings.html" class="hover:text-blue-700 dark:hover:text-yellow-400">Bookings</a>
-                    <a href="admin-dashboard.html" id="admin-link" class="text-orange-600 font-bold">Admin Dashboard</a>
-                    <a href="admin-profile.html" class="text-orange-600 font-bold">Admin Profile</a>
-                    <a href="#" id="logout-link" class="text-red-600 font-semibold" onclick="handleLogout()">Logout</a>
-                    <button id="theme-toggle"
-                        class="ml-2 px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">🌓</button>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+                        Home
+                    </a>
+
+                    <a href="bookings.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+                        Matches
+                    </a>
+
+                    <a href="leagues.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+                        Leagues
+                    </a>
+                    <a href="admin-profile.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">
+                        Admin Profile
+                    </a>
+                    <a href="#" id="logout-link"
+                        class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden"
+                        onclick="handleLogout()">Logout</a>
+
+                    </a>
                 </div>
+
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileToggle" aria-expanded="false" aria-controls="mobile-menu"
+                        class="p-2 rounded-md hover:bg-gray-100">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden bg-white shadow-lg hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html"
+                    class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md block">Back
+                    to
+                    Home</a>
+                <a href="events.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Back to
+                    Matches</a>
+                <a href="faq.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">FAQs</a>
             </div>
         </div>
     </nav>
