@@ -86,7 +86,7 @@ function toggleDarkMode() {
 }
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     applyThemePreference();
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
@@ -108,10 +108,10 @@ async function initializeBookingsPage() {
             loadBookings(),
             loadBookingEvents()
         ]);
-        
+
         setupEventListeners();
         setupBookingEventListeners();
-        
+
     } catch (error) {
         console.error('Error initializing bookings page:', error);
         showError('Please refresh the page to see the cancelled bookings.');
@@ -122,15 +122,15 @@ function updateNavigation() {
     const token = localStorage.getItem('accessToken');
     const userRole = localStorage.getItem('userRole');
     const username = localStorage.getItem('username');
-    
+
     const signInBtn = document.querySelector('a[href="login.html"]');
     const navContainer = document.querySelector('.hidden.md\\:flex.items-center.space-x-4');
-    
+
     if (token && username) {
         if (signInBtn) {
             signInBtn.parentElement.remove();
         }
-        
+
         const userMenu = document.createElement('div');
         userMenu.className = 'flex items-center space-x-4';
         userMenu.innerHTML = `
@@ -148,21 +148,21 @@ function updateNavigation() {
         </div>
     </div>
 `;
-        
+
         const signInContainer = document.querySelector('.flex.items-center');
         if (signInContainer) {
             signInContainer.innerHTML = '';
             signInContainer.appendChild(userMenu);
         }
-        
+
         const userMenuBtn = document.getElementById('user-menu-btn');
         const userDropdown = document.getElementById('user-dropdown');
-        
+
         if (userMenuBtn && userDropdown) {
             userMenuBtn.addEventListener('click', () => {
                 userDropdown.classList.toggle('hidden');
             });
-            
+
             document.addEventListener('click', (e) => {
                 if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
                     userDropdown.classList.add('hidden');
@@ -183,21 +183,21 @@ function handleLogout() {
 async function loadBookings() {
     try {
         showLoading();
-        
+
         const token = localStorage.getItem('accessToken');
         const userId = localStorage.getItem('userId');
-        
+
         if (!token || !userId) {
             throw new Error('User not authenticated');
         }
-        
+
         const response = await fetch(`${API_BASE_URL}/bookings/user/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
-        
+
         if (!response.ok) {
             if (response.status === 401) {
                 localStorage.removeItem('accessToken');
@@ -207,9 +207,9 @@ async function loadBookings() {
             }
             throw new Error('Failed to fetch bookings');
         }
-        
+
         const bookings = await response.json();
-        
+
         // Enrich bookings with event details if missing
         const enrichedBookings = await Promise.all(bookings.map(async (booking) => {
             if (!booking.eventTitle || !booking.venue) {
@@ -236,14 +236,14 @@ async function loadBookings() {
                 venue: booking.venue || 'Venue'
             };
         }));
-        
+
         allBookings = enrichedBookings;
-        
+
         updateStats(enrichedBookings);
         displayBookings(enrichedBookings);
-        
+
         hideLoading();
-        
+
     } catch (error) {
         console.error('Error loading bookings:', error);
         showError('Failed to load bookings. Please try again.');
@@ -254,19 +254,19 @@ async function loadBookings() {
 async function loadBookingEvents() {
     try {
         showBookingLoading();
-        
+
         const response = await fetch(`${API_BASE_URL}/events`);
-        
+
         if (!response.ok) {
             throw new Error('Failed to fetch events');
         }
-        
+
         const events = await response.json();
         allEvents = events;
-        
+
         displayBookingEvents(events);
         hideBookingLoading();
-        
+
     } catch (error) {
         console.error('Error loading events:', error);
         showBookingError('Failed to load events. Please try again.');
@@ -276,7 +276,7 @@ async function loadBookingEvents() {
 
 function displayBookingEvents(events) {
     if (!bookingEventsGrid) return;
-    
+
     if (events.length === 0) {
         bookingEventsGrid.innerHTML = `
             <div class="col-span-2 text-center py-8">
@@ -285,7 +285,7 @@ function displayBookingEvents(events) {
         `;
         return;
     }
-    
+
     bookingEventsGrid.innerHTML = events.map(event => `
         <div class="booking-event-card bg-white rounded-lg shadow-md p-4 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-blue-500" 
              onclick="selectEvent(${event.id})">
@@ -312,24 +312,24 @@ function displayBookingEvents(events) {
 function selectEvent(eventId) {
     const event = allEvents.find(e => e.id === eventId);
     if (!event) return;
-    
+
     selectedEvent = event;
     currentTicketCount = 1;
-    
+
     selectedEventTitle.textContent = event.title;
     selectedEventVenue.textContent = event.venue;
     selectedEventDate.textContent = formatEventDate(event.eventDate);
     ticketCount.textContent = currentTicketCount;
     pricePerTicket.textContent = `£${event.price}`;
     updateTotalPrice();
-    
+
     bookingSummary.classList.remove('hidden');
     noSelection.classList.add('hidden');
-    
+
     document.querySelectorAll('.booking-event-card').forEach(card => {
         card.classList.remove('border-blue-500', 'bg-blue-50');
     });
-    
+
     const selectedCard = document.querySelector(`[onclick="selectEvent(${eventId})"]`);
     if (selectedCard) {
         selectedCard.classList.add('border-blue-500', 'bg-blue-50');
@@ -353,7 +353,7 @@ function setupBookingEventListeners() {
             }
         });
     }
-    
+
     if (increaseTickets) {
         increaseTickets.addEventListener('click', () => {
             if (currentTicketCount < 10) {
@@ -363,7 +363,7 @@ function setupBookingEventListeners() {
             }
         });
     }
-    
+
     if (confirmBooking) {
         confirmBooking.addEventListener('click', handleConfirmBooking);
     }
@@ -374,20 +374,20 @@ async function handleConfirmBooking() {
         showError('Please select an event first.');
         return;
     }
-    
+
     try {
         const token = localStorage.getItem('accessToken');
         const userId = localStorage.getItem('userId');
-        
+
         if (!token || !userId) {
             throw new Error('User not authenticated');
         }
-        
+
         const bookingData = {
             eventId: selectedEvent.id,
             numberOfTickets: currentTicketCount
         };
-        
+
         const response = await fetch(`${API_BASE_URL}/bookings?userId=${userId}`, {
             method: 'POST',
             headers: {
@@ -396,19 +396,19 @@ async function handleConfirmBooking() {
             },
             body: JSON.stringify(bookingData)
         });
-        
+
         if (!response.ok) {
             const errorData = await response.text();
             throw new Error(errorData);
         }
-        
+
         const bookingResponse = await response.json();
-        
+
         resetBookingForm();
         await loadBookings();
-        
+
         showSuccess('Booking created successfully!');
-        
+
     } catch (error) {
         console.error('Error creating booking:', error);
         showError('Failed to create booking: ' + error.message);
@@ -418,13 +418,13 @@ async function handleConfirmBooking() {
 function resetBookingForm() {
     selectedEvent = null;
     currentTicketCount = 1;
-    
+
     bookingSummary.classList.add('hidden');
     noSelection.classList.remove('hidden');
     ticketCount.textContent = '1';
     pricePerTicket.textContent = '£0';
     totalPrice.textContent = '£0';
-    
+
     document.querySelectorAll('.booking-event-card').forEach(card => {
         card.classList.remove('border-blue-500', 'bg-blue-50');
     });
@@ -452,14 +452,14 @@ function showBookingError(message) {
 
 function displayBookings(bookings) {
     if (!bookingsGrid) return;
-    
+
     if (bookings.length === 0) {
         showEmptyState();
         return;
     }
-    
+
     hideEmptyState();
-    
+
     bookingsGrid.innerHTML = bookings.map(booking => `
         <div class="booking-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:scale-105">
             <div class="relative">
@@ -538,23 +538,23 @@ function setupEventListeners() {
     if (allFilter) {
         allFilter.addEventListener('click', () => setFilter('all'));
     }
-    
+
     if (confirmedFilter) {
         confirmedFilter.addEventListener('click', () => setFilter('confirmed'));
     }
-    
+
     if (cancelledFilter) {
         cancelledFilter.addEventListener('click', () => setFilter('cancelled'));
     }
-    
+
     if (completedFilter) {
         completedFilter.addEventListener('click', () => setFilter('completed'));
     }
-    
+
     if (gridViewBtn) {
         gridViewBtn.addEventListener('click', () => setViewMode('grid'));
     }
-    
+
     if (listViewBtn) {
         listViewBtn.addEventListener('click', () => setViewMode('list'));
     }
@@ -562,10 +562,10 @@ function setupEventListeners() {
 
 function setFilter(filter) {
     currentFilter = filter;
-    
+
     const filterButtons = [allFilter, confirmedFilter, cancelledFilter, completedFilter];
     const filterNames = ['all', 'confirmed', 'cancelled', 'completed'];
-    
+
     filterButtons.forEach((btn, index) => {
         if (btn) {
             if (filterNames[index] === filter) {
@@ -575,9 +575,9 @@ function setFilter(filter) {
             }
         }
     });
-    
+
     let filteredBookings = allBookings;
-    
+
     if (filter === 'confirmed') {
         filteredBookings = allBookings.filter(booking => booking.status === 'CONFIRMED');
     } else if (filter === 'cancelled') {
@@ -585,13 +585,13 @@ function setFilter(filter) {
     } else if (filter === 'completed') {
         filteredBookings = allBookings.filter(booking => booking.status === 'COMPLETED');
     }
-    
+
     displayBookings(filteredBookings);
 }
 
 function setViewMode(mode) {
     currentView = mode;
-    
+
     if (mode === 'grid') {
         bookingsGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
         gridViewBtn.className = 'px-4 py-2 bg-blue-700 text-white rounded-lg text-sm font-medium';
@@ -607,11 +607,11 @@ async function cancelBooking(bookingId) {
     if (!confirm('Are you sure you want to cancel this booking?')) {
         return;
     }
-    
+
     try {
         const token = localStorage.getItem('accessToken');
         const userId = localStorage.getItem('userId');
-        
+
         const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}/cancel?userId=${userId}`, {
             method: 'POST',
             headers: {
@@ -619,14 +619,14 @@ async function cancelBooking(bookingId) {
                 'Content-Type': 'application/json'
             }
         });
-        
+
         if (!response.ok) {
             throw new Error('Failed to cancel booking');
         }
-        
+
         await loadBookings();
         showSuccess('Booking cancelled successfully');
-        
+
     } catch (error) {
         console.error('Error cancelling booking:', error);
         showError('Refresh the page to see the cancelled bookings.');
@@ -641,15 +641,15 @@ function generateQRCode(text, size = 200) {
     const ctx = canvas.getContext('2d');
     canvas.width = size;
     canvas.height = size;
-    
+
     // Fill background
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, size, size);
-    
+
     // Generate a simple pattern based on text
     ctx.fillStyle = '#000000';
     const cellSize = size / 25;
-    
+
     // Create a pseudo-random pattern based on the text
     for (let i = 0; i < text.length; i++) {
         const char = text.charCodeAt(i);
@@ -661,7 +661,7 @@ function generateQRCode(text, size = 200) {
             }
         }
     }
-    
+
     return canvas.toDataURL();
 }
 
@@ -684,10 +684,10 @@ function viewHistory() {
 async function showTicketModal(bookingReference) {
     const booking = allBookings.find(b => b.bookingReference === bookingReference);
     if (!booking) return;
-    
+
     // Generate QR code
     const qrCodeData = generateQRCode(`${booking.bookingReference}-${booking.eventTitle}-${booking.numberOfTickets}`);
-    
+
     const modalHTML = `
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -734,14 +734,14 @@ async function showTicketModal(bookingReference) {
             </div>
         </div>
     `;
-    
+
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
 function showBookingDetailsModal(bookingReference) {
     const booking = allBookings.find(b => b.bookingReference === bookingReference);
     if (!booking) return;
-    
+
     const modalHTML = `
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -799,18 +799,18 @@ function showBookingDetailsModal(bookingReference) {
             </div>
         </div>
     `;
-    
+
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
 function showAllTicketsModal() {
     const confirmedBookings = allBookings.filter(b => b.status === 'CONFIRMED');
-    
+
     if (confirmedBookings.length === 0) {
         alert('No confirmed tickets found.');
         return;
     }
-    
+
     const modalHTML = `
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -851,7 +851,7 @@ function showAllTicketsModal() {
             </div>
         </div>
     `;
-    
+
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
@@ -911,7 +911,7 @@ function showBookingHistoryModal() {
             </div>
         </div>
     `;
-    
+
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
@@ -929,14 +929,14 @@ function downloadTicket(bookingReference) {
         alert('Booking not found');
         return;
     }
-    
+
     try {
         // Create a new window with the ticket content for printing
         const ticketWindow = window.open('', '_blank', 'width=800,height=600');
-        
+
         // Generate QR code for the ticket
         const qrCodeData = generateQRCode(`${booking.bookingReference}-${booking.eventTitle}-${booking.numberOfTickets}`);
-        
+
         const ticketHTML = `
             <!DOCTYPE html>
             <html>
@@ -1104,10 +1104,10 @@ function downloadTicket(bookingReference) {
             </body>
             </html>
         `;
-        
+
         ticketWindow.document.write(ticketHTML);
         ticketWindow.document.close();
-        
+
     } catch (error) {
         console.error('Error generating ticket:', error);
         alert('Failed to generate ticket. Please try again.');
@@ -1123,7 +1123,7 @@ function updateStats(bookings) {
         return b.status === 'CONFIRMED' && eventDate > now;
     }).length;
     const totalSpentAmount = bookings.reduce((sum, b) => sum + parseFloat(b.totalAmount || 0), 0);
-    
+
     if (totalBookings) totalBookings.textContent = total;
     if (confirmedBookings) confirmedBookings.textContent = confirmed;
     if (upcomingBookings) upcomingBookings.textContent = upcoming;
@@ -1136,12 +1136,12 @@ function formatBookingDate(dateString) {
     const date = new Date(dateString);
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
+
     const dayName = days[date.getDay()];
     const day = date.getDate();
     const month = months[date.getMonth()];
     const year = date.getFullYear();
-    
+
     return `${dayName}, ${day} ${month} ${year}`;
 }
 
@@ -1150,14 +1150,14 @@ function formatEventDate(dateString) {
     const date = new Date(dateString);
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
+
     const dayName = days[date.getDay()];
     const day = date.getDate();
     const month = months[date.getMonth()];
     const year = date.getFullYear();
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    
+
     return `${dayName}, ${day} ${month} ${year} • ${hours}:${minutes}`;
 }
 
@@ -1198,7 +1198,7 @@ function showSuccess(message) {
         </div>
     `;
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.opacity = '0';
         notification.style.transform = 'translateX(100%)';
@@ -1276,24 +1276,24 @@ async function loadAdminLeagues() {
     const leaguesTable = document.getElementById('admin-leagues-table');
     const leaguesTbody = document.getElementById('admin-leagues-tbody');
     if (!leaguesTable || !leaguesTbody) return;
-    
+
     leaguesTbody.innerHTML = '<tr><td colspan="6" class="text-center py-4">Loading...</td></tr>';
-    
+
     try {
         const token = localStorage.getItem('accessToken');
         const response = await fetch(`${API_BASE_URL}/leagues`, {
             headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
-        
+
         if (!response.ok) throw new Error('Failed to fetch leagues');
-        
+
         const leagues = await response.json();
-        
+
         if (leagues.length === 0) {
             leaguesTbody.innerHTML = '<tr><td colspan="6" class="text-center py-4">No leagues found.</td></tr>';
             return;
         }
-        
+
         leaguesTbody.innerHTML = leagues.map(l => `
             <tr class="hover:bg-gray-50">
                 <td class="px-4 py-2">${l.id}</td>
