@@ -6,6 +6,38 @@ body {
     background-color: #f8fafc;
 }
 
+/* Navigation */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0; /* Diubah ke left: 0 untuk full width dari kiri, matching gambar */
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+/* Hapus alignment yang mendorong links ke kanan */
+nav .hidden.md\:flex {
+    margin-left: 0; /* Links tetap di kiri setelah logo */
+}
+
+/* Mobile menu alignment seperti gambar (left-aligned) */
+#mobile-menu .px-2.pt-2.pb-3 {
+    text-align: left;
+}
+
+/* Tambahan untuk user dropdown setelah login (positioning right-aligned seperti gambar kedua) */
+.relative > button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.relative .hidden.absolute {
+    right: 0; /* Dropdown muncul di bawah username, align right */
+    left: auto;
+}
+
 /* Hero pattern */
 .hero-pattern {
     background-color: #1e40af;
@@ -15,7 +47,8 @@ body {
 /* Match card hover effect */
 .match-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .match-card:hover img {
@@ -58,13 +91,4 @@ body {
 
 .match-card:hover .event-image {
     transform: scale(1.05);
-}
-
-/* Navigation alignment */
-nav .hidden.md\:flex {
-    margin-left: auto;
-}
-
-#mobile-menu .px-2.pt-2.pb-3 {
-    text-align: right;
 }

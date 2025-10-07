@@ -1,0 +1,471 @@
+/* Admin Profile Page Styles */
+
+/* Admin header with orange gradient */
+.bg-gradient-to-r.from-orange-600.to-red-600 {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-gradient-to-r.from-orange-600.to-red-600::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: adminShimmer 3s infinite;
+}
+
+@keyframes adminShimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Admin avatar with shield icon */
+.relative .w-24 {
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.relative .w-24:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Admin camera button */
+.absolute.bottom-0.right-0.bg-orange-500 {
+    transition: all 0.3s ease;
+}
+
+.absolute.bottom-0.right-0.bg-orange-500:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background-color: #ea580c;
+}
+
+/* System status indicators */
+.bg-green-50 {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bg-green-50::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #10b981;
+    border-radius: 2px;
+}
+
+.bg-green-50:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+/* System controls toggle switches */
+.relative.inline-flex {
+    transition: all 0.3s ease;
+}
+
+.relative.inline-flex:hover {
+    transform: scale(1.05);
+}
+
+/* System action buttons */
+.grid.grid-cols-1.md\:grid-cols-2 button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid.grid-cols-1.md\:grid-cols-2 button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.grid.grid-cols-1.md\:grid-cols-2 button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.grid.grid-cols-1.md\:grid-cols-2 button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* User management cards */
+.bg-gray-50 {
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.bg-gray-50:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #f59e0b;
+}
+
+/* Security settings form styling */
+input[type="number"] {
+    transition: all 0.3s ease;
+}
+
+input[type="number"]:focus {
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    border-color: #f59e0b;
+}
+
+/* Audit log entries */
+.bg-red-50,
+.bg-green-50,
+.bg-blue-50,
+.bg-yellow-50 {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bg-red-50::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #ef4444;
+    border-radius: 2px;
+}
+
+.bg-green-50::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #10b981;
+    border-radius: 2px;
+}
+
+.bg-blue-50::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 2px;
+}
+
+.bg-yellow-50::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #f59e0b;
+    border-radius: 2px;
+}
+
+.bg-red-50:hover,
+.bg-green-50:hover,
+.bg-blue-50:hover,
+.bg-yellow-50:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Admin sidebar styling */
+.sticky {
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.sticky:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left-color: #f59e0b;
+}
+
+/* Admin action buttons */
+.space-y-2 button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.space-y-2 button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.space-y-2 button:hover::before {
+    left: 100%;
+}
+
+.space-y-2 button:hover {
+    transform: translateX(4px);
+    background-color: #fef3c7;
+}
+
+/* Form input styling for admin */
+input:disabled {
+    background-color: #f8fafc;
+    cursor: not-allowed;
+}
+
+input:not(:disabled):focus {
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    border-color: #f59e0b;
+}
+
+/* Edit button animations */
+.bg-orange-600 {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-orange-600::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.bg-orange-600:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.bg-orange-600:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* Section transitions */
+.profile-section {
+    animation: adminFadeInUp 0.6s ease-out;
+}
+
+@keyframes adminFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading states for admin actions */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f4f6;
+    border-top: 2px solid #f59e0b;
+    border-radius: 50%;
+    animation: adminSpin 1s linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes adminSpin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Success/error message animations */
+.message {
+    animation: adminSlideIn 0.3s ease-out;
+}
+
+@keyframes adminSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design for admin */
+@media (max-width: 768px) {
+    .lg\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .sticky {
+        position: relative;
+        top: auto;
+    }
+
+    .grid.grid-cols-1.md\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accessibility improvements */
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid #f59e0b;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .bg-gradient-to-r.from-orange-600.to-red-600::before {
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.3), transparent);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print styles for admin */
+@media print {
+    .bg-gradient-to-r.from-orange-600.to-red-600 {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .sticky {
+        position: static;
+    }
+
+    button {
+        display: none;
+    }
+
+    .bg-red-50,
+    .bg-green-50,
+    .bg-blue-50,
+    .bg-yellow-50 {
+        border: 1px solid #000;
+    }
+}
+
+/* Custom scrollbar for admin */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #f59e0b;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #d97706;
+}
+
+/* Focus management for admin */
+.profile-section:target {
+    scroll-margin-top: 100px;
+}
+
+/* Emergency stop button special styling */
+.bg-red-600 {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bg-red-600:hover {
+    background-color: #dc2626;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+/* Status indicators pulse animation */
+.bg-green-50 .w-3.h-3 {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Admin-specific hover effects */
+.space-y-4>div:hover {
+    background-color: #fef3c7;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Form validation for admin */
+input:invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+input:valid {
+    border-color: #10b981;
+}

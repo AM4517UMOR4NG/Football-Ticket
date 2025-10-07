@@ -1,4 +1,43 @@
 /* style.css */
+
+/* Wishlist Button Styles */
+.wishlist-btn {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.wishlist-btn:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.wishlist-btn.added {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.wishlist-btn.added:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+.wishlist-btn i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.wishlist-btn:hover i {
+    transform: scale(1.1);
+}
 :root {
     --primary: #2563eb;
     --primary-dark: #1d4ed8;

@@ -1,10 +1,10 @@
 /* Glassmorphism Card */
 .form-card {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(18px);
   border-radius: 1.5rem;
-  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.25), 0 1.5px 8px 0 rgba(59,130,246,0.10);
-  border: 1.5px solid rgba(255,255,255,0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25), 0 1.5px 8px 0 rgba(59, 130, 246, 0.10);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
   padding: 2rem;
   width: 100%;
   display: flex;
@@ -12,6 +12,7 @@
   align-items: center;
   transition: box-shadow 0.3s, transform 0.3s;
 }
+
 .form-title {
   color: #fff;
   font-size: 2rem;
@@ -20,16 +21,19 @@
   letter-spacing: -0.5px;
   text-align: center;
 }
+
 .form-subtitle {
   color: #c7d2fe;
   opacity: 0.85;
   margin-bottom: 1.5rem;
   text-align: center;
 }
+
 .form-group {
   width: 100%;
   margin-bottom: 1.25rem;
 }
+
 .form-label {
   color: #fff;
   font-size: 1rem;
@@ -37,11 +41,12 @@
   margin-bottom: 0.5rem;
   display: block;
 }
+
 .form-input {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: rgba(255,255,255,0.10);
-  border: 1.5px solid rgba(255,255,255,0.22);
+  background: rgba(255, 255, 255, 0.10);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
   border-radius: 0.75rem;
   color: #fff;
   font-size: 1rem;
@@ -49,18 +54,21 @@
   transition: border 0.2s, background 0.2s;
   margin-top: 0.25rem;
 }
+
 .form-input:focus {
   border-color: #7c3aed;
-  background: rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.18);
 }
+
 .form-checkbox {
   accent-color: #6366f1;
   width: 1.1rem;
   height: 1.1rem;
   border-radius: 0.3rem;
-  border: 1.5px solid rgba(255,255,255,0.22);
-  background: rgba(255,255,255,0.10);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.10);
 }
+
 .form-btn {
   width: 100%;
   background: linear-gradient(90deg, #34d399 0%, #6366f1 100%);
@@ -71,18 +79,21 @@
   font-size: 1.1rem;
   margin-top: 0.5rem;
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.10);
+  box-shadow: 0 2px 8px 0 rgba(59, 130, 246, 0.10);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.form-btn:hover, .form-btn:focus {
+
+.form-btn:hover,
+.form-btn:focus {
   background: linear-gradient(90deg, #22d3ee 0%, #a78bfa 100%);
   transform: scale(1.035);
-  box-shadow: 0 4px 16px 0 rgba(59,130,246,0.18);
+  box-shadow: 0 4px 16px 0 rgba(59, 130, 246, 0.18);
 }
+
 .toggle-password {
   position: absolute;
   right: 1.25rem;
@@ -95,14 +106,17 @@
   cursor: pointer;
   z-index: 2;
 }
+
 @media (max-width: 480px) {
   .form-card {
     padding: 1rem;
     border-radius: 1rem;
   }
+
   .form-title {
     font-size: 1.3rem;
   }
+
   .form-btn {
     font-size: 1rem;
     padding: 0.75rem;
