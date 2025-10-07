@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootballTix - User Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body class="bg-gray-50 font-montserrat">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="index.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
+                        <a href="events.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
+                        <a href="bookings.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My
+                            Bookings</a>
+                        <a href="leagues.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Leagues</a>
+                        <a href="profile.html" id="profile-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-600 font-semibold">Profile</a>
+                        <a href="admin-dashboard.html" id="admin-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin
+                            Dashboard</a>
+                        <a href="admin-profile.html" id="admin-profile-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-500 hover:text-orange-700 hidden">Admin
+                            Profile</a>
+                        <a href="#" id="logout-link"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden"
+                            onclick="handleLogout()">Logout</a>
+                    </div>
+                    <a href="login.html" id="login-link"
+                        class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign
+                        In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-3xl"></i>
+                    </div>
+                    <button
+                        class="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 transition-colors">
+                        <i class="fas fa-camera text-sm"></i>
+                    </button>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold mb-2" id="profile-name">John Doe</h1>
+                    <p class="text-blue-100 mb-2" id="profile-email">john.doe@example.com</p>
+                    <div class="flex items-center space-x-4 text-sm">
+                        <span class="bg-white/20 px-3 py-1 rounded-full">Member since 2023</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full">Premium User</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Stats</h2>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Total Bookings</span>
+                                <span class="font-semibold text-blue-600" id="total-bookings">12</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Active Bookings</span>
+                                <span class="font-semibold text-green-600" id="active-bookings">3</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Total Spent</span>
+                                <span class="font-semibold text-purple-600" id="total-spent">$1,250</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Favorite Team</span>
+                                <span class="font-semibold text-orange-600" id="favorite-team">Manchester United</span>
+                            </div>
+                        </div>
+
+                        <hr class="my-6">
+
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                        <div class="space-y-2 sidebar">
+                            <button onclick="showSection('personal-info')"
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
+                                <i class="fas fa-user mr-2"></i>Personal Information
+                            </button>
+                            <button onclick="showSection('booking-history')"
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
+                                <i class="fas fa-ticket-alt mr-2"></i>Booking History
+                            </button>
+                            <button onclick="showSection('account-settings')"
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
+                                <i class="fas fa-cog mr-2"></i>Account Settings
+                            </button>
+                            <button onclick="showSection('preferences')"
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
+                                <i class="fas fa-heart mr-2"></i>Preferences
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="lg:col-span-2">
+                    <!-- Personal Information Section -->
+                    <div id="personal-info" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
+                            <button onclick="editPersonalInfo()"
+                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors edit-btn">
+                                <i class="fas fa-edit mr-2"></i>Edit
+                            </button>
+                        </div>
+
+                        <form id="personal-info-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                    <input type="text" id="first-name" value="John"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        disabled>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                    <input type="text" id="last-name" value="Doe"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        disabled>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input type="email" id="email" value="john.doe@example.com"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        disabled>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                                    <input type="tel" id="phone" value="+1 (555) 123-4567"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        disabled>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                    <input type="text" id="address" value="123 Main Street, City, State 12345"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        disabled>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end space-x-4">
+                                <button type="button" onclick="cancelEdit()"
+                                    class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors hidden"
+                                    id="cancel-personal-btn">
+                                    Cancel
+                                </button>
+                                <button type="submit"
+                                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors hidden"
+                                    id="save-personal-btn">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Booking History Section -->
+                    <div id="booking-history" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Booking History</h2>
+
+                        <div class="space-y-4">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900">Manchester United vs Liverpool</h3>
+                                        <p class="text-gray-600">Old Trafford • March 15, 2024</p>
+                                        <p class="text-sm text-gray-500">Seat: A12 • Row: 5</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Confirmed</span>
+                                        <p class="text-lg font-bold text-gray-900 mt-1">$85.00</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View
+                                        Details</button>
+                                    <button class="text-red-600 hover:text-red-700 text-sm font-medium">Cancel</button>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900">Arsenal vs Chelsea</h3>
+                                        <p class="text-gray-600">Emirates Stadium • February 28, 2024</p>
+                                        <p class="text-sm text-gray-500">Seat: B15 • Row: 8</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span
+                                            class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">Completed</span>
+                                        <p class="text-lg font-bold text-gray-900 mt-1">$75.00</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View
+                                        Details</button>
+                                    <button class="text-gray-600 hover:text-gray-700 text-sm font-medium">Download
+                                        Receipt</button>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900">Barcelona vs Real Madrid</h3>
+                                        <p class="text-gray-600">Camp Nou • January 20, 2024</p>
+                                        <p class="text-sm text-gray-500">Seat: C22 • Row: 12</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span
+                                            class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">Completed</span>
+                                        <p class="text-lg font-bold text-gray-900 mt-1">$120.00</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View
+                                        Details</button>
+                                    <button class="text-gray-600 hover:text-gray-700 text-sm font-medium">Download
+                                        Receipt</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Settings Section -->
+                    <div id="account-settings" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Account Settings</h2>
+
+                        <div class="space-y-6">
+                            <!-- Change Password -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Change Password</h3>
+                                <form id="password-form" class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Current
+                                            Password</label>
+                                        <input type="password" id="current-password"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                                        <input type="password" id="new-password"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New
+                                            Password</label>
+                                        <input type="password" id="confirm-password"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                    <button type="submit"
+                                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                        Change Password
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Notification Settings -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Notification Settings</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">Email Notifications</h4>
+                                            <p class="text-sm text-gray-600">Receive booking confirmations and updates
+                                            </p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div
+                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">SMS Notifications</h4>
+                                            <p class="text-sm text-gray-600">Receive match day reminders</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer">
+                                            <div
+                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">Promotional Emails</h4>
+                                            <p class="text-sm text-gray-600">Receive special offers and promotions</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div
+                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Privacy Settings -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Privacy Settings</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">Profile Visibility</h4>
+                                            <p class="text-sm text-gray-600">Allow other users to see your profile</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer">
+                                            <div
+                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">Data Sharing</h4>
+                                            <p class="text-sm text-gray-600">Allow us to share your data with partners
+                                            </p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div
+                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferences Section -->
+                    <div id="preferences" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Preferences</h2>
+
+                        <div class="space-y-6">
+                            <!-- Favorite Teams -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Favorite Teams</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex items-center space-x-3">
+                                        <input type="checkbox" checked
+                                            class="rounded text-blue-600 focus:ring-blue-500">
+                                        <span class="text-gray-900">Manchester United</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                                        <span class="text-gray-900">Liverpool</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                                        <span class="text-gray-900">Arsenal</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                                        <span class="text-gray-900">Chelsea</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Preferred Seating -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Preferred Seating</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Seat
+                                            Location</label>
+                                        <select
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option>Any</option>
+                                            <option>Behind Goal</option>
+                                            <option>Side View</option>
+                                            <option>VIP/Executive</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                                        <select
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option>Any Price</option>
+                                            <option>$0 - $50</option>
+                                            <option>$51 - $100</option>
+                                            <option>$101 - $200</option>
+                                            <option>$200+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Language & Region -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Language & Region</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                        <select
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option>English</option>
+                                            <option>Spanish</option>
+                                            <option>French</option>
+                                            <option>German</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Currency</label>
+                                        <select
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option>USD ($)</option>
+                                            <option>EUR (€)</option>
+                                            <option>GBP (£)</option>
+                                            <option>JPY (¥)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">FootballTix</h3>
+                    <p class="text-gray-400">Your trusted partner for football ticketing worldwide.</p>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-white">Home</a></li>
+                        <li><a href="events.html" class="hover:text-white">Matches</a></li>
+                        <li><a href="leagues.html" class="hover:text-white">Leagues</a></li>
+                        <li><a href="about.html" class="hover:text-white">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="faq.html" class="hover:text-white">FAQ</a></li>
+                        <li><a href="terms.html" class="hover:text-white">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 FootballTix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/profile.js"></script>
+</body>
+
+</html>
