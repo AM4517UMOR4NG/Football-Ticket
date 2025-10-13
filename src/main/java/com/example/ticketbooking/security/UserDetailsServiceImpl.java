@@ -65,8 +65,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             System.out.println("ROLE USER: " + user.getUsername() + " -> " + user.getRole());
-            if (user.getRole() != null && user.getRole().equalsIgnoreCase("ADMIN")) {
-                return Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            if (user.getRole() != null) {
+                String role = user.getRole().trim();
+                if (role.equalsIgnoreCase("ADMIN")) {
+                    return Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                }
+                if (role.equalsIgnoreCase("CASHIER")) {
+                    return Collections.singletonList(new SimpleGrantedAuthority("ROLE_CASHIER"));
+                }
             }
             return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
         }
