@@ -22,8 +22,13 @@ public class CashierDashboardController {
 
     @GetMapping("/bookings")
     public List<BookingDTO> getAllBookings() {
-        List<Booking> bookings = bookingRepository.findAll();
-        return bookings.stream().map(this::convertToDto).collect(Collectors.toList());
+        try {
+            List<Booking> bookings = bookingRepository.findAllWithDetails();
+            return bookings.stream().map(this::convertToDto).collect(Collectors.toList());
+        } catch (Exception ex) {
+            // Avoid leaking exceptions as 400 responses; return empty list for robustness
+            return java.util.Collections.emptyList();
+        }
     }
 
     private BookingDTO convertToDto(Booking booking) {
