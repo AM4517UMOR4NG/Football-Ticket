@@ -4,29 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cashier Dashboard</title>
-    <link rel="stylesheet" href="cashier-dashboard.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/cashier-dashboard.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Cashier Dashboard</h1>
-        <h2>All Bookings</h2>
-        <table id="bookings-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Booking Reference</th>
-                    <th>Event Title</th>
-                    <th>Number of Tickets</th>
-                    <th>Total Amount</th>
-                    <th>Status</th>
-                    <th>Booking Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Booking data will be inserted here by JavaScript -->
-            </tbody>
-        </table>
+    <!-- Shared Navigation (from index.html) -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                        </svg>
+                        <span class="ml-2 text-xl font-extrabold text-black tracking-wide">FootballTix</span>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Home</a>
+                    <a href="events.html" class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Matches</a>
+                    <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">My Bookings</a>
+                    <a href="wishlist.html" class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">My Wishlist</a>
+                    <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Leagues</a>
+                </div>
+
+                <div class="flex items-center" id="nav-right-container">
+                    <!-- Sign In Button - Will be replaced by user menu when logged in -->
+                    <a href="login.html" id="login-link" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign In</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-toggle" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Home</a>
+                    <a href="events.html" class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Matches</a>
+                    <a href="bookings.html" class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">My Bookings</a>
+                    <a href="wishlist.html" class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">My Wishlist</a>
+                    <a href="leagues.html" class="block px-3 py-2 rounded-md text-base font-bold text-black hover:text-blue-700 hover:bg-blue-50">Leagues</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen bg-gray-50 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <div class="bg-blue-600 text-white rounded-2xl px-6 py-5 flex items-center justify-between shadow">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold">Cashier Dashboard</h1>
+                    <button id="new-sale-btn" class="inline-flex items-center px-4 py-2 rounded-lg bg-white text-blue-700 hover:bg-blue-50 shadow">
+                        + Jual Tiket Baru
+                    </button>
+                </div>
+            </div>
+
+            <!-- Metric Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="metric-cards">
+                <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
+                    <div class="p-3 rounded-full bg-emerald-100 text-emerald-600">$</div>
+                    <div>
+                        <p class="text-sm text-gray-500">Penjualan Hari Ini</p>
+                        <p class="text-2xl font-bold" id="sales-today">Rp 0</p>
+                        <p class="text-xs text-emerald-600" id="sales-compare">—</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
+                    <div class="p-3 rounded-full bg-blue-100 text-blue-600">🎟️</div>
+                    <div>
+                        <p class="text-sm text-gray-500">Tiket Terjual</p>
+                        <p class="text-2xl font-bold" id="tickets-sold">0</p>
+                        <p class="text-xs text-blue-600" id="tickets-left">—</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
+                    <div class="p-3 rounded-full bg-purple-100 text-purple-600">📈</div>
+                    <div>
+                        <p class="text-sm text-gray-500">Transaksi</p>
+                        <p class="text-2xl font-bold" id="transactions-count">0</p>
+                        <p class="text-xs text-gray-500" id="avg-amount">—</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
+                    <div class="p-3 rounded-full bg-amber-100 text-amber-600">✅</div>
+                    <div>
+                        <p class="text-sm text-gray-500">Pertandingan Aktif</p>
+                        <p class="text-2xl font-bold" id="active-matches">0</p>
+                        <p class="text-xs text-amber-600" id="upcoming-matches">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales List -->
+            <div class="bg-white rounded-2xl shadow">
+                <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-gray-900">Penjualan Tiket</h2>
+                </div>
+                <div id="sales-list" class="divide-y divide-gray-100">
+                    <!-- Rows injected by JS -->
+                    <div class="p-6 text-center text-gray-500" id="sales-empty">Memuat data...</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="cashier-dashboard.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/index2.js"></script>
+    <script src="js/cashier-dashboard.js"></script>
 </body>
 </html>
