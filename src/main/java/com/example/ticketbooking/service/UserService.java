@@ -88,6 +88,7 @@ public class UserService {
     @PostConstruct
     public void initDefaultAdmin() {
         createDefaultAdminIfNotExists();
+        createDefaultCashierIfNotExists();
         createDefaultUserIfNotExists();
     }
 
@@ -142,6 +143,26 @@ public class UserService {
                 log.info("Default admin 'Alogo12' created successfully");
             } else {
                 log.error("Failed to create default admin: invalid password");
+            }
+        }
+    }
+
+    private void createDefaultCashierIfNotExists() {
+        if (userRepository.findByUsername("cashier1").isEmpty()) {
+            UserRegistrationDTO cashierDto = new UserRegistrationDTO(
+                    "cashier1",
+                    "cashier1@example.com",
+                    "Alogo.situ24",
+                    "Kasir Satu",
+                    "081234567891",
+                    "CASHIER");
+
+            if (isPasswordValid(cashierDto.password())) {
+                User cashier = createUserFromDTO(cashierDto);
+                userRepository.save(cashier);
+                log.info("Default cashier 'cashier1' created successfully");
+            } else {
+                log.error("Failed to create default cashier: invalid password");
             }
         }
     }
