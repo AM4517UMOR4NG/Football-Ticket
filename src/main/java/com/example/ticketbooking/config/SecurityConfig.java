@@ -62,9 +62,11 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/api/user/dashboard/**")).hasRole("USER")
                         .requestMatchers(new AntPathRequestMatcher("/api/cashier/dashboard/**")).hasRole("CASHIER")
+                        .requestMatchers(new AntPathRequestMatcher("/api/cashier/**")).hasRole("CASHIER")
                         .requestMatchers(new AntPathRequestMatcher("/api/bookings/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/api/profile")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/api/profile/**")).authenticated())
+                        .requestMatchers(new AntPathRequestMatcher("/api/profile/**")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/uploads/**")).permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
                         UsernamePasswordAuthenticationFilter.class)
