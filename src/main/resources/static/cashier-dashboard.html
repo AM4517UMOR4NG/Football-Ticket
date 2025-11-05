@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cashier Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/cashier-dashboard.css">
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+        .cashier-hero {
+            background: radial-gradient(1200px 300px at 10% -20%, rgba(37,99,235,.15), transparent),
+                        radial-gradient(1200px 300px at 90% -20%, rgba(124,58,237,.15), transparent),
+                        linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+    </style>
 </head>
 <body>
     <!-- Shared Navigation (from index.html) -->
@@ -63,16 +73,22 @@
         </div>
     </nav>
 
-    <div class="min-h-screen bg-gray-50 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-8">
-                <div class="bg-blue-600 text-white rounded-2xl px-6 py-5 flex items-center justify-between shadow">
-                    <h1 class="text-2xl sm:text-3xl font-extrabold">Cashier Dashboard</h1>
+    <div class="min-h-screen bg-gray-50">
+        <div class="cashier-hero text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 flex items-center justify-between shadow">
+                    <div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Cashier Dashboard</h1>
+                        <p class="text-white/70 text-sm mt-1">Kelola penjualan tiket dengan mudah dan cepat</p>
+                    </div>
                     <button id="new-sale-btn" class="inline-flex items-center px-4 py-2 rounded-lg bg-white text-blue-700 hover:bg-blue-50 shadow">
                         + Jual Tiket Baru
                     </button>
                 </div>
             </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 pb-10">
 
             <!-- Metric Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="metric-cards">
@@ -110,10 +126,39 @@
                 </div>
             </div>
 
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-2xl shadow mb-6">
+                <div class="px-6 py-4 border-b border-gray-100">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Cari Tiket</h2>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex-1">
+                            <input type="text" id="search-reference" placeholder="Cari berdasarkan booking reference..." 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="flex gap-2">
+                            <select id="status-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">Semua Status</option>
+                                <option value="CONFIRMED">Confirmed</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="CANCELLED">Cancelled</option>
+                                <option value="COMPLETED">Completed</option>
+                            </select>
+                            <button id="search-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Cari
+                            </button>
+                            <button id="refresh-btn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Sales List -->
             <div class="bg-white rounded-2xl shadow">
                 <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-gray-900">Penjualan Tiket</h2>
+                    <div class="text-sm text-gray-500" id="total-count">0 tiket</div>
                 </div>
                 <div id="sales-list" class="divide-y divide-gray-100">
                     <!-- Rows injected by JS -->
