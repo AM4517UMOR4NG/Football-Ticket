@@ -58,8 +58,6 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/api/events/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/leagues/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/about/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/api/test/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/test-data/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/cashier/dashboard/**")).hasRole("CASHIER")
                         .requestMatchers(new AntPathRequestMatcher("/api/wishlist/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")

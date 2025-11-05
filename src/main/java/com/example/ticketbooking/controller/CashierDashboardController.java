@@ -6,6 +6,7 @@ import com.example.ticketbooking.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,10 +24,43 @@ public class CashierDashboardController {
     @GetMapping("/bookings")
     public List<BookingDTO> getAllBookings() {
         try {
-            List<Booking> bookings = bookingRepository.findAllWithDetails();
+            System.out.println("CashierDashboardController: Getting all bookings");
+            List<Booking> bookings = bookingRepository.findAll();
+            System.out.println("CashierDashboardController: Found " + bookings.size() + " bookings");
+            List<BookingDTO> result = bookings.stream().map(this::convertToDto).collect(Collectors.toList());
+            System.out.println("CashierDashboardController: Converted to " + result.size() + " DTOs");
+            return result;
+        } catch (Exception ex) {
+            System.err.println("CashierDashboardController: Error getting bookings: " + ex.getMessage());
+            ex.printStackTrace();
+            // Avoid leaking exceptions as 400 responses; return empty list for robustness
+            return java.util.Collections.emptyList();
+        }
+    }
+
+    @GetMapping("/test")
+    public String testEndpoint() {
+        return "Cashier dashboard is working!";
+    }
+
+    @GetMapping("/bookings/{bookingReference}")
+    public BookingDTO getBookingByReference(@PathVariable String bookingReference) {
+        try {
+            return bookingRepository.findByBookingReference(bookingReference)
+                    .map(this::convertToDto)
+                    .orElse(null);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @GetMapping("/bookings/status/{status}")
+    public List<BookingDTO> getBookingsByStatus(@PathVariable String status) {
+        try {
+            Booking.BookingStatus bookingStatus = Booking.BookingStatus.valueOf(status.toUpperCase());
+            List<Booking> bookings = bookingRepository.findByStatus(bookingStatus);
             return bookings.stream().map(this::convertToDto).collect(Collectors.toList());
         } catch (Exception ex) {
-            // Avoid leaking exceptions as 400 responses; return empty list for robustness
             return java.util.Collections.emptyList();
         }
     }
