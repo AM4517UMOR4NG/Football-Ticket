@@ -514,6 +514,41 @@ body {
     margin-top: 30px;
 }
 
+/* Team logo styling - make logos visible and clear */
+.team-logo-img {
+    filter: none; /* Remove filter to show logos in original colors */
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.match-card:hover .team-logo-img {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Apply to all team logo images in match cards */
+.match-card img[alt*="Logo"],
+.match-card img[alt*="logo"] {
+    filter: none;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.match-card:hover img[alt*="Logo"],
+.match-card:hover img[alt*="logo"] {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Also apply to dynamically generated cards */
+[class*="match-card"] img[alt*="Logo"],
+[class*="match-card"] img[alt*="logo"],
+.group\/team img {
+    filter: none;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
 .match-card {
     background-color: var(--white);
     border-radius: var(--radius);
@@ -521,6 +556,33 @@ body {
     box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid var(--light-gray);
+}
+
+/* Dark theme match cards */
+.match-card.bg-gray-900 {
+    background-color: #111827;
+    border: 1px solid #374151;
+}
+
+.match-card.bg-gray-900 .price-tag {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.match-card.bg-gray-900 .ticket-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.match-card.bg-gray-900 .ticket-button:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
 }
 
 .match-card:hover {
