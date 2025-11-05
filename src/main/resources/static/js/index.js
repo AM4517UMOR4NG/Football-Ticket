@@ -183,35 +183,166 @@ function initializeCarousel() {
     const indicators = document.querySelectorAll('.indicator');
     const prevButton = document.querySelector('.prev');
     const nextButton = document.querySelector('.next');
+    const carouselContainer = document.getElementById('highlight-carousel');
     
     if (!carouselInner || !items.length) return;
     
     let currentIndex = 0;
-
-    const updateCarousel = () => {
-        carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentIndex);
-            indicator.setAttribute('aria-selected', index === currentIndex);
+    let autoPlayInterval = null;
+    let isTransitioning = false;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    // Optimized update function with requestAnimationFrame
+    const updateCarousel = (smooth = true) => {
+        if (isTransitioning && !smooth) return;
+        isTransitioning = true;
+        
+        requestAnimationFrame(() => {
+            carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                const isActive = index === currentIndex;
+                indicator.classList.toggle('active', isActive);
+                indicator.classList.toggle('bg-white', isActive);
+                indicator.classList.toggle('bg-gray-300', !isActive);
+                indicator.setAttribute('aria-selected', isActive);
+            });
+            
+            // Update ARIA labels
+            items.forEach((item, index) => {
+                item.setAttribute('aria-label', `Slide ${index + 1} of ${items.length}`);
+            });
+            
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 500); // Match transition duration
         });
     };
 
+    const goToSlide = (index, smooth = true) => {
+        if (index < 0 || index >= items.length || isTransitioning) return;
+        currentIndex = index;
+        updateCarousel(smooth);
+        resetAutoPlay();
+    };
+
+    const nextSlide = () => {
+        goToSlide((currentIndex + 1) % items.length);
+    };
+
+    const prevSlide = () => {
+        goToSlide((currentIndex - 1 + items.length) % items.length);
+    };
+
+    // Auto-play functionality
+    const startAutoPlay = () => {
+        autoPlayInterval = setInterval(() => {
+            if (!document.hidden && carouselContainer) {
+                nextSlide();
+            }
+        }, 5000); // Auto-advance every 5 seconds
+    };
+
+    const stopAutoPlay = () => {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+    };
+
+    const resetAutoPlay = () => {
+        stopAutoPlay();
+        startAutoPlay();
+    };
+
+    // Button event listeners with debouncing
+    let buttonDebounce = false;
     prevButton?.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + items.length) % items.length;
-        updateCarousel();
+        if (buttonDebounce) return;
+        buttonDebounce = true;
+        prevSlide();
+        setTimeout(() => { buttonDebounce = false; }, 500);
     });
 
     nextButton?.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % items.length;
-        updateCarousel();
+        if (buttonDebounce) return;
+        buttonDebounce = true;
+        nextSlide();
+        setTimeout(() => { buttonDebounce = false; }, 500);
     });
 
+    // Indicator click handlers
     indicators.forEach((indicator, index) => {
         indicator?.addEventListener('click', () => {
-            currentIndex = index;
-            updateCarousel();
+            if (!buttonDebounce) {
+                goToSlide(index);
+            }
         });
     });
+
+    // Touch/swipe support for mobile
+    const handleSwipe = () => {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                nextSlide(); // Swipe left - next
+            } else {
+                prevSlide(); // Swipe right - previous
+            }
+        }
+    };
+
+    if (carouselContainer) {
+        carouselContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoPlay();
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            resetAutoPlay();
+        }, { passive: true });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (carouselContainer && document.activeElement !== document.body) return;
+        
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        }
+    });
+
+    // Pause auto-play on hover
+    if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+    }
+
+    // Pause auto-play when page is hidden
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoPlay();
+        } else {
+            startAutoPlay();
+        }
+    });
+
+    // Initial setup
+    updateCarousel(false);
+    startAutoPlay();
+    
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', stopAutoPlay);
 }
 
 function initializeMobileMenu() {
@@ -455,19 +586,22 @@ function updateFeaturedMatches(events) {
                 
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex flex-col items-center group/team">
-                        <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 rounded-full flex items-center justify-center mb-2 transition-all duration-200 group-hover/team:scale-110 overflow-hidden">
-                            ${event.homeTeamLogo ? `
-                                <img src="${event.homeTeamLogo}" alt="${getHomeTeam(event.title)} Logo"
-                                     class="w-12 h-12 object-contain"
-                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                <svg class="w-8 h-8 text-blue-700 dark:text-blue-400 hidden" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-                                </svg>
-                            ` : `
-                                <svg class="w-8 h-8 text-blue-700 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-                                </svg>
-                            `}
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 rounded-full flex items-center justify-center mb-2 transition-all duration-200 group-hover/team:scale-110 overflow-hidden p-2">
+                            ${(() => {
+                                const teamLogo = event.homeTeamLogo || getTeamLogo(getHomeTeam(event.title));
+                                return teamLogo ? `
+                                    <img src="${teamLogo}" alt="${getHomeTeam(event.title)} Logo"
+                                         class="w-full h-full object-contain team-logo-img"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <svg class="w-8 h-8 text-blue-700 dark:text-blue-400 hidden" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                                    </svg>
+                                ` : `
+                                    <svg class="w-8 h-8 text-blue-700 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                                    </svg>
+                                `;
+                            })()}
                         </div>
                         <div class="font-semibold text-center text-sm text-gray-800 dark:text-gray-200">${getHomeTeam(event.title)}</div>
                     </div>
@@ -478,19 +612,22 @@ function updateFeaturedMatches(events) {
                     </div>
                     
                     <div class="flex flex-col items-center group/team">
-                        <div class="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 dark:from-red-800 dark:to-red-900 rounded-full flex items-center justify-center mb-2 transition-all duration-200 group-hover/team:scale-110 overflow-hidden">
-                            ${event.awayTeamLogo ? `
-                                <img src="${event.awayTeamLogo}" alt="${getAwayTeam(event.title)} Logo"
-                                     class="w-12 h-12 object-contain"
-                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                <svg class="w-8 h-8 text-red-600 dark:text-red-400 hidden" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-                                </svg>
-                            ` : `
-                                <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-                                </svg>
-                            `}
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 dark:from-red-800 dark:to-red-900 rounded-full flex items-center justify-center mb-2 transition-all duration-200 group-hover/team:scale-110 overflow-hidden p-2">
+                            ${(() => {
+                                const teamLogo = event.awayTeamLogo || getTeamLogo(getAwayTeam(event.title));
+                                return teamLogo ? `
+                                    <img src="${teamLogo}" alt="${getAwayTeam(event.title)} Logo"
+                                         class="w-full h-full object-contain team-logo-img"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <svg class="w-8 h-8 text-red-600 dark:text-red-400 hidden" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                                    </svg>
+                                ` : `
+                                    <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                                    </svg>
+                                `;
+                            })()}
                         </div>
                         <div class="font-semibold text-center text-sm text-gray-800 dark:text-gray-200">${getAwayTeam(event.title)}</div>
                     </div>
@@ -797,6 +934,67 @@ function getAwayTeam(title) {
     if (!title) return 'Away Team';
     const parts = title.split(' vs ');
     return parts[1]?.trim() || 'Away Team';
+}
+
+// Team logo mapping
+function getTeamLogo(teamName) {
+    if (!teamName) return null;
+    
+    const teamLogos = {
+        // Premier League
+        'Manchester United': 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png',
+        'Man Utd': 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png',
+        'Liverpool': 'https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Liverpool_FC.svg/1200px-Liverpool_FC.svg.png',
+        'Chelsea': 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/1200px-Chelsea_FC.svg.png',
+        'Arsenal': 'https://upload.wikimedia.org/wikipedia/id/thumb/5/53/Arsenal_FC.svg/1020px-Arsenal_FC.svg.png',
+        'Manchester City': 'https://upload.wikimedia.org/wikipedia/id/thumb/e/eb/Manchester_City_FC_badge.svg/1200px-Manchester_City_FC_badge.svg.png',
+        'Man City': 'https://upload.wikimedia.org/wikipedia/id/thumb/e/eb/Manchester_City_FC_badge.svg/1200px-Manchester_City_FC_badge.svg.png',
+        'Tottenham': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Tottenham_Hotspur.svg/1200px-Tottenham_Hotspur.svg.png',
+        'Tottenham Hotspur': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Tottenham_Hotspur.svg/1200px-Tottenham_Hotspur.svg.png',
+        // La Liga
+        'Real Madrid': 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo.png',
+        'Barcelona': 'https://logos-world.net/wp-content/uploads/2020/06/Barcelona-Logo.png',
+        'Atletico Madrid': 'https://logos-world.net/wp-content/uploads/2020/06/Atletico-Madrid-Logo.png',
+        'Sevilla': 'https://logos-world.net/wp-content/uploads/2020/06/Sevilla-Logo.png',
+        // Bundesliga
+        'Bayern Munich': 'https://logos-world.net/wp-content/uploads/2020/06/Bayern-Munich-Logo.png',
+        'Borussia Dortmund': 'https://logos-world.net/wp-content/uploads/2020/06/Borussia-Dortmund-Logo.png',
+        'RB Leipzig': 'https://logos-world.net/wp-content/uploads/2020/06/RB-Leipzig-Logo.png',
+        'Bayer Leverkusen': 'https://logos-world.net/wp-content/uploads/2020/06/Bayer-Leverkusen-Logo.png',
+        // Serie A
+        'AC Milan': 'https://logos-world.net/wp-content/uploads/2020/06/AC-Milan-Logo.png',
+        'Inter Milan': 'https://logos-world.net/wp-content/uploads/2020/06/Inter-Milan-Logo.png',
+        'Juventus': 'https://logos-world.net/wp-content/uploads/2020/06/Juventus-Logo.png',
+        'Napoli': 'https://logos-world.net/wp-content/uploads/2020/06/Napoli-Logo.png',
+        // Ligue 1
+        'Paris Saint-Germain': 'https://logos-world.net/wp-content/uploads/2020/06/Paris-Saint-Germain-Logo.png',
+        'PSG': 'https://logos-world.net/wp-content/uploads/2020/06/Paris-Saint-Germain-Logo.png',
+        'Marseille': 'https://logos-world.net/wp-content/uploads/2020/06/Olympique-Marseille-Logo.png',
+        'Lyon': 'https://logos-world.net/wp-content/uploads/2020/06/Olympique-Lyon-Logo.png',
+        'Monaco': 'https://logos-world.net/wp-content/uploads/2020/06/Monaco-Logo.png'
+    };
+    
+    // Try exact match first
+    if (teamLogos[teamName]) {
+        return teamLogos[teamName];
+    }
+    
+    // Try case-insensitive match
+    const normalizedName = teamName.toLowerCase();
+    for (const [key, value] of Object.entries(teamLogos)) {
+        if (key.toLowerCase() === normalizedName) {
+            return value;
+        }
+    }
+    
+    // Try partial match (e.g., "Man Utd" matches "Manchester United")
+    for (const [key, value] of Object.entries(teamLogos)) {
+        if (normalizedName.includes(key.toLowerCase()) || key.toLowerCase().includes(normalizedName)) {
+            return value;
+        }
+    }
+    
+    return null;
 }
 
 function formatEventDate(dateString) {
@@ -1263,23 +1461,19 @@ function updateNavigation() {
             </div>
         `;
 
-        const signInContainer = document.querySelector('.flex.items-center');
+        const signInContainer = document.getElementById('nav-right-container') || document.querySelector('.flex.items-center');
         if (signInContainer) {
             signInContainer.innerHTML = '';
             signInContainer.appendChild(userMenu);
         }
-
         // Setup dropdown functionality
         const userMenuBtn = document.getElementById('user-menu-btn');
         const userDropdown = document.getElementById('user-dropdown');
-
         if (userMenuBtn && userDropdown) {
             userMenuBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 userDropdown.classList.toggle('hidden');
             });
-
-            // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
                     userDropdown.classList.add('hidden');
@@ -1309,6 +1503,9 @@ function handleLogout() {
 // Initialize error boundary and styles
 setupErrorBoundary();
 injectStyles();
+
+// Ensure nav updates when full window load completes as well
+window.addEventListener('load', updateNavigation);
 
 // Make functions globally available
 window.toggleFavorite = toggleFavorite;

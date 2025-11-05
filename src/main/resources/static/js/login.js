@@ -12,131 +12,189 @@ const redirectOptions = {
 // DOM Elements
 const loginForm = document.getElementById('loginForm');
 const loginBtn = document.getElementById('loginBtn');
-const loginBtnText = document.getElementById('loginBtnText');
-const loginSpinner = document.getElementById('loginSpinner');
 const loadingOverlay = document.getElementById('loadingOverlay');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
-const togglePassword = document.getElementById('togglePassword');
-const eyeIcon = document.getElementById('eyeIcon');
-const rememberMeCheckbox = document.getElementById('rememberMe');
+const alertDiv = document.getElementById('alert');
 
 // Enhanced UI interactions
 function initializeUI() {
-    // Custom checkbox functionality
-    rememberMeCheckbox.addEventListener('change', function () {
-        const checkmark = this.parentElement.querySelector('.checkmark');
-        if (this.checked) {
-            checkmark.style.opacity = '1';
-            this.parentElement.querySelector('.checkbox-custom').style.backgroundColor = 'rgba(59, 130, 246, 0.5)';
-        } else {
-            checkmark.style.opacity = '0';
-            this.parentElement.querySelector('.checkbox-custom').style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-        }
-    });
-
-    // Password toggle functionality
-    togglePassword.addEventListener('click', function () {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-
-        if (type === 'text') {
-            eyeIcon.innerHTML = `
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
-            `;
-        } else {
-            eyeIcon.innerHTML = `
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-            `;
-        }
-    });
-
-    // Auto-focus and smooth transitions
-    usernameInput.focus();
+    // Auto-focus on email input
+    if (usernameInput) {
+        usernameInput.focus();
+    }
 
     // Enhanced keyboard navigation
-    usernameInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            passwordInput.focus();
-        }
-    });
+    if (usernameInput && passwordInput) {
+        usernameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                passwordInput.focus();
+            }
+        });
+
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                showInfo('Processing login...');
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    }
 }
 
 // Enhanced loading states
 function showLoading() {
-    loginBtn.disabled = true;
-    loginBtnText.classList.add('hidden');
-    loginSpinner.classList.remove('hidden');
-    loadingOverlay.classList.remove('hidden');
+    if (loginBtn) {
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'SIGNING IN...';
+    }
+    if (loadingOverlay) {
+        loadingOverlay.classList.remove('hidden');
+    }
 }
 
 function hideLoading() {
-    loginBtn.disabled = false;
-    loginBtnText.classList.remove('hidden');
-    loginSpinner.classList.add('hidden');
-    loadingOverlay.classList.add('hidden');
+    if (loginBtn) {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'SIGN IN';
+    }
+    if (loadingOverlay) {
+        loadingOverlay.classList.add('hidden');
+    }
 }
 
-// Enhanced error handling with beautiful notifications
-function showError(message) {
-    // Remove existing errors
-    const existingError = document.querySelector('.error-notification');
-    if (existingError) existingError.remove();
+// Show alert in the form
+function showAlert(message, type = 'error') {
+    if (!alertDiv) return;
+    
+    alertDiv.textContent = message;
+    alertDiv.className = `alert ${type}`;
+    alertDiv.classList.remove('hidden');
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        alertDiv.classList.add('hidden');
+    }, 5000);
+}
 
-    // Create beautiful error notification
+// Enhanced error handling
+function showError(message) {
+    showAlert(message, 'error');
+    
+    // Also show notification
     const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-notification fixed top-4 right-4 bg-red-500 bg-opacity-90 backdrop-blur-lg text-white p-4 rounded-xl shadow-2xl border border-red-400 border-opacity-30 z-50 transform translate-x-full transition-transform duration-300';
+    errorDiv.className = 'error-notification';
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #f44336;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        max-width: 400px;
+        animation: slideIn 0.3s ease-out;
+    `;
     errorDiv.innerHTML = `
-        <div class="flex items-center">
-            <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <svg style="width: 20px; height: 20px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <div>
-                <p class="font-medium">Login Failed</p>
-                <p class="text-sm opacity-90">${message}</p>
+            <div style="flex: 1;">
+                <p style="font-weight: 600; margin-bottom: 4px;">Login Failed</p>
+                <p style="font-size: 14px; opacity: 0.9;">${message}</p>
             </div>
-            <button class="ml-4 opacity-70 hover:opacity-100 transition-opacity" onclick="this.parentElement.parentElement.remove()">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; cursor: pointer; padding: 4px;">
+                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
     `;
 
-    document.body.appendChild(errorDiv);
+    // Add animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    `;
+    if (!document.querySelector('style[data-login-animations]')) {
+        style.setAttribute('data-login-animations', 'true');
+        document.head.appendChild(style);
+    }
 
-    // Animate in
-    setTimeout(() => {
-        errorDiv.style.transform = 'translateX(0)';
-    }, 100);
+    document.body.appendChild(errorDiv);
 
     // Auto remove
     setTimeout(() => {
-        errorDiv.style.transform = 'translateX(full)';
+        errorDiv.style.animation = 'slideOut 0.3s ease-out';
         setTimeout(() => errorDiv.remove(), 300);
     }, 5000);
 }
 
+// Info notification (blue)
+function showInfo(message) {
+    const infoDiv = document.createElement('div');
+    infoDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #2563eb;
+        color: white;
+        padding: 14px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        max-width: 400px;
+        animation: slideIn 0.25s ease-out;
+    `;
+    infoDiv.textContent = message;
+    document.body.appendChild(infoDiv);
+    setTimeout(() => infoDiv.remove(), 1500);
+}
+
 // Success notification
 function showSuccess(message) {
+    showAlert(message, 'success');
+    
     const successDiv = document.createElement('div');
-    successDiv.className = 'fixed top-4 right-4 bg-green-500 bg-opacity-90 backdrop-blur-lg text-white p-4 rounded-xl shadow-2xl border border-green-400 border-opacity-30 z-50 transform translate-x-full transition-transform duration-300';
+    successDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #4caf50;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        max-width: 400px;
+        animation: slideIn 0.3s ease-out;
+    `;
     successDiv.innerHTML = `
-        <div class="flex items-center">
-            <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <svg style="width: 20px; height: 20px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <div>
-                <p class="font-medium">Success!</p>
-                <p class="text-sm opacity-90">${message}</p>
+            <div style="flex: 1;">
+                <p style="font-weight: 600; margin-bottom: 4px;">Success!</p>
+                <p style="font-size: 14px; opacity: 0.9;">${message}</p>
             </div>
         </div>
     `;
 
     document.body.appendChild(successDiv);
-    setTimeout(() => successDiv.style.transform = 'translateX(0)', 100);
     setTimeout(() => successDiv.remove(), 3000);
 }
 
@@ -179,56 +237,58 @@ function handleLoginSuccess(response) {
 }
 
 // Main login handler
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value;
+        const username = usernameInput ? usernameInput.value.trim() : '';
+        const password = passwordInput ? passwordInput.value : '';
 
-    if (!username || !password) {
-        showError('Please enter both username and password');
-        return;
-    }
+        if (!username || !password) {
+            showError('Please enter both email and password');
+            return;
+        }
 
-    showLoading();
-    const loginData = { username, password };
-
-    try {
-        let response;
+        showLoading();
+        const loginData = { username, password };
 
         try {
-            response = await attemptLogin(apiConfig.baseUrl, loginData);
-        } catch (primaryError) {
-            console.log('Primary API failed, trying fallback:', primaryError.message);
-            response = await attemptLogin(apiConfig.fallbackUrl, loginData);
-        }
+            let response;
 
-        handleLoginSuccess(response);
-
-    } catch (error) {
-        hideLoading();
-        console.error('Login error:', error);
-
-        let errorMessage = 'Login failed. Please try again.';
-
-        if (error.response) {
-            const status = error.response.status;
-            const data = error.response.data;
-
-            if (status === 401) {
-                errorMessage = 'Invalid username or password';
-            } else if (status === 429) {
-                errorMessage = 'Too many login attempts. Please try again later.';
-            } else if (data?.message) {
-                errorMessage = data.message;
+            try {
+                response = await attemptLogin(apiConfig.baseUrl, loginData);
+            } catch (primaryError) {
+                console.log('Primary API failed, trying fallback:', primaryError.message);
+                response = await attemptLogin(apiConfig.fallbackUrl, loginData);
             }
-        } else if (error.request) {
-            errorMessage = 'Unable to connect to server. Please check your connection.';
-        }
 
-        showError(errorMessage);
-    }
-});
+            handleLoginSuccess(response);
+
+        } catch (error) {
+            hideLoading();
+            console.error('Login error:', error);
+
+            let errorMessage = 'Login failed. Please try again.';
+
+            if (error.response) {
+                const status = error.response.status;
+                const data = error.response.data;
+
+                if (status === 401) {
+                    errorMessage = 'Invalid email or password';
+                } else if (status === 429) {
+                    errorMessage = 'Too many login attempts. Please try again later.';
+                } else if (data?.message) {
+                    errorMessage = data.message;
+                }
+            } else if (error.request) {
+                errorMessage = 'Unable to connect to server. Please check your connection.';
+            }
+
+            showError(errorMessage);
+        }
+    });
+}
 
 // Auto-login check
 window.addEventListener('load', () => {

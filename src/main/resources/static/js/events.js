@@ -669,6 +669,79 @@ function formatEventDate(dateString) {
 
     return `${dayName}, ${day} ${month} ${year}`;
 }
+// Team logo mapping - same as in index.js
+function getTeamLogo(teamName) {
+    if (!teamName) return null;
+    
+    const teamLogos = {
+        // Premier League
+        'Manchester United': 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png',
+        'Man Utd': 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png',
+        'Liverpool': 'https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Liverpool_FC.svg/1200px-Liverpool_FC.svg.png',
+        'Chelsea': 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/1200px-Chelsea_FC.svg.png',
+        'Arsenal': 'https://upload.wikimedia.org/wikipedia/id/thumb/5/53/Arsenal_FC.svg/1020px-Arsenal_FC.svg.png',
+        'Manchester City': 'https://upload.wikimedia.org/wikipedia/id/thumb/e/eb/Manchester_City_FC_badge.svg/1200px-Manchester_City_FC_badge.svg.png',
+        'Man City': 'https://upload.wikimedia.org/wikipedia/id/thumb/e/eb/Manchester_City_FC_badge.svg/1200px-Manchester_City_FC_badge.svg.png',
+        'Tottenham': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Tottenham_Hotspur.svg/1200px-Tottenham_Hotspur.svg.png',
+        'Tottenham Hotspur': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Tottenham_Hotspur.svg/1200px-Tottenham_Hotspur.svg.png',
+        // La Liga
+        'Real Madrid': 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo.png',
+        'Barcelona': 'https://logos-world.net/wp-content/uploads/2020/06/Barcelona-Logo.png',
+        'Atletico Madrid': 'https://logos-world.net/wp-content/uploads/2020/06/Atletico-Madrid-Logo.png',
+        'Sevilla': 'https://logos-world.net/wp-content/uploads/2020/06/Sevilla-Logo.png',
+        // Bundesliga
+        'Bayern Munich': 'https://logos-world.net/wp-content/uploads/2020/06/Bayern-Munich-Logo.png',
+        'Borussia Dortmund': 'https://logos-world.net/wp-content/uploads/2020/06/Borussia-Dortmund-Logo.png',
+        'RB Leipzig': 'https://logos-world.net/wp-content/uploads/2020/06/RB-Leipzig-Logo.png',
+        'Bayer Leverkusen': 'https://logos-world.net/wp-content/uploads/2020/06/Bayer-Leverkusen-Logo.png',
+        // Serie A
+        'AC Milan': 'https://logos-world.net/wp-content/uploads/2020/06/AC-Milan-Logo.png',
+        'Inter Milan': 'https://logos-world.net/wp-content/uploads/2020/06/Inter-Milan-Logo.png',
+        'Juventus': 'https://logos-world.net/wp-content/uploads/2020/06/Juventus-Logo.png',
+        'Napoli': 'https://logos-world.net/wp-content/uploads/2020/06/Napoli-Logo.png',
+        // Ligue 1
+        'Paris Saint-Germain': 'https://logos-world.net/wp-content/uploads/2020/06/Paris-Saint-Germain-Logo.png',
+        'PSG': 'https://logos-world.net/wp-content/uploads/2020/06/Paris-Saint-Germain-Logo.png',
+        'Marseille': 'https://logos-world.net/wp-content/uploads/2020/06/Olympique-Marseille-Logo.png',
+        'Lyon': 'https://logos-world.net/wp-content/uploads/2020/06/Olympique-Lyon-Logo.png',
+        'Monaco': 'https://logos-world.net/wp-content/uploads/2020/06/Monaco-Logo.png'
+    };
+    
+    // Try exact match first
+    if (teamLogos[teamName]) {
+        return teamLogos[teamName];
+    }
+    
+    // Try case-insensitive match
+    const normalizedName = teamName.toLowerCase();
+    for (const [key, value] of Object.entries(teamLogos)) {
+        if (key.toLowerCase() === normalizedName) {
+            return value;
+        }
+    }
+    
+    // Try partial match
+    for (const [key, value] of Object.entries(teamLogos)) {
+        if (normalizedName.includes(key.toLowerCase()) || key.toLowerCase().includes(normalizedName)) {
+            return value;
+        }
+    }
+    
+    return null;
+}
+
+function getHomeTeam(title) {
+    if (!title) return 'Home Team';
+    const parts = title.split(' vs ');
+    return parts[0]?.trim() || 'Home Team';
+}
+
+function getAwayTeam(title) {
+    if (!title) return 'Away Team';
+    const parts = title.split(' vs ');
+    return parts[1]?.trim() || 'Away Team';
+}
+
 function formatEventTime(dateString) {
     const date = new Date(dateString);
     const hours = date.getHours().toString().padStart(2, '0');
