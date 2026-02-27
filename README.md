@@ -4,7 +4,7 @@ A comprehensive football ticket booking platform built with Spring Boot and mode
 
 ## Features
 
-### 🏆 League Management
+###  League Management
 - **Dynamic League Loading**: Leagues are loaded dynamically from the backend API
 - **League Filtering**: Filter events by specific leagues (Premier League, La Liga, Bundesliga, etc.)
 - **League Details**: View detailed information about each league including teams, founding year, and season dates
