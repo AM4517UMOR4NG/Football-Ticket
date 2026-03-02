@@ -1,18 +1,3 @@
-/**
- * AdvancedHowItWorks.js - Ultra Modern & Sophisticated Version
- * 
- * Features:
- * ✨ Advanced animations with GSAP-like timing
- * 🎨 Dynamic theme switching with smooth transitions
- * 🔮 Particle effects and ambient animations
- * 🎯 Smart intersection observers with predictive loading
- * 🌊 Fluid parallax with momentum physics
- * 🎪 Advanced micro-interactions
- * 🎵 Sound effects (optional)
- * 📱 Advanced responsive behaviors
- * 🧠 AI-powered content suggestions
- * 🌈 Dynamic color morphing
- */
 
 class AdvancedHowItWorks {
     constructor() {
