@@ -109,9 +109,9 @@ function showSuccessMessage(message) {
             <span>${message}</span>
         </div>
     `;
-    
+
     document.body.appendChild(successDiv);
-    
+
     // Remove after 3 seconds
     setTimeout(() => {
         successDiv.remove();
@@ -124,7 +124,7 @@ async function checkWishlistStatus() {
     if (!token) return;
 
     const wishlistButtons = document.querySelectorAll('.wishlist-btn');
-    
+
     for (const button of wishlistButtons) {
         const eventId = button.getAttribute('onclick')?.match(/addToWishlist\((\d+)\)/)?.[1];
         if (!eventId) continue;
@@ -184,23 +184,23 @@ function initializeCarousel() {
     const prevButton = document.querySelector('.prev');
     const nextButton = document.querySelector('.next');
     const carouselContainer = document.getElementById('highlight-carousel');
-    
+
     if (!carouselInner || !items.length) return;
-    
+
     let currentIndex = 0;
     let autoPlayInterval = null;
     let isTransitioning = false;
     let touchStartX = 0;
     let touchEndX = 0;
-    
+
     // Optimized update function with requestAnimationFrame
     const updateCarousel = (smooth = true) => {
         if (isTransitioning && !smooth) return;
         isTransitioning = true;
-        
+
         requestAnimationFrame(() => {
             carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
-            
+
             // Update indicators
             indicators.forEach((indicator, index) => {
                 const isActive = index === currentIndex;
@@ -209,12 +209,12 @@ function initializeCarousel() {
                 indicator.classList.toggle('bg-gray-300', !isActive);
                 indicator.setAttribute('aria-selected', isActive);
             });
-            
+
             // Update ARIA labels
             items.forEach((item, index) => {
                 item.setAttribute('aria-label', `Slide ${index + 1} of ${items.length}`);
             });
-            
+
             setTimeout(() => {
                 isTransitioning = false;
             }, 500); // Match transition duration
@@ -286,7 +286,7 @@ function initializeCarousel() {
     const handleSwipe = () => {
         const swipeThreshold = 50;
         const diff = touchStartX - touchEndX;
-        
+
         if (Math.abs(diff) > swipeThreshold) {
             if (diff > 0) {
                 nextSlide(); // Swipe left - next
@@ -312,7 +312,7 @@ function initializeCarousel() {
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (carouselContainer && document.activeElement !== document.body) return;
-        
+
         if (e.key === 'ArrowLeft') {
             e.preventDefault();
             prevSlide();
@@ -340,7 +340,7 @@ function initializeCarousel() {
     // Initial setup
     updateCarousel(false);
     startAutoPlay();
-    
+
     // Cleanup on page unload
     window.addEventListener('beforeunload', stopAutoPlay);
 }
@@ -348,7 +348,7 @@ function initializeCarousel() {
 function initializeMobileMenu() {
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    
+
     mobileMenuToggle?.addEventListener('click', () => {
         mobileMenu?.classList.toggle('hidden');
     });
@@ -397,25 +397,25 @@ function toggleDarkMode() {
 function showToast(message, type = 'info', duration = 3000) {
     const existingToast = document.getElementById('toast-container');
     if (existingToast) existingToast.remove();
-    
+
     const toast = document.createElement('div');
     toast.id = 'toast-container';
     toast.className = 'fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 ease-in-out';
-    
+
     const typeStyles = {
         success: 'bg-green-500 border-green-600',
         error: 'bg-red-500 border-red-600',
         warning: 'bg-yellow-500 border-yellow-600',
         info: 'bg-blue-500 border-blue-600'
     };
-    
+
     const typeIcons = {
         success: '✅',
         error: '❌',
         warning: '⚠️',
         info: 'ℹ️'
     };
-    
+
     toast.innerHTML = `
         <div class="${typeStyles[type]} text-white px-6 py-4 rounded-lg shadow-lg border-l-4 flex items-center space-x-3 min-w-80 max-w-96">
             <span class="text-xl">${typeIcons[type]}</span>
@@ -427,14 +427,14 @@ function showToast(message, type = 'info', duration = 3000) {
             </button>
         </div>
     `;
-    
+
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.classList.remove('translate-x-full');
         toast.classList.add('translate-x-0');
     }, 100);
-    
+
     setTimeout(() => {
         if (toast.parentElement) {
             toast.classList.add('translate-x-full');
@@ -447,7 +447,7 @@ function showToast(message, type = 'info', duration = 3000) {
 function showLoadingSpinner(target = document.body, message = 'Loading...') {
     // Remove existing spinner
     hideLoadingSpinner();
-    
+
     const spinner = document.createElement('div');
     spinner.id = 'loading-spinner';
     spinner.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -457,7 +457,7 @@ function showLoadingSpinner(target = document.body, message = 'Loading...') {
             <p class="text-gray-700 dark:text-gray-300 font-medium">${message}</p>
         </div>
     `;
-    
+
     if (target === document.body) {
         document.body.appendChild(spinner);
     } else {
@@ -476,11 +476,11 @@ function setupThemeToggle() {
     if (themeToggle) {
         themeToggle.addEventListener('click', toggleDarkMode);
         themeToggle.style.transition = 'transform 0.3s ease-in-out';
-        
+
         themeToggle.addEventListener('mousedown', () => {
             themeToggle.style.transform = 'scale(0.95)';
         });
-        
+
         themeToggle.addEventListener('mouseup', () => {
             themeToggle.style.transform = 'scale(1)';
         });
@@ -490,7 +490,7 @@ function setupThemeToggle() {
 async function initializeApp() {
     if (isLoading) return;
     isLoading = true;
-    
+
     try {
         showLoadingSpinner(document.body, 'Initializing FootballTix...');
         await loadUserPreferences();
@@ -512,27 +512,27 @@ async function initializeApp() {
 // Enhanced Featured Matches with Retry Logic
 async function loadFeaturedMatchesWithRetry(maxRetries = 3) {
     let retries = 0;
-    
+
     while (retries < maxRetries) {
         try {
             const response = await fetch(`${API_BASE_URL}/events/featured`);
             if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            
+
             const events = await response.json();
             if (!Array.isArray(events)) throw new Error('Invalid data format from server');
-            
+
             updateFeaturedMatches(events);
             return;
         } catch (error) {
             retries++;
             console.error(`Attempt ${retries} failed:`, error);
-            
+
             if (retries >= maxRetries) {
                 showToast('Using offline data due to connection issues', 'warning');
                 loadStaticFeaturedMatches();
                 return;
             }
-            
+
             // Exponential backoff
             await new Promise(resolve => setTimeout(resolve, Math.pow(2, retries) * 1000));
         }
@@ -542,7 +542,7 @@ async function loadFeaturedMatchesWithRetry(maxRetries = 3) {
 // Enhanced Match Cards with Interactive Features
 function updateFeaturedMatches(events) {
     if (!featuredMatchesContainer) return;
-    
+
     featuredMatchesContainer.innerHTML = events.map((event, index) => `
         <div class="match-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:transform hover:scale-105 group"
              data-event-id="${event.id}">
@@ -588,8 +588,8 @@ function updateFeaturedMatches(events) {
                     <div class="flex flex-col items-center group/team">
                         <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 rounded-full flex items-center justify-center mb-2 transition-all duration-200 group-hover/team:scale-110 overflow-hidden p-2">
                             ${(() => {
-                                const teamLogo = event.homeTeamLogo || getTeamLogo(getHomeTeam(event.title));
-                                return teamLogo ? `
+            const teamLogo = event.homeTeamLogo || getTeamLogo(getHomeTeam(event.title));
+            return teamLogo ? `
                                     <img src="${teamLogo}" alt="${getHomeTeam(event.title)} Logo"
                                          class="w-full h-full object-contain team-logo-img"
                                          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -601,7 +601,7 @@ function updateFeaturedMatches(events) {
                                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
                                     </svg>
                                 `;
-                            })()}
+        })()}
                         </div>
                         <div class="font-semibold text-center text-sm text-gray-800 dark:text-gray-200">${getHomeTeam(event.title)}</div>
                     </div>
@@ -614,8 +614,8 @@ function updateFeaturedMatches(events) {
                     <div class="flex flex-col items-center group/team">
                         <div class="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 dark:from-red-800 dark:to-red-900 rounded-full flex items-center justify-center mb-2 transition-all duration-200 group-hover/team:scale-110 overflow-hidden p-2">
                             ${(() => {
-                                const teamLogo = event.awayTeamLogo || getTeamLogo(getAwayTeam(event.title));
-                                return teamLogo ? `
+            const teamLogo = event.awayTeamLogo || getTeamLogo(getAwayTeam(event.title));
+            return teamLogo ? `
                                     <img src="${teamLogo}" alt="${getAwayTeam(event.title)} Logo"
                                          class="w-full h-full object-contain team-logo-img"
                                          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -627,7 +627,7 @@ function updateFeaturedMatches(events) {
                                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
                                     </svg>
                                 `;
-                            })()}
+        })()}
                         </div>
                         <div class="font-semibold text-center text-sm text-gray-800 dark:text-gray-200">${getAwayTeam(event.title)}</div>
                     </div>
@@ -666,7 +666,7 @@ function updateFeaturedMatches(events) {
             </div>
         </div>
     `).join('');
-    
+
     observeMatchCards();
 }
 
@@ -676,34 +676,34 @@ async function handleSearch() {
     const team = teamSelect?.value || '';
     const dateInput = document.querySelector('input[type="date"]');
     const date = dateInput?.value || '';
-    
+
     if (!league && !team && !date) {
         showToast('Please select at least one search criteria', 'warning');
         return;
     }
-    
+
     const searchQuery = { league, team, date, timestamp: Date.now() };
     addToSearchHistory(searchQuery);
-    
+
     showLoadingSpinner(document.body, 'Searching matches...');
-    
+
     try {
         let url = `${API_BASE_URL}/events/search?`;
         if (league) url += `league=${encodeURIComponent(league)}&`;
         if (team) url += `team=${encodeURIComponent(team)}&`;
         if (date) url += `date=${encodeURIComponent(date)}&`;
-        
+
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Search failed: HTTP ${response.status} - ${response.statusText}`);
-        
+
         const events = await response.json();
         if (!Array.isArray(events)) throw new Error('Invalid data format from server');
-        
+
         if (events.length === 0) {
             showToast('No matches found for your search criteria', 'info');
             return;
         }
-        
+
         showToast(`Found ${events.length} match(es)`, 'success');
         // Use sessionStorage instead of localStorage for temporary data
         sessionStorage.setItem('searchResults', JSON.stringify(events));
@@ -720,7 +720,7 @@ async function handleSearch() {
 function handleBuyTickets(eventId, eventTitle) {
     // Check if user is authenticated using sessionStorage
     const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
-    
+
     if (!token) {
         showToast('Please sign in to purchase tickets', 'warning');
         sessionStorage.setItem('pendingAction', JSON.stringify({
@@ -731,12 +731,12 @@ function handleBuyTickets(eventId, eventTitle) {
         window.location.href = 'login.html';
         return;
     }
-    
+
     const button = event.target;
     const originalText = button.textContent;
     button.textContent = 'Opening...';
     button.disabled = true;
-    
+
     setTimeout(() => {
         window.location.href = `events.html?eventId=${eventId}&eventTitle=${encodeURIComponent(eventTitle)}`;
     }, 500);
@@ -745,7 +745,7 @@ function handleBuyTickets(eventId, eventTitle) {
 // Favorite functionality
 function toggleFavorite(eventId, event) {
     event.stopPropagation();
-    
+
     const index = favorites.indexOf(eventId);
     if (index > -1) {
         favorites.splice(index, 1);
@@ -754,7 +754,7 @@ function toggleFavorite(eventId, event) {
         favorites.push(eventId);
         showToast('Added to favorites ❤️', 'success');
     }
-    
+
     updateFavoriteButtons();
 }
 
@@ -786,7 +786,7 @@ async function shareEvent(eventId, eventTitle) {
         text: `Check out this exciting match: ${eventTitle}`,
         url: `${window.location.origin}/events.html?id=${eventId}`
     };
-    
+
     try {
         if (navigator.share) {
             await navigator.share(shareData);
@@ -822,7 +822,7 @@ function setupKeyboardShortcuts() {
                 showToast('Search focused! Use Tab to navigate between fields', 'info');
             }
         }
-        
+
         // Ctrl/Cmd + D for dark mode toggle
         if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
             event.preventDefault();
@@ -891,12 +891,12 @@ function getTicketAvailability(event) {
 
 function formatMatchTime(dateString) {
     if (!dateString) return 'TBD';
-    
+
     const date = new Date(dateString);
     const now = new Date();
     const diffTime = date.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Tomorrow';
     if (diffDays < 7) return `In ${diffDays} days`;
@@ -906,7 +906,7 @@ function formatMatchTime(dateString) {
 function getLeagueFromEvent(event) {
     const title = (event.title || '').toLowerCase();
     const venue = (event.venue || '').toLowerCase();
-    
+
     const leagues = {
         'premier league': ['manchester', 'chelsea', 'arsenal', 'liverpool', 'tottenham', 'london'],
         'la liga': ['madrid', 'barcelona', 'atletico', 'sevilla'],
@@ -915,7 +915,7 @@ function getLeagueFromEvent(event) {
         'ligue 1': ['psg', 'marseille', 'lyon', 'paris'],
         'champions league': ['champions league', 'ucl']
     };
-    
+
     for (const [league, keywords] of Object.entries(leagues)) {
         if (keywords.some(keyword => title.includes(keyword) || venue.includes(keyword))) {
             return league.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -939,7 +939,7 @@ function getAwayTeam(title) {
 // Team logo mapping
 function getTeamLogo(teamName) {
     if (!teamName) return null;
-    
+
     const teamLogos = {
         // Premier League
         'Manchester United': 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png',
@@ -973,12 +973,12 @@ function getTeamLogo(teamName) {
         'Lyon': 'https://logos-world.net/wp-content/uploads/2020/06/Olympique-Lyon-Logo.png',
         'Monaco': 'https://logos-world.net/wp-content/uploads/2020/06/Monaco-Logo.png'
     };
-    
+
     // Try exact match first
     if (teamLogos[teamName]) {
         return teamLogos[teamName];
     }
-    
+
     // Try case-insensitive match
     const normalizedName = teamName.toLowerCase();
     for (const [key, value] of Object.entries(teamLogos)) {
@@ -986,30 +986,30 @@ function getTeamLogo(teamName) {
             return value;
         }
     }
-    
+
     // Try partial match (e.g., "Man Utd" matches "Manchester United")
     for (const [key, value] of Object.entries(teamLogos)) {
         if (normalizedName.includes(key.toLowerCase()) || key.toLowerCase().includes(normalizedName)) {
             return value;
         }
     }
-    
+
     return null;
 }
 
 function formatEventDate(dateString) {
     if (!dateString) return 'TBD';
-    
+
     const date = new Date(dateString);
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
+
     const dayName = days[date.getDay()];
     const day = date.getDate();
     const month = months[date.getMonth()];
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    
+
     return `${dayName} ${day} ${month} • ${hours}:${minutes}`;
 }
 
@@ -1018,17 +1018,17 @@ function handleNewsletterSubscription(event) {
     const emailInput = document.querySelector('input[type="email"]');
     const email = emailInput?.value?.trim() || '';
     const button = event.target;
-    
+
     if (!email || !email.includes('@') || !email.includes('.')) {
         showToast('Please enter a valid email address', 'error');
         emailInput?.focus();
         return;
     }
-    
+
     const originalText = button.textContent;
     button.textContent = 'Subscribing...';
     button.disabled = true;
-    
+
     setTimeout(() => {
         showToast('Thank you for subscribing! 📧', 'success');
         if (emailInput) emailInput.value = '';
@@ -1042,7 +1042,7 @@ function setupErrorBoundary() {
         console.error('Global error:', event.error);
         showToast('Chill bro, it\'s just a test.', 'error');
     });
-    
+
     window.addEventListener('unhandledrejection', (event) => {
         console.error('Unhandled promise rejection:', event.reason);
         showToast('Network error occurred. Please check your connection.', 'error');
@@ -1053,10 +1053,10 @@ async function loadLeagues() {
     try {
         const response = await fetch(`${API_BASE_URL}/events/leagues`);
         if (!response.ok) throw new Error('Failed to fetch leagues');
-        
+
         const leagues = await response.json();
         updateLeagueSelect(leagues);
-        
+
         if (leagueSelect) {
             leagueSelect.classList.add('animate-pulse');
             setTimeout(() => leagueSelect.classList.remove('animate-pulse'), 500);
@@ -1082,7 +1082,7 @@ function loadFallbackLeagues() {
 
 function updateLeagueSelect(leagues) {
     if (!leagueSelect) return;
-    
+
     leagueSelect.innerHTML = '<option value="">🏆 Select League</option>';
     Object.entries(leagues).forEach(([key, league]) => {
         const option = document.createElement('option');
@@ -1090,9 +1090,9 @@ function updateLeagueSelect(leagues) {
         option.textContent = league.name;
         leagueSelect.appendChild(option);
     });
-    
-    leagueSelect.classList.add('transition-all', 'duration-200', 'hover:border-blue-500', 
-                              'focus:border-blue-500', 'focus:ring-2', 'focus:ring-blue-200');
+
+    leagueSelect.classList.add('transition-all', 'duration-200', 'hover:border-blue-500',
+        'focus:border-blue-500', 'focus:ring-2', 'focus:ring-blue-200');
 }
 
 function setupEventListeners() {
@@ -1101,26 +1101,26 @@ function setupEventListeners() {
         leagueSelect.addEventListener('focus', () => leagueSelect.classList.add('ring-2', 'ring-blue-200'));
         leagueSelect.addEventListener('blur', () => leagueSelect.classList.remove('ring-2', 'ring-blue-200'));
     }
-    
+
     if (searchButton) {
         searchButton.addEventListener('click', handleSearch);
-        
+
         // Add Enter key support for search
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' && 
-                (event.target === leagueSelect || 
-                 event.target === teamSelect || 
-                 event.target.type === 'date')) {
+            if (event.key === 'Enter' &&
+                (event.target === leagueSelect ||
+                    event.target === teamSelect ||
+                    event.target.type === 'date')) {
                 event.preventDefault();
                 handleSearch();
             }
         });
     }
-    
+
     // Mobile menu functionality
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    
+
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', () => {
             const isHidden = mobileMenu.classList.contains('hidden');
@@ -1136,17 +1136,17 @@ function setupEventListeners() {
             }
         });
     }
-    
+
     // Newsletter subscription
     const subscribeButton = document.querySelector('.bg-blue-700 button, [onclick*="newsletter"]');
     if (subscribeButton) {
         subscribeButton.addEventListener('click', handleNewsletterSubscription);
     }
-    
+
     // Close mobile menu when clicking outside
     document.addEventListener('click', (event) => {
-        if (mobileMenu && 
-            !mobileMenu.contains(event.target) && 
+        if (mobileMenu &&
+            !mobileMenu.contains(event.target) &&
             !mobileMenuButton?.contains(event.target)) {
             if (!mobileMenu.classList.contains('hidden')) {
                 mobileMenu.classList.add('hidden');
@@ -1157,7 +1157,7 @@ function setupEventListeners() {
 
 async function handleLeagueChange() {
     const selectedLeague = leagueSelect.value;
-    
+
     if (!selectedLeague) {
         if (teamSelect) {
             teamSelect.innerHTML = '<option value="">⚽ Select Team</option>';
@@ -1165,13 +1165,13 @@ async function handleLeagueChange() {
         }
         return;
     }
-    
+
     showLoadingSpinner(teamSelect?.parentElement || document.body, 'Loading teams...');
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/events/league/${selectedLeague}`);
         if (!response.ok) throw new Error('Failed to fetch league events');
-        
+
         const events = await response.json();
         updateTeamSelect(events);
         showToast(`Loaded teams for ${selectedLeague.replace('-', ' ')}`, 'success');
@@ -1192,17 +1192,17 @@ function loadFallbackTeams(league) {
         'serie-a': ['Juventus', 'AC Milan', 'Inter Milan', 'Napoli', 'AS Roma'],
         'ligue-1': ['PSG', 'Marseille', 'Lyon', 'Monaco', 'Lille']
     };
-    
+
     const teams = fallbackTeams[league] || [];
     updateTeamSelectWithArray(teams);
 }
 
 function updateTeamSelect(events) {
     if (!teamSelect) return;
-    
+
     teamSelect.innerHTML = '<option value="">⚽ Select Team</option>';
     teamSelect.disabled = false;
-    
+
     const teams = new Set();
     events.forEach(event => {
         const homeTeam = getHomeTeam(event.title);
@@ -1210,23 +1210,23 @@ function updateTeamSelect(events) {
         if (homeTeam !== 'Home Team') teams.add(homeTeam);
         if (awayTeam !== 'Away Team') teams.add(awayTeam);
     });
-    
+
     Array.from(teams).sort().forEach(team => {
         const option = document.createElement('option');
         option.value = team.toLowerCase().replace(/\s+/g, '-');
         option.textContent = team;
         teamSelect.appendChild(option);
     });
-    
+
     teamSelect.classList.add('transition-all', 'duration-200');
 }
 
 function updateTeamSelectWithArray(teams) {
     if (!teamSelect) return;
-    
+
     teamSelect.innerHTML = '<option value="">⚽ Select Team</option>';
     teamSelect.disabled = false;
-    
+
     teams.forEach(team => {
         const option = document.createElement('option');
         option.value = team.toLowerCase().replace(/\s+/g, '-');
@@ -1239,7 +1239,7 @@ async function loadStats() {
     try {
         const response = await fetch(`${API_BASE_URL}/events/stats`);
         if (!response.ok) throw new Error('Failed to fetch stats');
-        
+
         const stats = await response.json();
         updateStatsDisplay(stats);
         animateStats();
@@ -1325,7 +1325,7 @@ function loadStaticFeaturedMatches() {
             awayTeamLogo: "/images/logos/tottenham.png"
         }
     ];
-    
+
     updateFeaturedMatches(staticEvents);
     showToast('Displaying sample matches', 'info');
 }
@@ -1441,6 +1441,12 @@ function updateNavigation() {
             signInBtn.parentElement.remove();
         }
 
+        // Unhide explicit profile links for desktop and mobile menus if they exist
+        const profileLink = document.getElementById('profile-link');
+        const profileMobileLink = document.getElementById('profile-mobile-link');
+        if (profileLink) profileLink.classList.remove('hidden');
+        if (profileMobileLink) profileMobileLink.classList.remove('hidden');
+
         // Create user menu
         const userMenu = document.createElement('div');
         userMenu.className = 'flex items-center space-x-4';
@@ -1493,7 +1499,7 @@ function handleLogout() {
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
     localStorage.removeItem('userRole');
-    
+
     showToast('Logged out successfully', 'info');
     setTimeout(() => {
         window.location.href = 'index.html';
