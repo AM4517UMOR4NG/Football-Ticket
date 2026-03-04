@@ -1,58 +1,41 @@
-:root {
-    --primary: #FFC107;
-    --bg-dark: #121212;
-    --card-bg: #1e1e1e;
-    --text-main: #e0e0e0;
-    --text-dim: #909090;
-}
+/* Custom styles for Privacy Policy page */
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    line-height: 1.7;
-}
-
-.policy-section {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 2.5rem;
-    margin-bottom: 2rem;
-}
-
-.accent-border {
-    border-left: 4px solid var(--primary);
-}
-
-h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.gradient-blur {
-    position: fixed;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255, 193, 7, 0.05) 0%, transparent 70%);
-    z-index: -1;
-    filter: blur(60px);
-}
-
-@keyframes fadeIn {
+/* Animations */
+@keyframes fadeInUp {
     from {
         opacity: 0;
+        transform: translateY(20px);
     }
 
     to {
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
-.fade-in {
-    animation: fadeIn 1s ease forwards;
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.policy-block {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.policy-block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #f3f4f6;
+    /* gray-100 */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.policy-block:hover::before {
+    background-color: #2563eb;
+    /* blue-600 */
 }
