@@ -20,11 +20,18 @@ class WishlistManager {
 
         const signInBtn = document.getElementById('login-link');
 
-        if (token && username) {
-            if (signInBtn) {
-                signInBtn.parentElement.remove();
-            }
+        // Remove existing sign in button
+        if (signInBtn && signInBtn.parentElement) {
+            signInBtn.parentElement.innerHTML = '';
+        }
 
+        // Unhide explicit profile links for desktop and mobile menus if they exist
+        const profileLink = document.getElementById('profile-link');
+        const profileMobileLink = document.getElementById('profile-mobile-link');
+        if (profileLink) profileLink.classList.remove('hidden');
+        if (profileMobileLink) profileMobileLink.classList.remove('hidden');
+
+        if (token && username) {
             const userMenu = document.createElement('div');
             userMenu.className = 'flex items-center space-x-4';
             userMenu.innerHTML = `
@@ -80,13 +87,13 @@ class WishlistManager {
         // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
-        
+
         if (mobileMenuToggle && mobileMenu) {
             mobileMenuToggle.addEventListener('click', () => {
                 const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
                 mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
                 mobileMenu.classList.toggle('hidden');
-                
+
                 // Toggle icons
                 const openIcon = mobileMenuToggle.querySelector('.block');
                 const closeIcon = mobileMenuToggle.querySelector('.hidden');
@@ -267,7 +274,7 @@ class WishlistManager {
             this.wishlistItems = this.wishlistItems.filter(item => item.eventId !== eventId);
             this.renderWishlist();
             this.updateWishlistCount();
-            
+
             this.showSuccess('Event removed from wishlist');
 
         } catch (error) {
@@ -353,7 +360,7 @@ class WishlistManager {
         document.getElementById('loading-state').classList.add('hidden');
         document.getElementById('wishlist-container').classList.add('hidden');
         document.getElementById('empty-state').classList.add('hidden');
-        
+
         // Update error message if there's a specific element for it
         const errorMessage = document.querySelector('#error-state p');
         if (errorMessage) {
@@ -371,9 +378,9 @@ class WishlistManager {
                 <span>${message}</span>
             </div>
         `;
-        
+
         document.body.appendChild(successDiv);
-        
+
         // Remove after 3 seconds
         setTimeout(() => {
             successDiv.remove();
@@ -391,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Trigger update on window load too
 window.addEventListener('load', () => {
-    try { wishlistManager?.updateNavigation?.(); } catch (e) {}
+    try { wishlistManager?.updateNavigation?.(); } catch (e) { }
 });
 
 // Global functions for inline event handlers
