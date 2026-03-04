@@ -164,7 +164,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException {
         String path = request.getRequestURI();
 
-        if (path.matches(".*\\.(css|js|png|jpg|jpeg|gif|ico|svg|html)$")) {
+        if (path.equals("/") || path.matches(".*\\.(css|js|png|jpg|jpeg|gif|ico|svg|html)$")) {
             return true;
         }
 
