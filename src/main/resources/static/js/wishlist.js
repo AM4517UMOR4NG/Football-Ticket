@@ -20,37 +20,31 @@ class WishlistManager {
 
         const signInBtn = document.getElementById('login-link');
 
-        // Remove existing sign in button
-        if (signInBtn && signInBtn.parentElement) {
-            signInBtn.parentElement.innerHTML = '';
-        }
-
-        // Unhide explicit profile links for desktop and mobile menus if they exist
-        const profileLink = document.getElementById('profile-link');
-        const profileMobileLink = document.getElementById('profile-mobile-link');
-        if (profileLink) profileLink.classList.remove('hidden');
-        if (profileMobileLink) profileMobileLink.classList.remove('hidden');
-
         if (token && username) {
+            // Remove existing sign in button
+            if (signInBtn && signInBtn.parentElement) {
+                signInBtn.parentElement.remove();
+            }
+
             const userMenu = document.createElement('div');
             userMenu.className = 'flex items-center space-x-4';
             userMenu.innerHTML = `
-            <div class="relative">
-                <button id="user-menu-btn" class="flex items-center space-x-2 text-black dark:text-white hover:text-blue-700 dark:hover:text-blue-400">
-                    <span class="text-sm font-medium">${username}</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700">
-                    ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Admin Dashboard</a>' : ''}
-                    ${userRole === 'CASHIER' ? '<a href="cashier-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Cashier Dashboard</a>' : ''}
-                    <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
-                    <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
-                </div>
-            </div>
-        `;
-            const signInContainer = document.getElementById('nav-right-container');
+           <div class="relative">
+        <button id="user-menu-btn" class="flex items-center space-x-2 text-black hover:text-blue-700">
+            <span class="text-sm font-medium">${username}</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+            ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
+            ${userRole === 'CASHIER' ? '<a href="cashier-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cashier Dashboard</a>' : ''}
+            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
+        </div>
+    </div>
+`;
+            const signInContainer = document.querySelector('.flex.items-center');
             if (signInContainer) {
                 signInContainer.innerHTML = '';
                 signInContainer.appendChild(userMenu);
