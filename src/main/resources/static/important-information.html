@@ -6,126 +6,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Important Information - FootballTix</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/important-information.css">
 </head>
 
-<body class="selection:bg-amber-500 selection:text-black">
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-[#1a1a1a]/80 backdrop-blur-md border-b border-white/10 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-extrabold tracking-tighter flex items-center gap-2">
-                <i class="fas fa-futbol text-amber-500"></i>
-                <span>Football<span class="text-amber-500 text-3xl italic">Tix</span></span>
-            </a>
-            <div class="hidden md:flex items-center gap-8 text-sm font-semibold">
-                <a href="index.html" class="hover:text-amber-500 transition-colors uppercase tracking-widest">Home</a>
-                <a href="events.html"
-                    class="hover:text-amber-500 transition-colors uppercase tracking-widest">Matches</a>
-                <a href="login.html"
-                    class="bg-amber-500 text-black px-6 py-2 rounded-full hover:bg-amber-400 transition-all transform hover:scale-105 active:scale-95">LOGIN</a>
+<body class="bg-gray-50 font-montserrat text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"
+                            aria-hidden="true">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-extrabold text-black tracking-wide">FootballTix</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Back
+                        to Home</a>
+                    <a href="login.html"
+                        class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign
+                        In</a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 px-6">
-        <div class="max-w-4xl mx-auto text-center animate-fade-in">
-            <span class="text-amber-500 font-bold tracking-[0.3em] text-sm mb-4 block uppercase leading-none">Essentials
-                Guide</span>
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-none">Important <span
-                    class="gradient-text">Information</span></h1>
-            <p class="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">Everything you need to know about
-                booking, stadium entry, and match day protocols to ensure you have the best experience possible.</p>
+    <header class="bg-blue-800 text-white py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-blue-900 opacity-50 hero-pattern"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Important <span
+                    class="text-blue-300">Information</span></h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto font-medium">Your guide to a safe, secure, and
+                unforgettable matchday experience.</p>
         </div>
-    </section>
+    </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 pb-32">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="grid md:grid-cols-3 gap-8">
-            <!-- Authentic Tickets -->
-            <div class="glass-card p-8 relative overflow-hidden animate-fade-in delay-1">
-                <span class="step-number">01</span>
-                <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-ticket-alt text-amber-500 text-2xl"></i>
+            <!-- Ticket Authenticity -->
+            <div
+                class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-blue-600 animate-fade-in-up delay-100">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 text-blue-700">
+                    <i class="fas fa-ticket-alt text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Ticket Authenticity</h3>
-                <p class="text-gray-400 leading-relaxed">All tickets on FootballTix are 100% verified. We use direct
-                    encrypted digital ticketing systems to prevent fraud and ensure your seat is guaranteed.</p>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Virtual Tickets</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">All tickets booked through FootballTix are digital.
+                    Ensure your smartphone is fully charged before heading to the stadium. Screenshots of tickets are
+                    strongly discouraged as NFC validation may be required.</p>
             </div>
 
             <!-- Stadium Access -->
-            <div class="glass-card p-8 relative overflow-hidden animate-fade-in delay-2">
-                <span class="step-number">02</span>
-                <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-id-card text-amber-500 text-2xl"></i>
+            <div
+                class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-blue-600 animate-fade-in-up delay-200">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 text-blue-700">
+                    <i class="fas fa-id-badge text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Stadium Entry</h3>
-                <p class="text-gray-400 leading-relaxed">Arrive at least 90 minutes before kick-off. You must have your
-                    digital ticket and a valid government ID. Screenshots of tickets are typically not accepted at the
-                    gates.</p>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Stadium Entry</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">Gates typically open 2 hours before kick-off. Arrive
+                    early to avoid queues. Valid identification matching the name on the ticket might be requested by
+                    stadium security at the turnstiles.</p>
             </div>
 
-            <!-- Safety First -->
-            <div class="glass-card p-8 relative overflow-hidden animate-fade-in delay-3">
-                <span class="step-number">03</span>
-                <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-shield-alt text-amber-500 text-2xl"></i>
+            <!-- Bag Policy -->
+            <div
+                class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-blue-600 animate-fade-in-up delay-300">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 text-blue-700">
+                    <i class="fas fa-shopping-bag text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Safety Protocols</h3>
-                <p class="text-gray-400 leading-relaxed">Fan safety is our priority. Be aware of the bag policy
-                    (restricted sizes) and prohibited items lists. Security checks are mandatory for all attendees.</p>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Clear Bag Policy</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">For enhanced safety, most stadiums implement a strict
+                    bag policy. Bags larger than A4 size (21.0 x 29.7cm) are generally not permitted. Luggage storage
+                    facilities are rarely provided.</p>
             </div>
         </div>
 
-        <!-- Detailed Info Table -->
-        <div class="mt-20 glass-card p-10 animate-fade-in delay-2">
-            <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
-                <i class="fas fa-list-ul text-amber-500"></i>
-                Match Day Checklist
-            </h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h4 class="text-amber-500 font-bold mb-4 uppercase tracking-wider text-sm">DO's</h4>
+        <!-- Checklist Section -->
+        <div
+            class="mt-16 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden animate-fade-in-up delay-400">
+            <div class="bg-blue-50 px-8 py-6 border-b border-blue-100 flex items-center gap-4">
+                <div
+                    class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
+                    <i class="fas fa-check-double"></i></div>
+                <h2 class="text-2xl font-bold text-gray-900">Matchday Checklist</h2>
+            </div>
+            <div class="grid md:grid-cols-2">
+                <div class="p-8 border-b md:border-b-0 md:border-r border-gray-100">
+                    <h3 class="text-lg font-bold text-green-600 uppercase tracking-wide mb-6 flex items-center"><i
+                            class="fas fa-thumbs-up mr-2"></i> Must Do</h3>
                     <ul class="space-y-4">
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-green-500/20 text-green-500 rounded-full p-1"><i
-                                    class="fas fa-check text-xs"></i></div>
-                            <span>Charge your phone fully to display digital tickets.</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg text-opacity-80"></i>
+                            <span class="text-gray-700 font-medium">Download or add tickets to your digital wallet
+                                before arriving.</span>
                         </li>
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-green-500/20 text-green-500 rounded-full p-1"><i
-                                    class="fas fa-check text-xs"></i></div>
-                            <span>Check your stadium gate number in advance.</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg text-opacity-80"></i>
+                            <span class="text-gray-700 font-medium">Check your specific entrance gate printed on the
+                                ticket.</span>
                         </li>
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-green-500/20 text-green-500 rounded-full p-1"><i
-                                    class="fas fa-check text-xs"></i></div>
-                            <span>Follow the directions of stadium stewards.</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg text-opacity-80"></i>
+                            <span class="text-gray-700 font-medium">Follow instructions from stewards and local
+                                authorities.</span>
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="text-red-500 font-bold mb-4 uppercase tracking-wider text-sm">DON'Ts</h4>
+                <div class="p-8">
+                    <h3 class="text-lg font-bold text-red-600 uppercase tracking-wide mb-6 flex items-center"><i
+                            class="fas fa-times-octagon mr-2 text-xl"></i> Forbidden</h3>
                     <ul class="space-y-4">
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-red-500/20 text-red-500 rounded-full p-1"><i
-                                    class="fas fa-times text-xs"></i></div>
-                            <span>Don't bring large backpacks (A4 size restriction usually applies).</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-3 text-lg text-opacity-80"></i>
+                            <span class="text-gray-700 font-medium">No flares, smoke bombs, or pyrotechnics of any
+                                kind.</span>
                         </li>
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-red-500/20 text-red-500 rounded-full p-1"><i
-                                    class="fas fa-times text-xs"></i></div>
-                            <span>Avoid bringing professional cameras without accreditation.</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-3 text-lg text-opacity-80"></i>
+                            <span class="text-gray-700 font-medium">Umbrellas, selfie sticks, and professional cameras
+                                are banned.</span>
                         </li>
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-red-500/20 text-red-500 rounded-full p-1"><i
-                                    class="fas fa-times text-xs"></i></div>
-                            <span>No pyrotechnics or dangerous objects.</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-3 text-lg text-opacity-80"></i>
+                            <span class="text-gray-700 font-medium">Entering the pitch is a criminal offense and will
+                                lead to arrest.</span>
                         </li>
                     </ul>
                 </div>
@@ -133,16 +147,54 @@
         </div>
     </main>
 
-    <!-- Simple Footer -->
-    <footer class="border-t border-white/10 py-12 px-6 bg-[#111]">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-lg font-bold">FootballTix</div>
-            <div class="flex gap-8 text-sm text-gray-500">
-                <a href="privacy-policy.html" class="hover:text-amber-500 transition-colors">Privacy Policy</a>
-                <a href="terms.html" class="hover:text-amber-500 transition-colors">Terms of Service</a>
+    <!-- Footer (Matched with index) -->
+    <footer class="bg-gray-900 text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold">FootballTix</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your trusted source for football tickets worldwide.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About Us</a>
+                        </li>
+                        <li><a href="privacy-policy.html"
+                                class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="important-information.html" class="text-amber-500 font-semibold">Important Info</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Popular Leagues</h3>
+                    <ul class="space-y-2">
+                        <li><span class="text-gray-400">Premier League</span></li>
+                        <li><span class="text-gray-400">La Liga</span></li>
+                        <li><span class="text-gray-400">Bundesliga</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-blue-500"></i>
+                            <a href="mailto:support@footballtix.com"
+                                class="hover:text-white">support@footballtix.com</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="text-sm text-gray-600">
-                &copy; <span id="current-year">2026</span> FootballTix. All rights reserved.
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
+                <p>&copy; <span id="current-year">2026</span> FootballTix. All rights reserved.</p>
             </div>
         </div>
     </footer>
