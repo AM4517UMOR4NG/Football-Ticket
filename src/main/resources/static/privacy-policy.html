@@ -6,100 +6,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - FootballTix</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/privacy-policy.css">
 </head>
 
-<body class="selection:bg-amber-500 selection:text-black">
-    <div class="gradient-blur top-[-100px] left-[-100px]"></div>
-    <div class="gradient-blur bottom-[-100px] right-[-100px]"></div>
+<body class="bg-gray-50 font-montserrat text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-700 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"
+                            aria-hidden="true">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
+                        </svg>
+                        <span class="ml-2 text-xl font-extrabold text-black tracking-wide">FootballTix</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-black hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 active:bg-blue-100 transition-all duration-200">Back
+                        to Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Mini Header -->
-    <header class="py-12 border-b border-white/5 bg-[#1a1a1a]">
-        <div class="max-w-4xl mx-auto px-6">
-            <a href="index.html"
-                class="inline-flex items-center gap-2 text-gray-400 hover:text-amber-500 transition-colors mb-8 text-sm font-semibold uppercase tracking-widest">
-                <i class="fas fa-arrow-left"></i> Back to Home
-            </a>
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Privacy <span class="text-amber-500">Policy</span></h1>
-            <p class="text-gray-500 font-medium italic">Last Updated: March 4, 2026</p>
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Privacy Policy</h1>
+            <p class="text-blue-600 font-medium tracking-wide text-sm uppercase">Last Updated: March 2026</p>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-6 py-16 fade-in">
-        <div class="prose prose-invert max-w-none">
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div
+            class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 mb-12 prose prose-blue prose-lg max-w-none animate-fade-in-up">
 
-            <!-- Introduction -->
-            <div class="policy-section accent-border">
-                <h2><i class="fas fa-info-circle text-amber-500"></i> Introduction</h2>
-                <p>Welcome to FootballTix. Your privacy is critically important to us. This policy outlines how we
-                    collect, use, and protect your personal data when you use our ticketing services.</p>
-            </div>
-
-            <!-- Data Collection -->
-            <div class="policy-section">
-                <h2><i class="fas fa-database text-amber-500"></i> Data We Collect</h2>
-                <div class="grid md:grid-cols-2 gap-6 mt-4">
-                    <div class="bg-black/20 p-4 rounded-xl">
-                        <h4 class="font-bold text-amber-500 mb-2">Registration</h4>
-                        <p class="text-sm text-gray-400">Username, email address, password hash, and full name required
-                            for account creation.</p>
+            <section class="mb-10 policy-block">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+                        <i class="fas fa-shield-alt text-xl"></i>
                     </div>
-                    <div class="bg-black/20 p-4 rounded-xl">
-                        <h4 class="font-bold text-amber-500 mb-2">Transactions</h4>
-                        <p class="text-sm text-gray-400">Payment metadata, booking history, and ticket assignments for
-                            match attendance.</p>
-                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 m-0">Introduction</h2>
                 </div>
-            </div>
+                <p class="text-gray-600 leading-relaxed">FootballTix ("we", "our", or "us") respects your privacy and is
+                    committed to protecting your personal data. This privacy policy informs you about how we look after
+                    your personal data when you visit our website and outlines your privacy rights.</p>
+            </section>
 
-            <!-- Use of Data -->
-            <div class="policy-section">
-                <h2><i class="fas fa-chart-line text-amber-500"></i> How We Use Data</h2>
-                <ul class="space-y-4 text-gray-400">
-                    <li class="flex gap-4">
-                        <i class="fas fa-chevron-right text-amber-500 mt-2"></i>
-                        <span>To process your ticket orders and manage your user account.</span>
+            <div class="w-full h-px bg-gray-100 my-8"></div>
+
+            <section class="mb-10 policy-block">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+                        <i class="fas fa-database text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 m-0">Data We Collect</h2>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">We may collect, use, store and transfer different kinds of
+                    personal data about you which we have grouped together as follows:</p>
+                <ul class="list-none space-y-3 text-gray-600">
+                    <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mt-1.5 mr-3 text-sm"></i>
+                        <strong>Identity Data:</strong> includes first name, last name, username or similar identifier.
                     </li>
-                    <li class="flex gap-4">
-                        <i class="fas fa-chevron-right text-amber-500 mt-2"></i>
-                        <span>To send match reminders and critical safety information regarding events.</span>
-                    </li>
-                    <li class="flex gap-4">
-                        <i class="fas fa-chevron-right text-amber-500 mt-2"></i>
-                        <span>To improve our platform security and prevent fraudulent transactions.</span>
-                    </li>
+                    <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mt-1.5 mr-3 text-sm"></i>
+                        <strong>Contact Data:</strong> includes email address and telephone numbers.</li>
+                    <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mt-1.5 mr-3 text-sm"></i>
+                        <strong>Transaction Data:</strong> includes details about payments to and from you and other
+                        details of tickets or services you have purchased from us.</li>
                 </ul>
-            </div>
+            </section>
 
-            <!-- Security -->
-            <div class="policy-section">
-                <h2><i class="fas fa-user-shield text-amber-500"></i> Data Security</h2>
-                <p>We implement industry-standard security measures, including 256-bit encryption and JWT-based
-                    authentication, to ensure your sensitive information remains private.</p>
-            </div>
+            <div class="w-full h-px bg-gray-100 my-8"></div>
 
-            <!-- Contact -->
-            <div class="text-center py-10">
-                <p class="text-gray-500 mb-4">Have questions regarding your data?</p>
+            <section class="mb-10 policy-block">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+                        <i class="fas fa-lock text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 m-0">Data Security</h2>
+                </div>
+                <p class="text-gray-600 leading-relaxed">We have put in place appropriate security measures to prevent
+                    your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or
+                    disclosed. We use JWT (JSON Web Tokens) for secure session management and Bcrypt for password
+                    hashing.</p>
+            </section>
+
+            <div
+                class="bg-blue-50 rounded-xl p-6 mt-10 border border-blue-100 flex flex-col sm:flex-row items-center justify-between">
+                <div>
+                    <h4 class="font-bold text-gray-900 text-lg mb-1">Questions about your data?</h4>
+                    <p class="text-gray-600 text-sm">Our Data Protection Officer is ready to help.</p>
+                </div>
                 <a href="mailto:privacy@footballtix.com"
-                    class="inline-block bg-white/5 border border-white/10 px-8 py-3 rounded-full hover:bg-amber-500 hover:text-black transition-all font-bold">
-                    Contact Privacy Team
+                    class="mt-4 sm:mt-0 inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors">
+                    Contact Us
                 </a>
             </div>
-
         </div>
     </main>
 
-    <!-- Simple Footer -->
-    <footer class="py-12 border-t border-white/10 text-center">
-        <p class="text-gray-600 text-sm italic">&copy; <span id="current-year">2026</span> FootballTix. All rights
-            reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center">
+                    <svg class="h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                        </path>
+                    </svg>
+                    <span class="ml-2 font-bold">FootballTix</span>
+                </div>
+                <div class="text-sm text-gray-500">
+                    &copy; <span id="current-year">2026</span> FootballTix. All rights reserved.
+                </div>
+            </div>
+        </div>
     </footer>
     <script src="js/privacy-policy.js"></script>
 </body>
