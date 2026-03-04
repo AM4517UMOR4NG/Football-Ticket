@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
     <div class="register-container">
         <!-- Left Side: Register Form -->
@@ -17,100 +19,81 @@
             <div class="register-header">
                 <h1 class="logo-text">FootballTix</h1>
             </div>
-            
+
             <div class="register-content">
                 <h2 class="register-title">Create Account</h2>
                 <p class="register-subtitle">Fill in your details to get started</p>
-                
+
                 <div id="alert" class="alert mb-4 hidden"></div>
-                
+
                 <form id="registerForm" class="register-form">
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>
                         <div class="input-wrapper">
-                            <input 
-                                type="text" 
-                                id="username" 
-                                name="username"
-                                placeholder="Choose your username"
-                                class="form-input"
-                                required 
-                                autofocus>
+                            <input type="text" id="username" name="username" placeholder="Choose your username"
+                                class="form-input" required autofocus>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="email" class="form-label">E-mail</label>
                         <div class="input-wrapper">
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email"
-                                placeholder="john.doe@gmail.com"
-                                class="form-input"
-                                required>
+                            <input type="email" id="email" name="email" placeholder="john.doe@gmail.com"
+                                class="form-input" required>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="fullName" class="form-label">Full Name</label>
                         <div class="input-wrapper">
-                            <input 
-                                type="text" 
-                                id="fullName" 
-                                name="fullName"
-                                placeholder="John Doe"
-                                class="form-input"
+                            <input type="text" id="fullName" name="fullName" placeholder="John Doe" class="form-input"
                                 required>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="phoneNumber" class="form-label">Phone Number <span class="optional">(Optional)</span></label>
+                        <label for="phoneNumber" class="form-label">Phone Number <span
+                                class="optional">(Optional)</span></label>
                         <div class="input-wrapper">
-                            <input 
-                                type="tel" 
-                                id="phoneNumber" 
-                                name="phoneNumber"
-                                placeholder="+1 234 567 8900"
+                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+1 234 567 8900"
                                 class="form-input">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-wrapper">
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password"
-                                placeholder="••••••••"
-                                class="form-input"
-                                required>
-                            <button type="button" id="togglePassword" class="toggle-password" aria-label="Toggle password visibility">
-                                <svg id="eyeIcon" class="eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <input type="password" id="password" name="password" placeholder="••••••••"
+                                class="form-input" required>
+                            <button type="button" id="togglePassword" class="toggle-password"
+                                aria-label="Toggle password visibility">
+                                <svg id="eyeIcon" class="eye-icon" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                             </button>
                         </div>
                     </div>
-                    
+
                     <!-- Password Strength Indicator -->
                     <div id="passwordStrength" class="password-strength hidden">
                         <div class="strength-bar">
                             <div id="strengthBar" class="strength-bar-fill"></div>
                         </div>
-                        <p class="strength-text"><span id="strengthText">Password Strength:</span> <span id="strengthLevel">Weak</span></p>
+                        <p class="strength-text"><span id="strengthText">Password Strength:</span> <span
+                                id="strengthLevel">Weak</span></p>
                     </div>
-                    
+
                     <div class="terms-checkbox">
                         <input type="checkbox" id="agreeTerms" class="checkbox-input" required>
                         <label for="agreeTerms" class="checkbox-label">
                             I agree to the <a href="terms.html" class="terms-link">Terms & Conditions</a>
                         </label>
                     </div>
-                    
+
                     <div class="button-group">
                         <button type="submit" id="registerBtn" class="btn-register">
                             CREATE ACCOUNT
@@ -121,18 +104,18 @@
                     </div>
                 </form>
             </div>
-            
+
             <div class="register-footer">
-                <a href="#" class="footer-link">Important information</a>
-                <a href="#" class="footer-link">Privacy policy</a>
-                <p class="footer-copyright">© Copyright 2018 Football.</p>
+                <a href="important-information.html" class="footer-link">Important information</a>
+                <a href="privacy-policy.html" class="footer-link">Privacy policy</a>
+                <p class="footer-copyright">© 2026 FootballTix. All rights reserved.</p>
             </div>
         </div>
-        
+
         <!-- Right Side: Background Image -->
         <div class="register-image-section">
             <div class="image-background"></div>
-            
+
             <!-- Bottom Right Text and Button -->
             <div class="bottom-right-content">
                 <p class="account-question">Already have an account?</p>
@@ -142,7 +125,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Terms and Conditions Modal -->
     <div id="termsModal" class="terms-modal hidden">
         <div class="modal-backdrop" id="modalBackdrop"></div>
@@ -151,7 +134,8 @@
                 <h2 class="modal-title">Terms & Conditions</h2>
                 <button id="closeModal" class="modal-close" aria-label="Close modal">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -159,11 +143,13 @@
                 <div class="terms-content">
                     <section>
                         <h3>1. Acceptance of Terms</h3>
-                        <p>By creating an account and using our Football Ticket Booking platform, you agree to be bound by these Terms and Conditions.</p>
+                        <p>By creating an account and using our Football Ticket Booking platform, you agree to be bound
+                            by these Terms and Conditions.</p>
                     </section>
                     <section>
                         <h3>2. Account Registration</h3>
-                        <p>When you create an account, you agree to provide accurate information and maintain account security.</p>
+                        <p>When you create an account, you agree to provide accurate information and maintain account
+                            security.</p>
                     </section>
                     <section>
                         <h3>3. Ticket Booking and Payment</h3>
@@ -171,11 +157,13 @@
                     </section>
                     <section>
                         <h3>4. Cancellation and Refund Policy</h3>
-                        <p>Tickets can be cancelled up to 24 hours before the event for a full refund, minus processing fees.</p>
+                        <p>Tickets can be cancelled up to 24 hours before the event for a full refund, minus processing
+                            fees.</p>
                     </section>
                     <section>
                         <h3>5. Privacy Policy</h3>
-                        <p>We are committed to protecting your privacy. Personal information is used solely for service provision.</p>
+                        <p>We are committed to protecting your privacy. Personal information is used solely for service
+                            provision.</p>
                     </section>
                 </div>
             </div>
@@ -185,12 +173,13 @@
             </div>
         </div>
     </div>
-    
+
     <div id="loadingOverlay" class="loading-overlay hidden">
         <div class="loading-spinner"></div>
         <div class="loading-text">Creating your account...</div>
     </div>
-    
+
     <script src="js/register.js"></script>
 </body>
+
 </html>
