@@ -17,7 +17,7 @@ public class JwtTokenProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-    @Value("${app.jwt.secret:defaultSecretKey}")
+    @Value("${app.jwt.secret:my-super-secret-jwt-key-for-football-tix-app-backend-secure-string}")
     private String jwtSecret;
 
     @Value("${app.jwt.expiration:86400000}")
