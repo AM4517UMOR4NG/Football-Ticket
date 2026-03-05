@@ -312,22 +312,27 @@ window.addEventListener('load', () => {
 });
 
 // Google Sign-In
-const GOOGLE_CLIENT_ID = '833959984959-rr99ep8naddjv9814muvo4pkhsi8j3ir.apps.googleusercontent.com';
+async function initializeGoogleSignIn() {
+    try {
+        const response = await axios.get(`${apiConfig.baseUrl}/auth/google/client-id`);
+        const clientId = response.data.clientId;
 
-function initializeGoogleSignIn() {
-    if (typeof google !== 'undefined' && google.accounts) {
-        google.accounts.id.initialize({
-            client_id: GOOGLE_CLIENT_ID,
-            callback: handleGoogleCredentialResponse
-        });
+        if (typeof google !== 'undefined' && google.accounts && clientId) {
+            google.accounts.id.initialize({
+                client_id: clientId,
+                callback: handleGoogleCredentialResponse
+            });
 
-        const container = document.getElementById('googleContainer');
-        if (container) {
-            google.accounts.id.renderButton(
-                container,
-                { theme: 'filled_black', size: 'large', type: 'standard', text: 'signin_with', shape: 'rectangular' }
-            );
+            const container = document.getElementById('googleContainer');
+            if (container) {
+                google.accounts.id.renderButton(
+                    container,
+                    { theme: 'filled_black', size: 'large', type: 'standard', text: 'signin_with', shape: 'rectangular' }
+                );
+            }
         }
+    } catch (error) {
+        console.error('Failed to fetch Google Client ID', error);
     }
 }
 

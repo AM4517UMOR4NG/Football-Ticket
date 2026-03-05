@@ -322,26 +322,27 @@ function showFancyInfo(message) {
 // ============================================
 // GOOGLE SIGN-UP
 // ============================================
-const GOOGLE_CLIENT_ID = '833959984959-rr99ep8naddjv9814muvo4pkhsi8j3ir.apps.googleusercontent.com';
+async function initializeGoogleSignUp() {
+    try {
+        const response = await axios.get(`${apiConfig.baseUrl}/auth/google/client-id`);
+        const clientId = response.data.clientId;
 
-function initializeGoogleSignUp() {
-    if (typeof google !== 'undefined' && google.accounts) {
-        google.accounts.id.initialize({
-            client_id: GOOGLE_CLIENT_ID,
-            callback: handleGoogleCredentialResponse
-        });
-    }
-}
+        if (typeof google !== 'undefined' && google.accounts && clientId) {
+            google.accounts.id.initialize({
+                client_id: clientId,
+                callback: handleGoogleCredentialResponse
+            });
 
-function handleGoogleSignUp() {
-    if (typeof google !== 'undefined' && google.accounts) {
-        google.accounts.id.prompt((notification) => {
-            if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                showAlert('Google popup was blocked. Please allow popups or try again.', 'error');
+            const container = document.getElementById('googleContainer');
+            if (container) {
+                google.accounts.id.renderButton(
+                    container,
+                    { theme: 'filled_black', size: 'large', type: 'standard', text: 'signup_with', shape: 'rectangular' }
+                );
             }
-        });
-    } else {
-        showAlert('Google Sign-Up is loading. Please try again in a moment.', 'error');
+        }
+    } catch (error) {
+        console.error('Failed to fetch Google Client ID', error);
     }
 }
 
