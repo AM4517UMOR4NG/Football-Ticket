@@ -159,7 +159,7 @@ function initializeForm() {
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             // Validate terms
             if (!agreeTerms.checked) {
                 showAlert('Please agree to the Terms & Conditions', 'error');
@@ -206,16 +206,16 @@ function initializeForm() {
                 });
 
                 showAlert('Registration successful! Redirecting to login...', 'success');
-                
+
                 // Redirect after short delay
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 1500);
 
             } catch (error) {
-                const errorMessage = error?.response?.data?.message || 
-                                   error?.message || 
-                                   'Registration failed. Please try again.';
+                const errorMessage = error?.response?.data?.message ||
+                    error?.message ||
+                    'Registration failed. Please try again.';
                 showAlert(errorMessage, 'error');
             } finally {
                 registerBtn.disabled = false;
@@ -318,3 +318,71 @@ function showFancyInfo(message) {
         document.head.appendChild(style);
     }
 }
+
+// ============================================
+// GOOGLE SIGN-UP
+// ============================================
+const GOOGLE_CLIENT_ID = '833959984959-rr99ep8naddjv9814muvo4pkhsi8j3ir.apps.googleusercontent.com';
+
+function initializeGoogleSignUp() {
+    if (typeof google !== 'undefined' && google.accounts) {
+        google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: handleGoogleCredentialResponse
+        });
+    }
+}
+
+function handleGoogleSignUp() {
+    if (typeof google !== 'undefined' && google.accounts) {
+        google.accounts.id.prompt((notification) => {
+            if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                showAlert('Google popup was blocked. Please allow popups or try again.', 'error');
+            }
+        });
+    } else {
+        showAlert('Google Sign-Up is loading. Please try again in a moment.', 'error');
+    }
+}
+
+async function handleGoogleCredentialResponse(response) {
+    showLoading(true);
+    try {
+        const res = await axios.post(`${apiConfig.baseUrl}/auth/google`, {
+            credential: response.credential
+        }, {
+            timeout: 15000,
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        // Store auth data (same as login)
+        if (res.data.accessToken) {
+            localStorage.setItem('accessToken', res.data.accessToken);
+        }
+        if (res.data.userId) {
+            localStorage.setItem('userId', res.data.userId);
+        }
+        if (res.data.role) {
+            localStorage.setItem('userRole', res.data.role);
+        }
+        if (res.data.username) {
+            localStorage.setItem('username', res.data.username);
+        }
+        localStorage.setItem('loginTime', new Date().toISOString());
+
+        showAlert('Google sign-up successful! Redirecting...', 'success');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
+    } catch (error) {
+        showLoading(false);
+        const errorMessage = error?.response?.data?.message ||
+            'Google registration failed. Please try again.';
+        showAlert(errorMessage, 'error');
+    }
+}
+
+// Initialize Google Sign-Up on page load
+window.addEventListener('load', () => {
+    initializeGoogleSignUp();
+});

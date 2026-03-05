@@ -170,6 +170,61 @@ body {
     border-color: #505050;
 }
 
+/* ============================================
+   GOOGLE SIGN-IN
+   ============================================ */
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    gap: 12px;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background-color: #404040;
+}
+
+.divider-text {
+    color: #808080;
+    font-size: 13px;
+    white-space: nowrap;
+    text-transform: lowercase;
+}
+
+.btn-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background-color: #2a2a2a;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-google:hover {
+    background-color: #333333;
+    border-color: #606060;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-google:active {
+    transform: scale(0.98);
+}
+
+.google-icon {
+    flex-shrink: 0;
+}
+
 .login-footer {
     margin-top: auto;
     padding-top: 40px;
@@ -226,17 +281,17 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
+    background-image:
         /* Center circle */
-        radial-gradient(circle at 50% 50%, transparent 15%, rgba(255,255,255,0.5) 15%, rgba(255,255,255,0.5) 16%, transparent 16%),
+        radial-gradient(circle at 50% 50%, transparent 15%, rgba(255, 255, 255, 0.5) 15%, rgba(255, 255, 255, 0.5) 16%, transparent 16%),
         /* Penalty boxes */
-        linear-gradient(to right, transparent 20%, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.6) 21%, transparent 21%),
-        linear-gradient(to right, transparent 79%, rgba(255,255,255,0.6) 79%, rgba(255,255,255,0.6) 80%, transparent 80%),
+        linear-gradient(to right, transparent 20%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0.6) 21%, transparent 21%),
+        linear-gradient(to right, transparent 79%, rgba(255, 255, 255, 0.6) 79%, rgba(255, 255, 255, 0.6) 80%, transparent 80%),
         /* Goal boxes */
-        linear-gradient(to right, transparent 10%, rgba(255,255,255,0.5) 10%, rgba(255,255,255,0.5) 11%, transparent 11%),
-        linear-gradient(to right, transparent 89%, rgba(255,255,255,0.5) 89%, rgba(255,255,255,0.5) 90%, transparent 90%),
+        linear-gradient(to right, transparent 10%, rgba(255, 255, 255, 0.5) 10%, rgba(255, 255, 255, 0.5) 11%, transparent 11%),
+        linear-gradient(to right, transparent 89%, rgba(255, 255, 255, 0.5) 89%, rgba(255, 255, 255, 0.5) 90%, transparent 90%),
         /* Center line */
-        linear-gradient(to bottom, transparent 48%, rgba(255,255,255,0.6) 48%, rgba(255,255,255,0.6) 52%, transparent 52%);
+        linear-gradient(to bottom, transparent 48%, rgba(255, 255, 255, 0.6) 48%, rgba(255, 255, 255, 0.6) 52%, transparent 52%);
     pointer-events: none;
     opacity: 0.8;
 }
@@ -396,34 +451,34 @@ body {
         flex-direction: column;
         min-height: 100vh;
     }
-    
+
     .login-form-section {
         flex: none;
         min-height: auto;
         padding: 40px 50px;
         max-width: 100%;
     }
-    
+
     .login-image-section {
         flex: none;
         min-height: 300px;
         max-height: 400px;
     }
-    
+
     .app-icon-container {
         top: 25%;
         transform: translate(-50%, -50%);
     }
-    
+
     .app-icon {
         width: 100px;
         height: 100px;
     }
-    
+
     .icon-letter {
         font-size: 60px;
     }
-    
+
     .bottom-right-content {
         bottom: 30px;
         right: 30px;
@@ -435,63 +490,63 @@ body {
     body {
         overflow-x: hidden;
     }
-    
+
     .login-container {
         flex-direction: column;
     }
-    
+
     .login-form-section {
         padding: 30px 32px;
         min-height: auto;
     }
-    
+
     .login-header {
         margin-bottom: 40px;
     }
-    
+
     .login-content {
         max-width: 100%;
     }
-    
+
     .login-title {
         font-size: 28px;
     }
-    
+
     .login-subtitle {
         font-size: 13px;
     }
-    
+
     .login-image-section {
         min-height: 250px;
         max-height: 350px;
     }
-    
+
     .app-icon-container {
         top: 50%;
     }
-    
+
     .app-icon {
         width: 80px;
         height: 80px;
     }
-    
+
     .icon-letter {
         font-size: 48px;
     }
-    
+
     .icon-plus {
         font-size: 14px;
         bottom: 16px;
         right: 16px;
     }
-    
+
     .icon-target {
         width: 20px;
         height: 20px;
         bottom: 8px;
         right: 8px;
     }
-    
+
     .bottom-right-content {
         position: static;
         text-align: center;
@@ -501,7 +556,7 @@ body {
         margin: 0 auto 20px;
         max-width: 90%;
     }
-    
+
     .account-question {
         margin-bottom: 10px;
     }
@@ -511,101 +566,101 @@ body {
     .login-form-section {
         padding: 24px 20px;
     }
-    
+
     .login-header {
         margin-bottom: 30px;
     }
-    
+
     .logo-text {
         font-size: 24px;
     }
-    
+
     .login-title {
         font-size: 24px;
         margin-bottom: 6px;
     }
-    
+
     .login-subtitle {
         font-size: 12px;
         margin-bottom: 32px;
     }
-    
+
     .form-group {
         margin-bottom: 18px;
     }
-    
+
     .form-input {
         padding: 10px 14px;
         font-size: 15px;
     }
-    
+
     .button-group {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .btn-signin,
     .btn-signup {
         width: 100%;
         padding: 12px 20px;
         font-size: 13px;
     }
-    
+
     .login-footer {
         padding-top: 30px;
     }
-    
+
     .footer-link {
         font-size: 11px;
         margin-right: 12px;
     }
-    
+
     .footer-copyright {
         font-size: 11px;
     }
-    
+
     .login-image-section {
         min-height: 200px;
         max-height: 300px;
     }
-    
+
     .app-icon {
         width: 60px;
         height: 60px;
     }
-    
+
     .icon-letter {
         font-size: 36px;
     }
-    
+
     .icon-plus {
         font-size: 12px;
         bottom: 12px;
         right: 12px;
     }
-    
+
     .icon-target {
         width: 16px;
         height: 16px;
         bottom: 6px;
         right: 6px;
     }
-    
+
     .icon-target::before {
         width: 6px;
         height: 6px;
     }
-    
+
     .bottom-right-content {
         padding: 16px;
         margin: 0 auto 16px;
     }
-    
+
     .account-question {
         font-size: 13px;
         margin-bottom: 8px;
     }
-    
+
     .btn-get-started {
         padding: 10px 20px;
         font-size: 11px;
@@ -616,16 +671,16 @@ body {
     .login-form-section {
         padding: 20px 16px;
     }
-    
+
     .login-title {
         font-size: 22px;
     }
-    
+
     .form-input {
         padding: 9px 12px;
         font-size: 14px;
     }
-    
+
     .btn-signin,
     .btn-signup {
         padding: 11px 18px;
@@ -638,29 +693,29 @@ body {
     .login-container {
         flex-direction: row;
     }
-    
+
     .login-form-section {
         flex: 1;
         padding: 20px 40px;
     }
-    
+
     .login-header {
         margin-bottom: 20px;
     }
-    
+
     .login-content {
         justify-content: flex-start;
     }
-    
+
     .login-footer {
         padding-top: 20px;
     }
-    
+
     .login-image-section {
         flex: 1;
         min-height: 100vh;
     }
-    
+
     .app-icon-container {
         top: 50%;
     }

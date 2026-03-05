@@ -274,6 +274,61 @@ body {
     border-color: #505050;
 }
 
+/* ============================================
+   GOOGLE SIGN-UP
+   ============================================ */
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    gap: 12px;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background-color: #404040;
+}
+
+.divider-text {
+    color: #808080;
+    font-size: 13px;
+    white-space: nowrap;
+    text-transform: lowercase;
+}
+
+.btn-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background-color: #2a2a2a;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-google:hover {
+    background-color: #333333;
+    border-color: #606060;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-google:active {
+    transform: scale(0.98);
+}
+
+.google-icon {
+    flex-shrink: 0;
+}
+
 .register-footer {
     margin-top: auto;
     padding-top: 40px;
@@ -574,20 +629,20 @@ body {
         flex-direction: column;
         min-height: 100vh;
     }
-    
+
     .register-form-section {
         flex: none;
         min-height: auto;
         padding: 40px 50px;
         max-width: 100%;
     }
-    
+
     .register-image-section {
         flex: none;
         min-height: 300px;
         max-height: 400px;
     }
-    
+
     .bottom-right-content {
         bottom: 30px;
         right: 30px;
@@ -599,37 +654,37 @@ body {
     body {
         overflow-x: hidden;
     }
-    
+
     .register-container {
         flex-direction: column;
     }
-    
+
     .register-form-section {
         padding: 30px 32px;
         min-height: auto;
     }
-    
+
     .register-header {
         margin-bottom: 40px;
     }
-    
+
     .register-content {
         max-width: 100%;
     }
-    
+
     .register-title {
         font-size: 28px;
     }
-    
+
     .register-subtitle {
         font-size: 13px;
     }
-    
+
     .register-image-section {
         min-height: 250px;
         max-height: 350px;
     }
-    
+
     .bottom-right-content {
         position: static;
         text-align: center;
@@ -639,11 +694,11 @@ body {
         margin: 0 auto 20px;
         max-width: 90%;
     }
-    
+
     .account-question {
         margin-bottom: 10px;
     }
-    
+
     .modal-content {
         max-height: 90vh;
     }
@@ -653,84 +708,84 @@ body {
     .register-form-section {
         padding: 24px 20px;
     }
-    
+
     .register-header {
         margin-bottom: 30px;
     }
-    
+
     .logo-text {
         font-size: 24px;
     }
-    
+
     .register-title {
         font-size: 24px;
         margin-bottom: 6px;
     }
-    
+
     .register-subtitle {
         font-size: 12px;
         margin-bottom: 28px;
     }
-    
+
     .form-group {
         margin-bottom: 18px;
     }
-    
+
     .form-input {
         padding: 10px 14px;
         font-size: 15px;
     }
-    
+
     .button-group {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .btn-register,
     .btn-signin {
         width: 100%;
         padding: 12px 20px;
         font-size: 13px;
     }
-    
+
     .register-footer {
         padding-top: 30px;
     }
-    
+
     .footer-link {
         font-size: 11px;
         margin-right: 12px;
     }
-    
+
     .footer-copyright {
         font-size: 11px;
     }
-    
+
     .register-image-section {
         min-height: 200px;
         max-height: 300px;
     }
-    
+
     .bottom-right-content {
         padding: 16px;
         margin: 0 auto 16px;
     }
-    
+
     .account-question {
         font-size: 13px;
         margin-bottom: 8px;
     }
-    
+
     .btn-get-started {
         padding: 10px 20px;
         font-size: 11px;
     }
-    
+
     .modal-content {
         margin: 10px;
         max-width: calc(100% - 20px);
     }
-    
+
     .modal-header,
     .modal-body,
     .modal-footer {
@@ -742,16 +797,16 @@ body {
     .register-form-section {
         padding: 20px 16px;
     }
-    
+
     .register-title {
         font-size: 22px;
     }
-    
+
     .form-input {
         padding: 9px 12px;
         font-size: 14px;
     }
-    
+
     .btn-register,
     .btn-signin {
         padding: 11px 18px;
@@ -764,24 +819,24 @@ body {
     .register-container {
         flex-direction: row;
     }
-    
+
     .register-form-section {
         flex: 1;
         padding: 20px 40px;
     }
-    
+
     .register-header {
         margin-bottom: 20px;
     }
-    
+
     .register-content {
         justify-content: flex-start;
     }
-    
+
     .register-footer {
         padding-top: 20px;
     }
-    
+
     .register-image-section {
         flex: 1;
         min-height: 100vh;

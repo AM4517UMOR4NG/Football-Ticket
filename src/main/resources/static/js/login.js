@@ -67,11 +67,11 @@ function hideLoading() {
 // Show alert in the form
 function showAlert(message, type = 'error') {
     if (!alertDiv) return;
-    
+
     alertDiv.textContent = message;
     alertDiv.className = `alert ${type}`;
     alertDiv.classList.remove('hidden');
-    
+
     // Auto-hide after 5 seconds
     setTimeout(() => {
         alertDiv.classList.add('hidden');
@@ -81,7 +81,7 @@ function showAlert(message, type = 'error') {
 // Enhanced error handling
 function showError(message) {
     showAlert(message, 'error');
-    
+
     // Also show notification
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-notification';
@@ -167,7 +167,7 @@ function showInfo(message) {
 // Success notification
 function showSuccess(message) {
     showAlert(message, 'success');
-    
+
     const successDiv = document.createElement('div');
     successDiv.style.cssText = `
         position: fixed;
@@ -293,6 +293,7 @@ if (loginForm) {
 // Auto-login check
 window.addEventListener('load', () => {
     initializeUI();
+    initializeGoogleSignIn();
 
     const token = localStorage.getItem('accessToken');
     const loginTime = localStorage.getItem('loginTime');
@@ -309,3 +310,41 @@ window.addEventListener('load', () => {
         }
     }
 });
+
+// Google Sign-In
+const GOOGLE_CLIENT_ID = '833959984959-rr99ep8naddjv9814muvo4pkhsi8j3ir.apps.googleusercontent.com';
+
+function initializeGoogleSignIn() {
+    if (typeof google !== 'undefined' && google.accounts) {
+        google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: handleGoogleCredentialResponse
+        });
+
+        const container = document.getElementById('googleContainer');
+        if (container) {
+            google.accounts.id.renderButton(
+                container,
+                { theme: 'filled_black', size: 'large', type: 'standard', text: 'signin_with', shape: 'rectangular' }
+            );
+        }
+    }
+}
+
+async function handleGoogleCredentialResponse(response) {
+    showLoading();
+    try {
+        const res = await axios.post(`${apiConfig.baseUrl}/auth/google`, {
+            credential: response.credential
+        }, {
+            timeout: 15000,
+            headers: { 'Content-Type': 'application/json' }
+        });
+        handleLoginSuccess(res);
+    } catch (error) {
+        hideLoading();
+        const errorMessage = error?.response?.data?.message ||
+            'Google authentication failed. Please try again.';
+        showError(errorMessage);
+    }
+}
