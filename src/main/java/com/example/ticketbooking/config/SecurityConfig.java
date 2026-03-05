@@ -55,6 +55,8 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/**/*.gif")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/**/*.svg")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/payments/notification")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/payments/client-key")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/events/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/leagues/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/about/**")).permitAll()
