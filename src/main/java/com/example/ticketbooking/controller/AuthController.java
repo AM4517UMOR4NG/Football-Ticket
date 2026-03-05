@@ -1,13 +1,20 @@
 package com.example.ticketbooking.controller;
 
+import com.example.ticketbooking.dto.GoogleAuthRequest;
 import com.example.ticketbooking.dto.LoginRequest;
 import com.example.ticketbooking.dto.LoginResponse;
 import com.example.ticketbooking.dto.UserRegistrationDTO;
 import com.example.ticketbooking.entity.User;
+import com.example.ticketbooking.repository.UserRepository;
 import com.example.ticketbooking.service.UserService;
 import com.example.ticketbooking.security.JwtTokenProvider;
 import com.example.ticketbooking.security.SecurityAuditService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController
@@ -31,10 +39,16 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private SecurityAuditService securityAuditService;
+
+    @Value("${app.google.client-id}")
+    private String googleClientId;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDTO userDto, HttpServletRequest request) {
@@ -106,6 +120,75 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(false, "Login failed: " + ex.getMessage()));
         }
+    }
+
+    @PostMapping("/google")
+    public ResponseEntity<?> authenticateWithGoogle(@RequestBody GoogleAuthRequest googleRequest,
+            HttpServletRequest request) {
+        String clientIp = getClientIpAddress(request);
+
+        try {
+            // Verify the Google ID token
+            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
+                    new NetHttpTransport(), GsonFactory.getDefaultInstance())
+                    .setAudience(Collections.singletonList(googleClientId))
+                    .build();
+
+            GoogleIdToken idToken = verifier.verify(googleRequest.credential());
+            if (idToken == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ApiResponse(false, "Invalid Google token"));
+            }
+
+            GoogleIdToken.Payload payload = idToken.getPayload();
+            String googleId = payload.getSubject();
+            String email = payload.getEmail();
+            String fullName = (String) payload.get("name");
+
+            // Find or create user
+            User user = findOrCreateGoogleUser(googleId, email, fullName);
+
+            // Generate JWT token
+            String jwt = jwtTokenProvider.generateTokenFromUsername(user.getUsername());
+
+            securityAuditService.logLoginAttempt(user.getUsername(), clientIp, true);
+
+            LoginResponse loginResponse = new LoginResponse(
+                    jwt, user.getId(), user.getUsername(), user.getEmail(),
+                    user.getFullName(), user.getRole());
+            return ResponseEntity.ok(loginResponse);
+
+        } catch (Exception ex) {
+            securityAuditService.logLoginAttempt("google-auth", clientIp, false);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(false, "Google authentication failed: " + ex.getMessage()));
+        }
+    }
+
+    private User findOrCreateGoogleUser(String googleId, String email, String fullName) {
+        // 1. Try to find by Google ID
+        Optional<User> byGoogleId = userRepository.findByGoogleId(googleId);
+        if (byGoogleId.isPresent()) {
+            return byGoogleId.get();
+        }
+
+        // 2. Try to find by email (existing account, link Google)
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isPresent()) {
+            User existingUser = byEmail.get();
+            existingUser.setGoogleId(googleId);
+            return userRepository.save(existingUser);
+        }
+
+        // 3. Create new user
+        User newUser = new User();
+        newUser.setGoogleId(googleId);
+        newUser.setEmail(email);
+        newUser.setFullName(fullName != null ? fullName : email.split("@")[0]);
+        newUser.setUsername(email.split("@")[0] + "_g" + googleId.substring(0, Math.min(4, googleId.length())));
+        newUser.setPassword(null); // No password for Google-only users
+        newUser.setRole("USER");
+        return userRepository.save(newUser);
     }
 
     private String getClientIpAddress(HttpServletRequest request) {
