@@ -48,7 +48,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
     }
 
     private boolean isAuthenticationEndpoint(String path) {
-        return path.startsWith("/api/auth/login") || path.startsWith("/api/auth/register");
+        return path.startsWith("/api/auth/login") ||
+                path.startsWith("/api/auth/register") ||
+                path.startsWith("/api/auth/google");
     }
 
     private boolean isRateLimitExceeded(String clientIp) {
