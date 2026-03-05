@@ -75,4 +75,33 @@ public class BookingResponseDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
+    private String snapToken;
+    private String redirectUrl;
+
+    public String getSnapToken() {
+        return snapToken;
+    }
+
+    public void setSnapToken(String snapToken) {
+        this.snapToken = snapToken;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
+
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
