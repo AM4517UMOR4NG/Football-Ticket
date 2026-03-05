@@ -237,6 +237,35 @@ async function loadBookings() {
             };
         }));
 
+        // Auto-sync PENDING bookings with Midtrans (fixes sandbox redirect issue)
+        const pendingBookings = enrichedBookings.filter(b => b.status === 'PENDING');
+        if (pendingBookings.length > 0) {
+            console.log(`Syncing ${pendingBookings.length} PENDING booking(s) with Midtrans...`);
+            await Promise.all(pendingBookings.map(async (b) => {
+                try {
+                    await fetch(`${API_BASE_URL}/payments/sync-status/${b.bookingReference}`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                } catch (e) { console.warn('Sync failed for', b.bookingReference, e); }
+            }));
+            // Re-fetch bookings to get updated statuses
+            const refreshResponse = await fetch(`${API_BASE_URL}/bookings/user/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (refreshResponse.ok) {
+                const refreshedBookings = await refreshResponse.json();
+                allBookings = refreshedBookings;
+                updateStats(refreshedBookings);
+                displayBookings(refreshedBookings);
+                hideLoading();
+                return;
+            }
+        }
+
         allBookings = enrichedBookings;
 
         updateStats(enrichedBookings);
@@ -296,7 +325,7 @@ function displayBookingEvents(events) {
                     <p class="text-sm text-gray-500">${formatEventDate(event.eventDate)}</p>
                 </div>
                 <div class="text-right">
-                    <div class="text-2xl font-bold text-green-600">£${event.price}</div>
+                    <div class="text-2xl font-bold text-green-600">Rp ${new Intl.NumberFormat('id-ID').format(event.price)}</div>
                     <div class="text-xs text-gray-500">per ticket</div>
                 </div>
             </div>
@@ -320,7 +349,7 @@ function selectEvent(eventId) {
     selectedEventVenue.textContent = event.venue;
     selectedEventDate.textContent = formatEventDate(event.eventDate);
     ticketCount.textContent = currentTicketCount;
-    pricePerTicket.textContent = `£${event.price}`;
+    pricePerTicket.textContent = `Rp ${new Intl.NumberFormat('id-ID').format(event.price)}`;
     updateTotalPrice();
 
     bookingSummary.classList.remove('hidden');
@@ -339,7 +368,7 @@ function selectEvent(eventId) {
 function updateTotalPrice() {
     if (selectedEvent) {
         const total = selectedEvent.price * currentTicketCount;
-        totalPrice.textContent = `£${total.toFixed(2)}`;
+        totalPrice.textContent = `Rp ${total.toFixed(2)}`;
     }
 }
 
@@ -422,8 +451,8 @@ function resetBookingForm() {
     bookingSummary.classList.add('hidden');
     noSelection.classList.remove('hidden');
     ticketCount.textContent = '1';
-    pricePerTicket.textContent = '£0';
-    totalPrice.textContent = '£0';
+    pricePerTicket.textContent = 'Rp 0';
+    totalPrice.textContent = 'Rp 0';
 
     document.querySelectorAll('.booking-event-card').forEach(card => {
         card.classList.remove('border-blue-500', 'bg-blue-50');
@@ -503,7 +532,7 @@ function displayBookings(bookings) {
                 </div>
                 
                 <div class="flex items-center justify-between mb-4">
-                    <div class="text-3xl font-bold text-green-600">£${booking.totalAmount}</div>
+                    <div class="text-3xl font-bold text-green-600">Rp ${new Intl.NumberFormat('id-ID').format(booking.totalAmount)}</div>
                     <div class="text-sm text-gray-500">total paid</div>
                 </div>
                 
@@ -709,7 +738,7 @@ async function showTicketModal(bookingReference) {
                         <div class="text-center">
                             <div class="text-4xl font-bold text-gray-900 mb-2">${booking.eventTitle}</div>
                             <div class="text-gray-600 mb-4">${formatEventDate(booking.eventDate)} • ${booking.venue}</div>
-                            <div class="text-2xl font-bold text-green-600 mb-2">£${booking.totalAmount}</div>
+                            <div class="text-2xl font-bold text-green-600 mb-2">Rp ${new Intl.NumberFormat('id-ID').format(booking.totalAmount)}</div>
                             <div class="text-sm text-gray-500">${booking.numberOfTickets} ticket${booking.numberOfTickets > 1 ? 's' : ''}</div>
                         </div>
                         <div class="mt-6 text-center">
@@ -786,7 +815,7 @@ function showBookingDetailsModal(bookingReference) {
                         </div>
                         <div>
                             <div class="text-sm text-gray-500">Total Amount</div>
-                            <div class="font-medium text-green-600">£${booking.totalAmount}</div>
+                            <div class="font-medium text-green-600">Rp ${new Intl.NumberFormat('id-ID').format(booking.totalAmount)}</div>
                         </div>
                     </div>
                     <div class="flex space-x-3">
@@ -895,7 +924,7 @@ function showBookingHistoryModal() {
                                                 ${booking.status}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">£${booking.totalAmount}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp ${new Intl.NumberFormat('id-ID').format(booking.totalAmount)}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -1073,7 +1102,7 @@ function downloadTicket(bookingReference) {
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Total Amount</div>
-                            <div class="detail-value price">£${booking.totalAmount}</div>
+                            <div class="detail-value price">Rp ${new Intl.NumberFormat('id-ID').format(booking.totalAmount)}</div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Status</div>
@@ -1127,7 +1156,7 @@ function updateStats(bookings) {
     if (totalBookings) totalBookings.textContent = total;
     if (confirmedBookings) confirmedBookings.textContent = confirmed;
     if (upcomingBookings) upcomingBookings.textContent = upcoming;
-    if (totalSpent) totalSpent.textContent = `£${totalSpentAmount.toFixed(2)}`;
+    if (totalSpent) totalSpent.textContent = `Rp ${new Intl.NumberFormat('id-ID').format(totalSpentAmount)}`;
 }
 
 // Utility functions

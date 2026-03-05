@@ -644,7 +644,7 @@ function updateFeaturedMatches(events) {
                     
                     <div class="flex justify-between items-center">
                         <div class="flex items-center space-x-2">
-                            <span class="text-green-600 dark:text-green-400 font-bold text-lg">From £${event.price || 'TBD'}</span>
+                            <span class="text-green-600 dark:text-green-400 font-bold text-lg">From Rp ${event.price || 'TBD'}</span>
                             <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">${getTicketAvailability(event)}</span>
                         </div>
                         
