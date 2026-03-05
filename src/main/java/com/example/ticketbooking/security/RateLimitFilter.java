@@ -88,8 +88,8 @@ public class RateLimitFilter extends OncePerRequestFilter {
             LocalDateTime minuteKey = now.withSecond(0).withNano(0);
             LocalDateTime hourKey = now.withMinute(0).withSecond(0).withNano(0);
 
-            minuteRequests.merge(minuteKey, 1, Integer::sum);
-            hourRequests.merge(hourKey, 1, Integer::sum);
+            minuteRequests.compute(minuteKey, (k, v) -> v == null ? 1 : v + 1);
+            hourRequests.compute(hourKey, (k, v) -> v == null ? 1 : v + 1);
         }
 
         public void cleanOldEntries(LocalDateTime now) {

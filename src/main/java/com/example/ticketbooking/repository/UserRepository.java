@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
+    Optional<User> findByGoogleId(String googleId);
+
     @Query("SELECT u FROM User u WHERE u.role = :role")
     List<User> findByRole(@Param("role") String role);
 
