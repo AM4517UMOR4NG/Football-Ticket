@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### H2 Database Files ###
+*.mv.db
+*.trace.db
+data/
+
+### Environment & Secrets ###
+.env
+*.pem
+*.key
+
+### Logs ###
+*.log
+logs/
