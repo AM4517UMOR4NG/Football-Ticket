@@ -44,6 +44,15 @@ public class Booking {
     @Column(name = "booking_date")
     private LocalDateTime bookingDate = LocalDateTime.now();
 
+    @Column(name = "payment_type")
+    private String paymentType;
+
+    @Column(name = "payment_date")
+    private LocalDateTime paymentDate;
+
+    @Column(name = "snap_token")
+    private String snapToken;
+
     public enum BookingStatus {
         PENDING, CONFIRMED, CANCELLED, COMPLETED
     }
