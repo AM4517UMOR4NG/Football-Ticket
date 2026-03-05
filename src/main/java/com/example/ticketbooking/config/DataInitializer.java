@@ -30,7 +30,7 @@ public class DataInitializer implements CommandLineRunner {
 
         @Override
         public void run(String... args) throws Exception {
-               
+
                 if (leagueRepository.count() == 0) {
                         createLeagues();
                 }
@@ -146,7 +146,8 @@ public class DataInitializer implements CommandLineRunner {
                 Long bundesligaId = leagueRepository.findByName("Bundesliga").map(l -> l.getId()).orElse(3L);
                 Long serieAId = leagueRepository.findByName("Serie A").map(l -> l.getId()).orElse(4L);
                 Long ligue1Id = leagueRepository.findByName("Ligue 1").map(l -> l.getId()).orElse(5L);
-                Long championsLeagueId = leagueRepository.findByName("UEFA Champions League").map(l -> l.getId()).orElse(6L);
+                Long championsLeagueId = leagueRepository.findByName("UEFA Champions League").map(l -> l.getId())
+                                .orElse(6L);
 
                 EventDTO event1 = new EventDTO(
                                 null,
@@ -159,12 +160,11 @@ public class DataInitializer implements CommandLineRunner {
                                 "Old Trafford, Manchester",
                                 LocalDateTime.now().plusDays(15).withHour(16).withMinute(30),
                                 75000,
-                                new BigDecimal("95.00"),
+                                new BigDecimal("1500000.00"),
                                 "https://upload.wikimedia.org/wikipedia/commons/c/cf/2009-3-14_ManUtd_vs_LFC_Ronaldo_Tackling.JPG",
                                 premierLeagueId);
                 eventService.createEvent(event1);
 
-               
                 EventDTO event2 = new EventDTO(
                                 null,
                                 "Chelsea vs Arsenal",
@@ -176,7 +176,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Stamford Bridge, London",
                                 LocalDateTime.now().plusDays(21).withHour(15).withMinute(0),
                                 40000,
-                                new BigDecimal("85.00"),
+                                new BigDecimal("1200000.00"),
                                 "https://upload.wikimedia.org/wikipedia/commons/4/4b/Chelsea_vs._Arsenal%2C_29_May_2019_13.jpg",
                                 premierLeagueId);
                 eventService.createEvent(event2);
@@ -192,12 +192,11 @@ public class DataInitializer implements CommandLineRunner {
                                 "Etihad Stadium, Manchester",
                                 LocalDateTime.now().plusDays(22).withHour(14).withMinute(0),
                                 55000,
-                                new BigDecimal("75.00"),
+                                new BigDecimal("1100000.00"),
                                 "https://upload.wikimedia.org/wikipedia/commons/8/8e/Free_Kick_Discussion_%2836593751686%29.jpg",
                                 premierLeagueId);
                 eventService.createEvent(event3);
 
-                
                 EventDTO event4 = new EventDTO(
                                 null,
                                 "Real Madrid vs Barcelona",
@@ -209,7 +208,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Santiago Bernabéu, Madrid",
                                 LocalDateTime.now().plusDays(25).withHour(20).withMinute(0),
                                 90000,
-                                new BigDecimal("150.00"),
+                                new BigDecimal("2500000.00"),
                                 "https://img.okezone.com/content/2020/12/08/261/2323551/senang-bisa-saksikan-pertarungan-messi-vs-ronaldo-bonucci-mereka-alien-QAcg70oLzn.jpg",
                                 laLigaId);
                 eventService.createEvent(event4);
@@ -224,7 +223,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Wanda Metropolitano, Madrid",
                                 LocalDateTime.now().plusDays(18).withHour(19).withMinute(30),
                                 68000,
-                                new BigDecimal("65.00"),
+                                new BigDecimal("950000.00"),
                                 "https://english.ahram.org.eg/Media/News/2023/12/23/41_2023-638389580607985899-798.jpg",
                                 laLigaId);
                 eventService.createEvent(event5);
@@ -241,7 +240,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Allianz Arena, Munich",
                                 LocalDateTime.now().plusDays(30).withHour(20).withMinute(30),
                                 75000,
-                                new BigDecimal("120.00"),
+                                new BigDecimal("1800000.00"),
                                 "https://assets-bundesliga-com.translate.goog/contender/2025/3/1920-1080-max.jpg?fit=1140,https://www-bundesliga-com.translate.goog/en/bundesliga/news/1140?_x_tr_sl%3Den&_x_tr_sl=en&_x_tr_tl=id&_x_tr_hl=id&_x_tr_pto=imgs",
                                 bundesligaId);
                 eventService.createEvent(event6);
@@ -256,7 +255,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Red Bull Arena, Leipzig",
                                 LocalDateTime.now().plusDays(12).withHour(17).withMinute(30),
                                 47000,
-                                new BigDecimal("55.00"),
+                                new BigDecimal("850000.00"),
                                 "https://assets.bundesliga.com/contender/2025/0/SMCS_Team-H2H_RBLB04_16-9.jpg?crop=285px,0px,1350px,1080px&fit=540,540",
                                 bundesligaId);
                 eventService.createEvent(event7);
@@ -272,7 +271,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "San Siro, Milan",
                                 LocalDateTime.now().plusDays(28).withHour(20).withMinute(45),
                                 80000,
-                                new BigDecimal("110.00"),
+                                new BigDecimal("1650000.00"),
                                 "https://asset-2.tstatic.net/bangka/foto/bank/images/2024021-ac-Milan-vs-Inter-Milan.jpg",
                                 serieAId);
                 eventService.createEvent(event8);
@@ -288,7 +287,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Allianz Stadium, Turin",
                                 LocalDateTime.now().plusDays(35).withHour(20).withMinute(30),
                                 41000,
-                                new BigDecimal("95.00"),
+                                new BigDecimal("1350000.00"),
                                 "https://asset-2.tstatic.net/medan/foto/bank/originals/Napoli-vs-juventus-link.jpg",
                                 serieAId);
                 eventService.createEvent(event9);
@@ -304,7 +303,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Parc des Princes, Paris",
                                 LocalDateTime.now().plusDays(32).withHour(21).withMinute(0),
                                 48000,
-                                new BigDecimal("130.00"),
+                                new BigDecimal("1950000.00"),
                                 "https://wp.clutchpoints.com/wp-content/uploads/2023/02/Ligue-1-Odds-Marseille-vs.-PSG-prediction-pick-how-to-watch.jpg?w=1200",
                                 ligue1Id);
                 eventService.createEvent(event10);
@@ -319,7 +318,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Groupama Stadium, Lyon",
                                 LocalDateTime.now().plusDays(19).withHour(20).withMinute(0),
                                 59000,
-                                new BigDecimal("70.00"),
+                                new BigDecimal("1050000.00"),
                                 "https://www.thesun.co.uk/wp-content/uploads/2017/10/sport-preview-lyon.jpg?w=620",
                                 ligue1Id);
                 eventService.createEvent(event11);
@@ -335,7 +334,7 @@ public class DataInitializer implements CommandLineRunner {
                                 "Santiago Bernabéu, Madrid",
                                 LocalDateTime.now().plusDays(45).withHour(21).withMinute(0),
                                 90000,
-                                new BigDecimal("200.00"),
+                                new BigDecimal("3500000.00"),
                                 "https://img2.beritasatu.com/cache/beritasatu/480x310-2/2023/05/1683603654-910x580.webp",
                                 championsLeagueId);
                 eventService.createEvent(event12);
