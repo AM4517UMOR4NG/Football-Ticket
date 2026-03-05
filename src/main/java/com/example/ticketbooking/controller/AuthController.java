@@ -122,6 +122,11 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/google/client-id")
+    public ResponseEntity<?> getGoogleClientId() {
+        return ResponseEntity.ok(Collections.singletonMap("clientId", googleClientId));
+    }
+
     @PostMapping("/google")
     public ResponseEntity<?> authenticateWithGoogle(@RequestBody GoogleAuthRequest googleRequest,
             HttpServletRequest request) {
