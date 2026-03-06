@@ -316,7 +316,7 @@ function displayBookingEvents(events) {
     }
 
     bookingEventsGrid.innerHTML = events.map(event => `
-        <div class="booking-event-card bg-white rounded-lg shadow-md p-4 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-blue-500" 
+        <div class="booking-event-card bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 p-4 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-blue-500" 
              onclick="selectEvent(${event.id})">
             <div class="flex justify-between items-start mb-3">
                 <div class="flex-1">
@@ -490,21 +490,27 @@ function displayBookings(bookings) {
     hideEmptyState();
 
     bookingsGrid.innerHTML = bookings.map(booking => `
-        <div class="booking-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:scale-105">
-            <div class="relative">
-                <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <div class="text-sm font-medium">Booking #${booking.bookingReference}</div>
-                            <div class="text-xs opacity-90">${formatBookingDate(booking.bookingDate)}</div>
-                        </div>
-                        <div class="status-${booking.status.toLowerCase()} px-3 py-1 rounded-full text-xs font-medium text-white">
-                            ${booking.status}
+        <div class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-500 hover:scale-105">
+                <div class="h-40 relative group overflow-hidden">
+                    ${booking.imageUrl ? `
+                    <img src="${booking.imageUrl}" alt="Event" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/60"></div>
+                    ` : `
+                    <div class="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-800"></div>
+                    <div class="absolute inset-0 ticket-pattern opacity-20"></div>
+                    `}
+                    <div class="absolute inset-x-0 top-0 p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="text-xs font-bold text-white/80 uppercase tracking-wider mb-1">Booking Ref</div>
+                                <div class="text-sm font-mono font-medium text-white bg-black/40 px-2 py-0.5 rounded backdrop-blur-sm border border-white/10">#${booking.bookingReference}</div>
+                            </div>
+                            <div class="status-${booking.status.toLowerCase()} px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg backdrop-blur-md border border-white/20">
+                                ${booking.status}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="absolute inset-0 ticket-pattern opacity-10"></div>
-            </div>
             
             <div class="p-6">
                 <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">${booking.eventTitle}</h3>
@@ -553,7 +559,7 @@ function displayBookings(bookings) {
                         </button>
                     ` : `
                         <button onclick="viewBookingDetails('${booking.bookingReference}')" 
-                                class="flex-1 bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200">
+                                class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200">
                             View Details
                         </button>
                     `}
@@ -820,7 +826,7 @@ function showBookingDetailsModal(bookingReference) {
                     </div>
                     <div class="flex space-x-3">
                         <button onclick="closeModal()" 
-                                class="flex-1 bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium">
+                                class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-3 rounded-lg font-medium">
                             Close
                         </button>
                     </div>
@@ -1341,3 +1347,4 @@ async function loadAdminLeagues() {
         leaguesTbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-red-600">Error: ${err.message}</td></tr>`;
     }
 }
+
