@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/book-tickets.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
@@ -16,23 +19,34 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
                         <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
                         </svg>
                         <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
                     </div>
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">Home</a>
-                    <a href="events.html" class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">Matches</a>
-                    <a href="bookings.html" class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">My Bookings</a>
-                    <a href="leagues.html" class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">Leagues</a>
-                    <a href="how-it-works.html" class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">How It Works</a>
+                    <a href="index.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">Home</a>
+                    <a href="events.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">Matches</a>
+                    <a href="bookings.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">My
+                        Bookings</a>
+                    <a href="leagues.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">Leagues</a>
+                    <a href="how-it-works.html"
+                        class="px-3 py-2 rounded-md text-sm font-bold text-gray-700 hover:text-blue-700 hover:shadow-md hover:shadow-blue-300 transition-all duration-200">How
+                        It Works</a>
                 </div>
 
                 <!-- User Menu / Sign In -->
                 <div class="flex items-center">
-                    <a href="login.html" id="login-link" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign In</a>
+                    <a href="login.html" id="login-link"
+                        class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign
+                        In</a>
                 </div>
             </div>
         </div>
@@ -54,7 +68,7 @@
             <!-- Available Events -->
             <div class="lg:col-span-2">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Available Matches</h2>
-                
+
                 <!-- Loading State -->
                 <div id="loading-state" class="text-center py-12">
                     <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700 mx-auto mb-4"></div>
@@ -64,12 +78,14 @@
                 <!-- Events Grid -->
                 <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
                     <!-- Sample Event Card -->
-                    <div class="booking-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                    <div
+                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=500&h=200&fit=crop" 
-                                 alt="Stadium" class="w-full h-48 object-cover">
+                            <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=500&h=200&fit=crop"
+                                alt="Stadium" class="w-full h-48 object-cover">
                             <div class="absolute top-3 right-3">
-                                <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Available</span>
+                                <span
+                                    class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Available</span>
                             </div>
                         </div>
                         <div class="p-6">
@@ -80,14 +96,19 @@
                             <div class="space-y-2 mb-4">
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                     Old Trafford, Manchester
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
                                     </svg>
                                     March 15, 2024 • 3:00 PM
                                 </div>
@@ -95,11 +116,13 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-green-600">£45</div>
+                                    <div class="text-xl font-bold text-green-600">Rp 45</div>
                                 </div>
-                                <button class="select-ticket-btn bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                                        data-event-id="1" data-event-title="Manchester United vs Arsenal" data-venue="Old Trafford, Manchester" 
-                                        data-date="March 15, 2024 • 3:00 PM" data-price="45">
+                                <button
+                                    class="select-ticket-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
+                                    data-event-id="1" data-event-title="Manchester United vs Arsenal"
+                                    data-venue="Old Trafford, Manchester" data-date="March 15, 2024 • 3:00 PM"
+                                    data-price="45">
                                     Select Tickets
                                 </button>
                             </div>
@@ -107,12 +130,14 @@
                     </div>
 
                     <!-- Sample Event Card 2 -->
-                    <div class="booking-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                    <div
+                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=500&h=200&fit=crop" 
-                                 alt="Stadium" class="w-full h-48 object-cover">
+                            <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=500&h=200&fit=crop"
+                                alt="Stadium" class="w-full h-48 object-cover">
                             <div class="absolute top-3 right-3">
-                                <span class="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-medium">Few Left</span>
+                                <span class="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-medium">Few
+                                    Left</span>
                             </div>
                         </div>
                         <div class="p-6">
@@ -123,14 +148,19 @@
                             <div class="space-y-2 mb-4">
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                     Stamford Bridge, London
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
                                     </svg>
                                     March 22, 2024 • 5:30 PM
                                 </div>
@@ -138,11 +168,13 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-green-600">£65</div>
+                                    <div class="text-xl font-bold text-green-600">Rp 65</div>
                                 </div>
-                                <button class="select-ticket-btn bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                                        data-event-id="2" data-event-title="Chelsea vs Liverpool" data-venue="Stamford Bridge, London" 
-                                        data-date="March 22, 2024 • 5:30 PM" data-price="65">
+                                <button
+                                    class="select-ticket-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
+                                    data-event-id="2" data-event-title="Chelsea vs Liverpool"
+                                    data-venue="Stamford Bridge, London" data-date="March 22, 2024 • 5:30 PM"
+                                    data-price="65">
                                     Select Tickets
                                 </button>
                             </div>
@@ -150,12 +182,14 @@
                     </div>
 
                     <!-- Sample Event Card 3 -->
-                    <div class="booking-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                    <div
+                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&h=200&fit=crop" 
-                                 alt="Stadium" class="w-full h-48 object-cover">
+                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&h=200&fit=crop"
+                                alt="Stadium" class="w-full h-48 object-cover">
                             <div class="absolute top-3 right-3">
-                                <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Available</span>
+                                <span
+                                    class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Available</span>
                             </div>
                         </div>
                         <div class="p-6">
@@ -166,14 +200,19 @@
                             <div class="space-y-2 mb-4">
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                     Camp Nou, Barcelona
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
                                     </svg>
                                     April 10, 2024 • 9:00 PM
                                 </div>
@@ -181,11 +220,13 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-green-600">£120</div>
+                                    <div class="text-xl font-bold text-green-600">Rp 120</div>
                                 </div>
-                                <button class="select-ticket-btn bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                                        data-event-id="3" data-event-title="Barcelona vs Real Madrid" data-venue="Camp Nou, Barcelona" 
-                                        data-date="April 10, 2024 • 9:00 PM" data-price="120">
+                                <button
+                                    class="select-ticket-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
+                                    data-event-id="3" data-event-title="Barcelona vs Real Madrid"
+                                    data-venue="Camp Nou, Barcelona" data-date="April 10, 2024 • 9:00 PM"
+                                    data-price="120">
                                     Select Tickets
                                 </button>
                             </div>
@@ -193,12 +234,14 @@
                     </div>
 
                     <!-- Sample Event Card 4 -->
-                    <div class="booking-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                    <div
+                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=500&h=200&fit=crop" 
-                                 alt="Stadium" class="w-full h-48 object-cover">
+                            <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=500&h=200&fit=crop"
+                                alt="Stadium" class="w-full h-48 object-cover">
                             <div class="absolute top-3 right-3">
-                                <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">Sold Out</span>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">Sold
+                                    Out</span>
                             </div>
                         </div>
                         <div class="p-6">
@@ -209,14 +252,19 @@
                             <div class="space-y-2 mb-4">
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                     Allianz Arena, Munich
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
                                     </svg>
                                     March 28, 2024 • 6:30 PM
                                 </div>
@@ -224,9 +272,11 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-gray-400">£85</div>
+                                    <div class="text-xl font-bold text-gray-400">Rp 85</div>
                                 </div>
-                                <button class="bg-gray-400 text-white px-6 py-2 rounded-lg font-medium cursor-not-allowed" disabled>
+                                <button
+                                    class="bg-gray-400 text-white px-6 py-2 rounded-lg font-medium cursor-not-allowed"
+                                    disabled>
                                     Sold Out
                                 </button>
                             </div>
@@ -237,63 +287,81 @@
                 <!-- Error State -->
                 <div id="error-state" class="text-center py-12 hidden">
                     <div class="text-red-600 mb-4">Failed to load matches</div>
-                    <button onclick="loadEvents()" class="bg-blue-700 text-white px-4 py-2 rounded-lg">Try Again</button>
+                    <button onclick="loadEvents()" class="bg-blue-700 text-white px-4 py-2 rounded-lg">Try
+                        Again</button>
                 </div>
             </div>
 
             <!-- Booking Summary -->
             <div class="lg:col-span-1">
-                <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Booking Summary</h3>
-                    
+                <div
+                    class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 p-8 sticky top-28 z-10">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Booking Summary</h3>
+
                     <div id="booking-summary" class="hidden">
-                        <div class="space-y-4 mb-6">
-                            <div class="border-b border-gray-200 pb-4">
-                                <h4 id="selected-event-title" class="font-semibold text-gray-900"></h4>
-                                <p id="selected-event-venue" class="text-sm text-gray-600"></p>
-                                <p id="selected-event-date" class="text-sm text-gray-600"></p>
-                            </div>
-                            
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Number of Tickets:</span>
-                                <div class="flex items-center space-x-2">
-                                    <button id="decrease-tickets" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">-</button>
-                                    <span id="ticket-count" class="w-8 text-center font-medium">1</span>
-                                    <button id="increase-tickets" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">+</button>
+                        <div class="space-y-5 mb-8">
+                            <div class="bg-blue-50/50 rounded-2xl p-4 border border-blue-100/50">
+                                <h4 id="selected-event-title" class="font-bold text-blue-900 text-lg mb-1"></h4>
+                                <div class="flex items-center text-sm text-gray-600 mb-1">
+                                    <i class="fas fa-map-marker-alt w-4 mr-1 text-blue-500"></i>
+                                    <span id="selected-event-venue"></span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-calendar-alt w-4 mr-1 text-blue-500"></i>
+                                    <span id="selected-event-date"></span>
                                 </div>
                             </div>
-                            
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Price per Ticket:</span>
-                                <span id="price-per-ticket" class="font-medium">£0</span>
+
+                            <div class="flex justify-between items-center p-2">
+                                <span class="text-gray-600 font-medium">Tickets</span>
+                                <div
+                                    class="flex items-center space-x-3 bg-gray-50 rounded-full p-1 border border-gray-200">
+                                    <button id="decrease-tickets"
+                                        class="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 shadow-sm text-gray-700 font-bold transition-colors">-</button>
+                                    <span id="ticket-count" class="w-6 text-center font-bold text-gray-900">1</span>
+                                    <button id="increase-tickets"
+                                        class="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 shadow-sm text-gray-700 font-bold transition-colors">+</button>
+                                </div>
                             </div>
-                            
-                            <div class="border-t border-gray-200 pt-4">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg font-semibold text-gray-900">Total:</span>
-                                    <span id="total-price" class="text-2xl font-bold text-green-600">£0</span>
+
+                            <div class="flex justify-between items-center p-2">
+                                <span class="text-gray-600 font-medium">Price</span>
+                                <span id="price-per-ticket" class="font-bold text-gray-900">Rp 0</span>
+                            </div>
+
+                            <div class="border-t border-gray-200 pt-6 mt-2">
+                                <div class="flex justify-between items-end">
+                                    <span class="text-gray-500 font-medium mb-1">Total Payment</span>
+                                    <span id="total-price"
+                                        class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700">Rp
+                                        0</span>
                                 </div>
                             </div>
                         </div>
-                        
-                        <button id="confirm-booking" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
+
+                        <button id="confirm-booking"
+                            class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 transition duration-300">
                             Confirm Booking
                         </button>
                     </div>
-                    
-                    <div id="no-selection" class="text-center py-8">
-                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
+
+                    <div id="no-selection" class="text-center py-12">
+                        <div
+                            class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-gray-100 shadow-inner">
+                            <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z">
+                                </path>
                             </svg>
                         </div>
-                        <p class="text-gray-500">Select a match to start booking</p>
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">No Match Selected</h4>
+                        <p class="text-gray-500 text-sm">Pick a match from the list to start booking your tickets.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -301,7 +369,9 @@
                 <div>
                     <div class="flex items-center mb-4">
                         <svg class="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"></path>
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
+                            </path>
                         </svg>
                         <span class="ml-2 text-xl font-bold">FootballTix</span>
                     </div>
@@ -340,6 +410,9 @@
         </div>
     </footer>
 
+    <!-- Midtrans Snap.js -->
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key=""></script>
     <script src="js/book-tickets.js"></script>
 </body>
+
 </html>
