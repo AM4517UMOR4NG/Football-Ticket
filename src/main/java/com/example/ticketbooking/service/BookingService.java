@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,9 @@ public class BookingService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private MidtransService midtransService;
 
     public BookingResponseDTO createBooking(BookingRequestDTO requestDTO, Long userId) {
         User user = userRepository.findById(userId)
@@ -47,14 +51,28 @@ public class BookingService {
         booking.setNumberOfTickets(requestDTO.getNumberOfTickets());
         booking.setTotalAmount(
                 event.getPrice().multiply(java.math.BigDecimal.valueOf(requestDTO.getNumberOfTickets())));
-        booking.setStatus(Booking.BookingStatus.CONFIRMED);
+        booking.setStatus(Booking.BookingStatus.PENDING);
         booking.setBookingReference(generateBookingReference());
 
         event.setAvailableSeats(event.getAvailableSeats() - requestDTO.getNumberOfTickets());
         eventRepository.save(event);
         bookingRepository.save(booking);
 
-        return mapToDto(booking);
+        // Create Midtrans Snap token
+        BookingResponseDTO dto = mapToDto(booking);
+        try {
+            Map<String, String> snapResult = midtransService.createSnapTransaction(booking);
+            dto.setSnapToken(snapResult.get("token"));
+            dto.setRedirectUrl(snapResult.get("redirect_url"));
+            // Save snap token to booking
+            booking.setSnapToken(snapResult.get("token"));
+            bookingRepository.save(booking);
+        } catch (Exception e) {
+            logger.error("Failed to create Midtrans token for booking {}: {}",
+                    booking.getBookingReference(), e.getMessage());
+        }
+
+        return dto;
     }
 
     @Transactional(readOnly = true)
@@ -106,6 +124,7 @@ public class BookingService {
         dto.setNumberOfTickets(booking.getNumberOfTickets());
         dto.setTotalAmount(booking.getTotalAmount() != null ? booking.getTotalAmount().doubleValue() : null);
         dto.setStatus(booking.getStatus() != null ? booking.getStatus().toString() : null);
+        dto.setImageUrl(booking.getEvent() != null ? booking.getEvent().getImageUrl() : null);
         return dto;
     }
 
