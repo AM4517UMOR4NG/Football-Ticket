@@ -13,8 +13,8 @@
 </head>
 
 <body>
-      <!-- Navigation -->
-      <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-2xl">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300 hover:shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <!-- Logo -->
@@ -49,7 +49,7 @@
                 <div class="flex items-center" id="nav-right-container">
                     <!-- Sign In Button - Will be replaced by user menu when logged in -->
                     <a href="login.html" id="login-link"
-                        class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign
+                        class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign
                         In</a>
                 </div>
 
@@ -61,12 +61,16 @@
                         aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
                         <!-- Icon when menu is closed -->
-                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                         <!-- Icon when menu is open -->
-                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -101,46 +105,40 @@
                     worldwide</p>
                 <!-- Advanced Search Bar Section -->
                 <div
-                    class="filter-card rounded-full p-2 max-w-5xl mx-auto border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl">
-                    <div class="flex flex-col md:flex-row items-center gap-2 px-4">
-                        <!-- League Filter -->
-                        <div class="relative flex-1 w-full md:w-auto">
-                            <i
-                                class="fas fa-trophy absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70"></i>
-                            <select id="league-filter"
-                                class="w-full pl-10 pr-4 py-3 rounded-full text-white bg-transparent border border-white/30 focus:outline-none focus:border-white focus:ring-2 focus:ring-white/50 appearance-none">
-                                <option value="">All Leagues</option>
-                                <option value="premier">Premier League</option>
-                                <option value="laliga">La Liga</option>
-                                <option value="bundesliga">Bundesliga</option>
-                                <option value="seriea">Serie A</option>
-                                <option value="ligue1">Ligue 1</option>
-                                <option value="champions">Champions League</option>
-                            </select>
+                    class="filter-card p-3 max-w-4xl mx-auto bg-white rounded-full shadow-[0_20px_50px_rgb(0,0,0,0.15)] flex flex-col md:flex-row items-center gap-2 border border-gray-100">
+                    <!-- League Filter -->
+                    <div
+                        class="relative w-full md:w-1/3 flex items-center border-b md:border-b-0 md:border-r border-gray-200 px-4">
+                        <i class="fas fa-trophy text-blue-500 text-lg mr-3"></i>
+                        <select id="league-filter"
+                            class="w-full py-3 bg-transparent text-gray-700 font-medium focus:outline-none appearance-none cursor-pointer">
+                            <option value="">All Leagues</option>
+                            <option value="premier">Premier League</option>
+                            <option value="laliga">La Liga</option>
+                            <option value="bundesliga">Bundesliga</option>
+                            <option value="seriea">Serie A</option>
+                            <option value="ligue1">Ligue 1</option>
+                            <option value="champions">Champions League</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-4 text-gray-400 text-sm pointer-events-none"></i>
+                    </div>
+
+                    <!-- Search Input with Team Autocomplete -->
+                    <div class="relative w-full md:w-1/2 flex items-center px-4">
+                        <i class="fas fa-search text-blue-500 text-lg mr-3"></i>
+                        <input type="text" id="search-input" placeholder="Search teams, matches or venues..."
+                            class="w-full py-3 bg-transparent text-gray-800 font-medium placeholder-gray-400 focus:outline-none">
+                        <!-- Autocomplete Dropdown -->
+                        <div id="autocomplete-dropdown"
+                            class="absolute left-0 top-full mt-4 w-full bg-white rounded-2xl shadow-xl hidden max-h-60 overflow-y-auto z-50 border border-gray-100">
                         </div>
-                        <!-- Search Input with Team Autocomplete -->
-                        <div class="relative flex-1 w-full">
-                            <i
-                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70"></i>
-                            <input type="text" id="search-input" placeholder="Search teams, matches or venues..."
-                                class="w-full pl-10 pr-4 py-3 rounded-full text-white bg-transparent border border-white/30 focus:outline-none focus:border-white focus:ring-2 focus:ring-white/50 placeholder-white/70">
-                            <!-- Autocomplete Dropdown -->
-                            <div id="autocomplete-dropdown"
-                                class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg hidden max-h-60 overflow-y-auto">
-                                <!-- Suggestions will be populated here -->
-                            </div>
-                        </div>
-                        <!-- Date Filter -->
-                        <div class="relative flex-1 w-full md:w-auto">
-                            <i
-                                class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70"></i>
-                            <input type="date" id="date-filter"
-                                class="w-full pl-10 pr-4 py-3 rounded-full text-white bg-transparent border border-white/30 focus:outline-none focus:border-white focus:ring-2 focus:ring-white/50">
-                        </div>
-                        <!-- Search Button -->
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="w-full md:w-auto px-2 pb-2 md:pb-0">
                         <button id="search-btn"
-                            class="w-full md:w-auto bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white px-6 py-3 rounded-full font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg">
-                            <i class="fas fa-arrow-right mr-2"></i> Find Matches
+                            class="w-full md:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-300">
+                            Search
                         </button>
                     </div>
                 </div>
@@ -148,24 +146,48 @@
         </div>
     </div>
     <!-- Stats Section -->
-    <div class="bg-white py-8">
+    <div class="bg-gray-50/50 py-12 border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-blue-700" id="total-events">0</div>
-                    <div class="text-gray-600">Total Events</div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Stat Card 1 -->
+                <div
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i class="fas fa-calendar-check text-6xl text-blue-600"></i>
+                    </div>
+                    <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-blue-800 mb-2"
+                        id="total-events">0</div>
+                    <div class="text-sm font-bold text-gray-500 uppercase tracking-wider">Total Events</div>
                 </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-green-600" id="upcoming-events">0</div>
-                    <div class="text-gray-600">Upcoming</div>
+                <!-- Stat Card 2 -->
+                <div
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i class="fas fa-clock text-6xl text-emerald-600"></i>
+                    </div>
+                    <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-emerald-500 to-teal-700 mb-2"
+                        id="upcoming-events">0</div>
+                    <div class="text-sm font-bold text-gray-500 uppercase tracking-wider">Upcoming</div>
                 </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-purple-600" id="total-seats">0</div>
-                    <div class="text-gray-600">Available Seats</div>
+                <!-- Stat Card 3 -->
+                <div
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i class="fas fa-chair text-6xl text-purple-600"></i>
+                    </div>
+                    <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-purple-500 to-indigo-700 mb-2"
+                        id="total-seats">0</div>
+                    <div class="text-sm font-bold text-gray-500 uppercase tracking-wider">Available Seats</div>
                 </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-orange-600" id="avg-price">£0</div>
-                    <div class="text-gray-600">Avg Price</div>
+                <!-- Stat Card 4 -->
+                <div
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i class="fas fa-ticket-alt text-6xl text-orange-600"></i>
+                    </div>
+                    <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-500 to-red-600 mb-2"
+                        id="avg-price">Rp 0</div>
+                    <div class="text-sm font-bold text-gray-500 uppercase tracking-wider">Avg Price</div>
                 </div>
             </div>
         </div>
@@ -202,7 +224,7 @@
         </div>
     </div>
     <!-- Footer -->
- <footer class="bg-gray-900 text-white">
+    <footer class="bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
@@ -254,16 +276,27 @@
                     <h3 class="text-lg font-semibold mb-4">Contact</h3>
                     <ul class="space-y-3 text-gray-400">
                         <li class="flex items-center">
-                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.1 2 4.7 4.1 3 7.6c-.2.5-.1 1 .3 1.4l1.7 1.7c.4.4.4 1 0 1.4l-1.7 1.7c-.3.3-.5.8-.4 1.3C4.8 20 8.1 22 12 22c4 0 7.3-2 8.8-5.6.1-.5 0-1-.4-1.3l-1.7-1.7c-.4-.4-.4-1 0-1.4L20.4 9c.4-.4.5-.9.3-1.4C19.3 4.1 15.9 2 12 2z"/></svg>
-                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK" target="_blank" class="hover:text-white">123 Stadium Street, London, UK</a>
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C8.1 2 4.7 4.1 3 7.6c-.2.5-.1 1 .3 1.4l1.7 1.7c.4.4.4 1 0 1.4l-1.7 1.7c-.3.3-.5.8-.4 1.3C4.8 20 8.1 22 12 22c4 0 7.3-2 8.8-5.6.1-.5 0-1-.4-1.3l-1.7-1.7c-.4-.4-.4-1 0-1.4L20.4 9c.4-.4.5-.9.3-1.4C19.3 4.1 15.9 2 12 2z" />
+                            </svg>
+                            <a href="https://www.google.com/maps/search/?api=1&query=123+Stadium+Street,+London,+UK"
+                                target="_blank" class="hover:text-white">123 Stadium Street, London, UK</a>
                         </li>
                         <li class="flex items-center">
-                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 01.9-.27c1 .2 2 .3 3 .3a1 1 0 011 1v3a1 1 0 01-1 1C9.07 21.5 2.5 14.93 2.5 6a1 1 0 011-1h3a1 1 0 011 1c0 1 .1 2.1.3 3a1 1 0 01-.27.9l-2.2 2.2z"/></svg>
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M6.62 10.79a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 01.9-.27c1 .2 2 .3 3 .3a1 1 0 011 1v3a1 1 0 01-1 1C9.07 21.5 2.5 14.93 2.5 6a1 1 0 011-1h3a1 1 0 011 1c0 1 .1 2.1.3 3a1 1 0 01-.27.9l-2.2 2.2z" />
+                            </svg>
                             <a href="tel:+441234567890" class="hover:text-white">+44 123 456 7890</a>
                         </li>
                         <li class="flex items-center">
-                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            <a href="mailto:support@footballtix.com" class="hover:text-white">support@footballtix.com</a>
+                            <svg class="w-6 h-6 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                            </svg>
+                            <a href="mailto:support@footballtix.com"
+                                class="hover:text-white">support@footballtix.com</a>
                         </li>
                     </ul>
                 </div>
