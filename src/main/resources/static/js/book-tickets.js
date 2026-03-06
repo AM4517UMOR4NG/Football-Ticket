@@ -48,6 +48,9 @@ async function initializeBookingPage() {
         // Load events (used both by booking and admin)
         await loadEvents();
 
+        // Initialize Midtrans Snap client key
+        await initMidtransSnap();
+
         // Setup page listeners (ticket controls, confirm)
         setupEventListeners();
 
@@ -165,7 +168,7 @@ function displayEvents(events) {
     eventsGrid.innerHTML = events.map(event => {
         const selectedClass = selectedEvent && selectedEvent.id === event.id ? 'ring-2 ring-blue-500' : '';
         return `
-    <div class="booking-card ${selectedClass} bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 cursor-pointer" data-event-id="${event.id}">
+    <div class="booking-card ${selectedClass} bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100/50 hover:shadow-blue-900/10 hover:-translate-y-2 overflow-hidden transition-all duration-300 cursor-pointer" data-event-id="${event.id}">
         <div class="relative">
             <!-- Event Image -->
             <div class="h-48 bg-gradient-to-r from-blue-600 to-blue-800 relative overflow-hidden">
@@ -239,7 +242,7 @@ function displayEvents(events) {
             </div>
            
             <div class="flex items-center justify-between">
-                <div class="text-2xl font-bold text-green-600">£${Number(event.price).toFixed(2)}</div>
+                <div class="text-2xl font-bold text-green-600">Rp ${new Intl.NumberFormat('id-ID').format(event.price)}</div>
                 <div class="text-sm text-gray-500">per ticket</div>
             </div>
             <div class="flex space-x-3 mt-4">
@@ -351,7 +354,7 @@ function updateBookingSummary() {
     selectedEventTitle.textContent = selectedEvent.title;
     selectedEventVenue.textContent = selectedEvent.venue;
     selectedEventDate.textContent = formatEventDate(selectedEvent.eventDate);
-    pricePerTicket.textContent = `£${Number(selectedEvent.price).toFixed(2)}`;
+    pricePerTicket.textContent = `Rp ${new Intl.NumberFormat('id-ID').format(selectedEvent.price)}`;
 
     updateTicketCount();
 }
@@ -360,7 +363,7 @@ function updateTicketCount() {
     if (!selectedEvent) return;
     ticketCount.textContent = currentTicketCount;
     const total = parseFloat(selectedEvent.price) * currentTicketCount;
-    totalPrice.textContent = `£${total.toFixed(2)}`;
+    totalPrice.textContent = `Rp ${new Intl.NumberFormat('id-ID').format(total)}`;
 }
 
 /* --------------------- Ticket controls & Confirm --------------------- */
@@ -419,7 +422,7 @@ function handleBuyTickets(eventOrId, title) {
     if (bookingSummary) bookingSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-/* --------------------- Confirm Booking -> API -> Refund Policy --------------------- */
+/* --------------------- Confirm Booking -> API -> Midtrans Payment --------------------- */
 async function handleConfirmBooking() {
     if (!selectedEvent) {
         alert('Please select an event first.');
@@ -461,12 +464,59 @@ async function handleConfirmBooking() {
 
         const booking = await response.json();
 
-        showSuccess('Booking created successfully!');
+        // Check if we got a Snap token for Midtrans payment
+        if (booking.snapToken) {
+            // Function to sync status with backend
+            const syncStatus = async (orderId) => {
+                try {
+                    await fetch(`${API_BASE_URL}/payments/sync-status/${orderId}`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                } catch (e) { console.error('Error syncing status:', e); }
+            };
 
-        // Immediately show refund policy + read it aloud
-        setTimeout(() => {
-            showRefundPolicyAndSpeak(selectedEvent, booking);
-        }, 700);
+            // Open Midtrans Snap popup
+            window.snap.pay(booking.snapToken, {
+                onSuccess: async function (result) {
+                    console.log('Payment success:', result);
+                    await syncStatus(result.order_id);
+                    showSuccess('Payment successful! Your booking is confirmed.');
+                    setTimeout(() => {
+                        window.location.href = 'bookings.html';
+                    }, 1500);
+                },
+                onPending: async function (result) {
+                    console.log('Payment pending:', result);
+                    await syncStatus(result.order_id);
+                    showSuccess('Payment is being processed. Please complete your payment.');
+                    setTimeout(() => {
+                        window.location.href = 'bookings.html';
+                    }, 2000);
+                },
+                onError: async function (result) {
+                    console.error('Payment error:', result);
+                    if (result && result.order_id) await syncStatus(result.order_id);
+                    showError('Payment failed. Please try again.');
+                    confirmBooking.disabled = false;
+                    confirmBooking.textContent = originalText;
+                },
+                onClose: async function () {
+                    console.log('Payment popup closed');
+                    // Sync anyway to capture if they actually paid but closed too fast
+                    await syncStatus(booking.bookingReference);
+                    showToast('Payment not completed. You can pay later from My Bookings.', 'warning');
+                    confirmBooking.disabled = false;
+                    confirmBooking.textContent = originalText;
+                }
+            });
+        } else {
+            // Fallback: no Snap token (Midtrans might not be configured)
+            showSuccess('Booking created successfully!');
+            setTimeout(() => {
+                showRefundPolicyAndSpeak(selectedEvent, booking);
+            }, 700);
+        }
 
     } catch (error) {
         console.error('Error creating booking:', error);
@@ -474,6 +524,22 @@ async function handleConfirmBooking() {
 
         confirmBooking.disabled = false;
         confirmBooking.textContent = 'Confirm Booking';
+    }
+}
+
+/* Initialize Midtrans Snap client key */
+async function initMidtransSnap() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/payments/client-key`);
+        if (response.ok) {
+            const data = await response.json();
+            const snapScript = document.querySelector('script[src*="midtrans"]');
+            if (snapScript && data.clientKey) {
+                snapScript.setAttribute('data-client-key', data.clientKey);
+            }
+        }
+    } catch (e) {
+        console.warn('Could not load Midtrans client key:', e);
     }
 }
 
@@ -590,7 +656,7 @@ function openAdminPanel(eventId) {
         if (titleEl) titleEl.textContent = eventData.title;
         if (venueEl) venueEl.textContent = eventData.venue;
         if (dateEl) dateEl.textContent = formatEventDate(eventData.eventDate) + ' • ' + formatEventTime(eventData.eventDate);
-        if (priceEl) priceEl.textContent = `£${Number(eventData.price).toFixed(2)}`;
+        if (priceEl) priceEl.textContent = `Rp ${new Intl.NumberFormat('id-ID').format(eventData.price)}`;
         if (descEl) descEl.textContent = eventData.description || '';
         if (seatsEl) seatsEl.textContent = `${Number(eventData.totalSeats || 0).toLocaleString()} seats`;
 
@@ -796,3 +862,5 @@ function escapeAttr(str) {
     `;
     document.head.appendChild(style);
 })();
+
+
