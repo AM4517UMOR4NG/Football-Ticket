@@ -237,7 +237,7 @@ function displayEvents(events) {
     hideEmptyState();
 
     matchesGrid.innerHTML = events.map(event => `
-        <div class="match-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:scale-105">
+        <div class="match-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-500 hover:scale-105">
             <div class="relative">
                 <!-- Event Image -->
                 <div class="h-48 bg-gradient-to-r from-blue-600 to-blue-800 relative overflow-hidden">
@@ -313,7 +313,7 @@ function displayEvents(events) {
                
                 <!-- Price and Actions -->
                 <div class="flex items-center justify-between mb-4">
-                    <div class="text-3xl font-bold text-green-600">£${event.price}</div>
+                    <div class="text-3xl font-bold text-green-600">Rp ${event.price}</div>
                     <div class="text-sm text-gray-500">per ticket</div>
                 </div>
                
@@ -474,12 +474,12 @@ async function showEventDetailsModal(eventId) {
                             </div>
                             <div>
                                 <div class="text-sm text-gray-500">Price</div>
-                                <div class="font-medium text-green-600">£${event.price}</div>
+                                <div class="font-medium text-green-600">Rp ${event.price}</div>
                             </div>
                         </div>
                         <div class="flex space-x-3">
                             <button onclick="handleBookEvent(${event.id}, '${event.title}')"
-                                    class="flex-1 bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium">
+                                    class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-3 rounded-lg font-medium">
                                 Book Tickets
                             </button>
                             <button onclick="closeModal()"
@@ -521,7 +521,7 @@ function updateStats(stats) {
     if (totalEvents) totalEvents.textContent = stats.totalEvents || 0;
     if (upcomingEvents) upcomingEvents.textContent = stats.upcomingEvents || 0;
     if (totalSeats) totalSeats.textContent = stats.totalSeats ? stats.totalSeats.toLocaleString() : 0;
-    if (avgPrice) avgPrice.textContent = stats.averagePrice ? `£${Math.round(stats.averagePrice)}` : '£0';
+    if (avgPrice) avgPrice.textContent = stats.averagePrice ? `Rp ${Math.round(stats.averagePrice)}` : 'Rp 0';
 }
 // Advanced league detection with team mappings and cross-league logic
 const teamToLeagueMap = {
@@ -966,3 +966,4 @@ async function checkWishlistStatus() {
         }
     }
 }
+
