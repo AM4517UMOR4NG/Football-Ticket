@@ -31,6 +31,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/api/auth/register",
             "/api/auth/google",
             "/api/auth/google/client-id",
+            "/api/payments/notification",
+            "/api/payments/client-key",
             "/api/events/upcoming",
             "/api/events/all",
             "/api/leagues",
@@ -134,6 +136,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if (path.startsWith("/api/about") && "GET".equals(method)) {
+            return true;
+        }
+
+        // Allow payment sync-status for both GET and POST
+        if (path.startsWith("/api/payments/sync-status")) {
             return true;
         }
 
