@@ -45,7 +45,7 @@ async function checkAdminAuth() {
             throw new Error('Insufficient privileges');
         }
 
-        // Update user data in localStorage
+        // Updat user data in localStorage
         localStorage.setItem('userData', JSON.stringify(userData));
         return true;
 
