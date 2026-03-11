@@ -1,6 +1,6 @@
 # FootballTix - Football Ticket Booking System
 
-A comprehensive football ticket booking platform built with Spring Boot and modern web technologies.
+A  football ticket booking platform built with Spring Boot and modern web technologies.
 
 ## Features
 
