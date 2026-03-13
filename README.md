@@ -2,7 +2,7 @@
   FootballTix README — bilingual (ID + EN) documentation
 -->
 
-# FootballTix – Football Ticket Booking System
+# FootballTix – Football Ticketing System
 
 **ID:** Platform pemesanan tiket sepak bola end-to-end berbasis Spring Boot 3 dengan antarmuka statis modern (Tailwind + JavaScript) dan data persistensi H2 file-based.
 
