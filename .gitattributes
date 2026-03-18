@@ -1,2 +1,19 @@
-/mvnw text eol=lf
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Handle CRLF for Windows-specific files
 *.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Force LF for shell scripts and specific Maven files
+mvnw text eol=lf
+*.sh text eol=lf
+
+# Denotes all files that are truly binary and should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.jar binary
+*.pdf binary
