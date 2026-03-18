@@ -121,6 +121,6 @@ src/main/java/com/example/ticketbooking
 
 **FootballTix – Experiencing the stadium, simplified.**
 
-Built with ❤️ by the FootballTix Team.
+Built by the FootballTix Team.
 
 </div>
