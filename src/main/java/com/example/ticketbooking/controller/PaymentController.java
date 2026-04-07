@@ -147,7 +147,6 @@ public class PaymentController {
             JSONObject midtransStatus = midtransService.checkTransactionStatus(orderId);
 
             String transactionStatus = midtransStatus.optString("transaction_status", "capture");
-            String fraudStatus = midtransStatus.optString("fraud_status", "accept");
             String paymentType = midtransStatus.optString("payment_type", "midtrans");
 
             logger.info("Syncing Midtrans status for order {}: transaction_status={}", orderId, transactionStatus);
