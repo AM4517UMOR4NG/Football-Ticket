@@ -89,7 +89,6 @@ public class UserService {
     public void initDefaultAdmin() {
         createDefaultAdminIfNotExists();
         createDefaultCashierIfNotExists();
-        createDefaultUserIfNotExists();
     }
 
     private void validateUserRegistration(UserRegistrationDTO registrationDTO) {
@@ -167,25 +166,6 @@ public class UserService {
         }
     }
 
-    private void createDefaultUserIfNotExists() {
-        if (userRepository.findByUsername("").isEmpty()) {
-            UserRegistrationDTO userDto = new UserRegistrationDTO(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "");
-
-            if (isPasswordValid(userDto.password())) {
-                User user = createUserFromDTO(userDto);
-                userRepository.save(user);
-                log.info("Default user '' created successfully");
-            } else {
-                log.error("Failed to create default user: invalid password");
-            }
-        }
-    }
 
     private boolean isPasswordValid(String password) {
         PasswordValidationService.PasswordValidationResult validation = passwordValidationService
