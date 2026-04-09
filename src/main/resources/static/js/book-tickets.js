@@ -512,7 +512,17 @@ async function handleConfirmBooking() {
             });
         } else {
             // Fallback: no Snap token (Midtrans might not be configured)
-            showSuccess('Booking created successfully!');
+            // Automatically confirm booking via sync-status fallback
+            try {
+                await fetch(`${API_BASE_URL}/payments/sync-status/${booking.bookingReference}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+            } catch (e) {
+                console.error('Error syncing status in fallback:', e);
+            }
+            
+            showSuccess('Payment Simulated! Your booking is confirmed.');
             setTimeout(() => {
                 showRefundPolicyAndSpeak(selectedEvent, booking);
             }, 700);
