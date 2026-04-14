@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚽ FootballTix – Football Ticket Booking System
+# FootballTix – Football Ticket Booking System
 
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.x-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17-007396?logo=java&logoColor=white)](https://www.oracle.com/java/)
