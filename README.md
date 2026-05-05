@@ -25,7 +25,7 @@ Platform pemesanan tiket sepak bola end-to-end berbasis Spring Boot 3 dengan ant
   - 🎫 Pemesanan Tiket (Virtual) dengan kuota kursi dinamis.
   - ❤️ Wishlist & Notifikasi UI.
   - 🔐 Autentikasi JWT & Google OAuth ready.
-  - 💳 Integrasi Midtrans Payment Gateway (Placeholder).
+  - 💳 Integrasi Midtrans Payment Gateway 
   - 📊 Dashboard untuk Admin, Kasir, dan User.
 
 ---
