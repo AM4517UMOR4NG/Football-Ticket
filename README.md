@@ -18,7 +18,7 @@
 </div>
 
 ## 1. ID: Ikhtisar Sistem
-Platform pemesanan tiket sepak bola end-to-end berbasis Spring Boot 3 dengan antarmuka modern (Tailwind + JS) dan persistensi data H2.
+\ket sepak bola end-to-end berbasis Spring Boot 3 dengan antarmuka modern (Tailwind + JS) dan persistensi data H2.
 
 - **Fitur Utama**:
   - 🏆 Kelola Liga & Event (CRUD).
