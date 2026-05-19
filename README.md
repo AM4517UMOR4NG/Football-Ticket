@@ -21,7 +21,7 @@
 \ket sepak bola end-to-end berbasis Spring Boot 3 dengan antarmuka modern (Tailwind + JS) dan persistensi data H2.
 
 - **Fitur Utama**:
-  - 🏆 Kelola Liga & Event (CRUD).
+  - 🏆 Kelola Liga & Event.
   - 🎫 Pemesanan Tiket (Virtual) dengan kuota kursi dinamis.
   - ❤️ Wishlist & Notifikasi UI.
   - 🔐 Autentikasi JWT & Google OAuth ready.
