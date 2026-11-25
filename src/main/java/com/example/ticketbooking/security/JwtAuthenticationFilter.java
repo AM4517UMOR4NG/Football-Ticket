@@ -15,8 +15,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -24,24 +22,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
-
-    // Endpoint yang tidak memerlukan authentication
-    private static final List<String> PUBLIC_ENDPOINTS = Arrays.asList(
-            "/api/auth/login",
-            "/api/auth/register",
-            "/api/auth/google",
-            "/api/auth/google/client-id",
-            "/api/payments/notification",
-            "/api/payments/client-key",
-            "/api/events/upcoming",
-            "/api/events/all",
-            "/api/leagues",
-            "/api/leagues/active",
-            "/api/about/stats",
-            "/api/about/team",
-            "/api/about/values",
-            "/error",
-            "/favicon.ico");
 
     public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, UserDetailsServiceImpl userDetailsService) {
         this.tokenProvider = tokenProvider;
@@ -55,57 +35,37 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @org.springframework.lang.NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String requestPath = request.getRequestURI();
-        String method = request.getMethod();
+        String jwt = getJwtFromRequest(request);
 
-        logger.debug("Processing request: {} {}", method, requestPath);
-
-        try {
-            if (isPublicEndpoint(requestPath, method)) {
-                logger.debug("Public endpoint accessed: {}", requestPath);
-                filterChain.doFilter(request, response);
+        if (StringUtils.hasText(jwt)) {
+            if (!tokenProvider.validateToken(jwt)) {
+                logger.warn("Invalid JWT token for request: {}", requestPath);
+                SecurityContextHolder.clearContext();
+                handleAuthenticationError(response, "Invalid or expired token");
                 return;
             }
 
-            String jwt = getJwtFromRequest(request);
+            try {
+                String username = tokenProvider.getUsernameFromToken(jwt);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (StringUtils.hasText(jwt)) {
-                if (tokenProvider.validateToken(jwt)) {
-                    String username = tokenProvider.getUsernameFromToken(jwt);
-                    logger.debug("JWT token valid for user: {}", username);
-
-                    try {
-                        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities());
-
-                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                        logger.debug("Authentication set for user: {}", username);
-
-                    } catch (UsernameNotFoundException ex) {
-                        logger.error("User not found: {}", username);
-                        handleAuthenticationError(response, "User not found");
-                        return;
-                    }
-                } else {
-                    logger.warn("Invalid JWT token for request: {}", requestPath);
-                    handleAuthenticationError(response, "Invalid or expired token");
-                    return;
-                }
-            } else {
-                logger.warn("No JWT token found for protected endpoint: {}", requestPath);
-                handleAuthenticationError(response, "Authentication required");
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (UsernameNotFoundException ex) {
+                logger.warn("JWT references non-existent user on {}", requestPath);
+                SecurityContextHolder.clearContext();
+                handleAuthenticationError(response, "User not found");
+                return;
+            } catch (Exception ex) {
+                logger.error("Could not set user authentication in security context for request: {}", requestPath, ex);
+                SecurityContextHolder.clearContext();
+                handleAuthenticationError(response, "Authentication failed");
                 return;
             }
-
-        } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context for request: {}", requestPath, ex);
-            handleAuthenticationError(response, "Authentication failed");
-            return;
         }
 
         filterChain.doFilter(request, response);
@@ -113,46 +73,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
-
         return null;
-    }
-
-    private boolean isPublicEndpoint(String path, String method) {
-        if (PUBLIC_ENDPOINTS.contains(path)) {
-            return true;
-        }
-
-        // Check pattern matches
-        if (path.startsWith("/api/events") && "GET".equals(method)) {
-            return true;
-        }
-
-        if (path.startsWith("/api/leagues") && "GET".equals(method)) {
-            return true;
-        }
-
-        if (path.startsWith("/api/about") && "GET".equals(method)) {
-            return true;
-        }
-
-        // Allow payment sync-status for both GET and POST
-        if (path.startsWith("/api/payments/sync-status")) {
-            return true;
-        }
-
-        if ("OPTIONS".equals(method)) {
-            return true;
-        }
-
-        if (path.matches(".*\\.(css|js|png|jpg|jpeg|gif|ico|svg)$")) {
-            return true;
-        }
-
-        return false;
     }
 
     private void handleAuthenticationError(HttpServletResponse response, String message) throws IOException {
@@ -166,21 +90,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         response.getWriter().write(jsonResponse);
         response.getWriter().flush();
-    }
-
-    @Override
-    protected boolean shouldNotFilter(@org.springframework.lang.NonNull HttpServletRequest request)
-            throws ServletException {
-        String path = request.getRequestURI();
-
-        if (path.equals("/") || path.matches(".*\\.(css|js|png|jpg|jpeg|gif|ico|svg|html)$")) {
-            return true;
-        }
-
-        if (path.equals("/health") || path.equals("/actuator/health")) {
-            return true;
-        }
-
-        return false;
     }
 }
