@@ -7,7 +7,7 @@
     <title>Admin Dashboard - FootballTix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="css/admin-dashboard.css" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -25,6 +25,9 @@
             window.location.href = 'index.html';
         }
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <script src="js/layout.js"></script>
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900">
@@ -100,8 +103,27 @@
         </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 class="text-3xl font-bold mb-8">Admin Dashboard</h1>
+    <div class="hero-pattern text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full bg-white/15 text-blue-100 text-xs font-bold uppercase tracking-wider mb-3">Administration</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Admin Dashboard</h1>
+                    <p class="text-blue-100/90 mt-1 text-sm md:text-base">Monitor users, ticket bookings, and platform analytics in real time</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="admin-profile.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-semibold text-sm backdrop-blur transition">
+                        <i class="fas fa-user-shield"></i> Admin Profile
+                    </a>
+                    <button type="button" onclick="refreshAllData()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-blue-700 hover:bg-blue-50 font-bold text-sm shadow transition">
+                        <i class="fas fa-sync-alt"></i> Refresh Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         <!-- Statistic Cards -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
@@ -114,7 +136,7 @@
                 <div class="text-gray-600">Total Bookings</div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow stat-card text-center">
-                <div class="text-3xl font-bold text-purple-600" id="stat-confirmed-bookings">0</div>
+                <div class="text-3xl font-bold text-emerald-600" id="stat-confirmed-bookings">0</div>
                 <div class="text-gray-600">Confirmed Bookings</div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow stat-card text-center">
