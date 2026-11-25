@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FootballTix - Book Tickets</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/book-tickets.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <script src="js/layout.js"></script>
 </head>
 
 <body>
@@ -45,7 +47,7 @@
                 <!-- User Menu / Sign In -->
                 <div class="flex items-center">
                     <a href="login.html" id="login-link"
-                        class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign
+                        class="bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-sm  text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign
                         In</a>
                 </div>
             </div>
@@ -77,211 +79,7 @@
 
                 <!-- Events Grid -->
                 <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
-                    <!-- Sample Event Card -->
-                    <div
-                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=500&h=200&fit=crop"
-                                alt="Stadium" class="w-full h-48 object-cover">
-                            <div class="absolute top-3 right-3">
-                                <span
-                                    class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Available</span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-lg font-bold text-gray-900">Manchester United vs Arsenal</h3>
-                                <span class="text-sm text-gray-500">Premier League</span>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    Old Trafford, Manchester
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
-                                    March 15, 2024 • 3:00 PM
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-green-600">Rp 45</div>
-                                </div>
-                                <button
-                                    class="select-ticket-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                                    data-event-id="1" data-event-title="Manchester United vs Arsenal"
-                                    data-venue="Old Trafford, Manchester" data-date="March 15, 2024 • 3:00 PM"
-                                    data-price="45">
-                                    Select Tickets
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sample Event Card 2 -->
-                    <div
-                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=500&h=200&fit=crop"
-                                alt="Stadium" class="w-full h-48 object-cover">
-                            <div class="absolute top-3 right-3">
-                                <span class="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-medium">Few
-                                    Left</span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-lg font-bold text-gray-900">Chelsea vs Liverpool</h3>
-                                <span class="text-sm text-gray-500">Premier League</span>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    Stamford Bridge, London
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
-                                    March 22, 2024 • 5:30 PM
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-green-600">Rp 65</div>
-                                </div>
-                                <button
-                                    class="select-ticket-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                                    data-event-id="2" data-event-title="Chelsea vs Liverpool"
-                                    data-venue="Stamford Bridge, London" data-date="March 22, 2024 • 5:30 PM"
-                                    data-price="65">
-                                    Select Tickets
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sample Event Card 3 -->
-                    <div
-                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&h=200&fit=crop"
-                                alt="Stadium" class="w-full h-48 object-cover">
-                            <div class="absolute top-3 right-3">
-                                <span
-                                    class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Available</span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-lg font-bold text-gray-900">Barcelona vs Real Madrid</h3>
-                                <span class="text-sm text-gray-500">El Clásico</span>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    Camp Nou, Barcelona
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
-                                    April 10, 2024 • 9:00 PM
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-green-600">Rp 120</div>
-                                </div>
-                                <button
-                                    class="select-ticket-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                                    data-event-id="3" data-event-title="Barcelona vs Real Madrid"
-                                    data-venue="Camp Nou, Barcelona" data-date="April 10, 2024 • 9:00 PM"
-                                    data-price="120">
-                                    Select Tickets
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sample Event Card 4 -->
-                    <div
-                        class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-300">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=500&h=200&fit=crop"
-                                alt="Stadium" class="w-full h-48 object-cover">
-                            <div class="absolute top-3 right-3">
-                                <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">Sold
-                                    Out</span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-lg font-bold text-gray-900">Bayern Munich vs Dortmund</h3>
-                                <span class="text-sm text-gray-500">Bundesliga</span>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    Allianz Arena, Munich
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
-                                    March 28, 2024 • 6:30 PM
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <span class="text-sm text-gray-500">From</span>
-                                    <div class="text-xl font-bold text-gray-400">Rp 85</div>
-                                </div>
-                                <button
-                                    class="bg-gray-400 text-white px-6 py-2 rounded-lg font-medium cursor-not-allowed"
-                                    disabled>
-                                    Sold Out
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Matches populated dynamically by js/book-tickets.js -->
                 </div>
 
                 <!-- Error State -->
@@ -295,7 +93,7 @@
             <!-- Booking Summary -->
             <div class="lg:col-span-1">
                 <div
-                    class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 p-8 sticky top-28 z-10">
+                    class="bg-white/90  rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 p-8 sticky top-28 z-10">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Booking Summary</h3>
 
                     <div id="booking-summary" class="hidden">
@@ -333,14 +131,14 @@
                                 <div class="flex justify-between items-end">
                                     <span class="text-gray-500 font-medium mb-1">Total Payment</span>
                                     <span id="total-price"
-                                        class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700">Rp
+                                        class="text-3xl font-extrabold text-emerald-700">Rp
                                         0</span>
                                 </div>
                             </div>
                         </div>
 
                         <button id="confirm-booking"
-                            class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 transition duration-300">
+                            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-sm  transition duration-300">
                             Confirm Booking
                         </button>
                     </div>

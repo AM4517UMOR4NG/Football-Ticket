@@ -48,6 +48,13 @@ async function initializeBookingPage() {
         // Load events (used both by booking and admin)
         await loadEvents();
 
+        // Auto-select match if navigated with ?eventId=...
+        const params = new URLSearchParams(window.location.search);
+        const initialEventId = parseInt(params.get('eventId'), 10);
+        if (!Number.isNaN(initialEventId)) {
+            selectEvent(initialEventId);
+        }
+
         // Initialize Midtrans Snap client key
         await initMidtransSnap();
 
@@ -65,63 +72,16 @@ async function initializeBookingPage() {
 
 /* --------------------- Navigation & Auth --------------------- */
 function updateNavigation() {
-    const token = localStorage.getItem('accessToken');
-    const userRole = localStorage.getItem('userRole');
-    const username = localStorage.getItem('username');
-
-    const signInBtn = document.querySelector('a[href="login.html"]');
-
-    if (token && username) {
-        if (signInBtn) {
-            signInBtn.parentElement.remove();
-        }
-
-        const userMenu = document.createElement('div');
-        userMenu.className = 'flex items-center space-x-4';
-        userMenu.innerHTML = `
-            <div class="relative">
-                <button id="user-menu-btn" class="flex items-center space-x-2 text-gray-700 hover:text-blue-700">
-                    <span class="text-sm font-medium">${username}</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                    ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
-                    <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                    <a href="#" id="logout-link" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-                </div>
-            </div>
-        `;
-
-        const signInContainer = document.querySelector('.flex.items-center');
-        if (signInContainer) {
-            signInContainer.innerHTML = '';
-            signInContainer.appendChild(userMenu);
-        }
-
-        const userMenuBtn = document.getElementById('user-menu-btn');
-        const userDropdown = document.getElementById('user-dropdown');
-
-        if (userMenuBtn && userDropdown) {
-            userMenuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                userDropdown.classList.toggle('hidden');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                }
-            });
-        }
-
-        const logoutLink = document.getElementById('logout-link');
-        if (logoutLink) logoutLink.addEventListener('click', handleLogout);
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.renderNavbar();
     }
 }
 
 function handleLogout() {
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.logout();
+        return;
+    }
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
@@ -167,8 +127,11 @@ function displayEvents(events) {
     // Render cards using data attributes (no inline onclick)
     eventsGrid.innerHTML = events.map(event => {
         const selectedClass = selectedEvent && selectedEvent.id === event.id ? 'ring-2 ring-blue-500' : '';
+        const availableSeats = Number(event.availableSeats ?? event.totalSeats ?? 0);
+        const totalSeats = Number(event.totalSeats ?? availableSeats);
+        const isSoldOut = availableSeats <= 0 || (event.status && event.status !== 'ACTIVE');
         return `
-    <div class="booking-card ${selectedClass} bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100/50 hover:shadow-blue-900/10 hover:-translate-y-2 overflow-hidden transition-all duration-300 cursor-pointer" data-event-id="${event.id}">
+    <div class="booking-card ${selectedClass} bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100/50 hover:shadow-blue-900/10 hover:border-gray-300 overflow-hidden transition-all duration-300 cursor-pointer" data-event-id="${event.id}">
         <div class="relative">
             <!-- Event Image -->
             <div class="h-48 bg-gradient-to-r from-blue-600 to-blue-800 relative overflow-hidden">
@@ -237,7 +200,7 @@ function displayEvents(events) {
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
-                    ${Number(event.totalSeats || 0).toLocaleString()} seats available
+                    ${isSoldOut ? '<span class="text-red-600 font-semibold">Sold Out</span>' : `${availableSeats.toLocaleString()} / ${totalSeats.toLocaleString()} seats available`}
                 </div>
             </div>
            
@@ -246,9 +209,10 @@ function displayEvents(events) {
                 <div class="text-sm text-gray-500">per ticket</div>
             </div>
             <div class="flex space-x-3 mt-4">
-                <button class="book-now-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                        data-event-id="${event.id}" data-event-title="${escapeAttr(event.title)}">
-                    Book Now
+                <button class="book-now-btn flex-1 ${isSoldOut ? 'bg-gray-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700 transform hover:scale-105'} text-white px-4 py-3 rounded-lg font-medium transition-all duration-200"
+                        data-event-id="${event.id}" data-event-title="${escapeAttr(event.title)}" ${isSoldOut ? 'disabled' : ''}>
+                    ${isSoldOut ? 'Sold Out' : 'Book Now'}
+                </button>
             </div>
             ${selectedEvent && selectedEvent.id === event.id ? `
                 <div class="mt-4 text-center">
@@ -379,7 +343,8 @@ function setupEventListeners() {
 
     if (increaseTickets) {
         increaseTickets.addEventListener('click', () => {
-            if (currentTicketCount < 10) {
+            const maxAllowed = Math.min(10, Number(selectedEvent?.availableSeats ?? selectedEvent?.totalSeats ?? 10));
+            if (currentTicketCount < maxAllowed) {
                 currentTicketCount++;
                 updateTicketCount();
             }
@@ -448,7 +413,7 @@ async function handleConfirmBooking() {
             numberOfTickets: currentTicketCount
         };
 
-        const response = await fetch(`${API_BASE_URL}/bookings?userId=${userId}`, {
+        const response = await fetch(`${API_BASE_URL}/bookings`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -511,18 +476,26 @@ async function handleConfirmBooking() {
                 }
             });
         } else {
-            // Fallback: no Snap token (Midtrans might not be configured)
-            // Automatically confirm booking via sync-status fallback
+            // Midtrans Snap token not returned (gateway not configured or unavailable)
+            let confirmed = false;
             try {
-                await fetch(`${API_BASE_URL}/payments/sync-status/${booking.bookingReference}`, {
+                const syncRes = await fetch(`${API_BASE_URL}/payments/sync-status/${booking.bookingReference}`, {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
+                if (syncRes.ok) {
+                    const syncData = await syncRes.json().catch(() => ({}));
+                    confirmed = syncData.status === 'CONFIRMED';
+                }
             } catch (e) {
                 console.error('Error syncing status in fallback:', e);
             }
-            
-            showSuccess('Payment Simulated! Your booking is confirmed.');
+
+            if (confirmed) {
+                showSuccess('Payment confirmed! Your booking is ready.');
+            } else {
+                showToast('Booking created (PENDING). Complete payment or ask staff to confirm.', 'warning');
+            }
             setTimeout(() => {
                 showRefundPolicyAndSpeak(selectedEvent, booking);
             }, 700);
@@ -594,8 +567,7 @@ function showRefundPolicyAndSpeak(eventObj, bookingObj) {
     closeBtn && closeBtn.addEventListener('click', removeModal);
     dismiss && dismiss.addEventListener('click', removeModal);
     contact && contact.addEventListener('click', () => {
-        // example: open mail client or support page
-        window.location.href = 'support.html';
+        window.location.href = 'contactus.html';
     });
 
     // Speak the policy aloud (if browser supports)
@@ -668,7 +640,11 @@ function openAdminPanel(eventId) {
         if (dateEl) dateEl.textContent = formatEventDate(eventData.eventDate) + ' • ' + formatEventTime(eventData.eventDate);
         if (priceEl) priceEl.textContent = `Rp ${new Intl.NumberFormat('id-ID').format(eventData.price)}`;
         if (descEl) descEl.textContent = eventData.description || '';
-        if (seatsEl) seatsEl.textContent = `${Number(eventData.totalSeats || 0).toLocaleString()} seats`;
+        if (seatsEl) {
+            const avail = Number(eventData.availableSeats ?? eventData.totalSeats ?? 0);
+            const total = Number(eventData.totalSeats ?? avail);
+            seatsEl.textContent = `${avail.toLocaleString()} / ${total.toLocaleString()} seats available`;
+        }
 
         // Add actions (edit/delete) if admin
         const actionsEl = adminPanel.querySelector('.panel-actions');
@@ -681,8 +657,7 @@ function openAdminPanel(eventId) {
             const deleteBtn = actionsEl.querySelector('.panel-delete-btn');
 
             editBtn && editBtn.addEventListener('click', () => {
-                // redirect to admin edit page with event id
-                window.location.href = `admin-edit-event.html?eventId=${eventData.id}`;
+                window.location.href = `admin-dashboard.html?eventId=${eventData.id}`;
             });
 
             deleteBtn && deleteBtn.addEventListener('click', async () => {
@@ -765,6 +740,9 @@ function showToast(message, type = 'info') {
 
 /* Utilities used from events.js - keep these if not already defined elsewhere */
 function getLeagueFromEvent(event) {
+    if (event?.leagueName) {
+        return event.leagueName;
+    }
     const title = (event.title || '').toLowerCase();
     const venue = (event.venue || '').toLowerCase();
 
