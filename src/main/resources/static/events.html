@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FootballTix - All Matches</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/events.css">
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <script src="js/layout.js"></script>
 </head>
 
 <body>
@@ -49,7 +51,7 @@
                 <div class="flex items-center" id="nav-right-container">
                     <!-- Sign In Button - Will be replaced by user menu when logged in -->
                     <a href="login.html" id="login-link"
-                        class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign
+                        class="bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-sm  text-white font-bold px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200">Sign
                         In</a>
                 </div>
 
@@ -103,15 +105,15 @@
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Discover Amazing Matches</h1>
                 <p class="text-xl md:text-2xl mb-8 opacity-90">Find and book tickets for the biggest football events
                     worldwide</p>
-                <!-- Advanced Search Bar Section -->
+                <!-- Match Search Bar -->
                 <div
-                    class="filter-card p-3 max-w-4xl mx-auto bg-white rounded-full shadow-[0_20px_50px_rgb(0,0,0,0.15)] flex flex-col md:flex-row items-center gap-2 border border-gray-100">
+                    class="p-2 max-w-4xl mx-auto bg-white rounded-lg border border-gray-200 flex flex-col md:flex-row items-center gap-2">
                     <!-- League Filter -->
                     <div
                         class="relative w-full md:w-1/3 flex items-center border-b md:border-b-0 md:border-r border-gray-200 px-4">
-                        <i class="fas fa-trophy text-blue-500 text-lg mr-3"></i>
+                        <i class="fas fa-trophy text-emerald-600 text-base mr-3"></i>
                         <select id="league-filter"
-                            class="w-full py-3 bg-transparent text-gray-700 font-medium focus:outline-none appearance-none cursor-pointer">
+                            class="w-full py-2.5 bg-transparent text-gray-800 font-medium focus:outline-none appearance-none cursor-pointer">
                             <option value="">All Leagues</option>
                             <option value="premier">Premier League</option>
                             <option value="laliga">La Liga</option>
@@ -120,24 +122,24 @@
                             <option value="ligue1">Ligue 1</option>
                             <option value="champions">Champions League</option>
                         </select>
-                        <i class="fas fa-chevron-down absolute right-4 text-gray-400 text-sm pointer-events-none"></i>
+                        <i class="fas fa-chevron-down absolute right-4 text-gray-400 text-xs pointer-events-none"></i>
                     </div>
 
                     <!-- Search Input with Team Autocomplete -->
                     <div class="relative w-full md:w-1/2 flex items-center px-4">
-                        <i class="fas fa-search text-blue-500 text-lg mr-3"></i>
+                        <i class="fas fa-search text-emerald-600 text-base mr-3"></i>
                         <input type="text" id="search-input" placeholder="Search teams, matches or venues..."
-                            class="w-full py-3 bg-transparent text-gray-800 font-medium placeholder-gray-400 focus:outline-none">
+                            class="w-full py-2.5 bg-transparent text-gray-800 font-medium placeholder-gray-400 focus:outline-none">
                         <!-- Autocomplete Dropdown -->
                         <div id="autocomplete-dropdown"
-                            class="absolute left-0 top-full mt-4 w-full bg-white rounded-2xl shadow-xl hidden max-h-60 overflow-y-auto z-50 border border-gray-100">
+                            class="absolute left-0 top-full mt-2 w-full bg-white rounded-lg shadow-lg hidden max-h-60 overflow-y-auto z-50 border border-gray-200">
                         </div>
                     </div>
 
                     <!-- Search Button -->
-                    <div class="w-full md:w-auto px-2 pb-2 md:pb-0">
+                    <div class="w-full md:w-auto px-1 pb-1 md:pb-0">
                         <button id="search-btn"
-                            class="w-full md:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-300">
+                            class="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-7 py-2.5 rounded-md font-bold text-sm uppercase tracking-wider transition-colors">
                             Search
                         </button>
                     </div>
@@ -151,17 +153,17 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Stat Card 1 -->
                 <div
-                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg  transition-all duration-300 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <i class="fas fa-calendar-check text-6xl text-blue-600"></i>
                     </div>
-                    <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-blue-800 mb-2"
+                    <div class="text-4xl font-extrabold text-gray-900 mb-2"
                         id="total-events">0</div>
                     <div class="text-sm font-bold text-gray-500 uppercase tracking-wider">Total Events</div>
                 </div>
                 <!-- Stat Card 2 -->
                 <div
-                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg  transition-all duration-300 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <i class="fas fa-clock text-6xl text-emerald-600"></i>
                     </div>
@@ -171,17 +173,17 @@
                 </div>
                 <!-- Stat Card 3 -->
                 <div
-                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg  transition-all duration-300 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <i class="fas fa-chair text-6xl text-purple-600"></i>
+                        <i class="fas fa-chair text-6xl text-emerald-600"></i>
                     </div>
-                    <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-purple-500 to-indigo-700 mb-2"
+                    <div class="text-4xl font-extrabold text-emerald-700 mb-2"
                         id="total-seats">0</div>
                     <div class="text-sm font-bold text-gray-500 uppercase tracking-wider">Available Seats</div>
                 </div>
                 <!-- Stat Card 4 -->
                 <div
-                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-lg  transition-all duration-300 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <i class="fas fa-ticket-alt text-6xl text-orange-600"></i>
                     </div>

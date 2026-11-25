@@ -9,59 +9,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* --------------------- Navigation & Auth --------------------- */
 function updateNavigation() {
-    const token = localStorage.getItem('accessToken');
-    const userRole = localStorage.getItem('userRole');
-    const username = localStorage.getItem('username');
-
-    const signInBtn = document.getElementById('login-link');
-
-    if (token && username) {
-        if (signInBtn) {
-            signInBtn.parentElement.remove();
-        }
-
-        const userMenu = document.createElement('div');
-        userMenu.className = 'flex items-center space-x-4';
-        userMenu.innerHTML = `
-           <div class="relative">
-        <button id="user-menu-btn" class="flex items-center space-x-2 text-black hover:text-blue-700">
-            <span class="text-sm font-medium">${username}</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-            ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
-                        <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-        </div>
-    </div>
-`;
-
-        const signInContainer = document.querySelector('.flex.items-center');
-        if (signInContainer) {
-            signInContainer.innerHTML = '';
-            signInContainer.appendChild(userMenu);
-        }
-
-        const userMenuBtn = document.getElementById('user-menu-btn');
-        const userDropdown = document.getElementById('user-dropdown');
-
-        if (userMenuBtn && userDropdown) {
-            userMenuBtn.addEventListener('click', () => {
-                userDropdown.classList.toggle('hidden');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                }
-            });
-        }
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.renderNavbar();
     }
 }
 
 function handleLogout() {
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.logout();
+        return;
+    }
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
@@ -205,7 +162,7 @@ function getStaticLeagues() {
         "laliga": { name: "La Liga", country: "Spain", color: "red" },
         "bundesliga": { name: "Bundesliga", country: "Germany", color: "green" },
         "seriea": { name: "Serie A", country: "Italy", color: "blue" },
-        "ligue1": { name: "Ligue 1", country: "France", color: "purple" },
+        "ligue1": { name: "Ligue 1", country: "France", color: "emerald" },
         "champions": { name: "Champions League", country: "Europe", color: "gold" }
     };
 }
@@ -237,7 +194,7 @@ function displayEvents(events) {
     hideEmptyState();
 
     matchesGrid.innerHTML = events.map(event => `
-        <div class="match-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-500 hover:scale-105">
+        <div class="match-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-gray-300 overflow-hidden transition-all duration-500 hover:scale-105">
             <div class="relative">
                 <!-- Event Image -->
                 <div class="h-48 bg-gradient-to-r from-blue-600 to-blue-800 relative overflow-hidden">
@@ -307,19 +264,19 @@ function displayEvents(events) {
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
-                        ${event.totalSeats.toLocaleString()} seats available
+                        ${Number(event.availableSeats ?? event.totalSeats ?? 0).toLocaleString()} seats available
                     </div>
                 </div>
                
                 <!-- Price and Actions -->
                 <div class="flex items-center justify-between mb-4">
-                    <div class="text-3xl font-bold text-green-600">Rp ${event.price}</div>
+                    <div class="text-3xl font-bold text-green-600">Rp ${new Intl.NumberFormat('id-ID').format(event.price || 0)}</div>
                     <div class="text-sm text-gray-500">per ticket</div>
                 </div>
                
                 <div class="flex space-x-3">
                     <button onclick="handleBookEvent(${event.id}, '${event.title}')"
-                            class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
+                            class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
                         Book Now
                     </button>
                     <button onclick="addToWishlist(${event.id})" 
@@ -470,16 +427,16 @@ async function showEventDetailsModal(eventId) {
                             </div>
                             <div>
                                 <div class="text-sm text-gray-500">Available Seats</div>
-                                <div class="font-medium">${event.totalSeats.toLocaleString()}</div>
+                                <div class="font-medium">${Number(event.availableSeats ?? event.totalSeats ?? 0).toLocaleString()} / ${Number(event.totalSeats ?? 0).toLocaleString()}</div>
                             </div>
                             <div>
                                 <div class="text-sm text-gray-500">Price</div>
-                                <div class="font-medium text-green-600">Rp ${event.price}</div>
+                                <div class="font-medium text-green-600">Rp ${new Intl.NumberFormat('id-ID').format(event.price || 0)}</div>
                             </div>
                         </div>
                         <div class="flex space-x-3">
                             <button onclick="handleBookEvent(${event.id}, '${event.title}')"
-                                    class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-3 rounded-lg font-medium">
+                                    class="flex-1 bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-sm  text-white px-6 py-3 rounded-lg font-medium">
                                 Book Tickets
                             </button>
                             <button onclick="closeModal()"
@@ -520,8 +477,9 @@ async function loadStats() {
 function updateStats(stats) {
     if (totalEvents) totalEvents.textContent = stats.totalEvents || 0;
     if (upcomingEvents) upcomingEvents.textContent = stats.upcomingEvents || 0;
-    if (totalSeats) totalSeats.textContent = stats.totalSeats ? stats.totalSeats.toLocaleString() : 0;
-    if (avgPrice) avgPrice.textContent = stats.averagePrice ? `Rp ${Math.round(stats.averagePrice)}` : 'Rp 0';
+    const seatsCount = stats.availableSeats ?? stats.totalSeats;
+    if (totalSeats) totalSeats.textContent = seatsCount ? Number(seatsCount).toLocaleString() : 0;
+    if (avgPrice) avgPrice.textContent = stats.averagePrice ? `Rp ${new Intl.NumberFormat('id-ID').format(Math.round(stats.averagePrice))}` : 'Rp 0';
 }
 // Advanced league detection with team mappings and cross-league logic
 const teamToLeagueMap = {
