@@ -15,4 +15,5 @@ public interface EventService {
 
     List<EventDTO> getEventsByLeague(String league);
     List<EventDTO> searchEvents(String query, String venue, String date);
+    List<EventDTO> searchEvents(String query, String venue, String date, String league);
 }
