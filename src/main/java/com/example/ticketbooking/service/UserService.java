@@ -32,7 +32,8 @@ public class UserService {
         validateUserRegistration(registrationDTO);
         validatePassword(registrationDTO.password());
 
-        User user = createUserFromDTO(registrationDTO);
+        // Always enforce USER role for public registration (prevent privilege escalation)
+        User user = createUserWithRole(registrationDTO, DEFAULT_ROLE);
         return userRepository.save(user);
     }
 
@@ -56,7 +57,7 @@ public class UserService {
         }
 
         User user = userOpt.get();
-        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+        if (user.getPassword() == null || !passwordEncoder.matches(currentPassword, user.getPassword())) {
             return false;
         }
 
@@ -108,22 +109,16 @@ public class UserService {
         }
     }
 
-    private User createUserFromDTO(UserRegistrationDTO registrationDTO) {
+    private User createUserWithRole(UserRegistrationDTO registrationDTO, String role) {
         User user = new User();
         user.setUsername(registrationDTO.username());
         user.setEmail(registrationDTO.email());
         user.setPassword(passwordEncoder.encode(registrationDTO.password()));
         user.setFullName(registrationDTO.fullName());
         user.setPhone(registrationDTO.phoneNumber());
-
-        String role = determineUserRole(registrationDTO.role());
         user.setRole(role);
 
         return user;
-    }
-
-    private String determineUserRole(String requestedRole) {
-        return (requestedRole != null && !requestedRole.isEmpty()) ? requestedRole : DEFAULT_ROLE;
     }
 
     private void createDefaultAdminIfNotExists() {
@@ -137,7 +132,7 @@ public class UserService {
                     "ADMIN");
 
             if (isPasswordValid(adminDto.password())) {
-                User admin = createUserFromDTO(adminDto);
+                User admin = createUserWithRole(adminDto, "ADMIN");
                 userRepository.save(admin);
                 log.info("Default admin 'Alogo12' created successfully");
             } else {
@@ -157,7 +152,7 @@ public class UserService {
                     "CASHIER");
 
             if (isPasswordValid(cashierDto.password())) {
-                User cashier = createUserFromDTO(cashierDto);
+                User cashier = createUserWithRole(cashierDto, "CASHIER");
                 userRepository.save(cashier);
                 log.info("Default cashier 'cashier1' created successfully");
             } else {
