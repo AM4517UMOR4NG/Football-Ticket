@@ -4,652 +4,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FootballTix - Admin Profile</title>
+    <title>Admin Profile - FootballTix</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/admin-profile.css">
+    <script src="js/layout.js"></script>
 </head>
 
-<body class="bg-gray-50 font-montserrat">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
-                            </path>
-                        </svg>
-                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="hidden md:flex items-center space-x-4">
-                        <a href="index.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
-                        <a href="events.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
-                        <a href="bookings.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My
-                            Bookings</a>
-                        <a href="leagues.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Leagues</a>
-                        <a href="admin-dashboard.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold">Admin
-                            Dashboard</a>
-                        <a href="admin-profile.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold">Admin Profile</a>
-                        <a href="#" id="logout-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold"
-                            onclick="handleLogout()">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body>
+    <nav></nav>
 
-    <!-- Admin Profile Header -->
-    <div class="bg-gradient-to-r from-orange-600 to-red-600 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center space-x-6">
-                <div class="relative">
-                    <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user-shield text-3xl"></i>
+    <!-- Editorial Stadium Admin Masthead -->
+    <header class="hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div class="flex items-center gap-5">
+                    <div id="admin-avatar-initials" class="ft-admin-avatar" aria-hidden="true">AD</div>
+                    <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                            <span id="admin-role-badge" class="ft-masthead-pill ft-pill-admin">
+                                <i class="fas fa-shield-alt mr-1.5" aria-hidden="true"></i>ADMIN
+                            </span>
+                            <span id="admin-access-badge" class="ft-masthead-pill ft-pill-pitch">Full Access</span>
+                            <span id="last-login" class="ft-masthead-pill">Last login: —</span>
+                        </div>
+                        <h1 id="admin-name" class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white uppercase leading-none">Loading Administrator...</h1>
+                        <p id="admin-email" class="text-sm text-neutral-300 mt-1.5 truncate">—</p>
                     </div>
-                    <button
-                        class="absolute bottom-0 right-0 bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 transition-colors">
-                        <i class="fas fa-camera text-sm"></i>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <button type="button" id="refresh-admin-btn" class="ft-header-btn-outline">
+                        <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                        <span>Refresh Stats</span>
                     </button>
-                </div>
-                <div>
-                    <h1 class="text-3xl font-bold mb-2" id="admin-name">Admin User</h1>
-                    <p class="text-orange-100 mb-2" id="admin-email">admin@footballtix.com</p>
-                    <div class="flex items-center space-x-4 text-sm">
-                        <span class="bg-white/20 px-3 py-1 rounded-full">System Administrator</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full">Super Admin</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full">Last Login: Today</span>
-                    </div>
+                    <a href="admin-dashboard.html" class="ft-header-btn-pitch">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        <span>Admin Dashboard</span>
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Admin Profile Content -->
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
-                        <h2 class="text-xl font-bold text-gray-900 mb-4">System Overview</h2>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Total Users</span>
-                                <span class="font-semibold text-blue-600" id="total-users">1,247</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Active Events</span>
-                                <span class="font-semibold text-green-600" id="active-events">23</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Total Revenue</span>
-                                <span class="font-semibold text-purple-600" id="total-revenue">$45,250</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">System Status</span>
-                                <span class="font-semibold text-green-600" id="system-status">Online</span>
-                            </div>
+    <!-- Executive KPI Strip -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 w-full" aria-label="System Overview">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="ft-kpi-card">
+                <div class="ft-kpi-top">
+                    <span class="ft-kicker">Registered Accounts</span>
+                    <i class="fas fa-users ft-kpi-icon" aria-hidden="true"></i>
+                </div>
+                <div id="total-users" class="ft-kpi-value">0</div>
+                <div id="users-breakdown" class="ft-kpi-sub">Loading user totals...</div>
+            </div>
+
+            <div class="ft-kpi-card">
+                <div class="ft-kpi-top">
+                    <span class="ft-kicker">Active Fixtures</span>
+                    <i class="fas fa-futbol ft-kpi-icon" aria-hidden="true"></i>
+                </div>
+                <div id="active-events" class="ft-kpi-value">0</div>
+                <div id="events-breakdown" class="ft-kpi-sub">Loading event totals...</div>
+            </div>
+
+            <div class="ft-kpi-card">
+                <div class="ft-kpi-top">
+                    <span class="ft-kicker">Gross Revenue</span>
+                    <i class="fas fa-coins ft-kpi-icon ft-kpi-icon-pitch" aria-hidden="true"></i>
+                </div>
+                <div id="total-revenue" class="ft-kpi-value ft-value-pitch">Rp 0</div>
+                <div id="bookings-breakdown" class="ft-kpi-sub">Confirmed &amp; completed orders</div>
+            </div>
+
+            <div class="ft-kpi-card">
+                <div class="ft-kpi-top">
+                    <span class="ft-kicker">System Status</span>
+                    <span class="ft-status-dot" aria-hidden="true"></span>
+                </div>
+                <div id="system-status" class="ft-kpi-value">Online</div>
+                <div id="stats-updated-at" class="ft-kpi-sub">Syncing telemetry...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- Left Sidebar -->
+            <aside class="lg:col-span-4 xl:col-span-3 space-y-5 lg:sticky lg:top-20">
+                <!-- Admin Identity Snapshot -->
+                <div class="ft-card p-5">
+                    <div class="ft-kicker mb-3">Administrator ID</div>
+                    <div class="ft-stat-list">
+                        <div class="ft-stat-row">
+                            <span class="ft-stat-label">Employee ID</span>
+                            <span id="sidebar-employee-id" class="ft-stat-value font-mono text-sm">—</span>
                         </div>
-
-                        <hr class="my-6">
-
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Admin Actions</h3>
-                        <div class="space-y-2 sidebar">
-                            <button onclick="showSection('admin-info')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-orange-50 text-gray-700 hover:text-orange-700 transition-colors">
-                                <i class="fas fa-user-shield mr-2"></i>Admin Information
-                            </button>
-                            <button onclick="showSection('system-management')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-orange-50 text-gray-700 hover:text-orange-700 transition-colors">
-                                <i class="fas fa-cogs mr-2"></i>System Management
-                            </button>
-                            <button onclick="showSection('user-management')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-orange-50 text-gray-700 hover:text-orange-700 transition-colors">
-                                <i class="fas fa-users mr-2"></i>User Management
-                            </button>
-                            <button onclick="showSection('security-settings')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-orange-50 text-gray-700 hover:text-orange-700 transition-colors">
-                                <i class="fas fa-shield-alt mr-2"></i>Security Settings
-                            </button>
-                            <button onclick="showSection('audit-logs')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-orange-50 text-gray-700 hover:text-orange-700 transition-colors">
-                                <i class="fas fa-clipboard-list mr-2"></i>Audit Logs
-                            </button>
+                        <div class="ft-stat-row">
+                            <span class="ft-stat-label">Department</span>
+                            <span id="sidebar-department" class="text-sm font-bold">—</span>
+                        </div>
+                        <div class="ft-stat-row">
+                            <span class="ft-stat-label">Pending Orders</span>
+                            <span id="sidebar-pending-bookings" class="ft-stat-value">0</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Main Content -->
-                <div class="lg:col-span-2">
-                    <!-- Admin Information Section -->
-                    <div id="admin-info" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-2xl font-bold text-gray-900">Admin Information</h2>
-                            <button onclick="editAdminInfo()"
-                                class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors edit-btn">
-                                <i class="fas fa-edit mr-2"></i>Edit
-                            </button>
+                <!-- Navigation Menu -->
+                <div class="ft-card p-3">
+                    <div class="px-2.5 pt-1 pb-2 ft-kicker">Admin Console</div>
+                    <div id="admin-tab-nav" class="space-y-1" role="tablist" aria-label="Admin profile sections">
+                        <button type="button" class="ft-tab-btn active" data-section="admin-info" role="tab" aria-selected="true">
+                            <i class="fas fa-user-shield w-4 text-center" aria-hidden="true"></i>
+                            <span>Admin Information</span>
+                        </button>
+                        <button type="button" class="ft-tab-btn" data-section="system-management" role="tab" aria-selected="false">
+                            <i class="fas fa-server w-4 text-center" aria-hidden="true"></i>
+                            <span>System Management</span>
+                        </button>
+                        <button type="button" class="ft-tab-btn" data-section="user-management" role="tab" aria-selected="false">
+                            <i class="fas fa-users-cog w-4 text-center" aria-hidden="true"></i>
+                            <span>User Directory</span>
+                        </button>
+                        <button type="button" class="ft-tab-btn" data-section="security-settings" role="tab" aria-selected="false">
+                            <i class="fas fa-shield-alt w-4 text-center" aria-hidden="true"></i>
+                            <span>Security Controls</span>
+                        </button>
+                        <button type="button" class="ft-tab-btn" data-section="audit-logs" role="tab" aria-selected="false">
+                            <i class="fas fa-clipboard-list w-4 text-center" aria-hidden="true"></i>
+                            <span>Audit Logs</span>
+                        </button>
+                    </div>
+
+                    <div class="ft-divider my-3"></div>
+
+                    <div class="space-y-1">
+                        <a href="admin-dashboard.html" class="ft-tab-btn">
+                            <i class="fas fa-chart-bar w-4 text-center" aria-hidden="true"></i>
+                            <span>Analytics Dashboard</span>
+                        </a>
+                        <a href="cashier-dashboard.html" class="ft-tab-btn">
+                            <i class="fas fa-cash-register w-4 text-center" aria-hidden="true"></i>
+                            <span>Cashier Terminal</span>
+                        </a>
+                        <a href="profile.html" class="ft-tab-btn">
+                            <i class="fas fa-user w-4 text-center" aria-hidden="true"></i>
+                            <span>Personal Profile</span>
+                        </a>
+                        <button type="button" id="admin-logout-btn" class="ft-tab-btn ft-tab-danger">
+                            <i class="fas fa-sign-out-alt w-4 text-center" aria-hidden="true"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Content Panel -->
+            <div class="lg:col-span-8 xl:col-span-9 space-y-6">
+
+                <!-- 1. Admin Information -->
+                <section id="admin-info" class="admin-section ft-card">
+                    <div class="ft-card-header">
+                        <div>
+                            <div class="ft-kicker">Administrator Profile</div>
+                            <h2 class="ft-section-title">Admin Information</h2>
+                        </div>
+                        <button type="button" id="edit-admin-btn" class="ft-btn-outline">
+                            <i class="fas fa-pen text-xs" aria-hidden="true"></i>
+                            <span>Edit Details</span>
+                        </button>
+                    </div>
+
+                    <form id="admin-info-form" class="p-6 space-y-6" novalidate>
+                        <div>
+                            <div class="ft-subhead mb-3">Contact &amp; Account Details</div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label for="admin-fullname" class="ft-label">Full Name</label>
+                                    <input type="text" id="admin-fullname" class="ft-input" placeholder="Administrator name" disabled>
+                                </div>
+                                <div>
+                                    <label for="admin-email-input" class="ft-label">Email Address</label>
+                                    <input type="email" id="admin-email-input" class="ft-input" placeholder="admin@footballtix.com" disabled>
+                                </div>
+                                <div>
+                                    <label for="admin-phone" class="ft-label">Phone Number</label>
+                                    <input type="tel" id="admin-phone" class="ft-input" placeholder="+62 812-0000-0000" disabled>
+                                </div>
+                                <div>
+                                    <label for="admin-username" class="ft-label">Username</label>
+                                    <input type="text" id="admin-username" class="ft-input ft-input-readonly" readonly disabled>
+                                </div>
+                            </div>
+                            <div class="mt-5">
+                                <label for="admin-address" class="ft-label">Address</label>
+                                <textarea id="admin-address" rows="2" class="ft-input" placeholder="Office or administrative address" disabled></textarea>
+                            </div>
                         </div>
 
-                        <form id="admin-info-form" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="ft-divider"></div>
+
+                        <div>
+                            <div class="ft-subhead mb-3">Organization Directory (Read-Only)</div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                                    <input type="text" id="admin-first-name" value="Admin"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                                    <input type="text" id="admin-last-name" value="User"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
+                                    <label for="admin-role" class="ft-label">Admin Role</label>
+                                    <input type="text" id="admin-role" class="ft-input ft-input-readonly" readonly disabled>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                    <input type="email" id="admin-email-input" value="admin@footballtix.com"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
+                                    <label for="admin-employee-id" class="ft-label">Employee ID</label>
+                                    <input type="text" id="admin-employee-id" class="ft-input ft-input-readonly" readonly disabled>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
-                                    <input type="tel" id="admin-phone" value="+1 (555) 987-6543"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
+                                    <label for="admin-department" class="ft-label">Department</label>
+                                    <input type="text" id="admin-department" class="ft-input ft-input-readonly" readonly disabled>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                                    <input type="text" id="admin-role" value="System Administrator"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
+                                    <label for="admin-office" class="ft-label">Office Location</label>
+                                    <input type="text" id="admin-office" class="ft-input ft-input-readonly" readonly disabled>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Department</label>
-                                    <input type="text" id="admin-department" value="IT Management"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
+                                    <label for="admin-schedule" class="ft-label">Work Schedule</label>
+                                    <input type="text" id="admin-schedule" class="ft-input ft-input-readonly" readonly disabled>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Employee ID</label>
-                                    <input type="text" id="admin-employee-id" value="ADM001"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
+                                    <label for="admin-permissions" class="ft-label">Permissions</label>
+                                    <input type="text" id="admin-permissions" class="ft-input ft-input-readonly" readonly disabled>
                                 </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                                    <input type="text" id="admin-address" value="123 Admin Street, Tech City, TC 12345"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
+                            </div>
+                        </div>
+
+                        <div id="admin-save-buttons" class="hidden pt-4 border-t border-[var(--ft-border)] flex flex-wrap justify-end gap-3">
+                            <button type="button" id="cancel-admin-edit-btn" class="ft-btn-outline">Cancel</button>
+                            <button type="submit" id="save-admin-btn" class="ft-btn-solid-pitch">
+                                <i class="fas fa-check text-xs" aria-hidden="true"></i>
+                                <span>Save Changes</span>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- 2. System Management -->
+                <section id="system-management" class="admin-section ft-card hidden">
+                    <div class="ft-card-header">
+                        <div>
+                            <div class="ft-kicker">Platform Operations</div>
+                            <h2 class="ft-section-title">System Management</h2>
+                        </div>
+                        <button type="button" id="sys-refresh-btn" class="ft-btn-outline">
+                            <i class="fas fa-sync-alt text-xs" aria-hidden="true"></i>
+                            <span>Refresh Metrics</span>
+                        </button>
+                    </div>
+
+                    <div class="p-6 space-y-6">
+                        <!-- Booking Pipeline Breakdown -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="ft-mini-metric">
+                                <div class="ft-kicker">Total Orders</div>
+                                <div id="metric-total-bookings" class="ft-mini-value">0</div>
+                            </div>
+                            <div class="ft-mini-metric">
+                                <div class="ft-kicker">Confirmed</div>
+                                <div id="metric-confirmed-bookings" class="ft-mini-value ft-value-pitch">0</div>
+                            </div>
+                            <div class="ft-mini-metric">
+                                <div class="ft-kicker">Pending</div>
+                                <div id="metric-pending-bookings" class="ft-mini-value">0</div>
+                            </div>
+                            <div class="ft-mini-metric">
+                                <div class="ft-kicker">Cancelled</div>
+                                <div id="metric-cancelled-bookings" class="ft-mini-value">0</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="ft-op-tile">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div>
+                                        <div class="text-sm font-bold">Maintenance Mode</div>
+                                        <p class="text-xs text-[var(--ft-muted)] mt-1">Notify system operations when toggling scheduled maintenance windows.</p>
+                                    </div>
+                                    <label class="ft-switch">
+                                        <input type="checkbox" id="maintenance-toggle">
+                                        <span class="ft-switch-slider"></span>
+                                    </label>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Emergency
-                                        Contact</label>
-                                    <input type="text" id="admin-emergency-contact" value="Emergency Contact"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Emergency Phone</label>
-                                    <input type="tel" id="admin-emergency-phone" value="+1 (555) 123-4567"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Work Schedule</label>
-                                    <input type="text" id="admin-work-schedule" value="Monday-Friday, 9AM-5PM"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Office Location</label>
-                                    <input type="text" id="admin-office-location" value="Main Office, Floor 3"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
-                                    <textarea id="admin-notes" rows="3"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                        disabled>Primary system administrator with full access to all system features.</textarea>
+                                <div class="mt-4 pt-3 border-t border-[var(--ft-border)] flex items-center justify-between text-xs">
+                                    <span class="text-[var(--ft-muted)]">Current State</span>
+                                    <span id="maintenance-status-text" class="ft-status-badge ft-badge-confirmed">Operational</span>
                                 </div>
                             </div>
 
-                            <div class="flex justify-end space-x-4">
-                                <button type="button" onclick="cancelAdminEdit()"
-                                    class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors hidden"
-                                    id="admin-cancel-btn">
-                                    Cancel
-                                </button>
-                                <button type="button" onclick="saveAdminProfile()"
-                                    class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-colors hidden"
-                                    id="admin-save-btn">
-                                    Save Changes
+                            <div class="ft-op-tile">
+                                <div>
+                                    <div class="text-sm font-bold">Match &amp; Inventory Console</div>
+                                    <p class="text-xs text-[var(--ft-muted)] mt-1">Manage fixtures, seat capacity, ticket pricing, and booking verifications.</p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-[var(--ft-border)] flex flex-wrap gap-2">
+                                    <a href="admin-dashboard.html" class="ft-btn-solid text-xs">Admin Dashboard</a>
+                                    <a href="events.html" class="ft-btn-outline text-xs">Browse Matches</a>
+                                    <a href="cashier-dashboard.html" class="ft-btn-outline text-xs">Cashier Desk</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. User Directory -->
+                <section id="user-management" class="admin-section ft-card hidden">
+                    <div class="ft-card-header flex-wrap gap-3">
+                        <div>
+                            <div class="ft-kicker">Account Directory</div>
+                            <h2 class="ft-section-title">User Management</h2>
+                        </div>
+                        <span id="user-count-badge" class="ft-ref-code">0 accounts</span>
+                    </div>
+
+                    <div class="p-6 space-y-5">
+                        <div class="flex flex-col sm:flex-row gap-2.5">
+                            <div class="relative flex-1">
+                                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[var(--ft-muted)]" aria-hidden="true"></i>
+                                <input type="text" id="user-search-input" class="ft-input pl-9" placeholder="Search by username, full name, or email...">
+                            </div>
+                            <select id="user-role-filter" class="ft-select-compact" aria-label="Filter users by role">
+                                <option value="ALL">All Roles</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="CASHIER">Cashier</option>
+                                <option value="USER">User</option>
+                            </select>
+                            <button type="button" id="user-search-btn" class="ft-btn-solid">Search</button>
+                            <button type="button" id="user-reset-btn" class="ft-btn-outline">Reset</button>
+                        </div>
+
+                        <div id="user-list-container" class="space-y-2.5">
+                            <div class="ft-empty-state">
+                                <i class="fas fa-circle-notch fa-spin text-lg mb-2" aria-hidden="true"></i>
+                                <p class="text-sm font-medium">Loading user directory...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Security Controls -->
+                <section id="security-settings" class="admin-section space-y-6 hidden">
+                    <div class="ft-card">
+                        <div class="ft-card-header">
+                            <div>
+                                <div class="ft-kicker">Administrator Credentials</div>
+                                <h2 class="ft-section-title">Change Admin Password</h2>
+                            </div>
+                        </div>
+                        <form id="admin-password-form" class="p-6 space-y-4 max-w-xl" novalidate>
+                            <div>
+                                <label for="admin-current-password" class="ft-label">Current Password</label>
+                                <input type="password" id="admin-current-password" class="ft-input" autocomplete="current-password" placeholder="Enter current password" required>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="admin-new-password" class="ft-label">New Password</label>
+                                    <input type="password" id="admin-new-password" class="ft-input" autocomplete="new-password" placeholder="Min. 8 chars (A-z, 0-9, symbol)" required>
+                                </div>
+                                <div>
+                                    <label for="admin-confirm-password" class="ft-label">Confirm Password</label>
+                                    <input type="password" id="admin-confirm-password" class="ft-input" autocomplete="new-password" placeholder="Re-enter password" required>
+                                </div>
+                            </div>
+                            <div class="pt-1">
+                                <button type="submit" id="admin-update-password-btn" class="ft-btn-solid-pitch">
+                                    <i class="fas fa-key text-xs" aria-hidden="true"></i>
+                                    <span>Update Admin Password</span>
                                 </button>
                             </div>
                         </form>
                     </div>
 
-                    <!-- System Management Section -->
-                    <div id="system-management" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">System Management</h2>
-
-                        <div class="space-y-6">
-                            <!-- System Status -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">System Status</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                                        <div class="flex items-center">
-                                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                                            <div>
-                                                <h4 class="font-medium text-green-900">Database</h4>
-                                                <p class="text-sm text-green-700">Online</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                                        <div class="flex items-center">
-                                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                                            <div>
-                                                <h4 class="font-medium text-green-900">API Services</h4>
-                                                <p class="text-sm text-green-700">Online</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                                        <div class="flex items-center">
-                                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                                            <div>
-                                                <h4 class="font-medium text-green-900">Payment Gateway</h4>
-                                                <p class="text-sm text-green-700">Online</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="ft-card">
+                        <div class="ft-card-header">
+                            <div>
+                                <div class="ft-kicker">Platform Hardening</div>
+                                <h2 class="ft-section-title">Active Security Controls</h2>
+                            </div>
+                            <span class="ft-status-badge ft-badge-confirmed">Enforced</span>
+                        </div>
+                        <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                            <div class="ft-policy-item">
+                                <i class="fas fa-check-circle text-[var(--ft-pitch)]" aria-hidden="true"></i>
+                                <div>
+                                    <div class="font-bold">JWT Bearer &amp; RBAC</div>
+                                    <div class="text-xs text-[var(--ft-muted)]">Method-scoped ADMIN / CASHIER / USER guards</div>
                                 </div>
                             </div>
-
-                            <!-- System Controls -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">System Controls</h3>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Maintenance Mode</h4>
-                                            <p class="text-sm text-gray-600">Enable maintenance mode for system updates
-                                            </p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Debug Mode</h4>
-                                            <p class="text-sm text-gray-600">Enable debug logging for troubleshooting
-                                            </p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Auto Backup</h4>
-                                            <p class="text-sm text-gray-600">Enable automatic database backups</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
-                                            </div>
-                                        </label>
-                                    </div>
+                            <div class="ft-policy-item">
+                                <i class="fas fa-check-circle text-[var(--ft-pitch)]" aria-hidden="true"></i>
+                                <div>
+                                    <div class="font-bold">Pessimistic Seat Locking</div>
+                                    <div class="text-xs text-[var(--ft-muted)]">Row-level DB locks prevent ticket overselling</div>
                                 </div>
                             </div>
-
-                            <!-- System Actions -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">System Actions</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <button
-                                        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                                        <i class="fas fa-database mr-2"></i>Backup Database
-                                    </button>
-                                    <button
-                                        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                                        <i class="fas fa-sync mr-2"></i>Clear Cache
-                                    </button>
-                                    <button
-                                        class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors">
-                                        <i class="fas fa-tools mr-2"></i>Run Maintenance
-                                    </button>
-                                    <button
-                                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
-                                        <i class="fas fa-exclamation-triangle mr-2"></i>Emergency Stop
-                                    </button>
+                            <div class="ft-policy-item">
+                                <i class="fas fa-check-circle text-[var(--ft-pitch)]" aria-hidden="true"></i>
+                                <div>
+                                    <div class="font-bold">Midtrans SHA-512 Verification</div>
+                                    <div class="text-xs text-[var(--ft-muted)]">Constant-time webhook signature &amp; amount checks</div>
+                                </div>
+                            </div>
+                            <div class="ft-policy-item">
+                                <i class="fas fa-check-circle text-[var(--ft-pitch)]" aria-hidden="true"></i>
+                                <div>
+                                    <div class="font-bold">Rate Limiting &amp; Headers</div>
+                                    <div class="text-xs text-[var(--ft-muted)]">Request throttling with hardened security headers</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- User Management Section -->
-                    <div id="user-management" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">User Management</h2>
-
-                        <div class="space-y-6">
-                            <!-- User Search -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Search Users</h3>
-                                <div class="flex space-x-4">
-                                    <input type="text" placeholder="Search by name, email, or ID..."
-                                        class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                    <button
-                                        class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-colors">
-                                        <i class="fas fa-search mr-2"></i>Search
-                                    </button>
-                                </div>
+                    <div class="ft-card ft-danger-card">
+                        <div class="ft-card-header">
+                            <div>
+                                <div class="ft-kicker text-red-600 dark:text-red-400">Emergency Action</div>
+                                <h2 class="ft-section-title">Session Termination</h2>
                             </div>
-
-                            <!-- User List -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Users</h3>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">John Doe</h4>
-                                            <p class="text-sm text-gray-600">john.doe@example.com</p>
-                                            <p class="text-xs text-gray-500">Member since Jan 2024</p>
-                                        </div>
-                                        <div class="flex space-x-2">
-                                            <button
-                                                class="text-blue-600 hover:text-blue-700 text-sm font-medium">View</button>
-                                            <button
-                                                class="text-orange-600 hover:text-orange-700 text-sm font-medium">Edit</button>
-                                            <button
-                                                class="text-red-600 hover:text-red-700 text-sm font-medium">Suspend</button>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Jane Smith</h4>
-                                            <p class="text-sm text-gray-600">jane.smith@example.com</p>
-                                            <p class="text-xs text-gray-500">Member since Dec 2023</p>
-                                        </div>
-                                        <div class="flex space-x-2">
-                                            <button
-                                                class="text-blue-600 hover:text-blue-700 text-sm font-medium">View</button>
-                                            <button
-                                                class="text-orange-600 hover:text-orange-700 text-sm font-medium">Edit</button>
-                                            <button
-                                                class="text-red-600 hover:text-red-700 text-sm font-medium">Suspend</button>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Mike Johnson</h4>
-                                            <p class="text-sm text-gray-600">mike.johnson@example.com</p>
-                                            <p class="text-xs text-gray-500">Member since Nov 2023</p>
-                                        </div>
-                                        <div class="flex space-x-2">
-                                            <button
-                                                class="text-blue-600 hover:text-blue-700 text-sm font-medium">View</button>
-                                            <button
-                                                class="text-orange-600 hover:text-orange-700 text-sm font-medium">Edit</button>
-                                            <button
-                                                class="text-red-600 hover:text-red-700 text-sm font-medium">Suspend</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div>
+                                <div class="text-sm font-bold">Force Logout All Users</div>
+                                <p class="text-xs text-[var(--ft-muted)] mt-0.5">Trigger a global session revocation command across all registered accounts.</p>
                             </div>
+                            <button type="button" id="force-logout-btn" class="ft-btn-danger">
+                                <i class="fas fa-power-off text-xs" aria-hidden="true"></i>
+                                <span>Force Logout All</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Audit Logs -->
+                <section id="audit-logs" class="admin-section ft-card hidden">
+                    <div class="ft-card-header flex-wrap gap-3">
+                        <div>
+                            <div class="ft-kicker">System Telemetry</div>
+                            <h2 class="ft-section-title">Audit Logs</h2>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <select id="audit-level-filter" class="ft-select-compact" aria-label="Filter audit logs by severity">
+                                <option value="ALL">All Levels</option>
+                                <option value="INFO">INFO</option>
+                                <option value="WARNING">WARNING</option>
+                                <option value="ERROR">ERROR</option>
+                            </select>
+                            <button type="button" id="refresh-logs-btn" class="ft-btn-outline">
+                                <i class="fas fa-sync-alt text-xs" aria-hidden="true"></i>
+                                <span>Refresh</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Security Settings Section -->
-                    <div id="security-settings" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Security Settings</h2>
-
-                        <div class="space-y-6">
-                            <!-- Password Policy -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Password Policy</h3>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Minimum Password
-                                            Length</label>
-                                        <input type="number" value="8" min="6" max="20"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                    </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center space-x-3">
-                                            <input type="checkbox" checked
-                                                class="rounded text-orange-600 focus:ring-orange-500">
-                                            <span class="text-gray-900">Require uppercase letters</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <input type="checkbox" checked
-                                                class="rounded text-orange-600 focus:ring-orange-500">
-                                            <span class="text-gray-900">Require numbers</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <input type="checkbox"
-                                                class="rounded text-orange-600 focus:ring-orange-500">
-                                            <span class="text-gray-900">Require special characters</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Session Management -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Session Management</h3>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Session Timeout
-                                            (minutes)</label>
-                                        <input type="number" value="30" min="5" max="120"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Force Logout</h4>
-                                            <p class="text-sm text-gray-600">Logout all active sessions</p>
-                                        </div>
-                                        <button
-                                            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
-                                            Force Logout All
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Access Control -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Access Control</h3>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Two-Factor Authentication</h4>
-                                            <p class="text-sm text-gray-600">Require 2FA for admin accounts</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">IP Whitelist</h4>
-                                            <p class="text-sm text-gray-600">Restrict admin access to specific IPs</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                    <div id="audit-logs-container" class="p-6 space-y-2.5">
+                        <div class="ft-empty-state">
+                            <i class="fas fa-circle-notch fa-spin text-lg mb-2" aria-hidden="true"></i>
+                            <p class="text-sm font-medium">Loading audit logs...</p>
                         </div>
                     </div>
-
-                    <!-- Audit Logs Section -->
-                    <div id="audit-logs" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Audit Logs</h2>
-
-                        <div class="space-y-6">
-                            <!-- Log Filters -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter Logs</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Log Level</label>
-                                        <select
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                            <option>All Levels</option>
-                                            <option>Error</option>
-                                            <option>Warning</option>
-                                            <option>Info</option>
-                                            <option>Debug</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
-                                        <select
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                            <option>Last 24 hours</option>
-                                            <option>Last 7 days</option>
-                                            <option>Last 30 days</option>
-                                            <option>Custom range</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">User</label>
-                                        <select
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                            <option>All Users</option>
-                                            <option>Admin User</option>
-                                            <option>System</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Log Entries -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Logs</h3>
-                                <div class="space-y-4">
-                                    <div
-                                        class="flex items-center justify-between p-4 bg-red-50 border border-red-200 rounded-lg">
-                                        <div>
-                                            <h4 class="font-medium text-red-900">Failed Login Attempt</h4>
-                                            <p class="text-sm text-red-700">IP: 192.168.1.100 • User: unknown</p>
-                                            <p class="text-xs text-red-600">2024-01-15 14:30:25</p>
-                                        </div>
-                                        <span
-                                            class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">ERROR</span>
-                                    </div>
-                                    <div
-                                        class="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
-                                        <div>
-                                            <h4 class="font-medium text-green-900">User Registration</h4>
-                                            <p class="text-sm text-green-700">New user: john.doe@example.com</p>
-                                            <p class="text-xs text-green-600">2024-01-15 14:25:10</p>
-                                        </div>
-                                        <span
-                                            class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">INFO</span>
-                                    </div>
-                                    <div
-                                        class="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                        <div>
-                                            <h4 class="font-medium text-blue-900">System Backup</h4>
-                                            <p class="text-sm text-blue-700">Database backup completed successfully</p>
-                                            <p class="text-xs text-blue-600">2024-01-15 14:00:00</p>
-                                        </div>
-                                        <span
-                                            class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">INFO</span>
-                                    </div>
-                                    <div
-                                        class="flex items-center justify-between p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                                        <div>
-                                            <h4 class="font-medium text-yellow-900">High Memory Usage</h4>
-                                            <p class="text-sm text-yellow-700">Memory usage at 85%</p>
-                                            <p class="text-xs text-yellow-600">2024-01-15 13:45:30</p>
-                                        </div>
-                                        <span
-                                            class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">WARNING</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </section>
             </div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <!-- User Detail Modal -->
+    <div id="user-detail-modal" class="ft-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-user-title">
+        <div class="ft-modal-panel">
+            <div class="ft-card-header">
+                <div>
+                    <div class="ft-kicker">Account Record</div>
+                    <h3 id="modal-user-title" class="ft-section-title">User Details</h3>
+                </div>
+                <button type="button" id="close-user-modal" class="ft-btn-outline" aria-label="Close modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div id="modal-user-body" class="p-6 space-y-3 text-sm"></div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">FootballTix</h3>
-                    <p class="text-gray-400">Your trusted partner for football ticketing worldwide.</p>
-                </div>
-                <div>
-                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="index.html" class="hover:text-white">Home</a></li>
-                        <li><a href="events.html" class="hover:text-white">Matches</a></li>
-                        <li><a href="leagues.html" class="hover:text-white">Leagues</a></li>
-                        <li><a href="about.html" class="hover:text-white">About</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-md font-semibold mb-4">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="faq.html" class="hover:text-white">FAQ</a></li>
-                        <li><a href="terms.html" class="hover:text-white">Terms & Conditions</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-md font-semibold mb-4">Connect</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 FootballTix. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div id="ft-toast-container" class="ft-toast-container" aria-live="polite"></div>
 
     <script src="js/admin-profile.js"></script>
 </body>
