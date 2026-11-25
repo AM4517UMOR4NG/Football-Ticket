@@ -6,16 +6,11 @@
     <title>Cashier Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-        .cashier-hero {
-            background: radial-gradient(1200px 300px at 10% -20%, rgba(37,99,235,.15), transparent),
-                        radial-gradient(1200px 300px at 90% -20%, rgba(124,58,237,.15), transparent),
-                        linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <script src="js/layout.js"></script>
 </head>
 <body>
     <!-- Shared Navigation (from index.html) -->
@@ -93,7 +88,7 @@
             <!-- Metric Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="metric-cards">
                 <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
-                    <div class="p-3 rounded-full bg-emerald-100 text-emerald-600">$</div>
+                    <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fas fa-wallet"></i></div>
                     <div>
                         <p class="text-sm text-gray-500">Penjualan Hari Ini</p>
                         <p class="text-2xl font-bold" id="sales-today">Rp 0</p>
@@ -101,7 +96,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
-                    <div class="p-3 rounded-full bg-blue-100 text-blue-600">🎟️</div>
+                    <div class="w-11 h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fas fa-ticket-alt"></i></div>
                     <div>
                         <p class="text-sm text-gray-500">Tiket Terjual</p>
                         <p class="text-2xl font-bold" id="tickets-sold">0</p>
@@ -109,7 +104,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
-                    <div class="p-3 rounded-full bg-purple-100 text-purple-600">📈</div>
+                    <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fas fa-chart-line"></i></div>
                     <div>
                         <p class="text-sm text-gray-500">Transaksi</p>
                         <p class="text-2xl font-bold" id="transactions-count">0</p>
@@ -117,7 +112,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow p-6 flex items-start gap-4">
-                    <div class="p-3 rounded-full bg-amber-100 text-amber-600">✅</div>
+                    <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg"><i class="fas fa-futbol"></i></div>
                     <div>
                         <p class="text-sm text-gray-500">Pertandingan Aktif</p>
                         <p class="text-2xl font-bold" id="active-matches">0</p>

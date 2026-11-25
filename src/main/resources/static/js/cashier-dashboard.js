@@ -322,26 +322,54 @@ function getStatusText(status) {
     return statusMap[status] || 'Status Tidak Diketahui';
 }
 
-function printTicket(bookingReference) {
-    // Simple print functionality - in a real app, this would generate a proper ticket
+async function printTicket(bookingReference) {
+    const token = localStorage.getItem('accessToken') || localStorage.getItem('jwtToken');
+    let qrDataUrl = '';
+    try {
+        const res = await fetch(`/api/bookings/${encodeURIComponent(bookingReference)}/qr?size=200`, {
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+        if (res.ok) {
+            const blob = await res.blob();
+            qrDataUrl = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        }
+    } catch (e) {
+        console.warn('Could not load QR for ticket print:', e);
+    }
+
+    const booking = (window.allBookings || []).find(b => b.bookingReference === bookingReference);
     const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        showToast('Izinkan popup browser untuk mencetak tiket.', true);
+        return;
+    }
     printWindow.document.write(`
         <html>
         <head>
-            <title>Tiket - ${bookingReference}</title>
+            <title>Tiket - ${escapeHtml(bookingReference)}</title>
             <style>
                 body { font-family: Arial, sans-serif; margin: 20px; }
                 .ticket { border: 2px solid #000; padding: 20px; max-width: 400px; }
-                .header { text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 20px; }
-                .info { margin: 10px 0; }
-                .footer { text-align: center; margin-top: 20px; font-size: 12px; }
+                .header { text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 16px; }
+                .info { margin: 8px 0; font-size: 14px; }
+                .qr { text-align: center; margin: 16px 0; }
+                .footer { text-align: center; margin-top: 16px; font-size: 12px; color: #555; }
             </style>
         </head>
         <body>
             <div class="ticket">
-                <div class="header">🎫 TIKET FOOTBALL</div>
-                <div class="info"><strong>Booking Reference:</strong> ${bookingReference}</div>
+                <div class="header">🎫 TIKET FOOTBALLTIX</div>
+                ${booking ? `<div class="info"><strong>Event:</strong> ${escapeHtml(booking.eventTitle || '-')}</div>` : ''}
+                <div class="info"><strong>Booking Reference:</strong> ${escapeHtml(bookingReference)}</div>
+                ${booking ? `<div class="info"><strong>Jumlah Tiket:</strong> ${booking.numberOfTickets || 0}</div>` : ''}
+                ${booking ? `<div class="info"><strong>Status:</strong> ${escapeHtml(booking.status || '-')}</div>` : ''}
                 <div class="info"><strong>Tanggal Cetak:</strong> ${new Date().toLocaleString('id-ID')}</div>
+                ${qrDataUrl ? `<div class="qr"><img src="${qrDataUrl}" alt="Ticket QR" width="160" height="160" /></div>` : ''}
                 <div class="footer">Terima kasih telah menggunakan FootballTix!</div>
             </div>
         </body>
