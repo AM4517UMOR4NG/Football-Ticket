@@ -4,6 +4,7 @@ import com.example.ticketbooking.dto.EventDTO;
 import com.example.ticketbooking.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/events")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class EventController {
     private final EventService eventService;
 
@@ -49,8 +49,9 @@ public class EventController {
     public ResponseEntity<List<EventDTO>> searchEvents(
             @RequestParam(required = false) String query,
             @RequestParam(required = false) String venue,
-            @RequestParam(required = false) String date) {
-        List<EventDTO> events = eventService.searchEvents(query, venue, date);
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) String league) {
+        List<EventDTO> events = eventService.searchEvents(query, venue, date, league);
         return ResponseEntity.ok(events);
     }
 
@@ -85,6 +86,9 @@ public class EventController {
                 "totalEvents", allEvents.size(),
                 "upcomingEvents", upcomingEvents.size(),
                 "totalSeats", allEvents.stream().mapToInt(EventDTO::totalSeats).sum(),
+                "availableSeats", allEvents.stream()
+                        .mapToInt(e -> e.availableSeats() != null ? e.availableSeats() : e.totalSeats())
+                        .sum(),
                 "averagePrice", allEvents.stream()
                         .mapToDouble(e -> e.price().doubleValue())
                         .average()
@@ -94,6 +98,7 @@ public class EventController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createEvent(@RequestBody EventDTO eventDTO) {
         try {
             eventService.createEvent(eventDTO);
@@ -104,6 +109,7 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
         try {
             eventService.updateEvent(id, eventDTO);
@@ -114,6 +120,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
         try {
             eventService.deleteEvent(id);
