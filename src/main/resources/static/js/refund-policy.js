@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const authHTML = `
             <div class="flex items-center space-x-4 bg-blue-600/20 backdrop-blur-sm rounded-lg px-6 py-3 border border-blue-400/30">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center ring-2 ring-white/50">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-emerald-600 rounded-full flex items-center justify-center ring-2 ring-white/50">
                         <span class="text-white text-sm font-bold">${(user.name || 'U').charAt(0).toUpperCase()}</span>
                     </div>
                     <div>
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate-fade-in');
-                    const children = entry.target.querySelectorAll('.bg-green-50, .bg-yellow-50, .bg-red-50, .bg-blue-50, .bg-purple-50');
+                    const children = entry.target.querySelectorAll('.bg-green-50, .bg-yellow-50, .bg-red-50, .bg-blue-50, .bg-emerald-50');
                     children.forEach((child, index) => {
                         setTimeout(() => {
                             child.style.opacity = '1';
