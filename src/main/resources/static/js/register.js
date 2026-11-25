@@ -290,7 +290,7 @@ function showFancyInfo(message) {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        background: linear-gradient(135deg, #2563eb 0%, #0e9f57 100%);
         color: #fff;
         padding: 14px 18px;
         border-radius: 12px;
