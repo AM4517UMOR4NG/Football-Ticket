@@ -309,16 +309,9 @@ class ThemeManager {
     }
 
     init() {
-        // Load saved theme or detect system preference
+        // Load saved theme consistently (default light across all pages)
         const savedTheme = localStorage.getItem(this.storageKey);
-        const initialTheme = savedTheme || 'auto';
-
-        // Listen for system theme changes
-        this.mediaQuery.addEventListener('change', (e) => {
-            if (this.currentTheme === 'auto') {
-                this.setTheme('auto', false);
-            }
-        });
+        const initialTheme = savedTheme === 'dark' ? 'dark' : 'light';
 
         // Set initial theme
         this.setTheme(initialTheme, false);
