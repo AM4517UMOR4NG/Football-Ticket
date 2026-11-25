@@ -1426,65 +1426,18 @@ function injectStyles() {
     document.head.appendChild(enhancedStyles);
 }
 
-// Navigation & Authentication Functions
+// Navigation & Authentication Functions (delegated to shared FootballTixLayout)
 function updateNavigation() {
-    // Check both sessionStorage and localStorage for tokens
-    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
-    const userRole = sessionStorage.getItem('userRole') || localStorage.getItem('userRole');
-    const username = sessionStorage.getItem('username') || localStorage.getItem('username');
-
-    const signInBtn = document.getElementById('login-link');
-
-    if (token && username) {
-        // Remove existing sign in button
-        if (signInBtn && signInBtn.parentElement) {
-            signInBtn.parentElement.remove();
-        }
-
-        // Create user menu
-        const userMenu = document.createElement('div');
-        userMenu.className = 'flex items-center space-x-4';
-        userMenu.innerHTML = `
-           <div class="relative">
-        <button id="user-menu-btn" class="flex items-center space-x-2 text-black hover:text-blue-700">
-            <span class="text-sm font-medium">${username}</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-            ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
-            ${userRole === 'CASHIER' ? '<a href="cashier-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cashier Dashboard</a>' : ''}
-            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-        </div>
-    </div>
-`;
-
-        const signInContainer = document.querySelector('.flex.items-center');
-        if (signInContainer) {
-            signInContainer.innerHTML = '';
-            signInContainer.appendChild(userMenu);
-        }
-        // Setup dropdown functionality
-        const userMenuBtn = document.getElementById('user-menu-btn');
-        const userDropdown = document.getElementById('user-dropdown');
-        if (userMenuBtn && userDropdown) {
-            userMenuBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                userDropdown.classList.toggle('hidden');
-            });
-            document.addEventListener('click', (e) => {
-                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                }
-            });
-        }
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.renderNavbar();
     }
 }
 
 function handleLogout() {
-    // Clear all authentication data
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.logout();
+        return;
+    }
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('username');
@@ -1493,11 +1446,7 @@ function handleLogout() {
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
     localStorage.removeItem('userRole');
-
-    showToast('Logged out successfully', 'info');
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 1000);
+    window.location.href = 'index.html';
 }
 
 // Initialize error boundary and styles

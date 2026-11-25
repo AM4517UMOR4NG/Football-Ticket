@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FootballTix - Your Premier Football Ticketing Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <script src="js/layout.js"></script>
 </head>
 
 <body class="bg-gray-50 font-montserrat">
@@ -103,9 +105,8 @@
     <!-- Highlight Carousel -->
     <div id="highlight-carousel" class="carousel-container relative overflow-hidden rounded-lg shadow-lg" role="region"
         aria-label="Featured highlights carousel">
-        <div class="flex justify-between items-center absolute top-1/2 left-4 right-4 z-20 transform -translate-y-1/2">
-            <h2 class="text-2xl font-bold text-white bg-black bg-opacity-50 px-4 py-2 rounded">🐐</h2>
-            <div class="carousel-controls flex space-x-2">
+        <div class="flex justify-end items-center absolute top-1/2 left-4 right-4 z-20 transform -translate-y-1/2 pointer-events-none">
+            <div class="carousel-controls flex space-x-2 pointer-events-auto">
                 <button class="carousel-nav prev" aria-label="Previous slide">
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -118,19 +119,19 @@
             <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
                 aria-label="Slide 1 of 4">
                 <img src="https://assets-bundesliga-com.translate.goog/contender/2025/3/1920-1080-max.jpg?fit=1140,https://www-bundesliga-com.translate.goog/en/bundesliga/news/1140?_x_tr_sl%3Den&_x_tr_sl=en&_x_tr_tl=id&_x_tr_hl=id&_x_tr_pto=imgs"
-                    alt="Loading.." class="w-full h-full object-cover" loading="lazy">
+                    alt="Bundesliga Highlights" class="w-full h-full object-cover" loading="lazy">
                 <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
                     <h3 class="text-xl font-bold mb-1">Bundesliga Highlights</h3>
-                    <p>Intensive match of the week</p>
+                    <p>Intense clashes of the week</p>
                 </div>
             </div>
             <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
                 aria-label="Slide 2 of 4">
                 <img src="https://asset-2.tstatic.net/bangka/foto/bank/images/2024021-ac-Milan-vs-Inter-Milan.jpg"
-                    alt="Loading.." class="w-full h-full object-cover" loading="lazy">
+                    alt="Serie A Highlights" class="w-full h-full object-cover" loading="lazy">
                 <div class="carousel-caption absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-5">
-                    <h3 class="text-xl font-bold mb-1">Seria A Highlights</h3>
-                    <p>Most waited matches of the weeks</p>
+                    <h3 class="text-xl font-bold mb-1">Serie A Highlights</h3>
+                    <p>Most awaited matches of the week</p>
                 </div>
             </div>
             <div class="carousel-item flex-shrink-0 w-full relative" role="group" aria-roledescription="slide"
@@ -180,7 +181,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Match 1: Man Utd vs Liverpool -->
-            <div class="match-card hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 rounded-2xl border border-gray-100/50 bg-gray-900">
+            <div class="match-card hover:border-gray-300 hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 rounded-2xl border border-gray-100/50 bg-gray-900">
                 <div
                     class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 flex justify-between items-center">
                     <div>
@@ -245,7 +246,7 @@
                 </div>
             </div>
             <!-- Match 2: Chelsea vs Arsenal -->
-            <div class="match-card hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 rounded-2xl border border-gray-100/50 bg-gray-900">
+            <div class="match-card hover:border-gray-300 hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 rounded-2xl border border-gray-100/50 bg-gray-900">
                 <div
                     class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 flex justify-between items-center">
                     <div>
@@ -309,7 +310,7 @@
                 </div>
             </div>
             <!-- Match 3: Man City vs Tottenham -->
-            <div class="match-card hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 rounded-2xl border border-gray-100/50 bg-gray-900">
+            <div class="match-card hover:border-gray-300 hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 rounded-2xl border border-gray-100/50 bg-gray-900">
                 <div
                     class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 flex justify-between items-center">
                     <div>
@@ -414,7 +415,7 @@
                     <div class="text-sm text-gray-500 mt-1">Italy</div>
                 </a>
                 <a href="leagues.html" class="league-card bg-white p-6 text-center hover:shadow-lg">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Ligue_1_2024_Logo.png"
                             alt="Ligue 1" class="w-12 h-12 object-contain">
                     </div>
