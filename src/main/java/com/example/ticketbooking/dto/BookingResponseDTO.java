@@ -96,6 +96,7 @@ public class BookingResponseDTO {
     }
 
     private String imageUrl;
+    private LocalDateTime bookingDate;
 
     public String getImageUrl() {
         return imageUrl;
@@ -103,5 +104,13 @@ public class BookingResponseDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public LocalDateTime getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(LocalDateTime bookingDate) {
+        this.bookingDate = bookingDate;
     }
 }
