@@ -1,520 +1,534 @@
-// User Profile Page JavaScript
+/**
+ * FootballTix — User Profile Controller
+ * Integrates with /api/profile, /api/profile/stats, /api/profile/change-password,
+ * /api/bookings/my-bookings, and /api/bookings/{id}/cancel.
+ */
+(function () {
+    'use strict';
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Check authentication first
-    const token = localStorage.getItem('accessToken');
-    const userRole = localStorage.getItem('userRole');
+    const PREFS_STORAGE_KEY = 'ft_user_preferences';
+    const state = {
+        profile: null,
+        bookings: [],
+        editing: false
+    };
 
-    if (!token) {
-        // Redirect to login if not authenticated
-        window.location.href = 'login.html';
-        return;
+    function getToken() {
+        return localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
     }
 
-    // Update navigation based on user role
-    updateNavigation(userRole);
-
-    // Initialize profile functionality
-    initializeProfile();
-
-    // Initialize form handling
-    initializeForms();
-
-    // Initialize section switching
-    initializeSectionSwitching();
-
-    // Initialize profile image upload
-    initializeImageUpload();
-});
-
-// Update navigation based on user role
-function updateNavigation(userRole) {
-    const profileLink = document.getElementById('profile-link');
-    const adminLink = document.getElementById('admin-link');
-    const adminProfileLink = document.getElementById('admin-profile-link');
-    const logoutLink = document.getElementById('logout-link');
-    const loginLink = document.getElementById('login-link');
-
-    if (userRole === 'ADMIN') {
-        if (adminLink) adminLink.classList.remove('hidden');
-        if (adminProfileLink) adminProfileLink.classList.remove('hidden');
+    function escapeHtml(str) {
+        return String(str ?? '').replace(/[&<>"']/g, s => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[s]));
     }
 
-    if (logoutLink) logoutLink.classList.remove('hidden');
-    if (loginLink) loginLink.classList.add('hidden');
-}
+    function formatIdr(amount) {
+        const numeric = Number(amount);
+        if (!Number.isFinite(numeric)) return 'Rp 0';
+        return 'Rp ' + new Intl.NumberFormat('id-ID', { maximumFractionDigits: 0 }).format(numeric);
+    }
 
-// Initialize Profile Page
-function initializeProfile() {
-    // Load user data from API
-    loadUserData();
-
-    // Initialize statistics
-    loadUserStats();
-
-    // Initialize booking history
-    loadBookingHistory();
-}
-
-// Load user data from API
-async function loadUserData() {
-    try {
-        const token = localStorage.getItem('accessToken');
-        const response = await fetch('/api/profile', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            if (response.status === 401) {
-                // Token expired or invalid
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('userData');
-                localStorage.removeItem('userRole');
-                window.location.href = 'login.html';
-                return;
-            }
-            throw new Error('Failed to load user data');
+    function formatDate(isoValue, includeTime) {
+        if (!isoValue) return '—';
+        const d = new Date(isoValue);
+        if (Number.isNaN(d.getTime())) return '—';
+        if (includeTime) {
+            return d.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         }
-
-        const userData = await response.json();
-        populateUserData(userData);
-
-    } catch (error) {
-        console.error('Error loading user data:', error);
-        showNotification('Failed to load user data. Using demo data.', 'warning');
-        // Use demo data as fallback
-        populateUserData({
-            id: 1,
-            username: 'demo_user',
-            email: 'demo@example.com',
-            fullName: 'Demo User',
-            role: 'USER',
-            phone: '+1 (555) 123-4567',
-            address: '123 Demo Street, Demo City, DC 12345',
-            createdAt: new Date().toISOString()
+        return d.toLocaleDateString('id-ID', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
         });
     }
-}
 
-// Load user statistics
-async function loadUserStats() {
-    try {
-        const token = localStorage.getItem('accessToken');
-        const response = await fetch('/api/profile/stats', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to load user stats');
+    function getInitials(name, username) {
+        const source = (name || username || 'FT').trim();
+        const parts = source.split(/\s+/).filter(Boolean);
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[1][0]).toUpperCase();
         }
-
-        const stats = await response.json();
-        updateStatistics(stats);
-
-    } catch (error) {
-        console.error('Error loading user stats:', error);
-        // Use demo data as fallback
-        updateStatistics({
-            totalBookings: 12,
-            activeBookings: 3,
-            totalSpent: 1250.00
-        });
-    }
-}
-
-// Load booking history
-async function loadBookingHistory() {
-    try {
-        const token = localStorage.getItem('accessToken');
-        const response = await fetch('/api/bookings/my-bookings', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to load booking history');
-        }
-
-        const bookings = await response.json();
-        updateBookingHistory(bookings);
-
-    } catch (error) {
-        console.error('Error loading booking history:', error);
-        // Show empty state
-        updateBookingHistory([]);
-    }
-}
-
-// Update booking history display
-function updateBookingHistory(bookings) {
-    const bookingHistoryContainer = document.getElementById('booking-history');
-    if (!bookingHistoryContainer) return;
-
-    if (bookings.length === 0) {
-        bookingHistoryContainer.innerHTML = `
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Booking History</h2>
-            <div class="text-center text-gray-500 py-8">
-                <i class="fas fa-ticket-alt text-4xl mb-4"></i>
-                <p>No booking history available</p>
-                <p class="text-sm mt-2">Start by booking your first match!</p>
-            </div>
-        `;
-        return;
+        return source.slice(0, 2).toUpperCase();
     }
 
-    let bookingHTML = '<h2 class="text-2xl font-bold text-gray-900 mb-6">Booking History</h2><div class="space-y-4">';
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('ft-toast-container');
+        if (!container) return;
 
-    bookings.forEach(booking => {
-        const statusClass = booking.status === 'CONFIRMED' ? 'bg-green-100 text-green-800' :
-            booking.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                booking.status === 'COMPLETED' ? 'bg-gray-100 text-gray-800' :
-                    'bg-red-100 text-red-800';
-
-        bookingHTML += `
-            <div class="border border-gray-200 rounded-lg p-4">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-semibold text-gray-900">${booking.eventTitle || 'Match Event'}</h3>
-                        <p class="text-gray-600">${booking.venue || 'Venue'} • ${new Date(booking.eventDate).toLocaleDateString()}</p>
-                        <p class="text-sm text-gray-500">Booking ID: ${booking.bookingReference}</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="${statusClass} px-2 py-1 rounded-full text-xs font-medium">${booking.status}</span>
-                        <p class="text-lg font-bold text-gray-900 mt-1">$${booking.totalAmount}</p>
-                    </div>
-                </div>
-                <div class="mt-4 flex space-x-2">
-                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View Details</button>
-                    ${booking.status === 'CONFIRMED' ? '<button class="text-red-600 hover:text-red-700 text-sm font-medium">Cancel</button>' : ''}
-                </div>
-            </div>
-        `;
-    });
-
-    bookingHTML += '</div>';
-    bookingHistoryContainer.innerHTML = bookingHTML;
-}
-
-// Populate user data in form fields
-function populateUserData(userData) {
-    // Update profile header
-    const profileName = document.getElementById('profile-name');
-    const profileEmail = document.getElementById('profile-email');
-
-    if (profileName) profileName.textContent = userData.fullName || userData.username || 'User';
-    if (profileEmail) profileEmail.textContent = userData.email || '';
-
-    // Populate form fields
-    const firstNameInput = document.getElementById('first-name');
-    const lastNameInput = document.getElementById('last-name');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const addressInput = document.getElementById('address');
-
-    if (firstNameInput && lastNameInput) {
-        const names = (userData.fullName || '').split(' ');
-        firstNameInput.value = names[0] || '';
-        lastNameInput.value = names.slice(1).join(' ') || '';
-    }
-
-    if (emailInput) emailInput.value = userData.email || '';
-    if (phoneInput) phoneInput.value = userData.phone || '';
-    if (addressInput) addressInput.value = userData.address || '';
-}
-
-// Update statistics display
-function updateStatistics(stats = null) {
-    const totalBookingsElement = document.getElementById('total-bookings');
-    const activeBookingsElement = document.getElementById('active-bookings');
-    const totalSpentElement = document.getElementById('total-spent');
-
-    if (stats) {
-        if (totalBookingsElement) totalBookingsElement.textContent = stats.totalBookings || 0;
-        if (activeBookingsElement) activeBookingsElement.textContent = stats.activeBookings || 0;
-        if (totalSpentElement) totalSpentElement.textContent = `$${(stats.totalSpent || 0).toFixed(2)}`;
-    }
-}
-
-// Initialize booking history
-function initializeBookingHistory() {
-    // This would load real booking data from API
-    const bookingHistoryContainer = document.getElementById('booking-history');
-    if (bookingHistoryContainer) {
-        bookingHistoryContainer.innerHTML = `
-            <div class="text-center text-gray-500 py-8">
-                <i class="fas fa-ticket-alt text-4xl mb-4"></i>
-                <p>No booking history available</p>
-            </div>
-        `;
-    }
-}
-
-// Initialize forms
-function initializeForms() {
-    // Personal information form
-    const personalInfoForm = document.getElementById('personal-info-form');
-    if (personalInfoForm) {
-        personalInfoForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            savePersonalInfo();
-        });
-    }
-
-    // Password change form
-    const passwordForm = document.getElementById('password-form');
-    if (passwordForm) {
-        passwordForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            changePassword();
-        });
-    }
-}
-
-// Edit personal information
-function editPersonalInfo() {
-    const inputs = document.querySelectorAll('#personal-info input[disabled]');
-    const editBtn = document.querySelector('#personal-info .edit-btn');
-    const saveBtn = document.getElementById('save-personal-btn');
-    const cancelBtn = document.getElementById('cancel-personal-btn');
-
-    inputs.forEach(input => input.disabled = false);
-    if (editBtn) editBtn.classList.add('hidden');
-    if (saveBtn) saveBtn.classList.remove('hidden');
-    if (cancelBtn) cancelBtn.classList.remove('hidden');
-}
-
-// Cancel edit
-function cancelEdit() {
-    const inputs = document.querySelectorAll('#personal-info input');
-    const editBtn = document.querySelector('#personal-info .edit-btn');
-    const saveBtn = document.getElementById('save-personal-btn');
-    const cancelBtn = document.getElementById('cancel-personal-btn');
-
-    inputs.forEach(input => input.disabled = true);
-    if (editBtn) editBtn.classList.remove('hidden');
-    if (saveBtn) saveBtn.classList.add('hidden');
-    if (cancelBtn) cancelBtn.classList.add('hidden');
-
-    // Reload user data to reset form
-    loadUserData();
-}
-
-// Save personal information
-async function savePersonalInfo() {
-    try {
-        const firstName = document.getElementById('first-name').value;
-        const lastName = document.getElementById('last-name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const address = document.getElementById('address').value;
-
-        const updateData = {
-            fullName: `${firstName} ${lastName}`.trim(),
-            email: email,
-            phone: phone,
-            address: address
+        const iconMap = {
+            success: 'fa-check-circle text-emerald-400',
+            error: 'fa-exclamation-circle text-red-400',
+            info: 'fa-info-circle text-sky-400'
         };
 
-        const token = localStorage.getItem('accessToken');
-        const response = await fetch('/api/profile', {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updateData)
-        });
+        const toast = document.createElement('div');
+        toast.className = `ft-toast ft-toast-${type}`;
+        toast.innerHTML = `<i class="fas ${iconMap[type] || iconMap.info}" aria-hidden="true"></i><span>${escapeHtml(message)}</span>`;
+        container.appendChild(toast);
 
-        if (!response.ok) {
-            throw new Error('Failed to update profile');
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.2s ease';
+            setTimeout(() => toast.remove(), 220);
+        }, 3400);
+    }
+
+    async function apiRequest(url, options = {}) {
+        const token = getToken();
+        if (!token) {
+            window.location.href = 'login.html';
+            throw new Error('Authentication required');
         }
 
-        const updatedUser = await response.json();
-        populateUserData(updatedUser);
-        cancelEdit();
-        showNotification('Profile updated successfully!', 'success');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+            ...(options.headers || {})
+        };
 
-    } catch (error) {
-        console.error('Error updating profile:', error);
-        showNotification('Failed to update profile', 'error');
+        const response = await fetch(url, { ...options, headers });
+
+        if (response.status === 401) {
+            showToast('Session expired. Please sign in again.', 'error');
+            setTimeout(() => {
+                if (window.FootballTixLayout) {
+                    window.FootballTixLayout.logout();
+                } else {
+                    window.location.href = 'login.html';
+                }
+            }, 900);
+            throw new Error('Unauthorized');
+        }
+
+        return response;
     }
-}
 
-// Change password
-async function changePassword() {
-    try {
+    function activateSection(sectionId) {
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.classList.toggle('hidden', section.id !== sectionId);
+        });
+
+        document.querySelectorAll('#profile-tab-nav .ft-tab-btn').forEach(btn => {
+            const isActive = btn.dataset.section === sectionId;
+            btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-selected', String(isActive));
+        });
+    }
+
+    function applyProfileData(user) {
+        state.profile = user;
+        const displayName = user.fullName && user.fullName.trim() ? user.fullName.trim() : user.username;
+        const role = (user.role || 'USER').toUpperCase();
+
+        document.getElementById('profile-avatar-initials').textContent = getInitials(user.fullName, user.username);
+        document.getElementById('profile-name').textContent = displayName || 'Member';
+        document.getElementById('profile-email').textContent = user.email || 'No email on file';
+        document.getElementById('profile-username-pill').textContent = `@${user.username || 'user'}`;
+
+        const roleBadge = document.getElementById('profile-role-badge');
+        roleBadge.textContent = role;
+        roleBadge.className = 'ft-masthead-pill ' + (
+            role === 'ADMIN' ? 'ft-pill-admin' :
+            role === 'CASHIER' ? 'ft-pill-cashier' : 'ft-pill-pitch'
+        );
+
+        const joinedYear = user.createdAt ? new Date(user.createdAt).getFullYear() : null;
+        document.getElementById('member-since').textContent = joinedYear && !Number.isNaN(joinedYear)
+            ? `Member since ${joinedYear}`
+            : 'Verified Member';
+
+        // Populate form fields
+        document.getElementById('fullname-input').value = user.fullName || '';
+        document.getElementById('email-input').value = user.email || '';
+        document.getElementById('phone-input').value = user.phone || '';
+        document.getElementById('username-input').value = user.username || '';
+        document.getElementById('role-input').value = role;
+        document.getElementById('member-since-input').value = formatDate(user.createdAt, false);
+        document.getElementById('address-input').value = user.address || '';
+
+        // Show staff shortcut if applicable
+        const staffLink = document.getElementById('staff-dashboard-link');
+        const staffLabel = document.getElementById('staff-dashboard-label');
+        if (role === 'ADMIN') {
+            staffLink.href = 'admin-dashboard.html';
+            staffLabel.textContent = 'Admin Dashboard';
+            staffLink.classList.remove('hidden');
+        } else if (role === 'CASHIER') {
+            staffLink.href = 'cashier-dashboard.html';
+            staffLabel.textContent = 'Cashier Dashboard';
+            staffLink.classList.remove('hidden');
+        } else {
+            staffLink.classList.add('hidden');
+        }
+    }
+
+    function setEditMode(enabled) {
+        state.editing = enabled;
+        const editableIds = ['fullname-input', 'email-input', 'phone-input', 'address-input'];
+        editableIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.disabled = !enabled;
+        });
+
+        const saveButtons = document.getElementById('save-buttons');
+        const editBtn = document.getElementById('edit-profile-btn');
+        if (saveButtons) saveButtons.classList.toggle('hidden', !enabled);
+        if (editBtn) editBtn.classList.toggle('hidden', enabled);
+
+        if (enabled) {
+            const first = document.getElementById('fullname-input');
+            if (first) first.focus();
+        } else if (state.profile) {
+            applyProfileData(state.profile);
+        }
+    }
+
+    async function loadProfile() {
+        try {
+            const response = await apiRequest('/api/profile');
+            if (!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                throw new Error(err.error || 'Failed to load profile');
+            }
+            const user = await response.json();
+            applyProfileData(user);
+        } catch (err) {
+            if (err.message !== 'Unauthorized') {
+                showToast(err.message || 'Could not load profile details', 'error');
+            }
+        }
+    }
+
+    async function loadStats() {
+        try {
+            const response = await apiRequest('/api/profile/stats');
+            if (!response.ok) return;
+            const stats = await response.json();
+            document.getElementById('total-bookings').textContent = String(stats.totalBookings ?? 0);
+            document.getElementById('active-bookings').textContent = String(stats.activeBookings ?? 0);
+            document.getElementById('total-spent').textContent = formatIdr(stats.totalSpent ?? 0);
+        } catch (err) {
+            if (err.message !== 'Unauthorized') {
+                console.error('Failed to load profile stats:', err);
+            }
+        }
+    }
+
+    function getStatusBadgeClass(status) {
+        switch ((status || '').toUpperCase()) {
+            case 'CONFIRMED': return 'ft-badge-confirmed';
+            case 'COMPLETED': return 'ft-badge-completed';
+            case 'PENDING': return 'ft-badge-pending';
+            case 'CANCELLED': return 'ft-badge-cancelled';
+            default: return 'ft-badge-pending';
+        }
+    }
+
+    function renderBookings() {
+        const container = document.getElementById('booking-history-list');
+        const filter = (document.getElementById('booking-status-filter')?.value || 'ALL').toUpperCase();
+        if (!container) return;
+
+        const filtered = filter === 'ALL'
+            ? state.bookings
+            : state.bookings.filter(b => (b.status || '').toUpperCase() === filter);
+
+        if (!filtered.length) {
+            container.innerHTML = `
+                <div class="ft-empty-state">
+                    <i class="fas fa-ticket-alt text-2xl mb-2 opacity-60" aria-hidden="true"></i>
+                    <p class="text-sm font-semibold mb-1">${filter === 'ALL' ? 'No bookings yet' : `No ${escapeHtml(filter.toLowerCase())} bookings`}</p>
+                    <p class="text-xs mb-4">When you reserve seats for a match, your ticket ledger will appear here.</p>
+                    <a href="events.html" class="ft-btn-solid-pitch">Browse Upcoming Matches</a>
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = filtered.map(booking => {
+            const status = (booking.status || 'PENDING').toUpperCase();
+            const canCancel = status === 'PENDING' || status === 'CONFIRMED';
+            const ticketLabel = booking.numberOfTickets === 1 ? '1 ticket' : `${booking.numberOfTickets || 0} tickets`;
+            const ref = booking.bookingReference || `BK-${booking.id}`;
+
+            return `
+                <div class="ft-booking-row">
+                    <div class="min-w-0 space-y-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="ft-ref-code">${escapeHtml(ref)}</span>
+                            <span class="ft-status-badge ${getStatusBadgeClass(status)}">${escapeHtml(status)}</span>
+                        </div>
+                        <h3 class="text-base font-bold truncate">${escapeHtml(booking.eventTitle || 'Football Match')}</h3>
+                        <p class="text-xs text-[var(--ft-muted)]">
+                            <i class="fas fa-map-marker-alt mr-1" aria-hidden="true"></i>${escapeHtml(booking.venue || 'Stadium TBA')}
+                            <span class="mx-1.5">&middot;</span>
+                            <i class="far fa-calendar mr-1" aria-hidden="true"></i>${escapeHtml(formatDate(booking.eventDate, true))}
+                        </p>
+                        <p class="text-xs font-semibold">
+                            ${escapeHtml(ticketLabel)} &middot; <span class="text-[var(--ft-pitch)]">${escapeHtml(formatIdr(booking.totalAmount))}</span>
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 flex-shrink-0">
+                        <a href="bookings.html" class="ft-btn-outline">
+                            <i class="fas fa-qrcode text-xs" aria-hidden="true"></i>
+                            <span>View Ticket</span>
+                        </a>
+                        ${canCancel ? `
+                            <button type="button" class="ft-btn-danger-outline cancel-booking-btn" data-booking-id="${escapeHtml(booking.id)}" data-booking-ref="${escapeHtml(ref)}">
+                                <span>Cancel</span>
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>`;
+        }).join('');
+
+        container.querySelectorAll('.cancel-booking-btn').forEach(btn => {
+            btn.addEventListener('click', () => handleCancelBooking(btn.dataset.bookingId, btn.dataset.bookingRef, btn));
+        });
+    }
+
+    async function loadBookings() {
+        const container = document.getElementById('booking-history-list');
+        if (container) {
+            container.innerHTML = `
+                <div class="ft-empty-state">
+                    <i class="fas fa-circle-notch fa-spin text-lg mb-2" aria-hidden="true"></i>
+                    <p class="text-sm font-medium">Loading your booking history...</p>
+                </div>`;
+        }
+
+        try {
+            const response = await apiRequest('/api/bookings/my-bookings');
+            if (!response.ok) {
+                throw new Error('Could not fetch booking history');
+            }
+            const data = await response.json();
+            state.bookings = Array.isArray(data) ? data : [];
+            renderBookings();
+        } catch (err) {
+            if (err.message !== 'Unauthorized' && container) {
+                container.innerHTML = `
+                    <div class="ft-empty-state">
+                        <i class="fas fa-exclamation-triangle text-xl mb-2 text-red-500" aria-hidden="true"></i>
+                        <p class="text-sm font-semibold">Unable to load booking history</p>
+                        <p class="text-xs mt-1">${escapeHtml(err.message)}</p>
+                    </div>`;
+            }
+        }
+    }
+
+    async function handleCancelBooking(bookingId, bookingRef, triggerBtn) {
+        if (!confirm(`Cancel booking ${bookingRef}? This action cannot be undone.`)) {
+            return;
+        }
+
+        const originalText = triggerBtn.innerHTML;
+        triggerBtn.disabled = true;
+        triggerBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin text-xs"></i>';
+
+        try {
+            const response = await apiRequest(`/api/bookings/${encodeURIComponent(bookingId)}/cancel`, {
+                method: 'POST'
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(payload.detail || payload.error || 'Failed to cancel booking');
+            }
+            showToast(`Booking ${bookingRef} cancelled.`, 'success');
+            await Promise.all([loadBookings(), loadStats()]);
+        } catch (err) {
+            triggerBtn.disabled = false;
+            triggerBtn.innerHTML = originalText;
+            if (err.message !== 'Unauthorized') {
+                showToast(err.message || 'Unable to cancel booking', 'error');
+            }
+        }
+    }
+
+    async function handleSaveProfile(e) {
+        e.preventDefault();
+        const saveBtn = document.getElementById('save-profile-btn');
+        const fullName = document.getElementById('fullname-input').value.trim();
+        const email = document.getElementById('email-input').value.trim();
+        const phone = document.getElementById('phone-input').value.trim();
+        const address = document.getElementById('address-input').value.trim();
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showToast('Please enter a valid email address.', 'error');
+            return;
+        }
+
+        saveBtn.disabled = true;
+        try {
+            const response = await apiRequest('/api/profile', {
+                method: 'PUT',
+                body: JSON.stringify({ fullName, email, phone, address })
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to update profile');
+            }
+            applyProfileData(data);
+            setEditMode(false);
+            showToast('Profile updated successfully.', 'success');
+        } catch (err) {
+            if (err.message !== 'Unauthorized') {
+                showToast(err.message || 'Failed to update profile', 'error');
+            }
+        } finally {
+            saveBtn.disabled = false;
+        }
+    }
+
+    async function handleChangePassword(e) {
+        e.preventDefault();
         const currentPassword = document.getElementById('current-password').value;
         const newPassword = document.getElementById('new-password').value;
         const confirmPassword = document.getElementById('confirm-password').value;
+        const submitBtn = document.getElementById('update-password-btn');
 
         if (!currentPassword || !newPassword || !confirmPassword) {
-            showNotification('Please fill in all password fields', 'error');
+            showToast('Please complete all password fields.', 'error');
             return;
         }
-
+        if (newPassword.length < 8) {
+            showToast('New password must be at least 8 characters with uppercase, lowercase, number, and symbol.', 'error');
+            return;
+        }
         if (newPassword !== confirmPassword) {
-            showNotification('New passwords do not match', 'error');
+            showToast('New password and confirmation do not match.', 'error');
             return;
         }
 
-        const token = localStorage.getItem('accessToken');
-        const response = await fetch('/api/profile/change-password', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                currentPassword: currentPassword,
-                newPassword: newPassword
-            })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to change password');
+        submitBtn.disabled = true;
+        try {
+            const response = await apiRequest('/api/profile/change-password', {
+                method: 'POST',
+                body: JSON.stringify({ currentPassword, newPassword })
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to change password');
+            }
+            document.getElementById('password-form').reset();
+            showToast(data.message || 'Password updated successfully.', 'success');
+        } catch (err) {
+            if (err.message !== 'Unauthorized') {
+                showToast(err.message || 'Failed to change password', 'error');
+            }
+        } finally {
+            submitBtn.disabled = false;
         }
-
-        // Clear password fields
-        document.getElementById('current-password').value = '';
-        document.getElementById('new-password').value = '';
-        document.getElementById('confirm-password').value = '';
-
-        showNotification('Password changed successfully!', 'success');
-
-    } catch (error) {
-        console.error('Error changing password:', error);
-        showNotification(error.message, 'error');
     }
-}
 
-// Initialize section switching
-function initializeSectionSwitching() {
-    const sidebarButtons = document.querySelectorAll('.sidebar button');
-    const sections = document.querySelectorAll('.profile-section');
+    function syncThemePreferenceControl() {
+        const isDark = document.documentElement.classList.contains('dark');
+        const label = document.getElementById('pref-theme-label');
+        const icon = document.getElementById('pref-theme-icon');
+        if (label) label.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+        if (icon) icon.className = isDark ? 'fas fa-sun text-xs' : 'fas fa-moon text-xs';
+    }
 
-    sidebarButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const targetSection = this.getAttribute('onclick').match(/showSection\('([^']+)'\)/)[1];
-            showSection(targetSection);
+    function loadPreferences() {
+        try {
+            const raw = localStorage.getItem(PREFS_STORAGE_KEY);
+            if (raw) {
+                const prefs = JSON.parse(raw);
+                document.getElementById('pref-email-notifications').checked = prefs.emailNotifications !== false;
+                document.getElementById('pref-sms-alerts').checked = Boolean(prefs.smsAlerts);
+                document.getElementById('pref-marketing').checked = Boolean(prefs.marketing);
+                if (prefs.language) document.getElementById('pref-language').value = prefs.language;
+                if (prefs.currency) document.getElementById('pref-currency').value = prefs.currency;
+            }
+        } catch (_) {
+            // Ignore corrupt preference cache
+        }
+        syncThemePreferenceControl();
+    }
+
+    function handleSavePreferences(e) {
+        e.preventDefault();
+        const prefs = {
+            emailNotifications: document.getElementById('pref-email-notifications').checked,
+            smsAlerts: document.getElementById('pref-sms-alerts').checked,
+            marketing: document.getElementById('pref-marketing').checked,
+            language: document.getElementById('pref-language').value,
+            currency: document.getElementById('pref-currency').value
+        };
+        try {
+            localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
+            showToast('Preferences saved.', 'success');
+        } catch (_) {
+            showToast('Unable to persist preferences in this browser.', 'error');
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('#profile-tab-nav .ft-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => activateSection(btn.dataset.section));
         });
+
+        document.getElementById('edit-profile-btn')?.addEventListener('click', () => setEditMode(true));
+        document.getElementById('cancel-edit-btn')?.addEventListener('click', () => setEditMode(false));
+        document.getElementById('personal-info-form')?.addEventListener('submit', handleSaveProfile);
+
+        document.getElementById('booking-status-filter')?.addEventListener('change', renderBookings);
+        document.getElementById('refresh-bookings-btn')?.addEventListener('click', () => {
+            loadBookings();
+            loadStats();
+        });
+
+        document.getElementById('password-form')?.addEventListener('submit', handleChangePassword);
+        document.querySelectorAll('.ft-pw-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById(btn.dataset.target);
+                if (!input) return;
+                const showing = input.type === 'text';
+                input.type = showing ? 'password' : 'text';
+                const icon = btn.querySelector('i');
+                if (icon) icon.className = showing ? 'fas fa-eye' : 'fas fa-eye-slash';
+            });
+        });
+
+        document.getElementById('preferences-form')?.addEventListener('submit', handleSavePreferences);
+        document.getElementById('pref-theme-toggle')?.addEventListener('click', () => {
+            if (window.FootballTixLayout) {
+                window.FootballTixLayout.toggleTheme();
+            }
+            syncThemePreferenceControl();
+        });
+
+        const triggerLogout = () => {
+            if (window.FootballTixLayout) {
+                window.FootballTixLayout.logout();
+            } else {
+                localStorage.removeItem('accessToken');
+                window.location.href = 'index.html';
+            }
+        };
+
+        document.getElementById('sidebar-logout-btn')?.addEventListener('click', triggerLogout);
+        document.getElementById('security-logout-btn')?.addEventListener('click', triggerLogout);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!getToken()) {
+            window.location.href = 'login.html';
+            return;
+        }
+        activateSection('personal-info');
+        loadPreferences();
+        bindEvents();
+        Promise.all([loadProfile(), loadStats(), loadBookings()]);
     });
-}
-
-// Show specific section
-function showSection(sectionId) {
-    const sections = document.querySelectorAll('.profile-section');
-    const sidebarButtons = document.querySelectorAll('.sidebar button');
-
-    // Hide all sections
-    sections.forEach(section => section.classList.add('hidden'));
-
-    // Remove active class from all buttons
-    sidebarButtons.forEach(button => button.classList.remove('bg-blue-100', 'text-blue-700'));
-
-    // Show target section
-    const targetSection = document.getElementById(sectionId);
-    if (targetSection) {
-        targetSection.classList.remove('hidden');
-    }
-
-    // Add active class to clicked button
-    const clickedButton = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
-    if (clickedButton) {
-        clickedButton.classList.add('bg-blue-100', 'text-blue-700');
-    }
-}
-
-// Initialize image upload
-function initializeImageUpload() {
-    const uploadButton = document.querySelector('.profile-image-upload');
-    if (uploadButton) {
-        uploadButton.addEventListener('click', function () {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function (e) {
-                uploadProfileImage(e.target.files[0]);
-            };
-            input.click();
-        });
-    }
-}
-
-// Upload profile image
-async function uploadProfileImage(file) {
-    if (!file) return;
-
-    try {
-        const formData = new FormData();
-        formData.append('image', file);
-
-        const token = localStorage.getItem('accessToken');
-        const response = await fetch('/api/profile/upload-image', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            body: formData
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to upload image');
-        }
-
-        showNotification('Profile image updated successfully!', 'success');
-
-    } catch (error) {
-        console.error('Error uploading image:', error);
-        showNotification('Failed to upload image', 'error');
-    }
-}
-
-// Show notification
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${type === 'error' ? 'bg-red-600' :
-            type === 'success' ? 'bg-green-600' :
-                type === 'warning' ? 'bg-yellow-600' :
-                    'bg-blue-600'
-        } text-white`;
-    notification.textContent = message;
-
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
-}
-
-// Track event for analytics
-function trackEvent(eventName, eventData = {}) {
-    if (typeof gtag !== 'undefined') {
-        gtag('event', eventName, eventData);
-    }
-    if (typeof window.analytics !== 'undefined') {
-        window.analytics.track(eventName, eventData);
-    }
-}
-
-// Handle logout function
-function handleLogout() {
-    // Clear authentication data
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userData');
-    localStorage.removeItem('userRole');
-
-    // Redirect to login page
-    window.location.href = 'login.html';
-}
-
-// Make handleLogout globally available
-window.handleLogout = handleLogout; 
+})();

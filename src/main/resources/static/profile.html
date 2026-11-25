@@ -4,508 +4,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FootballTix - User Profile</title>
+    <title>My Profile - FootballTix</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/profile.css">
+    <script src="js/layout.js"></script>
 </head>
 
-<body class="bg-gray-50 font-montserrat">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <svg class="h-8 w-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z">
-                            </path>
-                        </svg>
-                        <span class="ml-2 text-xl font-bold text-gray-900">FootballTix</span>
+<body>
+    <nav></nav>
+
+    <!-- Editorial Stadium Masthead -->
+    <header class="hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div class="flex items-center gap-5">
+                    <div id="profile-avatar-initials" class="ft-profile-avatar" aria-hidden="true">FT</div>
+                    <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                            <span id="profile-role-badge" class="ft-masthead-pill ft-pill-pitch">MEMBER</span>
+                            <span id="profile-username-pill" class="ft-masthead-pill">@—</span>
+                            <span id="member-since" class="ft-masthead-pill">Member since —</span>
+                        </div>
+                        <h1 id="profile-name" class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white uppercase leading-none">Loading Profile...</h1>
+                        <p id="profile-email" class="text-sm text-neutral-300 mt-1.5 truncate">—</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <div class="hidden md:flex items-center space-x-4">
-                        <a href="index.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Home</a>
-                        <a href="events.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Matches</a>
-                        <a href="bookings.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">My
-                            Bookings</a>
-                        <a href="leagues.html"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-blue-700">Leagues</a>
-                        <a href="profile.html" id="profile-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-600 font-semibold">Profile</a>
-                        <a href="admin-dashboard.html" id="admin-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-600 font-bold hidden">Admin
-                            Dashboard</a>
-                        <a href="admin-profile.html" id="admin-profile-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-orange-500 hover:text-orange-700 hidden">Admin
-                            Profile</a>
-                        <a href="#" id="logout-link"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-red-600 font-semibold hidden"
-                            onclick="handleLogout()">Logout</a>
-                    </div>
-                    <a href="login.html" id="login-link"
-                        class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Sign
-                        In</a>
+                <div class="flex flex-wrap items-center gap-3">
+                    <a href="events.html" class="ft-header-btn-outline">
+                        <i class="fas fa-futbol" aria-hidden="true"></i>
+                        <span>Browse Matches</span>
+                    </a>
+                    <a href="bookings.html" class="ft-header-btn-pitch">
+                        <i class="fas fa-ticket-alt" aria-hidden="true"></i>
+                        <span>My Tickets</span>
+                    </a>
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Profile Header -->
-    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center space-x-6">
-                <div class="relative">
-                    <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user text-3xl"></i>
-                    </div>
-                    <button
-                        class="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 transition-colors">
-                        <i class="fas fa-camera text-sm"></i>
-                    </button>
-                </div>
-                <div>
-                    <h1 class="text-3xl font-bold mb-2" id="profile-name">John Doe</h1>
-                    <p class="text-blue-100 mb-2" id="profile-email">john.doe@example.com</p>
-                    <div class="flex items-center space-x-4 text-sm">
-                        <span class="bg-white/20 px-3 py-1 rounded-full">Member since 2023</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full">Premium User</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-    <!-- Profile Content -->
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
-                        <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Stats</h2>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Total Bookings</span>
-                                <span class="font-semibold text-blue-600" id="total-bookings">12</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Active Bookings</span>
-                                <span class="font-semibold text-green-600" id="active-bookings">3</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Total Spent</span>
-                                <span class="font-semibold text-purple-600" id="total-spent">$1,250</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Favorite Team</span>
-                                <span class="font-semibold text-orange-600" id="favorite-team">Manchester United</span>
-                            </div>
+            <!-- Left Sidebar -->
+            <aside class="lg:col-span-4 xl:col-span-3 space-y-5 lg:sticky lg:top-20">
+                <!-- Account Snapshot Card -->
+                <div class="ft-card p-5">
+                    <div class="ft-kicker mb-3">Account Summary</div>
+                    <div class="ft-stat-list">
+                        <div class="ft-stat-row">
+                            <span class="ft-stat-label">Total Bookings</span>
+                            <span id="total-bookings" class="ft-stat-value">0</span>
                         </div>
-
-                        <hr class="my-6">
-
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-                        <div class="space-y-2 sidebar">
-                            <button onclick="showSection('personal-info')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
-                                <i class="fas fa-user mr-2"></i>Personal Information
-                            </button>
-                            <button onclick="showSection('booking-history')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
-                                <i class="fas fa-ticket-alt mr-2"></i>Booking History
-                            </button>
-                            <button onclick="showSection('account-settings')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
-                                <i class="fas fa-cog mr-2"></i>Account Settings
-                            </button>
-                            <button onclick="showSection('preferences')"
-                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors">
-                                <i class="fas fa-heart mr-2"></i>Preferences
-                            </button>
+                        <div class="ft-stat-row">
+                            <span class="ft-stat-label">Active Tickets</span>
+                            <span id="active-bookings" class="ft-stat-value ft-value-pitch">0</span>
+                        </div>
+                        <div class="ft-stat-row">
+                            <span class="ft-stat-label">Total Spent</span>
+                            <span id="total-spent" class="ft-stat-value">Rp 0</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Main Content -->
-                <div class="lg:col-span-2">
-                    <!-- Personal Information Section -->
-                    <div id="personal-info" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
-                            <button onclick="editPersonalInfo()"
-                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors edit-btn">
-                                <i class="fas fa-edit mr-2"></i>Edit
-                            </button>
+                <!-- Navigation Panel -->
+                <div class="ft-card p-3">
+                    <div class="px-2.5 pt-1 pb-2 ft-kicker">Profile Menu</div>
+                    <div id="profile-tab-nav" class="space-y-1" role="tablist" aria-label="Profile sections">
+                        <button type="button" class="ft-tab-btn active" data-section="personal-info" role="tab" aria-selected="true">
+                            <i class="fas fa-id-card w-4 text-center" aria-hidden="true"></i>
+                            <span>Personal Information</span>
+                        </button>
+                        <button type="button" class="ft-tab-btn" data-section="booking-history" role="tab" aria-selected="false">
+                            <i class="fas fa-receipt w-4 text-center" aria-hidden="true"></i>
+                            <span>Booking History</span>
+                        </button>
+                        <button type="button" class="ft-tab-btn" data-section="account-settings" role="tab" aria-selected="false">
+                            <i class="fas fa-lock w-4 text-center" aria-hidden="true"></i>
+                            <span>Security &amp; Password</span>
+                        </button>
+                        <button type="button" class="ft-tab-btn" data-section="preferences" role="tab" aria-selected="false">
+                            <i class="fas fa-sliders-h w-4 text-center" aria-hidden="true"></i>
+                            <span>Preferences</span>
+                        </button>
+                    </div>
+
+                    <div class="ft-divider my-3"></div>
+
+                    <div class="space-y-1">
+                        <a id="staff-dashboard-link" href="admin-dashboard.html" class="ft-tab-btn hidden">
+                            <i class="fas fa-chart-line w-4 text-center" aria-hidden="true"></i>
+                            <span id="staff-dashboard-label">Dashboard</span>
+                        </a>
+                        <a href="wishlist.html" class="ft-tab-btn">
+                            <i class="fas fa-heart w-4 text-center" aria-hidden="true"></i>
+                            <span>Saved Wishlist</span>
+                        </a>
+                        <button type="button" id="sidebar-logout-btn" class="ft-tab-btn ft-tab-danger">
+                            <i class="fas fa-sign-out-alt w-4 text-center" aria-hidden="true"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Content Panel -->
+            <div class="lg:col-span-8 xl:col-span-9 space-y-6">
+
+                <!-- 1. Personal Information -->
+                <section id="personal-info" class="profile-section ft-card">
+                    <div class="ft-card-header">
+                        <div>
+                            <div class="ft-kicker">Account Details</div>
+                            <h2 class="ft-section-title">Personal Information</h2>
+                        </div>
+                        <button type="button" id="edit-profile-btn" class="ft-btn-outline">
+                            <i class="fas fa-pen text-xs" aria-hidden="true"></i>
+                            <span>Edit Profile</span>
+                        </button>
+                    </div>
+
+                    <form id="personal-info-form" class="p-6 space-y-5" novalidate>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label for="fullname-input" class="ft-label">Full Name</label>
+                                <input type="text" id="fullname-input" class="ft-input" placeholder="Enter your full name" disabled>
+                            </div>
+                            <div>
+                                <label for="email-input" class="ft-label">Email Address</label>
+                                <input type="email" id="email-input" class="ft-input" placeholder="you@example.com" disabled>
+                            </div>
+                            <div>
+                                <label for="phone-input" class="ft-label">Phone Number</label>
+                                <input type="tel" id="phone-input" class="ft-input" placeholder="+62 812-0000-0000" disabled>
+                            </div>
+                            <div>
+                                <label for="username-input" class="ft-label">Username</label>
+                                <input type="text" id="username-input" class="ft-input ft-input-readonly" readonly disabled>
+                                <p class="ft-field-hint">Account username is fixed and cannot be modified.</p>
+                            </div>
+                            <div>
+                                <label for="role-input" class="ft-label">Account Role</label>
+                                <input type="text" id="role-input" class="ft-input ft-input-readonly" readonly disabled>
+                            </div>
+                            <div>
+                                <label for="member-since-input" class="ft-label">Member Since</label>
+                                <input type="text" id="member-since-input" class="ft-input ft-input-readonly" readonly disabled>
+                            </div>
                         </div>
 
-                        <form id="personal-info-form" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                                    <input type="text" id="first-name" value="John"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                                    <input type="text" id="last-name" value="Doe"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                    <input type="email" id="email" value="john.doe@example.com"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
-                                    <input type="tel" id="phone" value="+1 (555) 123-4567"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        disabled>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                                    <input type="text" id="address" value="123 Main Street, City, State 12345"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        disabled>
+                        <div>
+                            <label for="address-input" class="ft-label">Billing / Delivery Address</label>
+                            <textarea id="address-input" rows="3" class="ft-input" placeholder="Enter your street address, city, and postal code" disabled></textarea>
+                        </div>
+
+                        <div id="save-buttons" class="hidden pt-4 border-t border-[var(--ft-border)] flex flex-wrap justify-end gap-3">
+                            <button type="button" id="cancel-edit-btn" class="ft-btn-outline">Cancel</button>
+                            <button type="submit" id="save-profile-btn" class="ft-btn-solid-pitch">
+                                <i class="fas fa-check text-xs" aria-hidden="true"></i>
+                                <span>Save Changes</span>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- 2. Booking History -->
+                <section id="booking-history" class="profile-section ft-card hidden">
+                    <div class="ft-card-header flex-wrap gap-3">
+                        <div>
+                            <div class="ft-kicker">Ticket Ledger</div>
+                            <h2 class="ft-section-title">Booking History</h2>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <select id="booking-status-filter" class="ft-select-compact" aria-label="Filter bookings by status">
+                                <option value="ALL">All Statuses</option>
+                                <option value="CONFIRMED">Confirmed</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="COMPLETED">Completed</option>
+                                <option value="CANCELLED">Cancelled</option>
+                            </select>
+                            <button type="button" id="refresh-bookings-btn" class="ft-btn-outline">
+                                <i class="fas fa-sync-alt text-xs" aria-hidden="true"></i>
+                                <span>Refresh</span>
+                            </button>
+                            <a href="bookings.html" class="ft-btn-solid">
+                                <span>Full Ticket Page</span>
+                                <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="booking-history-list" class="p-6 space-y-3">
+                        <div class="ft-empty-state">
+                            <i class="fas fa-circle-notch fa-spin text-lg mb-2" aria-hidden="true"></i>
+                            <p class="text-sm font-medium">Loading your booking history...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Security & Password -->
+                <section id="account-settings" class="profile-section space-y-6 hidden">
+                    <div class="ft-card">
+                        <div class="ft-card-header">
+                            <div>
+                                <div class="ft-kicker">Credentials</div>
+                                <h2 class="ft-section-title">Change Password</h2>
+                            </div>
+                        </div>
+
+                        <form id="password-form" class="p-6 space-y-4 max-w-xl" novalidate>
+                            <div>
+                                <label for="current-password" class="ft-label">Current Password</label>
+                                <div class="relative">
+                                    <input type="password" id="current-password" class="ft-input pr-10" autocomplete="current-password" placeholder="Enter your current password" required>
+                                    <button type="button" class="ft-pw-toggle" data-target="current-password" aria-label="Show or hide current password">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
                                 </div>
                             </div>
 
-                            <div class="flex justify-end space-x-4">
-                                <button type="button" onclick="cancelEdit()"
-                                    class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors hidden"
-                                    id="cancel-personal-btn">
-                                    Cancel
-                                </button>
-                                <button type="submit"
-                                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors hidden"
-                                    id="save-personal-btn">
-                                    Save Changes
+                            <div>
+                                <label for="new-password" class="ft-label">New Password</label>
+                                <div class="relative">
+                                    <input type="password" id="new-password" class="ft-input pr-10" autocomplete="new-password" placeholder="Min. 8 chars (A-z, 0-9, symbol)" required>
+                                    <button type="button" class="ft-pw-toggle" data-target="new-password" aria-label="Show or hide new password">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="confirm-password" class="ft-label">Confirm New Password</label>
+                                <div class="relative">
+                                    <input type="password" id="confirm-password" class="ft-input pr-10" autocomplete="new-password" placeholder="Re-enter your new password" required>
+                                    <button type="button" class="ft-pw-toggle" data-target="confirm-password" aria-label="Show or hide confirm password">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="pt-2">
+                                <button type="submit" id="update-password-btn" class="ft-btn-solid-pitch">
+                                    <i class="fas fa-key text-xs" aria-hidden="true"></i>
+                                    <span>Update Password</span>
                                 </button>
                             </div>
                         </form>
                     </div>
 
-                    <!-- Booking History Section -->
-                    <div id="booking-history" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Booking History</h2>
+                    <div class="ft-card">
+                        <div class="ft-card-header">
+                            <div>
+                                <div class="ft-kicker">Active Session</div>
+                                <h2 class="ft-section-title">Authentication Status</h2>
+                            </div>
+                            <span class="ft-status-badge ft-badge-confirmed">JWT Active</span>
+                        </div>
+                        <div class="p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold">Signed in on this browser</p>
+                                <p class="text-xs text-[var(--ft-muted)] mt-0.5">Sign out if you are using a shared or public computer.</p>
+                            </div>
+                            <button type="button" id="security-logout-btn" class="ft-btn-danger-outline">
+                                <i class="fas fa-sign-out-alt text-xs" aria-hidden="true"></i>
+                                <span>Sign Out Now</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
 
+                <!-- 4. Preferences -->
+                <section id="preferences" class="profile-section ft-card hidden">
+                    <div class="ft-card-header">
+                        <div>
+                            <div class="ft-kicker">Display &amp; Notifications</div>
+                            <h2 class="ft-section-title">Preferences</h2>
+                        </div>
+                    </div>
+
+                    <form id="preferences-form" class="p-6 space-y-6">
                         <div class="space-y-4">
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h3 class="font-semibold text-gray-900">Manchester United vs Liverpool</h3>
-                                        <p class="text-gray-600">Old Trafford • March 15, 2024</p>
-                                        <p class="text-sm text-gray-500">Seat: A12 • Row: 5</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <span
-                                            class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Confirmed</span>
-                                        <p class="text-lg font-bold text-gray-900 mt-1">$85.00</p>
-                                    </div>
+                            <div class="ft-pref-row">
+                                <div>
+                                    <div class="text-sm font-semibold">Email Notifications</div>
+                                    <p class="text-xs text-[var(--ft-muted)] mt-0.5">Receive booking confirmations, QR tickets, and matchday reminders.</p>
                                 </div>
-                                <div class="mt-4 flex space-x-2">
-                                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View
-                                        Details</button>
-                                    <button class="text-red-600 hover:text-red-700 text-sm font-medium">Cancel</button>
-                                </div>
+                                <label class="ft-switch">
+                                    <input type="checkbox" id="pref-email-notifications" checked>
+                                    <span class="ft-switch-slider"></span>
+                                </label>
                             </div>
 
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h3 class="font-semibold text-gray-900">Arsenal vs Chelsea</h3>
-                                        <p class="text-gray-600">Emirates Stadium • February 28, 2024</p>
-                                        <p class="text-sm text-gray-500">Seat: B15 • Row: 8</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <span
-                                            class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">Completed</span>
-                                        <p class="text-lg font-bold text-gray-900 mt-1">$75.00</p>
-                                    </div>
+                            <div class="ft-pref-row">
+                                <div>
+                                    <div class="text-sm font-semibold">SMS Match Alerts</div>
+                                    <p class="text-xs text-[var(--ft-muted)] mt-0.5">Receive urgent gate updates and kick-off time changes by SMS.</p>
                                 </div>
-                                <div class="mt-4 flex space-x-2">
-                                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View
-                                        Details</button>
-                                    <button class="text-gray-600 hover:text-gray-700 text-sm font-medium">Download
-                                        Receipt</button>
-                                </div>
+                                <label class="ft-switch">
+                                    <input type="checkbox" id="pref-sms-alerts">
+                                    <span class="ft-switch-slider"></span>
+                                </label>
                             </div>
 
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h3 class="font-semibold text-gray-900">Barcelona vs Real Madrid</h3>
-                                        <p class="text-gray-600">Camp Nou • January 20, 2024</p>
-                                        <p class="text-sm text-gray-500">Seat: C22 • Row: 12</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <span
-                                            class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">Completed</span>
-                                        <p class="text-lg font-bold text-gray-900 mt-1">$120.00</p>
-                                    </div>
+                            <div class="ft-pref-row">
+                                <div>
+                                    <div class="text-sm font-semibold">Fixture Releases &amp; Offers</div>
+                                    <p class="text-xs text-[var(--ft-muted)] mt-0.5">Get notified when priority seats open for upcoming European fixtures.</p>
                                 </div>
-                                <div class="mt-4 flex space-x-2">
-                                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View
-                                        Details</button>
-                                    <button class="text-gray-600 hover:text-gray-700 text-sm font-medium">Download
-                                        Receipt</button>
-                                </div>
+                                <label class="ft-switch">
+                                    <input type="checkbox" id="pref-marketing">
+                                    <span class="ft-switch-slider"></span>
+                                </label>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Account Settings Section -->
-                    <div id="account-settings" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Account Settings</h2>
+                        <div class="ft-divider"></div>
 
-                        <div class="space-y-6">
-                            <!-- Change Password -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Change Password</h3>
-                                <form id="password-form" class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Current
-                                            Password</label>
-                                        <input type="password" id="current-password"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-                                        <input type="password" id="new-password"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New
-                                            Password</label>
-                                        <input type="password" id="confirm-password"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <button type="submit"
-                                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                                        Change Password
-                                    </button>
-                                </form>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <div>
+                                <label class="ft-label">Appearance</label>
+                                <button type="button" id="pref-theme-toggle" class="ft-btn-outline w-full justify-between">
+                                    <span id="pref-theme-label">Light Mode</span>
+                                    <i id="pref-theme-icon" class="fas fa-moon text-xs" aria-hidden="true"></i>
+                                </button>
                             </div>
-
-                            <!-- Notification Settings -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Notification Settings</h3>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Email Notifications</h4>
-                                            <p class="text-sm text-gray-600">Receive booking confirmations and updates
-                                            </p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">SMS Notifications</h4>
-                                            <p class="text-sm text-gray-600">Receive match day reminders</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Promotional Emails</h4>
-                                            <p class="text-sm text-gray-600">Receive special offers and promotions</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
+                            <div>
+                                <label for="pref-language" class="ft-label">Language</label>
+                                <select id="pref-language" class="ft-input">
+                                    <option value="en">English</option>
+                                    <option value="id">Bahasa Indonesia</option>
+                                </select>
                             </div>
-
-                            <!-- Privacy Settings -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Privacy Settings</h3>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Profile Visibility</h4>
-                                            <p class="text-sm text-gray-600">Allow other users to see your profile</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="font-medium text-gray-900">Data Sharing</h4>
-                                            <p class="text-sm text-gray-600">Allow us to share your data with partners
-                                            </p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
+                            <div>
+                                <label for="pref-currency" class="ft-label">Display Currency</label>
+                                <select id="pref-currency" class="ft-input">
+                                    <option value="IDR">IDR (Rp) — Indonesian Rupiah</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Preferences Section -->
-                    <div id="preferences" class="profile-section bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Preferences</h2>
-
-                        <div class="space-y-6">
-                            <!-- Favorite Teams -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Favorite Teams</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex items-center space-x-3">
-                                        <input type="checkbox" checked
-                                            class="rounded text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-900">Manchester United</span>
-                                    </div>
-                                    <div class="flex items-center space-x-3">
-                                        <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-900">Liverpool</span>
-                                    </div>
-                                    <div class="flex items-center space-x-3">
-                                        <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-900">Arsenal</span>
-                                    </div>
-                                    <div class="flex items-center space-x-3">
-                                        <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-900">Chelsea</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Preferred Seating -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Preferred Seating</h3>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Seat
-                                            Location</label>
-                                        <select
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option>Any</option>
-                                            <option>Behind Goal</option>
-                                            <option>Side View</option>
-                                            <option>VIP/Executive</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
-                                        <select
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option>Any Price</option>
-                                            <option>$0 - $50</option>
-                                            <option>$51 - $100</option>
-                                            <option>$101 - $200</option>
-                                            <option>$200+</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Language & Region -->
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Language & Region</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
-                                        <select
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option>English</option>
-                                            <option>Spanish</option>
-                                            <option>French</option>
-                                            <option>German</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Currency</label>
-                                        <select
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option>USD ($)</option>
-                                            <option>EUR (€)</option>
-                                            <option>GBP (Rp )</option>
-                                            <option>JPY (¥)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="pt-2 flex justify-end">
+                            <button type="submit" id="save-preferences-btn" class="ft-btn-solid-pitch">
+                                <i class="fas fa-check text-xs" aria-hidden="true"></i>
+                                <span>Save Preferences</span>
+                            </button>
                         </div>
-                    </div>
-                </div>
+                    </form>
+                </section>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">FootballTix</h3>
-                    <p class="text-gray-400">Your trusted partner for football ticketing worldwide.</p>
-                </div>
-                <div>
-                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="index.html" class="hover:text-white">Home</a></li>
-                        <li><a href="events.html" class="hover:text-white">Matches</a></li>
-                        <li><a href="leagues.html" class="hover:text-white">Leagues</a></li>
-                        <li><a href="about.html" class="hover:text-white">About</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-md font-semibold mb-4">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="faq.html" class="hover:text-white">FAQ</a></li>
-                        <li><a href="terms.html" class="hover:text-white">Terms & Conditions</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-md font-semibold mb-4">Connect</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 FootballTix. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <footer></footer>
+
+    <div id="ft-toast-container" class="ft-toast-container" aria-live="polite"></div>
 
     <script src="js/profile.js"></script>
 </body>
