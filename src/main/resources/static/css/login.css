@@ -720,3 +720,132 @@ body {
         top: 50%;
     }
 }
+
+
+/* ============================================
+   FOOTBALLTIX MATCHDAY EDITORIAL ALIGNMENT
+   ============================================ */
+body,
+.btn-google,
+.form-input,
+button {
+    font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.login-form-section {
+    background: #111315;
+}
+
+.ft-auth-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.ft-auth-brand-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: #0e9f57;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-text {
+    font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+}
+
+.logo-text span {
+    color: #0e9f57;
+}
+
+.login-title {
+    font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    color: #f3f5f4;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+}
+
+.login-subtitle {
+    color: #9aa3ab;
+}
+
+.form-label {
+    color: #d1d6db;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+}
+
+.form-input {
+    background-color: #181c20;
+    border: 1px solid #2b3137;
+    border-left: 3px solid transparent;
+    border-radius: 7px;
+    color: #f3f5f4;
+    font-size: 15px;
+}
+
+.form-input:focus {
+    border-color: #0e9f57;
+    border-left-color: #0e9f57;
+    background-color: #1b2024;
+    box-shadow: 0 0 0 2px rgba(14, 159, 87, 0.2);
+}
+
+.btn-signin {
+    background: #0e9f57;
+    border: 1px solid #0e9f57;
+    border-radius: 7px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.btn-signin:hover {
+    background: #0a7d44;
+    border-color: #0a7d44;
+}
+
+.btn-signup {
+    background-color: #181c20;
+    border: 1px solid #2b3137;
+    border-radius: 7px;
+    color: #e5e7eb;
+    font-weight: 700;
+}
+
+.btn-signup:hover {
+    background-color: #23282e;
+    border-color: #3a4149;
+}
+
+.login-image-section {
+    background: #0b0d0f;
+}
+
+.image-background {
+    opacity: 0.45;
+    filter: grayscale(35%) contrast(1.08);
+}
+
+.btn-get-started {
+    background: #0e9f57;
+    border: 1px solid #0e9f57;
+    border-radius: 7px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.btn-get-started:hover {
+    background: #0a7d44;
+}
