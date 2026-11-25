@@ -134,11 +134,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function addAdminFeatures() {
         // Add admin badge to contact form
         const adminBadge = document.createElement('div');
-        adminBadge.className = 'admin-badge bg-purple-100 border border-purple-300 rounded-lg p-3 mb-6';
+        adminBadge.className = 'admin-badge bg-emerald-100 border border-emerald-300 rounded-lg p-3 mb-6';
         adminBadge.innerHTML = `
             <div class="flex items-center">
-                <i class="fas fa-crown text-purple-600 mr-2"></i>
-                <span class="text-purple-800 font-medium">Admin Access - Priority Support</span>
+                <i class="fas fa-crown text-emerald-600 mr-2"></i>
+                <span class="text-emerald-800 font-medium">Admin Access - Priority Support</span>
             </div>
         `;
 

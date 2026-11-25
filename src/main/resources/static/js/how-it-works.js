@@ -734,7 +734,7 @@ class AdvancedHowItWorks {
         const isDark = this.state.theme === 'dark';
         const colors = {
             primary: isDark ? '#60a5fa' : '#2563eb',
-            secondary: isDark ? '#a78bfa' : '#7c3aed',
+            secondary: isDark ? '#a78bfa' : '#0e9f57',
             accent: isDark ? '#34d399' : '#059669',
             background: isDark ? '#0f172a' : '#ffffff',
             surface: isDark ? '#1e293b' : '#f8fafc'
@@ -1383,7 +1383,7 @@ class AdvancedHowItWorks {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(135deg, #111315 0%, #262a2e 100%);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1394,7 +1394,7 @@ class AdvancedHowItWorks {
                 position: absolute;
                 inset: -2px;
                 border-radius: 50%;
-                background: conic-gradient(from 0deg, #667eea, #764ba2, #667eea);
+                background: conic-gradient(from 0deg, #111315, #262a2e, #111315);
                 animation: rotate 3s linear infinite;
             }
             
@@ -2055,7 +2055,7 @@ const globalStyles = `
             left: 0;
             width: calc(var(--scroll-progress) * 100%);
             height: 3px;
-            background: linear-gradient(90deg, var(--dynamic-primary), #8b5cf6);
+            background: linear-gradient(90deg, var(--dynamic-primary), #0e9f57);
             z-index: 9999;
             transition: width 0.1s ease-out;
         }
