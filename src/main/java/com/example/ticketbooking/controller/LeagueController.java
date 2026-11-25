@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/api/leagues")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class LeagueController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeagueController.class);
@@ -126,6 +126,7 @@ public class LeagueController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LeagueDTO> createLeague(@RequestBody LeagueDTO leagueDTO) {
         try {
             LeagueDTO createdLeague = leagueService.createLeague(leagueDTO);
@@ -137,6 +138,7 @@ public class LeagueController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LeagueDTO> updateLeague(@PathVariable Long id, @RequestBody LeagueDTO leagueDTO) {
         try {
             LeagueDTO updatedLeague = leagueService.updateLeague(id, leagueDTO);
@@ -151,6 +153,7 @@ public class LeagueController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteLeague(@PathVariable Long id) {
         try {
             leagueService.deleteLeague(id);
