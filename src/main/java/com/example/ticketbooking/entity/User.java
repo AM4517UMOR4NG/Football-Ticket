@@ -2,11 +2,15 @@ package com.example.ticketbooking.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@ToString(exclude = "bookings")
+@EqualsAndHashCode(exclude = "bookings")
 @Table(name = "users")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User {
