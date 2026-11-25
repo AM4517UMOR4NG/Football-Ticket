@@ -8,60 +8,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* --------------------- Navigation & Auth --------------------- */
 function updateNavigation() {
-    const token = localStorage.getItem('accessToken');
-    const userRole = localStorage.getItem('userRole');
-    const username = localStorage.getItem('username');
-
-    const signInBtn = document.getElementById('login-link');
-
-    if (token && username) {
-        if (signInBtn) {
-            signInBtn.parentElement.remove();
-        }
-
-        const userMenu = document.createElement('div');
-        userMenu.className = 'flex items-center space-x-4';
-        userMenu.innerHTML = `
-           <div class="relative">
-        <button id="user-menu-btn" class="flex items-center space-x-2 text-black hover:text-blue-700">
-            <span class="text-sm font-medium">${username}</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-            ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
-            ${userRole === 'ADMIN' ? '<a href="admin-profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Profile</a>' : ''}
-            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-        </div>
-    </div>
-`;
-
-        const signInContainer = document.querySelector('.flex.items-center');
-        if (signInContainer) {
-            signInContainer.innerHTML = '';
-            signInContainer.appendChild(userMenu);
-        }
-
-        const userMenuBtn = document.getElementById('user-menu-btn');
-        const userDropdown = document.getElementById('user-dropdown');
-
-        if (userMenuBtn && userDropdown) {
-            userMenuBtn.addEventListener('click', () => {
-                userDropdown.classList.toggle('hidden');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                }
-            });
-        }
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.renderNavbar();
     }
 }
 
 function handleLogout() {
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.logout();
+        return;
+    }
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
@@ -713,7 +669,7 @@ class FootballLeaguesManager {
 
     createLeagueCardElement(league) {
         const card = document.createElement('div');
-        card.className = 'league-card bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1';
+        card.className = 'league-card bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl ';
         card.dataset.leagueId = league.id;
 
         card.innerHTML = this.createLeagueCardHTML(league);
@@ -742,7 +698,7 @@ class FootballLeaguesManager {
 
         return `
             <div class="relative">
-                <div class="league-banner h-56 bg-gradient-to-br from-blue-600 to-indigo-800 overflow-hidden">
+                <div class="league-banner h-56 bg-gradient-to-br from-blue-600 to-emerald-800 overflow-hidden">
                     <img src="${bannerUrl}" alt="${safeName} banner" class="w-full h-full object-cover opacity-60 transition-transform duration-500 hover:scale-105" />
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70"></div>
                     <div class="absolute bottom-4 left-4 right-4">
@@ -772,8 +728,8 @@ class FootballLeaguesManager {
                         <div class="text-xl font-bold text-green-600">${eventCount.toLocaleString()}</div>
                         <div class="text-xs text-gray-500">Events</div>
                     </div>
-                    <div class="text-center p-3 bg-purple-50 rounded-xl">
-                        <div class="text-xl font-bold text-purple-600">${foundedYear}</div>
+                    <div class="text-center p-3 bg-emerald-50 rounded-xl">
+                        <div class="text-xl font-bold text-emerald-600">${foundedYear}</div>
                         <div class="text-xs text-gray-500">Founded</div>
                     </div>
                 </div>
@@ -897,7 +853,7 @@ class FootballLeaguesManager {
             <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 modal-backdrop" style="animation: fadeIn 0.3s ease-out;">
                 <div class="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" style="animation: slideUp 0.3s ease-out;">
                     <div class="relative">
-                        <div class="league-banner h-72 bg-gradient-to-br from-blue-600 to-indigo-800 overflow-hidden">
+                        <div class="league-banner h-72 bg-gradient-to-br from-blue-600 to-emerald-800 overflow-hidden">
                             <img src="${bannerUrl}" alt="${safeName} banner" class="w-full h-full object-cover opacity-70 transition-transform duration-500 hover:scale-105" />
                             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80"></div>
                             <div class="absolute bottom-6 left-6 right-6">
@@ -936,8 +892,8 @@ class FootballLeaguesManager {
                                         <div class="text-2xl font-bold text-green-600">${(league.totalTeams || 0).toLocaleString()}</div>
                                         <div class="text-sm text-gray-600">Total Teams</div>
                                     </div>
-                                    <div class="bg-purple-50 p-4 rounded-xl">
-                                        <div class="text-2xl font-bold text-purple-600" id="modal-event-count">${eventCount.toLocaleString()}</div>
+                                    <div class="bg-emerald-50 p-4 rounded-xl">
+                                        <div class="text-2xl font-bold text-emerald-600" id="modal-event-count">${eventCount.toLocaleString()}</div>
                                         <div class="text-sm text-gray-600">Total Events</div>
                                     </div>
                                     <div class="bg-gray-50 p-4 rounded-xl">
@@ -1201,14 +1157,14 @@ class FootballLeaguesManager {
 
     generateLogoSvg(name) {
         const initial = name.charAt(0).toUpperCase();
-        const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'];
+        const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#0e9f57', '#06B6D4'];
         const color = colors[name.length % colors.length];
 
         return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:${color};stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:${color}90;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='40' cy='40' r='35' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='28' font-family='Arial, sans-serif' font-weight='bold'%3E${initial}%3C/text%3E%3C/svg%3E`;
     }
 
     generateBannerSvg(name) {
-        const colors = ['#1E40AF', '#059669', '#D97706', '#DC2626', '#7C3AED', '#0891B2'];
+        const colors = ['#1E40AF', '#059669', '#D97706', '#DC2626', '#0e9f57', '#0891B2'];
         const color1 = colors[name.length % colors.length];
         const color2 = colors[(name.length + 1) % colors.length];
 
