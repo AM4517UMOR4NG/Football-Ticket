@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,8 +22,14 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     private final Map<String, RequestCount> requestCounts = new ConcurrentHashMap<>();
 
-    private static final int MAX_REQUESTS_PER_MINUTE = 10;
-    private static final int MAX_REQUESTS_PER_HOUR = 100;
+    @Value("${app.rate-limit.max-requests-per-minute:10}")
+    private int maxRequestsPerMinute;
+
+    @Value("${app.rate-limit.max-requests-per-hour:100}")
+    private int maxRequestsPerHour;
+
+    @Value("${app.security.trust-proxy-headers:false}")
+    private boolean trustProxyHeaders;
 
     @Override
     protected void doFilterInternal(
@@ -37,6 +44,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             if (isRateLimitExceeded(clientIp)) {
                 logger.warn("Rate limit exceeded for IP: {}", clientIp);
                 response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
                 response.setStatus(429);
                 response.getWriter().write(
                         "{\"error\":\"Rate limit exceeded\",\"message\":\"Too many requests. Please try again later.\"}");
@@ -45,6 +53,10 @@ public class RateLimitFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    public void reset() {
+        requestCounts.clear();
     }
 
     private boolean isAuthenticationEndpoint(String path) {
@@ -57,26 +69,30 @@ public class RateLimitFilter extends OncePerRequestFilter {
         LocalDateTime now = LocalDateTime.now();
         RequestCount count = requestCounts.computeIfAbsent(clientIp, k -> new RequestCount());
 
-        count.cleanOldEntries(now);
+        synchronized (count) {
+            count.cleanOldEntries(now);
 
-        if (count.getMinuteCount() >= MAX_REQUESTS_PER_MINUTE ||
-                count.getHourCount() >= MAX_REQUESTS_PER_HOUR) {
-            return true;
+            if (count.getMinuteCount() >= maxRequestsPerMinute ||
+                    count.getHourCount() >= maxRequestsPerHour) {
+                return true;
+            }
+
+            count.addRequest(now);
+            return false;
         }
-
-        count.addRequest(now);
-        return false;
     }
 
     private String getClientIpAddress(HttpServletRequest request) {
-        String xForwardedFor = request.getHeader("X-Forwarded-For");
-        if (xForwardedFor != null && !xForwardedFor.isEmpty() && !"unknown".equalsIgnoreCase(xForwardedFor)) {
-            return xForwardedFor.split(",")[0].trim();
-        }
+        if (trustProxyHeaders) {
+            String xForwardedFor = request.getHeader("X-Forwarded-For");
+            if (xForwardedFor != null && !xForwardedFor.isEmpty() && !"unknown".equalsIgnoreCase(xForwardedFor)) {
+                return xForwardedFor.split(",")[0].trim();
+            }
 
-        String xRealIp = request.getHeader("X-Real-IP");
-        if (xRealIp != null && !xRealIp.isEmpty() && !"unknown".equalsIgnoreCase(xRealIp)) {
-            return xRealIp;
+            String xRealIp = request.getHeader("X-Real-IP");
+            if (xRealIp != null && !xRealIp.isEmpty() && !"unknown".equalsIgnoreCase(xRealIp)) {
+                return xRealIp;
+            }
         }
 
         return request.getRemoteAddr();
