@@ -1,0 +1,646 @@
+/* FootballTix — Matchday Editorial Design System (Zero Purple / Flat Athletic Sharpness) */
+:root {
+    --ft-font: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --ft-font-display: 'Barlow Condensed', 'Barlow', sans-serif;
+    --ft-ink: #111315;
+    --ft-ink-soft: #262a2e;
+    --ft-muted: #5b636a;
+    --ft-pitch: #0e9f57;
+    --ft-pitch-dark: #0a7d44;
+    --ft-pitch-tint: #ecf9f1;
+    --ft-amber: #d97706;
+    --ft-crimson: #dc2626;
+    --ft-bg: #f5f6f4;
+    --ft-surface: #ffffff;
+    --ft-surface-muted: #eef0ed;
+    --ft-border: #e1e4e0;
+    --ft-radius-card: 10px;
+    --ft-radius-btn: 7px;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: var(--ft-font);
+}
+
+body {
+    font-family: var(--ft-font) !important;
+    background-color: var(--ft-bg);
+    color: var(--ft-ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, .ft-display {
+    font-family: var(--ft-font-display);
+    letter-spacing: -0.01em;
+}
+
+/* =========================================================
+   ANTI-SLOP GEOMETRY & SURFACE NORMALIZATION
+   ========================================================= */
+.rounded-3xl {
+    border-radius: var(--ft-radius-card) !important;
+}
+
+.rounded-2xl {
+    border-radius: 10px !important;
+}
+
+.league-badge {
+    background: #111315 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 4px !important;
+    font-family: var(--ft-font-display);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* =========================================================
+   CRISP EDITORIAL NAVBAR
+   ========================================================= */
+.ft-navbar,
+nav.ft-navbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid var(--ft-border) !important;
+    box-shadow: 0 1px 0 rgba(17, 19, 21, 0.04) !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease !important;
+}
+
+.ft-nav-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+    .ft-nav-inner {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ft-nav-inner {
+        padding: 0 2rem;
+    }
+}
+
+.ft-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--ft-ink);
+    flex-shrink: 0;
+}
+
+.ft-navbar .ft-brand {
+    margin-bottom: 0 !important;
+}
+
+.ft-brand-icon {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 6px;
+    background: var(--ft-pitch);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+}
+
+.ft-brand:hover .ft-brand-icon {
+    background: var(--ft-pitch-dark);
+}
+
+.ft-brand-name {
+    font-family: var(--ft-font-display);
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--ft-ink);
+    line-height: 1;
+}
+
+.ft-brand-name span {
+    color: var(--ft-pitch);
+}
+
+.ft-nav-links {
+    display: none;
+    align-items: stretch;
+    height: 100%;
+    gap: 0.25rem;
+}
+
+@media (min-width: 900px) {
+    .ft-nav-links {
+        display: flex;
+    }
+}
+
+.ft-nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ft-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+}
+
+.ft-nav-link:hover {
+    color: var(--ft-ink);
+}
+
+.ft-nav-link.active {
+    color: var(--ft-ink);
+    font-weight: 700;
+}
+
+.ft-nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0;
+    height: 3px;
+    background: var(--ft-pitch);
+}
+
+.ft-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+.ft-theme-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--ft-radius-btn);
+    border: 1px solid var(--ft-border);
+    background: var(--ft-surface);
+    color: var(--ft-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.ft-theme-btn:hover {
+    color: var(--ft-ink);
+    border-color: #b7bec4;
+    background: var(--ft-surface-muted);
+}
+
+.ft-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.52rem 1.15rem;
+    border-radius: var(--ft-radius-btn);
+    background: var(--ft-ink);
+    color: #ffffff !important;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: 1px solid var(--ft-ink);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+}
+
+.ft-btn-primary:hover {
+    background: var(--ft-pitch);
+    border-color: var(--ft-pitch);
+}
+
+.ft-user-menu-wrap {
+    position: relative;
+}
+
+.ft-user-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.7rem 0.3rem 0.35rem;
+    border-radius: var(--ft-radius-btn);
+    border: 1px solid var(--ft-border);
+    background: var(--ft-surface);
+    color: var(--ft-ink);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.ft-user-trigger:hover {
+    border-color: #b7bec4;
+    background: var(--ft-surface-muted);
+}
+
+.ft-avatar {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 5px;
+    background: var(--ft-ink);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.ft-user-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    max-width: 8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ft-role-pill {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.12rem 0.42rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.ft-role-admin {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.ft-role-cashier {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.ft-role-user {
+    background: var(--ft-pitch-tint);
+    color: var(--ft-pitch-dark);
+}
+
+.ft-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    width: 14.5rem;
+    background: var(--ft-surface);
+    border: 1px solid var(--ft-border);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px -8px rgba(17, 19, 21, 0.18);
+    padding: 0.4rem;
+    z-index: 60;
+}
+
+.ft-dropdown.hidden {
+    display: none;
+}
+
+.ft-dropdown-header {
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid var(--ft-border);
+    margin-bottom: 0.3rem;
+}
+
+.ft-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.52rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ft-ink);
+    text-decoration: none;
+    transition: background-color 0.12s ease, color 0.12s ease;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+}
+
+.ft-dropdown-item:hover {
+    background: var(--ft-surface-muted);
+    color: var(--ft-pitch-dark);
+}
+
+.ft-dropdown-item.danger {
+    color: var(--ft-crimson);
+}
+
+.ft-dropdown-item.danger:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.ft-dropdown-divider {
+    height: 1px;
+    background: var(--ft-border);
+    margin: 0.3rem 0;
+}
+
+.ft-mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--ft-radius-btn);
+    border: 1px solid var(--ft-border);
+    background: var(--ft-surface);
+    color: var(--ft-ink);
+    cursor: pointer;
+}
+
+@media (min-width: 900px) {
+    .ft-mobile-btn {
+        display: none;
+    }
+}
+
+.ft-mobile-menu {
+    background: var(--ft-surface);
+    border-top: 1px solid var(--ft-border);
+    padding: 0.75rem 1rem 1rem;
+}
+
+.ft-mobile-menu.hidden {
+    display: none;
+}
+
+@media (min-width: 900px) {
+    .ft-mobile-menu {
+        display: none !important;
+    }
+}
+
+.ft-mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ft-ink);
+    text-decoration: none;
+    margin-bottom: 0.2rem;
+}
+
+.ft-mobile-link:hover,
+.ft-mobile-link.active {
+    background: var(--ft-pitch-tint);
+    color: var(--ft-pitch-dark);
+}
+
+/* =========================================================
+   MATCHDAY STADIUM HERO (FLAT OBSIDIAN + PITCH TOUCHLINE)
+   ========================================================= */
+.hero-pattern,
+.cashier-hero {
+    background-color: #111315 !important;
+    background-image: linear-gradient(180deg, #161a1d 0%, #111315 100%) !important;
+    border-bottom: 3px solid var(--ft-pitch) !important;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.hero-pattern::before,
+.cashier-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+}
+
+.hero-pattern > *,
+.cashier-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================================
+   CRISP EDITORIAL FOOTER
+   ========================================================= */
+footer.ft-footer {
+    margin-top: auto;
+    padding: 0 !important;
+    background: #111315 !important;
+    color: #cbd5e1 !important;
+    border-top: 3px solid var(--ft-pitch);
+}
+
+.ft-footer-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 3.25rem 1.5rem 1.75rem;
+}
+
+.ft-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+    padding-bottom: 2.25rem;
+    border-bottom: 1px solid #23282d;
+}
+
+@media (min-width: 768px) {
+    .ft-footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    }
+}
+
+.ft-footer-heading {
+    font-family: var(--ft-font-display);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.9rem;
+}
+
+.ft-footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.ft-footer-link {
+    color: #9aa3ab;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ft-footer-link:hover {
+    color: #ffffff;
+}
+
+.ft-footer-bottom {
+    padding-top: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #7c858d;
+}
+
+@media (min-width: 768px) {
+    .ft-footer-bottom {
+        flex-direction: row;
+    }
+}
+
+/* =========================================================
+   DARK MODE (NEUTRAL OBSIDIAN CARBON — ZERO BLUE-PURPLE TINT)
+   ========================================================= */
+html.dark {
+    --ft-bg: #0c0e10;
+    --ft-surface: #15181b;
+    --ft-surface-muted: #1e2226;
+    --ft-border: #272c31;
+    --ft-ink: #f3f5f4;
+    --ft-muted: #9aa3ab;
+    --ft-pitch-tint: rgba(14, 159, 87, 0.16);
+}
+
+html.dark body {
+    background-color: var(--ft-bg) !important;
+    color: var(--ft-ink) !important;
+}
+
+html.dark .ft-navbar,
+html.dark nav.ft-navbar {
+    background: #15181b !important;
+    border-bottom-color: #272c31 !important;
+}
+
+html.dark .ft-brand-name,
+html.dark .ft-user-name,
+html.dark .ft-dropdown-item,
+html.dark .ft-mobile-link,
+html.dark .ft-nav-link.active {
+    color: #f3f5f4;
+}
+
+html.dark .ft-nav-link {
+    color: #9aa3ab;
+}
+
+html.dark .ft-nav-link:hover {
+    color: #ffffff;
+}
+
+html.dark .ft-theme-btn,
+html.dark .ft-user-trigger,
+html.dark .ft-mobile-btn,
+html.dark .ft-dropdown,
+html.dark .ft-mobile-menu {
+    background-color: #15181b;
+    border-color: #272c31;
+    color: #f3f5f4;
+}
+
+html.dark .ft-btn-primary {
+    background: var(--ft-pitch);
+    border-color: var(--ft-pitch);
+}
+
+html.dark .ft-btn-primary:hover {
+    background: var(--ft-pitch-dark);
+    border-color: var(--ft-pitch-dark);
+}
+
+html.dark .bg-white,
+html.dark .bg-white\/80,
+html.dark .bg-white\/90 {
+    background-color: #15181b !important;
+    border-color: #272c31 !important;
+}
+
+html.dark .bg-gray-50,
+html.dark .bg-gray-50\/50,
+html.dark .bg-gray-100 {
+    background-color: #0f1214 !important;
+}
+
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-black {
+    color: #f3f5f4 !important;
+}
+
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+    color: #c2c8ce !important;
+}
+
+html.dark .text-gray-500 {
+    color: #8f98a0 !important;
+}
+
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+    border-color: #272c31 !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+    background-color: #1e2226 !important;
+    color: #f3f5f4 !important;
+    border-color: #32383e !important;
+}
+
+html.dark table thead {
+    background-color: #1e2226 !important;
+}
+
+html.dark table tbody tr:hover {
+    background-color: #1e2226 !important;
+}
