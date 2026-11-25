@@ -115,6 +115,18 @@
             <artifactId>java-library</artifactId>
             <version>3.2.1</version>
         </dependency>
+
+        <!-- ZXing for ISO/IEC 18004 QR Code ticket generation -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.3</version>
+        </dependency>
     </dependencies>
 
     <build>
