@@ -18,10 +18,10 @@ public class MidtransService {
 
     private static final Logger logger = LoggerFactory.getLogger(MidtransService.class);
 
-    @Value("${midtrans.server-key}")
+    @Value("${midtrans.server-key:}")
     private String serverKey;
 
-    @Value("${midtrans.client-key}")
+    @Value("${midtrans.client-key:}")
     private String clientKey;
 
     @Value("${midtrans.is-production:false}")
@@ -32,6 +32,10 @@ public class MidtransService {
 
     @PostConstruct
     public void init() {
+        if (serverKey == null || serverKey.isBlank() || clientKey == null || clientKey.isBlank()) {
+            logger.warn("Midtrans keys are not configured. Set MIDTRANS_SERVER_KEY and MIDTRANS_CLIENT_KEY to enable live payments.");
+            return;
+        }
         try {
             Config config = Config.builder()
                     .setServerKey(serverKey)
@@ -47,11 +51,21 @@ public class MidtransService {
         }
     }
 
+    public boolean isConfigured() {
+        return snapApi != null && coreApi != null;
+    }
+
     public org.json.JSONObject checkTransactionStatus(String orderId) throws MidtransError {
+        if (coreApi == null) {
+            throw new IllegalStateException("Midtrans Core API is not configured");
+        }
         return coreApi.checkTransaction(orderId);
     }
 
     public Map<String, String> createSnapTransaction(Booking booking) throws MidtransError {
+        if (snapApi == null) {
+            throw new IllegalStateException("Midtrans Snap API is not configured");
+        }
         Map<String, Object> params = new HashMap<>();
 
         // Transaction details
