@@ -68,8 +68,13 @@ public class AdminDashboardController {
     @DeleteMapping("/users/{id}")
     @Transactional
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        if (!userRepository.existsById(id))
+        User target = userRepository.findById(id).orElse(null);
+        if (target == null) {
             return ResponseEntity.notFound().build();
+        }
+        if ("ADMIN".equalsIgnoreCase(target.getRole())) {
+            return ResponseEntity.status(403).body(Map.of("error", "Cannot delete an ADMIN account"));
+        }
         userRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
