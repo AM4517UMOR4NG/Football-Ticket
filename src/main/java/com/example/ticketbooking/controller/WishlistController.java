@@ -19,7 +19,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/wishlist")
-@CrossOrigin(origins = "*")
 public class WishlistController {
     
     private static final Logger logger = LoggerFactory.getLogger(WishlistController.class);
