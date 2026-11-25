@@ -15,19 +15,7 @@ body {
     z-index: 100;
 }
 
-/* Navbar styling to match events.html exactly */
-nav {
-    background-color: #ffffff !important;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 50 !important;
-    transition: all 0.3s ease !important;
-}
-
-nav:hover {
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-}
+/* Navbar styling delegated to css/theme.css (.ft-navbar) */
 
 /* Navbar height and spacing */
 nav .flex.justify-between {
