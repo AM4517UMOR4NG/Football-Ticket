@@ -47,51 +47,8 @@ let currentView = 'grid';
 let selectedEvent = null;
 let currentTicketCount = 1;
 
-// Dark mode functionality
-function enableDarkMode() {
-    document.documentElement.classList.add('dark');
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.textContent = '☀️';
-    }
-    localStorage.setItem('theme', 'dark');
-}
-
-function applyThemePreference() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        enableDarkMode();
-    } else {
-        document.documentElement.classList.remove('dark');
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            themeToggle.textContent = '🌓';
-        }
-        localStorage.setItem('theme', 'light');
-    }
-}
-
-function toggleDarkMode() {
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    if (isDarkMode) {
-        document.documentElement.classList.remove('dark');
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            themeToggle.textContent = '🌓';
-        }
-        localStorage.setItem('theme', 'light');
-    } else {
-        enableDarkMode();
-    }
-}
-
-// Initialize the page
+// Theme & Navigation delegated to shared FootballTixLayout
 document.addEventListener('DOMContentLoaded', function () {
-    applyThemePreference();
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', toggleDarkMode);
-    }
     initializeBookingsPage();
 });
 
@@ -119,60 +76,16 @@ async function initializeBookingsPage() {
 }
 
 function updateNavigation() {
-    const token = localStorage.getItem('accessToken');
-    const userRole = localStorage.getItem('userRole');
-    const username = localStorage.getItem('username');
-
-    const signInBtn = document.querySelector('a[href="login.html"]');
-    const navContainer = document.querySelector('.hidden.md\\:flex.items-center.space-x-4');
-
-    if (token && username) {
-        if (signInBtn) {
-            signInBtn.parentElement.remove();
-        }
-
-        const userMenu = document.createElement('div');
-        userMenu.className = 'flex items-center space-x-4';
-        userMenu.innerHTML = `
-           <div class="relative">
-        <button id="user-menu-btn" class="flex items-center space-x-2 text-gray-700 hover:text-blue-700">
-            <span class="text-sm font-medium">${username}</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-            ${userRole === 'ADMIN' ? '<a href="admin-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>' : ''}
-            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-        </div>
-    </div>
-`;
-
-        const signInContainer = document.querySelector('.flex.items-center');
-        if (signInContainer) {
-            signInContainer.innerHTML = '';
-            signInContainer.appendChild(userMenu);
-        }
-
-        const userMenuBtn = document.getElementById('user-menu-btn');
-        const userDropdown = document.getElementById('user-dropdown');
-
-        if (userMenuBtn && userDropdown) {
-            userMenuBtn.addEventListener('click', () => {
-                userDropdown.classList.toggle('hidden');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                }
-            });
-        }
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.renderNavbar();
     }
 }
 
 function handleLogout() {
+    if (window.FootballTixLayout) {
+        window.FootballTixLayout.logout();
+        return;
+    }
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
@@ -191,7 +104,7 @@ async function loadBookings() {
             throw new Error('User not authenticated');
         }
 
-        const response = await fetch(`${API_BASE_URL}/bookings/user/${userId}`, {
+        const response = await fetch(`${API_BASE_URL}/bookings/my-bookings`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -250,7 +163,7 @@ async function loadBookings() {
                 } catch (e) { console.warn('Sync failed for', b.bookingReference, e); }
             }));
             // Re-fetch bookings to get updated statuses
-            const refreshResponse = await fetch(`${API_BASE_URL}/bookings/user/${userId}`, {
+            const refreshResponse = await fetch(`${API_BASE_URL}/bookings/my-bookings`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -316,7 +229,7 @@ function displayBookingEvents(events) {
     }
 
     bookingEventsGrid.innerHTML = events.map(event => `
-        <div class="booking-event-card bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 p-4 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-blue-500" 
+        <div class="booking-event-card bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-gray-300 p-4 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-blue-500" 
              onclick="selectEvent(${event.id})">
             <div class="flex justify-between items-start mb-3">
                 <div class="flex-1">
@@ -331,7 +244,7 @@ function displayBookingEvents(events) {
             </div>
             
             <div class="flex justify-between items-center text-sm">
-                <span class="text-gray-600">Available seats: ${event.totalSeats}</span>
+                <span class="text-gray-600">Available seats: ${Number(event.availableSeats ?? event.totalSeats ?? 0).toLocaleString()}</span>
                 <span class="text-blue-600 font-medium">Select Match</span>
             </div>
         </div>
@@ -367,8 +280,8 @@ function selectEvent(eventId) {
 
 function updateTotalPrice() {
     if (selectedEvent) {
-        const total = selectedEvent.price * currentTicketCount;
-        totalPrice.textContent = `Rp ${total.toFixed(2)}`;
+        const total = Number(selectedEvent.price || 0) * currentTicketCount;
+        totalPrice.textContent = `Rp ${new Intl.NumberFormat('id-ID').format(total)}`;
     }
 }
 
@@ -417,7 +330,7 @@ async function handleConfirmBooking() {
             numberOfTickets: currentTicketCount
         };
 
-        const response = await fetch(`${API_BASE_URL}/bookings?userId=${userId}`, {
+        const response = await fetch(`${API_BASE_URL}/bookings`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -490,13 +403,13 @@ function displayBookings(bookings) {
     hideEmptyState();
 
     bookingsGrid.innerHTML = bookings.map(booking => `
-        <div class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 overflow-hidden transition-all duration-500 hover:scale-105">
+        <div class="booking-card bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-gray-300 overflow-hidden transition-all duration-500 hover:scale-105">
                 <div class="h-40 relative group overflow-hidden">
                     ${booking.imageUrl ? `
                     <img src="${booking.imageUrl}" alt="Event" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/60"></div>
                     ` : `
-                    <div class="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-800"></div>
+                    <div class="w-full h-full bg-neutral-900"></div>
                     <div class="absolute inset-0 ticket-pattern opacity-20"></div>
                     `}
                     <div class="absolute inset-x-0 top-0 p-4">
@@ -559,7 +472,7 @@ function displayBookings(bookings) {
                         </button>
                     ` : `
                         <button onclick="viewBookingDetails('${booking.bookingReference}')" 
-                                class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200">
+                                class="flex-1 bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-sm  text-white px-4 py-3 rounded-lg font-medium transition-all duration-200">
                             View Details
                         </button>
                     `}
@@ -647,7 +560,7 @@ async function cancelBooking(bookingId) {
         const token = localStorage.getItem('accessToken');
         const userId = localStorage.getItem('userId');
 
-        const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}/cancel?userId=${userId}`, {
+        const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}/cancel`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -668,36 +581,35 @@ async function cancelBooking(bookingId) {
     }
 }
 
-// QR Code generation function
-function generateQRCode(text, size = 200) {
-    // Simple QR code generation using a basic pattern
-    // In production, you would use a proper QR code library
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = size;
-    canvas.height = size;
+function escapeHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, s => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[s]));
+}
 
-    // Fill background
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(0, 0, size, size);
-
-    // Generate a simple pattern based on text
-    ctx.fillStyle = '#000000';
-    const cellSize = size / 25;
-
-    // Create a pseudo-random pattern based on the text
-    for (let i = 0; i < text.length; i++) {
-        const char = text.charCodeAt(i);
-        for (let x = 0; x < 25; x++) {
-            for (let y = 0; y < 25; y++) {
-                if ((char + x + y) % 3 === 0) {
-                    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                }
-            }
+// Fetch genuine ISO/IEC 18004 QR Code PNG from authenticated backend endpoint
+async function fetchTicketQrDataUrl(bookingReference, size = 240) {
+    const token = localStorage.getItem('accessToken');
+    const response = await fetch(
+        `${API_BASE_URL}/bookings/${encodeURIComponent(bookingReference)}/qr?size=${size}`,
+        {
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         }
+    );
+    if (!response.ok) {
+        throw new Error(`Failed to load QR code (${response.status})`);
     }
-
-    return canvas.toDataURL();
+    const blob = await response.blob();
+    return await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
 }
 
 function viewTicket(bookingReference) {
@@ -720,8 +632,12 @@ async function showTicketModal(bookingReference) {
     const booking = allBookings.find(b => b.bookingReference === bookingReference);
     if (!booking) return;
 
-    // Generate QR code
-    const qrCodeData = generateQRCode(`${booking.bookingReference}-${booking.eventTitle}-${booking.numberOfTickets}`);
+    let qrCodeData = '';
+    try {
+        qrCodeData = await fetchTicketQrDataUrl(booking.bookingReference, 240);
+    } catch (err) {
+        console.error('Failed to fetch ticket QR code:', err);
+    }
 
     const modalHTML = `
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -730,7 +646,7 @@ async function showTicketModal(bookingReference) {
                     <div class="flex justify-between items-start">
                         <div>
                             <h2 class="text-2xl font-bold mb-2">Digital Ticket</h2>
-                            <p class="text-green-100">Booking #${booking.bookingReference}</p>
+                            <p class="text-green-100">Booking #${escapeHtml(booking.bookingReference)}</p>
                         </div>
                         <button onclick="closeModal()" class="text-white hover:text-gray-200">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -742,21 +658,21 @@ async function showTicketModal(bookingReference) {
                 <div class="p-6">
                     <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 mb-6 ticket-container">
                         <div class="text-center">
-                            <div class="text-4xl font-bold text-gray-900 mb-2">${booking.eventTitle}</div>
-                            <div class="text-gray-600 mb-4">${formatEventDate(booking.eventDate)} • ${booking.venue}</div>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">${escapeHtml(booking.eventTitle)}</div>
+                            <div class="text-gray-600 mb-4">${escapeHtml(formatEventDate(booking.eventDate))} • ${escapeHtml(booking.venue)}</div>
                             <div class="text-2xl font-bold text-green-600 mb-2">Rp ${new Intl.NumberFormat('id-ID').format(booking.totalAmount)}</div>
                             <div class="text-sm text-gray-500">${booking.numberOfTickets} ticket${booking.numberOfTickets > 1 ? 's' : ''}</div>
                         </div>
                         <div class="mt-6 text-center">
                             <div class="inline-block bg-gray-100 p-4 rounded-lg">
-                                <div class="text-xs text-gray-500 mb-2">QR Code</div>
-                                <img src="${qrCodeData}" alt="QR Code" class="w-32 h-32 rounded-lg" />
-                                <div class="text-xs text-gray-500 mt-2">${booking.bookingReference}</div>
+                                <div class="text-xs text-gray-500 mb-2">Verified Ticket QR Code</div>
+                                ${qrCodeData ? `<img src="${qrCodeData}" alt="QR Code" class="w-40 h-40 rounded-lg mx-auto" />` : '<div class="text-xs text-red-500">QR unavailable</div>'}
+                                <div class="text-xs text-gray-500 mt-2 font-mono">${escapeHtml(booking.bookingReference)}</div>
                             </div>
                         </div>
                     </div>
                     <div class="flex space-x-3">
-                        <button onclick="downloadTicket('${booking.bookingReference}')" 
+                        <button onclick="downloadTicket('${escapeHtml(booking.bookingReference)}')" 
                                 class="flex-1 bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium">
                             Download PDF
                         </button>
@@ -826,7 +742,7 @@ function showBookingDetailsModal(bookingReference) {
                     </div>
                     <div class="flex space-x-3">
                         <button onclick="closeModal()" 
-                                class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-blue-500/50 hover:-translate-y-1 text-white px-6 py-3 rounded-lg font-medium">
+                                class="flex-1 bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-sm  text-white px-6 py-3 rounded-lg font-medium">
                             Close
                         </button>
                     </div>
@@ -894,11 +810,11 @@ function showBookingHistoryModal() {
     const modalHTML = `
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                <div class="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-6 rounded-t-xl">
+                <div class="bg-neutral-900 text-white p-6 rounded-t-xl">
                     <div class="flex justify-between items-start">
                         <div>
                             <h2 class="text-2xl font-bold mb-2">Booking History</h2>
-                            <p class="text-purple-100">${allBookings.length} total booking${allBookings.length > 1 ? 's' : ''}</p>
+                            <p class="text-emerald-100">${allBookings.length} total booking${allBookings.length > 1 ? 's' : ''}</p>
                         </div>
                         <button onclick="closeModal()" class="text-white hover:text-gray-200">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -958,7 +874,7 @@ function closeModal() {
 }
 
 // Enhanced PDF ticket download function
-function downloadTicket(bookingReference) {
+async function downloadTicket(bookingReference) {
     const booking = allBookings.find(b => b.bookingReference === bookingReference);
     if (!booking) {
         alert('Booking not found');
@@ -966,17 +882,21 @@ function downloadTicket(bookingReference) {
     }
 
     try {
+        // Fetch verified ISO QR code before opening print window
+        const qrCodeData = await fetchTicketQrDataUrl(booking.bookingReference, 240);
+
         // Create a new window with the ticket content for printing
         const ticketWindow = window.open('', '_blank', 'width=800,height=600');
-
-        // Generate QR code for the ticket
-        const qrCodeData = generateQRCode(`${booking.bookingReference}-${booking.eventTitle}-${booking.numberOfTickets}`);
+        if (!ticketWindow) {
+            alert('Please allow popups to download your ticket.');
+            return;
+        }
 
         const ticketHTML = `
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Ticket - ${booking.bookingReference}</title>
+                <title>Ticket - ${escapeHtml(booking.bookingReference)}</title>
                 <style>
                     body {
                         font-family: Arial, sans-serif;
@@ -1157,7 +1077,9 @@ function updateStats(bookings) {
         const now = new Date();
         return b.status === 'CONFIRMED' && eventDate > now;
     }).length;
-    const totalSpentAmount = bookings.reduce((sum, b) => sum + parseFloat(b.totalAmount || 0), 0);
+    const totalSpentAmount = bookings
+        .filter(b => b.status === 'CONFIRMED' || b.status === 'COMPLETED')
+        .reduce((sum, b) => sum + parseFloat(b.totalAmount || 0), 0);
 
     if (totalBookings) totalBookings.textContent = total;
     if (confirmedBookings) confirmedBookings.textContent = confirmed;
