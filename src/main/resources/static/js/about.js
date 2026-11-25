@@ -99,14 +99,14 @@ document.addEventListener('DOMContentLoaded', function () {
             title: "Trust & Security",
             description: "Your security is our priority. Every transaction is protected with bank-level encryption.",
             color: "from-blue-400 to-cyan-600",
-            hoverEffect: "hover:shadow-blue-500/30"
+            hoverEffect: "hover:shadow-sm"
         },
         {
             icon: "🌍",
             title: "Global Accessibility",
             description: "Making football accessible to fans everywhere, regardless of location or background.",
-            color: "from-purple-400 to-indigo-600",
-            hoverEffect: "hover:shadow-purple-500/30"
+            color: "from-emerald-400 to-emerald-600",
+            hoverEffect: "hover:shadow-emerald-500/30"
         },
         {
             icon: "⚡",
@@ -182,10 +182,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (authStatus) {
             authStatus.innerHTML = `
-                <div class="flex items-center space-x-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 animate-slide-in-down">
+                <div class="flex items-center space-x-4 bg-gradient-to-r from-blue-600/20 to-emerald-600/20 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 animate-slide-in-down">
                     <div class="flex items-center space-x-3">
                         <div class="relative">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center ring-4 ring-white/30 shadow-lg animate-pulse-glow">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 via-emerald-500 to-pink-500 rounded-full flex items-center justify-center ring-4 ring-white/30 shadow-lg animate-pulse-glow">
                                 <span class="text-white text-lg font-bold animate-bounce-gentle">${(user.name || 'U').charAt(0).toUpperCase()}</span>
                             </div>
                             <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center animate-ping-slow">
@@ -499,10 +499,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const teamHTML = teamMembers.map((member, index) => `
             <div id="team-member-${member.id}" class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer overflow-hidden animate-fade-in-up" style="animation-delay: ${index * 0.15}s">
                 <!-- Animated background -->
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                
                 <!-- Floating orbs -->
-                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-500 rounded-full opacity-0 group-hover:opacity-20 group-hover:animate-bounce-gentle transition-all duration-700"></div>
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-blue-100 to-emerald-500 rounded-full opacity-0 group-hover:opacity-20 group-hover:animate-bounce-gentle transition-all duration-700"></div>
                 <div class="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-br from-green-100 to-blue-500 rounded-full opacity-0 group-hover:opacity-15 group-hover:animate-pulse transition-all duration-700"></div>
                
                 <div class="p-8 text-center relative z-10">
@@ -510,11 +510,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         <!-- Enhanced avatar with multiple effects -->
                         <div class="relative inline-block">
                             <img src="${member.avatar}" alt="${member.name}"
-                                 class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-blue-500 group-hover:border-purple-500 transition-all duration-500 shadow-xl group-hover:shadow-2xl transform group-hover:scale-110 group-hover:rotate-6"
+                                 class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-blue-500 group-hover:border-emerald-500 transition-all duration-500 shadow-xl group-hover:shadow-2xl transform group-hover:scale-110 group-hover:rotate-6"
                                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEyMCIgcj0iNDAiIGZpbGw9IiM5Q0EzQUYiLz4KPHBhdGggZD0iTTkxIDI0MEM5MSAyMTEuNzIyIDExMy43MjIgMTg5IDE0MiAxODlIMTU4QzE4Ni4yNzggMTg5IDIwOSAyMTEuNzIyIDIwOSAyNDBWMjYwSDkxVjI0MFoiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+Cg=='"
                             >
                             <!-- Animated ring around avatar -->
-                            <div class="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-500 group-hover:animate-spin-slow transition-all duration-1000"></div>
+                            <div class="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-500 group-hover:animate-spin-slow transition-all duration-1000"></div>
                            
                             <!-- Status indicator with pulse -->
                             <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-3 border-white shadow-lg flex items-center justify-center group-hover:scale-125 transition-transform duration-300">
@@ -525,8 +525,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                    
                     <!-- Enhanced name and role -->
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300 transform group-hover:scale-105">${member.name}</h3>
-                    <p class="text-blue-600 font-bold mb-3 text-lg group-hover:text-purple-600 transition-colors duration-300">${member.role}</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-emerald-600 group-hover:bg-clip-text transition-all duration-300 transform group-hover:scale-105">${member.name}</h3>
+                    <p class="text-blue-600 font-bold mb-3 text-lg group-hover:text-emerald-600 transition-colors duration-300">${member.role}</p>
                     <p class="text-sm text-gray-500 mb-4 flex items-center justify-center space-x-1">
                         <span class="animate-pulse">⭐</span>
                         <span>${member.experience} experience</span>
@@ -575,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                
                 <!-- Hover border effect -->
-                <div class="absolute inset-0 border-2 border-transparent group-hover:border-gradient-to-r group-hover:from-blue-400 group-hover:via-purple-500 group-hover:to-pink-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                <div class="absolute inset-0 border-2 border-transparent group-hover:border-gradient-to-r group-hover:from-blue-400 group-hover:via-emerald-500 group-hover:to-pink-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
             </div>
         `).join('');
 
@@ -705,14 +705,14 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="bg-white rounded-3xl max-w-md w-full p-0 transform transition-all duration-500 scale-90 shadow-2xl relative overflow-hidden max-h-[80vh] overflow-y-auto" id="modal-content">
                 <!-- Animated background patterns -->
                 <div class="absolute inset-0 opacity-5">
-                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 animate-gradient-shift"></div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500 via-emerald-500 to-pink-500 animate-gradient-shift"></div>
                     <div class="absolute top-10 right-10 w-32 h-32 bg-blue-400 rounded-full mix-blend-multiply animate-blob"></div>
-                    <div class="absolute top-20 left-20 w-32 h-32 bg-purple-400 rounded-full mix-blend-multiply animate-blob animation-delay-2s"></div>
+                    <div class="absolute top-20 left-20 w-32 h-32 bg-emerald-400 rounded-full mix-blend-multiply animate-blob animation-delay-2s"></div>
                     <div class="absolute -bottom-8 left-20 w-32 h-32 bg-pink-400 rounded-full mix-blend-multiply animate-blob animation-delay-4s"></div>
                 </div>
                
                 <!-- Header with enhanced design -->
-                <div class="bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800 rounded-t-3xl p-6 text-white text-center relative overflow-hidden">
+                <div class="bg-gradient-to-br from-blue-600 via-emerald-700 to-emerald-800 rounded-t-3xl p-6 text-white text-center relative overflow-hidden">
                     <!-- Animated background elements -->
                     <div class="absolute inset-0 opacity-20">
                         <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-pulse"></div>
@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="relative">
                                 <img src="${member.avatar}" alt="${member.name}" class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-white shadow-2xl transform hover:scale-105 transition-transform duration-300">
                                 <!-- Rotating border effect -->
-                                <div class="absolute inset-0 rounded-full border-4 border-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-spin-slow opacity-60"></div>
+                                <div class="absolute inset-0 rounded-full border-4 border-transparent bg-gradient-to-r from-blue-400 via-emerald-500 to-pink-500 animate-spin-slow opacity-60"></div>
                                 <!-- Pulse rings -->
                                 <div class="absolute inset-0 rounded-full border-2 border-white opacity-30 animate-ping"></div>
                                 <div class="absolute inset-0 rounded-full border-2 border-white opacity-20 animate-ping animation-delay-1s"></div>
@@ -762,7 +762,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <!-- About section with enhanced styling -->
                     <div class="mb-6">
                         <h4 class="text-xl font-bold text-gray-900 mb-3 flex items-center space-x-2">
-                            <span class="w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <span class="w-5 h-5 bg-gradient-to-r from-blue-500 to-emerald-600 rounded-full flex items-center justify-center">
                                 <span class="text-white text-xs">👤</span>
                             </span>
                             <span>About</span>
@@ -800,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </h4>
                         <div class="flex flex-wrap gap-2">
                             ${member.skills.map((skill, index) => `
-                                <span class="px-3 py-2 text-xs bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full font-bold hover:from-blue-200 hover:to-purple-200 hover:scale-110 transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg animate-bounce-gentle" style="animation-delay: ${index * 0.1}s">
+                                <span class="px-3 py-2 text-xs bg-gradient-to-r from-blue-100 to-emerald-100 text-blue-800 rounded-full font-bold hover:from-blue-200 hover:to-emerald-200 hover:scale-110 transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg animate-bounce-gentle" style="animation-delay: ${index * 0.1}s">
                                     ${skill}
                                 </span>
                             `).join('')}
@@ -810,7 +810,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <!-- Enhanced social connections -->
                     <div class="mb-6">
                         <h4 class="text-xl font-bold text-gray-900 mb-3 flex items-center space-x-2">
-                            <span class="w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
+                            <span class="w-5 h-5 bg-gradient-to-r from-emerald-500 to-pink-600 rounded-full flex items-center justify-center">
                                 <span class="text-white text-xs">🌐</span>
                             </span>
                             <span>Connect</span>
@@ -818,7 +818,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="flex flex-wrap gap-3">
                             ${Object.entries(member.social).map(([platform, handle], index) => `
                                 <a href="#" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-all duration-300 p-3 rounded-2xl hover:bg-blue-50 hover:shadow-lg transform hover:scale-105 hover:-rotate-2 border-2 border-transparent hover:border-blue-200 animate-slide-in-up" style="animation-delay: ${index * 0.1}s">
-                                    <div class="p-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                                    <div class="p-1 bg-gradient-to-r from-blue-500 to-emerald-600 rounded-full text-white hover:from-blue-600 hover:to-emerald-700 transition-all duration-300">
                                         ${getSocialIcon(platform)}
                                     </div>
                                     <div>
@@ -832,7 +832,7 @@ document.addEventListener('DOMContentLoaded', function () {
                    
                     <!-- Enhanced close button -->
                     <div class="text-center">
-                        <button id="close-modal" class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white py-3 px-6 rounded-2xl font-bold text-base transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50 active:scale-95 relative overflow-hidden">
+                        <button id="close-modal" class="bg-gradient-to-r from-blue-600 via-emerald-600 to-emerald-600 hover:from-blue-700 hover:via-emerald-700 hover:to-emerald-700 text-white py-3 px-6 rounded-2xl font-bold text-base transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-sm active:scale-95 relative overflow-hidden">
                             <span class="relative z-10">Close Profile</span>
                             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12 -translate-x-full hover:translate-x-full transition-transform duration-1000"></div>
                         </button>
@@ -980,9 +980,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (contactAddress) {
             contactAddress.innerHTML = `
-                <a href="https://maps.google.com/?q=123+Stadium+Street,+London,+UK" target="_blank" class="group text-purple-600 hover:text-purple-800 transition-all duration-300 font-bold text-lg relative inline-block">
+                <a href="https://maps.google.com/?q=123+Stadium+Street,+London,+UK" target="_blank" class="group text-emerald-600 hover:text-emerald-800 transition-all duration-300 font-bold text-lg relative inline-block">
                     <span class="relative z-10">123 Stadium Street, London, UK</span>
-                    <div class="absolute inset-0 bg-purple-100 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg -z-10"></div>
+                    <div class="absolute inset-0 bg-emerald-100 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg -z-10"></div>
                     <div class="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span class="text-xs animate-spin-slow">🌍</span>
                     </div>
@@ -996,7 +996,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (missionText) {
             const mission = "To revolutionize football ticketing by providing seamless, secure, and accessible booking experiences that bring fans closer to the beautiful game they love.";
             missionText.innerHTML = `
-                <span class="text-lg leading-relaxed bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-medium">
+                <span class="text-lg leading-relaxed bg-gradient-to-r from-blue-600 via-emerald-600 to-emerald-600 bg-clip-text text-transparent font-medium">
                     ${mission}
                 </span>
             `;
@@ -1753,7 +1753,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="relative max-w-md transform transition-all duration-500 scale-75" id="easter-egg-modal">
                 <!-- Animated background -->
                 <div class="absolute inset-0 bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600 rounded-3xl animate-gradient-shift opacity-90 blur-sm"></div>
-                <div class="absolute inset-0 bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 rounded-3xl animate-gradient-shift opacity-70 blur-md animation-delay-1s"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-green-400 via-blue-500 to-emerald-600 rounded-3xl animate-gradient-shift opacity-70 blur-md animation-delay-1s"></div>
                
                 <!-- Content -->
                 <div class="relative bg-white rounded-3xl p-8 text-center shadow-2xl border-4 border-white">
@@ -1762,7 +1762,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="absolute top-4 left-4 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
                         <div class="absolute top-8 right-8 w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
                         <div class="absolute bottom-6 left-8 w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <div class="absolute bottom-4 right-4 w-3 h-3 bg-purple-500 rounded-full animate-spin"></div>
+                        <div class="absolute bottom-4 right-4 w-3 h-3 bg-emerald-500 rounded-full animate-spin"></div>
                     </div>
                    
                     <div class="relative z-10">
