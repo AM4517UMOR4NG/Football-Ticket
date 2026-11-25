@@ -47,8 +47,11 @@ public class AuthController {
     @Autowired
     private SecurityAuditService securityAuditService;
 
-    @Value("${app.google.client-id}")
+    @Value("${app.google.client-id:}")
     private String googleClientId;
+
+    @Value("${app.security.trust-proxy-headers:false}")
+    private boolean trustProxyHeaders;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDTO userDto, HttpServletRequest request) {
@@ -75,9 +78,17 @@ public class AuthController {
             Object principal = auth.getPrincipal();
             if (principal instanceof org.springframework.security.core.userdetails.UserDetails userDetails) {
                 String username = userDetails.getUsername();
-                com.example.ticketbooking.entity.User user = userService.findByUsername(username).orElse(null);
+                User user = userService.findByUsername(username).orElse(null);
                 if (user != null) {
-                    return ResponseEntity.ok(user);
+                    java.util.Map<String, Object> safeUser = new java.util.HashMap<>();
+                    safeUser.put("id", user.getId());
+                    safeUser.put("username", user.getUsername());
+                    safeUser.put("email", user.getEmail());
+                    safeUser.put("fullName", user.getFullName());
+                    safeUser.put("role", user.getRole());
+                    safeUser.put("phone", user.getPhone());
+                    safeUser.put("address", user.getAddress());
+                    return ResponseEntity.ok(safeUser);
                 }
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(false, "User not found"));
@@ -89,6 +100,12 @@ public class AuthController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
             HttpServletRequest request) {
         String clientIp = getClientIpAddress(request);
+
+        if (securityAuditService.isIpBlocked(clientIp)) {
+            securityAuditService.logUnauthorizedAccess("/api/auth/login", clientIp, "IP temporarily blocked due to failed attempts");
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                    .body(new ApiResponse(false, "Too many failed login attempts. Please try again later."));
+        }
 
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -107,18 +124,18 @@ public class AuthController {
                 return ResponseEntity.ok(loginResponse);
             } else {
                 securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, false);
-                return ResponseEntity.badRequest()
-                        .body(new ApiResponse(false, "User not found after authentication"));
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ApiResponse(false, "Invalid username or password"));
             }
 
         } catch (AuthenticationException ex) {
             securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, false);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ApiResponse(false, "Invalid username or password: " + ex.getMessage()));
+                    .body(new ApiResponse(false, "Invalid username or password"));
         } catch (Exception ex) {
             securityAuditService.logLoginAttempt(loginRequest.getUsername(), clientIp, false);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse(false, "Login failed: " + ex.getMessage()));
+                    .body(new ApiResponse(false, "Login failed. Please try again later."));
         }
     }
 
@@ -131,6 +148,11 @@ public class AuthController {
     public ResponseEntity<?> authenticateWithGoogle(@RequestBody GoogleAuthRequest googleRequest,
             HttpServletRequest request) {
         String clientIp = getClientIpAddress(request);
+
+        if (googleClientId == null || googleClientId.isBlank()) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(new ApiResponse(false, "Google OAuth is not configured on this server"));
+        }
 
         try {
             // Verify the Google ID token
@@ -146,6 +168,10 @@ public class AuthController {
             }
 
             GoogleIdToken.Payload payload = idToken.getPayload();
+            if (!Boolean.TRUE.equals(payload.getEmailVerified())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ApiResponse(false, "Google account email is not verified"));
+            }
             String googleId = payload.getSubject();
             String email = payload.getEmail();
             String fullName = (String) payload.get("name");
@@ -197,14 +223,16 @@ public class AuthController {
     }
 
     private String getClientIpAddress(HttpServletRequest request) {
-        String xForwardedFor = request.getHeader("X-Forwarded-For");
-        if (xForwardedFor != null && !xForwardedFor.isEmpty() && !"unknown".equalsIgnoreCase(xForwardedFor)) {
-            return xForwardedFor.split(",")[0].trim();
-        }
+        if (trustProxyHeaders) {
+            String xForwardedFor = request.getHeader("X-Forwarded-For");
+            if (xForwardedFor != null && !xForwardedFor.isEmpty() && !"unknown".equalsIgnoreCase(xForwardedFor)) {
+                return xForwardedFor.split(",")[0].trim();
+            }
 
-        String xRealIp = request.getHeader("X-Real-IP");
-        if (xRealIp != null && !xRealIp.isEmpty() && !"unknown".equalsIgnoreCase(xRealIp)) {
-            return xRealIp;
+            String xRealIp = request.getHeader("X-Real-IP");
+            if (xRealIp != null && !xRealIp.isEmpty() && !"unknown".equalsIgnoreCase(xRealIp)) {
+                return xRealIp;
+            }
         }
 
         return request.getRemoteAddr();
@@ -231,7 +259,7 @@ public class AuthController {
             return message;
         }
 
-        public void sestMessage(String message) {
+        public void setMessage(String message) {
             this.message = message;
         }
     }
