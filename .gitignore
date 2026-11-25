@@ -43,6 +43,7 @@ data/
 *.pem
 *.key
 .env.*
+!.env.example
 
 ### Logs ###
 *.log
