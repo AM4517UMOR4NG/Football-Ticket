@@ -4,6 +4,7 @@ import com.example.ticketbooking.dto.BookingDTO;
 import com.example.ticketbooking.entity.Booking;
 import com.example.ticketbooking.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/public/cashier")
+@PreAuthorize("hasAnyRole('CASHIER', 'ADMIN')")
 @RequiredArgsConstructor
 public class PublicCashierController {
 
